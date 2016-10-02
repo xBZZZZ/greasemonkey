@@ -12,6 +12,7 @@ Cu.import('chrome://greasemonkey-modules/content/GM_setClipboard.js');
 Cu.import('chrome://greasemonkey-modules/content/ipcscript.js');
 Cu.import('chrome://greasemonkey-modules/content/menucommand.js');
 Cu.import('chrome://greasemonkey-modules/content/miscapis.js');
+Cu.import("chrome://greasemonkey-modules/content/notification.js");
 Cu.import('chrome://greasemonkey-modules/content/sandbox.js');
 Cu.import('chrome://greasemonkey-modules/content/scriptProtocol.js');
 Cu.import('chrome://greasemonkey-modules/content/util.js');
@@ -199,6 +200,9 @@ addMessageListener('greasemonkey:menu-command-list', function(aMessage) {
 });
 addMessageListener('greasemonkey:menu-command-run', function(aMessage) {
   MenuCommandRun(content, aMessage);
+});
+addMessageListener("greasemonkey:notification-run", function (aMessage) {
+  NotificationRun(content, aMessage);
 });
 addMessageListener("greasemonkey:context-menu-start", contextMenuStart);
 addMessageListener("greasemonkey:newscript-load-start", newScriptLoadStart);

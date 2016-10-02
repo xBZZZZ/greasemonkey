@@ -8,6 +8,7 @@ Cu.import('chrome://greasemonkey-modules/content/GM_openInTab.js');
 Cu.import('chrome://greasemonkey-modules/content/GM_setClipboard.js');
 Cu.import("chrome://greasemonkey-modules/content/menucommand.js");
 Cu.import("chrome://greasemonkey-modules/content/miscapis.js");
+Cu.import("chrome://greasemonkey-modules/content/notification.js");
 Cu.import("chrome://greasemonkey-modules/content/storageFront.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 Cu.import("chrome://greasemonkey-modules/content/xmlhttprequester.js");
@@ -18,6 +19,10 @@ var gStringBundle = Cc["@mozilla.org/intl/stringbundle;1"]
     .createBundle("chrome://greasemonkey/locale/greasemonkey.properties");
 var gInvalidAccesskeyErrorStr = gStringBundle
     .GetStringFromName('error.menu-invalid-accesskey');
+var gNotificationCallbackIsNotFunctionStr = gStringBundle
+    .GetStringFromName("notification.callback-is-not-function");
+var gNotificationMessageOrHighlightStr = gStringBundle
+    .GetStringFromName("notification.message-or-highlight");
 var subLoader = Components.classes["@mozilla.org/moz/jssubscript-loader;1"]
     .getService(Components.interfaces.mozIJSSubScriptLoader);
 
@@ -80,6 +85,20 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
         gInvalidAccesskeyErrorStr, MenuCommandEventNameSuffix);
     Components.utils.evalInSandbox(
         'delete this._MenuCommandSandbox;', sandbox);
+  }
+
+  if (GM_util.inArray(aScript.grants, "GM_notification")) {
+    Components.utils.evalInSandbox(
+        "this._NotificationSandbox = " +
+        NotificationSandbox.toSource(), sandbox);
+    sandbox._NotificationSandbox(
+        aFrameScope.content, aScript.uuid, aScript.localized.name, aScript.fileURL,
+        NotificationRespond,
+        gNotificationCallbackIsNotFunctionStr,
+        gNotificationMessageOrHighlightStr,
+        NotificationEventNameSuffix);
+    Components.utils.evalInSandbox(
+        "delete this._NotificationSandbox;", sandbox);
   }
 
   var scriptStorage = new GM_ScriptStorageFront(aScript, aFrameScope, sandbox);

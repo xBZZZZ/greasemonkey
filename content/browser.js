@@ -59,6 +59,9 @@ GM_BrowserUI.chromeLoad = function(aEvent) {
   // Initialize the chrome side handling of menu commands.
   GM_MenuCommander.initialize();
 
+  // Initialize the chrome side handling of notifications.
+  GM_Notificationer.initialize();
+
   GM_BrowserUI.showToolbarButton();
 
   // Make sure this is imported at least once, so its internal timer starts.
@@ -115,6 +118,7 @@ GM_BrowserUI.openInTab = function(aMessage) {
 GM_BrowserUI.chromeUnload = function() {
   GM_prefRoot.unwatch("enabled", GM_BrowserUI.refreshStatus);
   GM_MenuCommander.uninitialize();
+  GM_Notificationer.uninitialize();
 };
 
 /**
