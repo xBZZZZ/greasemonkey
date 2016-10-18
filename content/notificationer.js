@@ -31,6 +31,7 @@ GM_Notificationer.run = function (aNotification) {
   var options = {
     "body": details.message,
     "icon": details.image,
+    "requireInteraction": true,
   }
 
   // Hightlight tab does not work.
