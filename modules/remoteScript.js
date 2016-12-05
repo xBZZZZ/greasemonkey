@@ -11,6 +11,7 @@ Cu.import('chrome://greasemonkey-modules/content/scriptIcon.js');
 Cu.import('chrome://greasemonkey-modules/content/util.js');
 
 Cu.import("resource://gre/modules/NetUtil.jsm");
+Cu.import("resource://gre/modules/PrivateBrowsingUtils.jsm");
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 Cu.import("resource://gre/modules/Services.jsm");
 
@@ -162,12 +163,18 @@ DownloadListener.prototype = {
   onStartRequest: function(aRequest, aContext) {
     // For the first file (the script) detect an HTML page and abort if so.
     if (this._tryToParse) {
+      var contentType = false;
       try {
         aRequest.QueryInterface(Ci.nsIHttpChannel);
       } catch (e) {
         return;  // Non-http channel?  Ignore.
       }
-      if (this._htmlTypeRegex.test(aRequest.contentType)) {
+      try { 
+        contentType = this._htmlTypeRegex.test(aRequest.contentType); 
+      } catch (e) { 
+        return;  // Problem loading page (Unable to connect)?  Ignore. 
+      } 
+      if (contentType) {
         // Cancel this request immediately and let onStopRequest handle the
         // cleanup for everything else.
         aRequest.cancel(Components.results.NS_BINDING_ABORTED);
@@ -593,17 +600,46 @@ RemoteScript.prototype._downloadFile = function(
     }
   }
 
-  // Construct a channel with a policy type that the HTTP observer is
-  // designed to ignore, so it won't intercept this network call.
-  var channel = NetUtil.newChannel({
-    'uri': aUri,
-    'contentPolicyType': Ci.nsIContentPolicy.TYPE_OBJECT_SUBREQUEST,
-    'loadUsingSystemPrincipal': true,
-  });
+  // Firefox < 38 (i.e. PaleMoon)
+  // https://bugzilla.mozilla.org/show_bug.cgi?id=1125618
+  try {
+    // Construct a channel with a policy type that the HTTP observer is
+    // designed to ignore, so it won't intercept this network call.
+    var channel = NetUtil.newChannel({
+      'uri': aUri,
+      'contentPolicyType': Ci.nsIContentPolicy.TYPE_OBJECT_SUBREQUEST,
+      'loadUsingSystemPrincipal': true,
+    });
+  } catch (e) {
+    var channel = GM_util.channelFromUri(aUri);
+  }
   // When cache is used (*.user.js, e.g. MIME type: text/html):
   // 1. It creates temporary folder ("gm-temp-...") - permanently (see #2069)
   // 2. Infinite loading web page
   channel.loadFlags |= channel.LOAD_BYPASS_CACHE;
+  // See #1717
+  // A page with a userscript - http auth
+  // Private browsing
+  if (channel instanceof Ci.nsIPrivateBrowsingChannel) {
+    var isPrivate = true;
+    var chromeWin = GM_util.getBrowserWindow();
+    if (chromeWin.gBrowser) {
+      // i.e. the Private Browsing autoStart pref:
+      // "browser.privatebrowsing.autostart"
+      // PaleMoon
+      // http://bugzil.la/1069059
+      try {
+        isPrivate = PrivateBrowsingUtils.isBrowserPrivate(chromeWin.gBrowser);
+      } catch (e) {
+        isPrivate = GM_util.windowIsPrivate(
+            chromeWin.gBrowser.ownerDocument.defaultView);
+      }
+    }
+    if (isPrivate) {
+      channel = channel.QueryInterface(Ci.nsIPrivateBrowsingChannel);
+      channel.setPrivate(true);
+    }
+  }
   this._channels.push(channel);
   var dsl = new DownloadListener(
       0 == this._progressIndex,  // aTryToParse

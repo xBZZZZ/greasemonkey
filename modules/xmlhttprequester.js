@@ -1,6 +1,15 @@
 var EXPORTED_SYMBOLS = ['GM_xmlhttpRequester'];
 
-Components.utils.importGlobalProperties(["Blob"]);
+// Firefox < 35 (i.e. PaleMoon)
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1047483
+try {
+  Components.utils.importGlobalProperties(["Blob"]);
+} catch (e) {
+  var {_Blob} = Components.utils.import(
+      "resource://gre/modules/Services.jsm", {});
+}
+// PaleMoon
+Components.utils.import("chrome://greasemonkey-modules/content/third-party/extended.js");
 Components.utils.import("chrome://greasemonkey-modules/content/util.js");
 
 var gStringBundle = Components
@@ -8,11 +17,18 @@ var gStringBundle = Components
     .getService(Components.interfaces.nsIStringBundleService)
     .createBundle("chrome://greasemonkey/locale/greasemonkey.properties");
 
-Components.utils.importGlobalProperties(['XMLHttpRequest']);
+// Firefox < 27 (i.e. PaleMoon)
+// https://bugzilla.mozilla.org/show_bug.cgi?id=920553
+try {
+  Components.utils.importGlobalProperties(['XMLHttpRequest']);
+} catch (e) {
+  // Ignore.
+}
 
 
-function GM_xmlhttpRequester(wrappedContentWin, originUrl, sandbox) {
+function GM_xmlhttpRequester(wrappedContentWin, fileURL, originUrl, sandbox) {
   this.wrappedContentWin = wrappedContentWin;
+  this.fileURL = fileURL;
   this.originUrl = originUrl;
   this.sandbox = sandbox;
   // Firefox < 29 (i.e. PaleMoon) does not support getObjectPrincipal in a
@@ -32,8 +48,13 @@ function GM_xmlhttpRequester(wrappedContentWin, originUrl, sandbox) {
 // text/xml and we can't support that
 GM_xmlhttpRequester.prototype.contentStartRequest = function(details) {
   if (!details) {
-    throw new this.wrappedContentWin.Error(
-        gStringBundle.GetStringFromName('error.xhrNoDetails'));
+    // PaleMoon
+    var _sm_pm_tmp = gStringBundle.GetStringFromName('error.xhrNoDetails');
+    if (this.wrappedContentWin.Error) {
+      throw new this.wrappedContentWin.Error(_sm_pm_tmp, this.fileURL, null);
+    } else {
+      throw new Error(_sm_pm_tmp, this.fileURL, null);
+    }
   }
   try {
     // Validate and parse the (possibly relative) given URL.
@@ -41,10 +62,14 @@ GM_xmlhttpRequester.prototype.contentStartRequest = function(details) {
     var url = uri.spec;
   } catch (e) {
     // A malformed URL won't be parsed properly.
-    throw new this.wrappedContentWin.Error(
-        gStringBundle.GetStringFromName('error.invalidUrl')
-            .replace('%1', details.url)
-        );
+    // PaleMoon
+    var _sm_pm_tmp = gStringBundle.GetStringFromName('error.invalidUrl')
+        .replace('%1', details.url);
+    if (this.wrappedContentWin.Error) {
+      throw new this.wrappedContentWin.Error(_sm_pm_tmp, this.fileURL, null);
+    } else {
+      throw new Error(_sm_pm_tmp, this.fileURL, null);
+    }
   }
 
   // This is important - without it, GM_xmlhttpRequest can be used to get
@@ -53,15 +78,26 @@ GM_xmlhttpRequester.prototype.contentStartRequest = function(details) {
     case "http":
     case "https":
     case "ftp":
-        var req = new XMLHttpRequest(
-            (details.mozAnon || details.anonymous) ? {'mozAnon': true} : {});
+        // PaleMoon
+        try {
+          var req = new XMLHttpRequest(
+              (details.mozAnon || details.anonymous) ? {'mozAnon': true} : {});
+        } catch (e) {
+          var req = Components
+              .classes["@mozilla.org/xmlextras/xmlhttprequest;1"]
+              .createInstance(Components.interfaces.nsIXMLHttpRequest);
+        }
         GM_util.hitch(this, "chromeStartRequest", url, details, req)();
       break;
     default:
-      throw new this.wrappedContentWin.Error(
-          gStringBundle.GetStringFromName('error.disallowedScheme')
-              .replace('%1', details.url)
-          );
+      // PaleMoon
+      var _sm_pm_tmp = gStringBundle.GetStringFromName('error.disallowedScheme')
+          .replace('%1', details.url);
+      if (this.wrappedContentWin.Error) {
+        throw new this.wrappedContentWin.Error(_sm_pm_tmp, this.fileURL, null);
+      } else {
+        throw new Error(_sm_pm_tmp, this.fileURL, null);
+      }
   }
 
   var rv = {
@@ -73,6 +109,10 @@ GM_xmlhttpRequester.prototype.contentStartRequest = function(details) {
     status: null,
     statusText: null
   };
+  // Firefox < 30 (i.e. PaleMoon)
+  if (!Components.utils.cloneInto) {
+    rv = _cloneInto(rv);
+  }
 
   if (!!details.synchronous) {
     rv.finalUrl = req.finalUrl;
@@ -88,15 +128,18 @@ GM_xmlhttpRequester.prototype.contentStartRequest = function(details) {
     rv.statusText = req.statusText;
   }
 
-  rv = Components.utils.cloneInto({
-    abort: rv.abort.bind(rv),
-    finalUrl: rv.finalUrl,
-    readyState: rv.readyState,
-    responseHeaders: rv.responseHeaders,
-    responseText: rv.responseText,
-    status: rv.status,
-    statusText: rv.statusText
-  }, this.sandbox, {cloneFunctions: true});
+  // Firefox < 30 (i.e. PaleMoon)
+  if (Components.utils.cloneInto) {
+    rv = Components.utils.cloneInto({
+      abort: rv.abort.bind(rv),
+      finalUrl: rv.finalUrl,
+      readyState: rv.readyState,
+      responseHeaders: rv.responseHeaders,
+      responseText: rv.responseText,
+      status: rv.status,
+      statusText: rv.statusText
+    }, this.sandbox, {cloneFunctions: true});
+  }
 
   return rv;
 };
@@ -127,8 +170,25 @@ function(safeUrl, details, req) {
 
   req.mozBackgroundRequest = !!details.mozBackgroundRequest;
 
-  req.open(details.method, safeUrl,
-      !details.synchronous, details.user || "", details.password || "");
+  // See #2423
+  // http://bugzil.la/1275746
+  try {
+    req.open(details.method, safeUrl,
+        !details.synchronous, details.user || "", details.password || "");
+  } catch (e) {
+    // PaleMoon
+    var _sm_pm_tmp = "GM_xmlhttpRequest(): " + details.url + "\n" + e;
+    if (this.wrappedContentWin.Error) {
+      throw new this.wrappedContentWin.Error(_sm_pm_tmp, this.fileURL, null);
+    } else {
+      throw new Error(_sm_pm_tmp, this.fileURL, null);
+    }
+  }
+
+  // PaleMoon
+  if (details.mozAnon || details.anonymous) {
+    req.channel.loadFlags |= Components.interfaces.nsIRequest.LOAD_ANONYMOUS;
+  }
 
   var channel;
 
@@ -138,9 +198,13 @@ function(safeUrl, details, req) {
     channel.setPrivate(true);
   }
 
-  channel = req.channel
-      .QueryInterface(Components.interfaces.nsIHttpChannelInternal);
-  channel.forceAllowThirdPartyCookie = true;
+  try {
+    channel = req.channel
+        .QueryInterface(Components.interfaces.nsIHttpChannelInternal);
+    channel.forceAllowThirdPartyCookie = true;
+  } catch (e) {
+    // Ignore.  e.g. ftp://
+  }
 
   if (details.overrideMimeType) {
     req.overrideMimeType(details.overrideMimeType);
@@ -173,17 +237,29 @@ function(safeUrl, details, req) {
     }
   }
 
-  var body = details.data ? details.data : null;
-  if (details.binary && (body !== null)) {
-    var bodyLength = body.length;
-    var bodyData = new Uint8Array(bodyLength);
-    for (var i = 0; i < bodyLength; i++) {
-      bodyData[i] = body.charCodeAt(i) & 0xff;
+  // See #2423 
+  // http://bugzil.la/918751 
+  try {
+    var body = details.data ? details.data : null;
+    if (details.binary && (body !== null)) {
+      var bodyLength = body.length;
+      var bodyData = new Uint8Array(bodyLength);
+      for (var i = 0; i < bodyLength; i++) {
+        bodyData[i] = body.charCodeAt(i) & 0xff;
+      }
+      req.send(new Blob([bodyData]));
+    } else {
+      req.send(body);
     }
-    req.send(new Blob([bodyData]));
-  } else {
-    req.send(body);
-  }
+  } catch (e) { 
+    // PaleMoon
+    var _sm_pm_tmp = "GM_xmlhttpRequest(): " + details.url + "\n" + e;
+    if (this.wrappedContentWin.Error) {
+      throw new this.wrappedContentWin.Error(_sm_pm_tmp, this.fileURL, null);
+    } else {
+      throw new Error(_sm_pm_tmp, this.fileURL, null);
+    }
+   }
 };
 
 // arranges for the specified 'event' on xmlhttprequest 'req' to call the
@@ -219,6 +295,10 @@ function(wrappedContentWin, sandbox, req, event, details) {
       statusText: null,
       total: null
     };
+    // Firefox < 30 (i.e. PaleMoon)
+    if (!Components.utils.cloneInto) {
+      responseState = _cloneInto(responseState, ["responseXML"]);
+    }
 
     try {
       responseState.responseText = req.responseText;
@@ -258,20 +338,23 @@ function(wrappedContentWin, sandbox, req, event, details) {
         break;
     }
 
-    responseState = Components.utils.cloneInto({
-      context: responseState.context,
-      finalUrl: responseState.finalUrl,
-      lengthComputable: responseState.lengthComputable,
-      loaded: responseState.loaded,
-      readyState: responseState.readyState,
-      response: responseState.response,
-      responseHeaders: responseState.responseHeaders,
-      responseText: responseState.responseText,
-      responseXML: responseState.responseXML,
-      status: responseState.status,
-      statusText: responseState.statusText,
-      total: responseState.total
-    }, sandbox, {cloneFunctions: true, wrapReflectors: true});
+    // Firefox < 30 (i.e. PaleMoon)
+    if (Components.utils.cloneInto) {
+      responseState = Components.utils.cloneInto({
+        context: responseState.context,
+        finalUrl: responseState.finalUrl,
+        lengthComputable: responseState.lengthComputable,
+        loaded: responseState.loaded,
+        readyState: responseState.readyState,
+        response: responseState.response,
+        responseHeaders: responseState.responseHeaders,
+        responseText: responseState.responseText,
+        responseXML: responseState.responseXML,
+        status: responseState.status,
+        statusText: responseState.statusText,
+        total: responseState.total
+      }, sandbox, {cloneFunctions: true, wrapReflectors: true});
+    }
 
     if (GM_util.windowIsClosed(wrappedContentWin)) {
       return;

@@ -16,8 +16,12 @@ Cu.import("chrome://greasemonkey-modules/content/extractMeta.js");
 var gStringBundle = Cc["@mozilla.org/intl/stringbundle;1"]
     .getService(Ci.nsIStringBundleService)
     .createBundle("chrome://greasemonkey/locale/greasemonkey.properties");
-var gInvalidAccesskeyErrorStr = gStringBundle
-    .GetStringFromName('error.menu-invalid-accesskey');
+var gMenuCommandCallbackIsNotFunctionErrorStr =
+    'Error with menu command "%1": Callback is not a function!'; 
+var gMenuCommandCouldNotRunErrorStr =
+    'Error with menu command "%1": Could not run requested menu command!';
+var gMenuCommandInvalidAccesskeyErrorStr = gStringBundle 
+    .GetStringFromName("error.menu-invalid-accesskey");
 var subLoader = Components.classes["@mozilla.org/moz/jssubscript-loader;1"]
     .getService(Components.interfaces.mozIJSSubScriptLoader);
 
@@ -76,8 +80,12 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
     Components.utils.evalInSandbox(
         'this._MenuCommandSandbox = ' + MenuCommandSandbox.toSource(), sandbox);
     sandbox._MenuCommandSandbox(
-        aScript.uuid, aScript.localized.name, MenuCommandRespond,
-        gInvalidAccesskeyErrorStr, MenuCommandEventNameSuffix);
+        aScript.uuid, aScript.localized.name, aScript.fileURL, 
+        MenuCommandRespond, 
+        gMenuCommandCallbackIsNotFunctionErrorStr, 
+        gMenuCommandCouldNotRunErrorStr,
+        gMenuCommandInvalidAccesskeyErrorStr, 
+        MenuCommandEventNameSuffix);
     Components.utils.evalInSandbox(
         'delete this._MenuCommandSandbox;', sandbox);
   }
@@ -122,17 +130,21 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
 
   if (GM_util.inArray(aScript.grants, 'GM_xmlhttpRequest')) {
     sandbox.GM_xmlhttpRequest = GM_util.hitch(
-        new GM_xmlhttpRequester(aContentWin, aUrl, sandbox),
+        new GM_xmlhttpRequester(aContentWin, aScript.fileURL, aUrl, sandbox),
         'contentStartRequest');
   }
 
-  // See #2129
-  Object.getOwnPropertyNames(sandbox).forEach(function (prop) {
-    if (prop.indexOf("GM_") == 0) {
-      sandbox[prop] = Cu.cloneInto(
-          sandbox[prop], sandbox, {cloneFunctions: true, wrapReflectors: true});
-    }
-  });
+  // Firefox < 30 (i.e. PaleMoon)
+  if (Cu.cloneInto) {
+    // See #2129
+    Object.getOwnPropertyNames(sandbox).forEach(function (prop) {
+      if (prop.indexOf("GM_") == 0) {
+        sandbox[prop] = Cu.cloneInto(
+            sandbox[prop], sandbox,
+            {cloneFunctions: true, wrapReflectors: true});
+      }
+    });
+  }
 
   injectGMInfo(aScript, sandbox, aContentWin);
 
@@ -146,9 +158,17 @@ function injectGMInfo(aScript, sandbox, aContentWin) {
 
   rawInfo.isIncognito = GM_util.windowIsPrivate(aContentWin);
   rawInfo.isPrivate = rawInfo.isIncognito;
-  
-  // TODO: also delay top level clone via lazy getter? XPCOMUtils.defineLazyGetter
-  sandbox.GM_info = Cu.cloneInto(rawInfo, sandbox);
+
+  // Firefox < 30 (i.e. PaleMoon)
+  try {
+    // TODO: also delay top level clone via lazy getter? XPCOMUtils.defineLazyGetter
+    sandbox.GM_info = Cu.cloneInto(rawInfo, sandbox);
+  } catch (e) {
+    if (!sandbox.GM_info) {
+      Components.utils.evalInSandbox(
+          "const GM_info = " + uneval(rawInfo) + ";", sandbox);
+    }
+  }
 
   var waivedInfo = Components.utils.waiveXrays(sandbox.GM_info);
   var fileCache = new Map();
@@ -171,14 +191,20 @@ function injectGMInfo(aScript, sandbox, aContentWin) {
     return meta;
   }
 
+  // Firefox < 30 (i.e. PaleMoon)
   // lazy getters for heavyweight strings that aren't sent down through IPC
   Object.defineProperty(waivedInfo, "scriptSource", {
-    get: Cu.exportFunction(getScriptSource, sandbox)
+    get: Cu.exportFunction
+        ? Cu.exportFunction(getScriptSource, sandbox)
+        : getScriptSource
   });
 
+  // Firefox < 30 (i.e. PaleMoon)
   // meta depends on content, so we need a lazy one here too
   Object.defineProperty(waivedInfo, 'scriptMetaStr', {
-    get: Cu.exportFunction(getMeta, sandbox)
+    get: Cu.exportFunction
+        ? Cu.exportFunction(getMeta, sandbox)
+        : getMeta
   });
 }
 

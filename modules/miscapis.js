@@ -21,6 +21,7 @@ function GM_Resources(script) {
 }
 
 GM_Resources.prototype.getResourceURL = function(aScript, name) {
+  var dep = this._getDep(name);
   return ['greasemonkey-script:', aScript.uuid, '/', name].join('');
 };
 
@@ -28,8 +29,13 @@ GM_Resources.prototype.getResourceURL = function(aScript, name) {
 GM_Resources.prototype.getResourceText = function(sandbox, name, responseType) {
   var dep = this._getDep(name);
   if (dep.textContent !== undefined) return dep.textContent;
-  return Cu.cloneInto(GM_util.fileXhr(
-      dep.file_url, "text/plain", responseType), sandbox);
+  // Firefox < 30 (i.e. PaleMoon)
+  var _sm_pm_tmp = GM_util.fileXhr(dep.file_url, "text/plain", responseType);
+  if (Cu.cloneInto) {
+    return Cu.cloneInto(_sm_pm_tmp, sandbox);
+  } else {
+    return _sm_pm_tmp;
+  }
 };
 
 GM_Resources.prototype._getDep = function(name) {
