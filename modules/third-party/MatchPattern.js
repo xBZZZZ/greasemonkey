@@ -38,12 +38,23 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-var EXPORTED_SYMBOLS = ['MatchPattern'];
+var EXPORTED_SYMBOLS = ['_MatchPattern'];
+
+try {
+  // See #2480
+  // https://bugzilla.mozilla.org/show_bug.cgi?id=1171248
+  // https://bugzilla.mozilla.org/show_bug.cgi?id=1337629
+  Components.utils.import("resource://gre/modules/MatchPattern.jsm");
+} catch (e) {
+  // Ignore.
+}
 
 Components.utils.import("chrome://greasemonkey-modules/content/third-party/convert2RegExp.js");
 Components.utils.import("chrome://greasemonkey-modules/content/util.js");
 
 var validSchemes = ['http', 'https', 'ftp', 'file'];
+var validSchemesExpr = validSchemes.join("|");
+
 var REG_HOST = /^(?:\*\.)?[^*\/]+$|^\*$|^$/;
 var getString = (function() {
   var stringBundleService = Components.classes["@mozilla.org/intl/stringbundle;1"]
@@ -55,7 +66,8 @@ var getString = (function() {
 
 // For the format of "pattern", see:
 //   http://code.google.com/chrome/extensions/match_patterns.html
-function MatchPattern(pattern) {
+function _MatchPattern(pattern) {
+  this._newMatchPattern = false;
   this._pattern = pattern;
 
   // Special case "<all_urls>".
@@ -72,9 +84,25 @@ function MatchPattern(pattern) {
     pattern = "http" + pattern.slice(1);
   }
 
-  var uri = GM_util.uriFromUrl(pattern);
-  if (!uri) {
-    throw new Error(getString("error.matchPattern.parse"));
+  try {
+    var uri = GM_util.uriFromUrl(pattern);
+    if (!uri) {
+      throw new Error(getString("error.matchPattern.parse"));
+    }
+  } catch (e) {
+    // Copied this from resource://gre/modules/MatchPattern.jsm
+    // Cu.reportError != throw new Error; How to catch the error?
+    var re = new RegExp(`^(${validSchemesExpr}|\\*)://(\\*|\\*\\.[^*/]+|[^*/]+|)(/.*)$`);
+    var match = re.exec(this._pattern);
+    if (!match) {
+      throw new Error(getString("error.matchPattern.parse"));
+    }
+    // We allow the host to be empty for file URLs.
+    if (match[2] == "" && match[1] != "file") {
+      throw new Error(getString("error.matchPattern.parse"));
+    }
+    this._newMatchPattern = true;
+    return;
   }
 
   var scheme = this._wildScheme ? "all" : uri.scheme;
@@ -113,10 +141,10 @@ function MatchPattern(pattern) {
   this._pathExpr = GM_convert2RegExp(path, false, true);
 }
 
-MatchPattern.prototype.__defineGetter__('pattern',
+_MatchPattern.prototype.__defineGetter__('pattern',
 function MatchPattern_getPattern() { return '' + this._pattern; });
 
-MatchPattern.prototype.doMatch = function(uriSpec) {
+_MatchPattern.prototype.doMatch = function(uriSpec) {
   var matchURI = GM_util.uriFromUrl(uriSpec);
 
   if (validSchemes.indexOf(matchURI.scheme) == -1) {
@@ -126,9 +154,18 @@ MatchPattern.prototype.doMatch = function(uriSpec) {
   if (this._all) {
     return true;
   }
-  if (!this._wildScheme && this._scheme != matchURI.scheme) {
-    return false;
+
+  if (this._newMatchPattern) {
+    if ("undefined" == this._pattern) {
+      return false;
+    }
+    var match = new MatchPattern(this._pattern);
+    return match.matches(matchURI);
+  } else {
+    if (!this._wildScheme && this._scheme != matchURI.scheme) {
+      return false;
+    }
+    return this._hostExpr.test(matchURI.host)
+        && this._pathExpr.test(matchURI.path);
   }
-  return this._hostExpr.test(matchURI.host)
-      && this._pathExpr.test(matchURI.path);
 };

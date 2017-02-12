@@ -222,7 +222,7 @@ function Script_setUserMatches(matches) {
   for (var i = 0, count = matches.length; i < count; i++) {
     var match = matches[i];
     try {
-      var match_MatchPattern = new MatchPattern(match);
+      var match_MatchPattern = new _MatchPattern(match);
       matches_MatchPattern.push(match_MatchPattern);
     } catch (e) {
       GM_util.logError(stringBundle.GetStringFromName('parse.ignoring-match')
@@ -248,7 +248,7 @@ function Script_setMatches(matches) {
   for (var i = 0, count = matches.length; i < count; i++) {
     var match = matches[i];
     try {
-      var match_MatchPattern = new MatchPattern(match);
+      var match_MatchPattern = new _MatchPattern(match);
       matches_MatchPattern.push(match_MatchPattern);
     } catch (e) {
       GM_util.logError(stringBundle.GetStringFromName('parse.ignoring-match')
@@ -396,13 +396,13 @@ Script.prototype._loadFromConfigNode = function(node) {
       this._userIncludes.push(childNode.textContent);
       break;
     case "UserMatch":
-      this._userMatches.push(new MatchPattern(childNode.textContent));
+      this._userMatches.push(new _MatchPattern(childNode.textContent));
       break;
     case "UserExclude":
       this._userExcludes.push(childNode.textContent);
       break;
     case "Match":
-      this._matches.push(new MatchPattern(childNode.textContent));
+      this._matches.push(new _MatchPattern(childNode.textContent));
       break;
     case "Require":
       var scriptRequire = new ScriptRequire(this);

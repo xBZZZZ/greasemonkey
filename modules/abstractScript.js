@@ -33,7 +33,7 @@ AbstractScript.prototype.matchesURL = function(url) {
   }
   function testMatch(matchPattern) {
     if ('string' == typeof matchPattern)
-      matchPattern = new MatchPattern(matchPattern);
+      matchPattern = new _MatchPattern(matchPattern);
     return matchPattern.doMatch(url);
   }
 

@@ -147,7 +147,7 @@ function parse(aSource, aUri, aFailWhenMissing) {
 
     case 'match':
       try {
-        var match = new MatchPattern(data.value);
+        var match = new _MatchPattern(data.value);
         script._matches.push(match);
       } catch (e) {
         script.parseErrors.push(

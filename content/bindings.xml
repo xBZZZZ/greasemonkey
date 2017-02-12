@@ -64,7 +64,7 @@
             if ((this == document.getElementById('user-matches'))
              || (this == document.getElementById('script-matches'))) {
               try {
-                var match = new MatchPattern(page);
+                var match = new _MatchPattern(page);
                 this._pages.push(page);
               } catch (e) {
                 alert(this._stringBundle.GetStringFromName('parse.ignoring-match')
