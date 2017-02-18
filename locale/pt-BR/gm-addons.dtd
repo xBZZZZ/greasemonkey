@@ -24,5 +24,7 @@
 <!ENTITY Sort.Status "Status">
 <!ENTITY Sort.ByName "Organizar por nome">
 <!ENTITY Sort.Name "Nome">
+<!ENTITY Sort.ByNamespace "Sort by namespace">
+<!ENTITY Sort.Namespace "Namespace">
 <!ENTITY Sort.ByExecution "Organizar por ordem de execução">
 <!ENTITY Sort.Execution "Ordem de Execução">

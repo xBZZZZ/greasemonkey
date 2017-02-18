@@ -18,7 +18,7 @@ window.addEventListener("load", function window_load() {
 
   // load default namespace from pref
   document.getElementById("namespace").value =
-      GM_prefRoot.getValue("newscript_namespace", "");
+      GM_prefRoot.getValue("newScript.namespace", "");
 
   // default the includes with the current page's url
   var content = window.opener.gBrowser;
@@ -60,7 +60,7 @@ function doInstall() {
   // (put this created script into a file -- only way to install it)
   GM_util.installScriptFromSource(scriptSrc, function() {
     // Persist namespace value.
-    GM_prefRoot.setValue("newscript_namespace", script.namespace);
+    GM_prefRoot.setValue("newScript.namespace", script.namespace);
     // Now that async write is complete, close the window.
     close();
   });

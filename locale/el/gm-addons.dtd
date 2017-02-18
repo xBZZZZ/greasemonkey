@@ -24,5 +24,7 @@
 <!ENTITY Sort.Status "Κατάσταση">
 <!ENTITY Sort.ByName "Ταξινόμηση κατά όνομα">
 <!ENTITY Sort.Name "Όνομα">
+<!ENTITY Sort.ByNamespace "Sort by namespace">
+<!ENTITY Sort.Namespace "Namespace">
 <!ENTITY Sort.ByExecution "Ταξινόμηση κατά σειρά εκτέλεσης">
 <!ENTITY Sort.Execution "Σειρά Εκτέλεσης">

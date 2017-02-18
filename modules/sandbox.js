@@ -8,7 +8,9 @@ Cu.import('chrome://greasemonkey-modules/content/GM_openInTab.js');
 Cu.import('chrome://greasemonkey-modules/content/GM_setClipboard.js');
 Cu.import("chrome://greasemonkey-modules/content/menucommand.js");
 Cu.import("chrome://greasemonkey-modules/content/miscapis.js");
+Cu.import("chrome://greasemonkey-modules/content/notificationer.js");
 Cu.import("chrome://greasemonkey-modules/content/storageFront.js");
+Cu.import("chrome://greasemonkey-modules/content/third-party/getChromeWinForContentWin.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 Cu.import("chrome://greasemonkey-modules/content/xmlhttprequester.js");
 Cu.import("chrome://greasemonkey-modules/content/extractMeta.js");
@@ -16,8 +18,12 @@ Cu.import("chrome://greasemonkey-modules/content/extractMeta.js");
 var gStringBundle = Cc["@mozilla.org/intl/stringbundle;1"]
     .getService(Ci.nsIStringBundleService)
     .createBundle("chrome://greasemonkey/locale/greasemonkey.properties");
-var gInvalidAccesskeyErrorStr = gStringBundle
-    .GetStringFromName('error.menu-invalid-accesskey');
+var gMenuCommandCallbackIsNotFunctionErrorStr = gStringBundle
+    .GetStringFromName("error.menu.callbackIsNotFunction");
+var gMenuCommandCouldNotRunErrorStr = gStringBundle
+    .GetStringFromName("error.menu.couldNotRun");
+var gMenuCommandInvalidAccesskeyErrorStr = gStringBundle
+    .GetStringFromName("error.menu.invalidAccesskey");
 var subLoader = Components.classes["@mozilla.org/moz/jssubscript-loader;1"]
     .getService(Components.interfaces.mozIJSSubScriptLoader);
 
@@ -61,7 +67,9 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
   // unsafeWindow getter to live in the sandbox.  See http://bugzil.la/1043958
   var unsafeWindowGetter = new sandbox.Function(
       'return window.wrappedJSObject || window;');
-  Object.defineProperty(sandbox, 'unsafeWindow', {get: unsafeWindowGetter});
+  Object.defineProperty(sandbox, "unsafeWindow", {
+    get: unsafeWindowGetter
+  });
 
 
   if (GM_util.inArray(aScript.grants, 'GM_addStyle')) {
@@ -76,10 +84,22 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
     Components.utils.evalInSandbox(
         'this._MenuCommandSandbox = ' + MenuCommandSandbox.toSource(), sandbox);
     sandbox._MenuCommandSandbox(
-        aScript.uuid, aScript.localized.name, MenuCommandRespond,
-        gInvalidAccesskeyErrorStr, MenuCommandEventNameSuffix);
+        aScript.uuid, aScript.localized.name, aScript.fileURL,
+        MenuCommandRespond,
+        gMenuCommandCallbackIsNotFunctionErrorStr,
+        gMenuCommandCouldNotRunErrorStr,
+        gMenuCommandInvalidAccesskeyErrorStr,
+        MenuCommandEventNameSuffix);
     Components.utils.evalInSandbox(
         'delete this._MenuCommandSandbox;', sandbox);
+  }
+
+  if (GM_util.inArray(aScript.grants, "GM_notification")) {
+    sandbox.GM_notification = GM_util.hitch(
+        new GM_notificationer(
+        getChromeWinForContentWin(aContentWin), aContentWin, sandbox,
+        aScript.fileURL, aScript.localized.name),
+        "contentStart");
   }
 
   var scriptStorage = new GM_ScriptStorageFront(aScript, aFrameScope, sandbox);
@@ -108,12 +128,7 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
   }
 
   if (GM_util.inArray(aScript.grants, 'GM_listValues')) {
-    // Return plain (JSON) string from chrome, parse it in the sandbox,
-    // to avoid issues with objects (Array) crossing security boundaries.
-    sandbox._GM_listValues = GM_util.hitch(scriptStorage, 'listValues');
-    Components.utils.evalInSandbox(
-        'function GM_listValues() { return JSON.parse(_GM_listValues()); }',
-        sandbox);
+    sandbox.GM_listValues = GM_util.hitch(scriptStorage, 'listValues');
   }
 
   if (GM_util.inArray(aScript.grants, 'GM_openInTab')) {
@@ -122,7 +137,7 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
 
   if (GM_util.inArray(aScript.grants, 'GM_xmlhttpRequest')) {
     sandbox.GM_xmlhttpRequest = GM_util.hitch(
-        new GM_xmlhttpRequester(aContentWin, aUrl, sandbox),
+        new GM_xmlhttpRequester(aContentWin, sandbox, aScript.fileURL, aUrl),
         'contentStartRequest');
   }
 
@@ -177,7 +192,7 @@ function injectGMInfo(aScript, sandbox, aContentWin) {
   });
 
   // meta depends on content, so we need a lazy one here too
-  Object.defineProperty(waivedInfo, 'scriptMetaStr', {
+  Object.defineProperty(waivedInfo, "scriptMetaStr", {
     get: Cu.exportFunction(getMeta, sandbox)
   });
 }

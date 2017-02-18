@@ -24,5 +24,7 @@
 <!ENTITY Sort.Status "Állapot">
 <!ENTITY Sort.ByName "Rendezés név szerint">
 <!ENTITY Sort.Name "Név">
+<!ENTITY Sort.ByNamespace "Sort by namespace">
+<!ENTITY Sort.Namespace "Namespace">
 <!ENTITY Sort.ByExecution "Rendezés végrehajtási sorrend szerint">
 <!ENTITY Sort.Execution "Végrehajtási sorrend">

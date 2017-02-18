@@ -26,15 +26,19 @@ function GM_ScriptStorageFront(aScript, aMessageManager, aSandbox) {
 }
 
 
-GM_ScriptStorageFront.prototype.__defineGetter__('dbFile',
-function GM_ScriptStorageFront_getDbFile() {
-  throw 'Script storage front end has no DB file.';
+Object.defineProperty(GM_ScriptStorageFront.prototype, "dbFile", {
+  get: function GM_ScriptStorageFront_getDbFile() {
+    throw 'Script storage front end has no DB file.'
+  },
+  enumerable: true
 });
 
 
-GM_ScriptStorageFront.prototype.__defineGetter__('db',
-function GM_ScriptStorageFront_getDb() {
-  throw 'Script storage front end has no DB connection.';
+Object.defineProperty(GM_ScriptStorageFront.prototype, "db", {
+  get: function GM_ScriptStorageFront_getDb() {
+    throw 'Script storage front end has no DB connection.';
+  },
+  enumerable: true
 });
 
 
@@ -86,7 +90,16 @@ GM_ScriptStorageFront.prototype.listValues = function() {
   var value = this._messageManager.sendSyncMessage(
       'greasemonkey:scriptVal-list',
       {scriptId: this._script.id});
-  return JSON.stringify(value.length && value[0] || []);
+  value = value.length && value[0] || [];
+
+  try {
+    value = JSON.parse(JSON.stringify(value));
+    return Components.utils.cloneInto(
+        value, this._sandbox, { wrapReflectors: true });
+  } catch (e) {
+    dump('JSON parse error? ' + uneval(e) + '\n');
+    return Components.utils.cloneInto([], this._sandbox);
+  }
 };
 
 

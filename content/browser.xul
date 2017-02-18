@@ -41,11 +41,11 @@
     <menuitem id="greasemonkey-view-userscript"
       accesskey="&menu.show.accesskey;"
       label="&menu.show;"
-      insertbefore="context-openlink"
+      insertbefore="context-bookmarklink"
       oncommand="GM_BrowserUI.viewContextItemClicked(event);"
       hidden="true" />
     <menuseparator id="greasemonkey-install-sep"
-      insertbefore="context-openlink"
+      insertbefore="context-bookmarklink"
       hidden="true" />
   </popup>
 

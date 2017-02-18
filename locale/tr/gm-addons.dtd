@@ -24,5 +24,7 @@
 <!ENTITY Sort.Status "Durum">
 <!ENTITY Sort.ByName "İsme göre sırala">
 <!ENTITY Sort.Name "Isim">
+<!ENTITY Sort.ByNamespace "Sort by namespace">
+<!ENTITY Sort.Namespace "Namespace">
 <!ENTITY Sort.ByExecution "Yürütme sırasına göre sırala">
 <!ENTITY Sort.Execution "Yürütme Sırası">

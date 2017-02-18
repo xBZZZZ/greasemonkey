@@ -18,7 +18,7 @@ function getContents(aFile, aCharset, aFatal) {
   }
   unicodeConverter.charset = aCharset || 'UTF-8';
 
-  var channel = GM_util.channelFromUri(GM_util.getUriFromFile(aFile));
+  var channel = GM_util.getChannelFromUri(GM_util.getUriFromFile(aFile));
   try {
     var input = channel.open();
   } catch (e) {

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
-<?xml-stylesheet href="chrome://greasemonkey/skin/addons4.css" type="text/css"?>
-<?xml-stylesheet href="chrome://greasemonkey/content/third-party/addons4.css" type="text/css"?>
+<?xml-stylesheet href="chrome://greasemonkey/skin/addons.css" type="text/css"?>
+<?xml-stylesheet href="chrome://greasemonkey/content/third-party/addons.css" type="text/css"?>
 
 <!DOCTYPE overlay [
 <!ENTITY % greasemonkeyDTD SYSTEM "chrome://greasemonkey/locale/greasemonkey.dtd">
@@ -16,7 +16,7 @@
   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 >
 
-<script type="application/x-javascript" src="chrome://greasemonkey/content/addons4-overlay.js" />
+<script type="application/x-javascript" src="chrome://greasemonkey/content/addons-overlay.js" />
 <script type="application/x-javascript" src="chrome://greasemonkey/content/third-party/mpl-utils.js" />
 
 <commandset id="viewCommandSet">
@@ -78,6 +78,8 @@
         checkState="2"/>
     <button label="&Sort.Name;" tooltiptext="&Sort.ByName;"
         class="sorter" sortBy="name"/>
+    <button label="&Sort.Namespace;" tooltiptext="&Sort.ByNamespace;"
+        class="sorter" sortBy="namespace"/>
     <button label="&Sort.Execution;" tooltiptext="&Sort.ByExecution;"
         class="sorter" sortBy="executionIndex"/>
   </hbox>

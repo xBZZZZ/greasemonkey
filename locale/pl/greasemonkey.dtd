@@ -43,7 +43,7 @@
 <!ENTITY options.newScript.removeUnused "Usuń nieużywane linie">
 <!ENTITY Uninstall "Odinstaluj">
 <!ENTITY AnonymousStatistics "Anonimowe statystyki">
-<!ENTITY EnableFirefoxSync "Włącz Firefox Sync dla skryptów">
+<!ENTITY EnableSync "Włącz Pale Moon Sync dla skryptów">
 <!ENTITY SubmitStats "Zbieraj i przekazuj anonimowo statystyki używania Greasemonkey, by pomóc w udoskonaleniu aplikacji.">
 <!ENTITY UpdateChecking "Sprawdzaj dostępność aktualizacji">
 <!ENTITY RequireSecureUpdates "Wymaga bezpiecznych aktualizacji">

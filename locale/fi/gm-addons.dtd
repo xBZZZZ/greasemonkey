@@ -24,5 +24,7 @@
 <!ENTITY Sort.Status "Tila">
 <!ENTITY Sort.ByName "Järjestä nimen mukaan">
 <!ENTITY Sort.Name "Nimi">
+<!ENTITY Sort.ByNamespace "Sort by namespace">
+<!ENTITY Sort.Namespace "Namespace">
 <!ENTITY Sort.ByExecution "Järjestä suoritusjärjestyksen mukaan">
 <!ENTITY Sort.Execution "Suoritusjärjestys">

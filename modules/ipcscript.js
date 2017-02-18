@@ -1,18 +1,24 @@
 var EXPORTED_SYMBOLS = ['IPCScript'];
 
+Components.utils.import("resource://gre/modules/Services.jsm");
 Components.utils.import("chrome://greasemonkey-modules/content/util.js");
 Components.utils.import('chrome://greasemonkey-modules/content/abstractScript.js');
 
 
 function IPCScript(aScript, addonVersion) {
   this.addonVersion = addonVersion;
+  this.author = aScript.author || "";
   this.description = aScript.description;
   this.enabled = aScript.enabled;
   this.excludes = aScript.excludes;
   this.fileURL = aScript.fileURL;
   this.grants = aScript.grants;
+  this.homepage = ((aScript.homepageURL && (aScript.homepageURL != ""))
+      ? aScript.homepageURL
+      : null);
   this.id = aScript.id;
   this.includes = aScript.includes;
+  this.lastUpdated = aScript.modifiedDate.getTime();
   this.localized = aScript.localized;
   this.name = aScript.name;
   this.namespace = aScript.namespace;
@@ -87,10 +93,13 @@ IPCScript.prototype.info = function() {
     'version': this.addonVersion,
     'scriptWillUpdate': this.willUpdate,
     'script': {
+      'author': this.author,
       'description': this.description,
       'excludes': this.excludes,
+      'homepage': this.homepage,
       // 'icon': ??? source URL?
       'includes': this.includes,
+      'lastUpdated': this.lastUpdated,
       'localizedDescription': this.localized.description,
       'localizedName': this.localized.name,
       'matches': this.matches,
@@ -107,9 +116,6 @@ IPCScript.prototype.info = function() {
 
 
 var scripts = [];
-
-var cpmm = Components.classes["@mozilla.org/childprocessmessagemanager;1"]
-    .getService(Components.interfaces.nsISyncMessageSender);
 
 
 function objectToScript(obj) {
@@ -133,21 +139,23 @@ function updateData(data) {
   Object.freeze(newScripts);
   scripts = newScripts;
   Object.defineProperty(IPCScript.prototype, "globalExcludes", {
-    get: function () { return data.globalExcludes; },
+    get: function IPCScript_getGlobalExcludes() {
+      return data.globalExcludes;
+    },
     configurable: true,
     enumerable: true
   });
 }
 
 
-if (cpmm.initialProcessData) {
-  updateData(cpmm.initialProcessData["greasemonkey:scripts-update"]);
+if (Services.cpmm.initialProcessData) {
+  updateData(Services.cpmm.initialProcessData["greasemonkey:scripts-update"]);
 } else {
   // Support FF < 41.
-  var results = cpmm.sendSyncMessage("greasemonkey:scripts-update");
+  var results = Services.cpmm.sendSyncMessage("greasemonkey:scripts-update");
   updateData(results[0]);
 }
 
-cpmm.addMessageListener("greasemonkey:scripts-update", function(aMessage) {
+Services.cpmm.addMessageListener("greasemonkey:scripts-update", function(aMessage) {
   updateData(aMessage.data);
 });

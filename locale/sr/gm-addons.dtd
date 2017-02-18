@@ -24,5 +24,7 @@
 <!ENTITY Sort.Status "Стање">
 <!ENTITY Sort.ByName "Поређај по називу">
 <!ENTITY Sort.Name "Назив">
+<!ENTITY Sort.ByNamespace "Sort by namespace">
+<!ENTITY Sort.Namespace "Namespace">
 <!ENTITY Sort.ByExecution "Поређај по редоследу извршавања">
 <!ENTITY Sort.Execution "Ред. извршавања">

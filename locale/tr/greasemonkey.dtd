@@ -43,7 +43,7 @@
 <!ENTITY options.newScript.removeUnused "Kullanılmayan satırları sil">
 <!ENTITY Uninstall "Kaldır">
 <!ENTITY AnonymousStatistics "Anonim İstatistikler">
-<!ENTITY EnableFirefoxSync "Kullanıcı Betikleri için Firefox Eşitlemeyi Etkinleştir">
+<!ENTITY EnableSync "Kullanıcı Betikleri için Pale Moon Eşitlemeyi Etkinleştir">
 <!ENTITY SubmitStats "Greasemonkey geliştirmeleri için anonim kullanım istatistiklerini topla ve gönder.">
 <!ENTITY UpdateChecking "Güncelleştirme Kontrol Ediliyor">
 <!ENTITY RequireSecureUpdates "Gerekli güvenlik güncellemeleri">

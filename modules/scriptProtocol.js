@@ -120,12 +120,12 @@ var ScriptProtocol = {
 
     for (var i = 0, resource = null; resource = script.resources[i]; i++) {
       if (resource.name == m[2]) {
-        var uri = GM_util.uriFromUrl(resource.file_url);
+        var uri = GM_util.getUriFromUrl(resource.file_url);
 
         // Get the channel for the file URI, but set its originalURI to the
         // greasemonkey-script: protocol URI, to ensure it can still be loaded
         // in unprivileged contexts (bug #2326).
-        var channel = GM_util.channelFromUri(uri);
+        var channel = GM_util.getChannelFromUri(uri);
         channel.originalURI = aUri;
 
         return channel;

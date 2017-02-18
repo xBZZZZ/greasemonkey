@@ -1,4 +1,4 @@
-// This file specifically targets integration with the add-ons tab in Firefox
+// This file specifically targets integration with the add-ons tab in Pale Moon
 // 4+, thus it makes liberal use of features only available there.
 //
 // Derived from the SlipperyMonkey extension originally by Dave Townsend:
@@ -18,13 +18,13 @@ var EXPORTED_SYMBOLS = [
 Components.utils.import('resource://gre/modules/AddonManager.jsm');
 Components.utils.import('resource://gre/modules/Services.jsm');
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm');
+Components.utils.import("chrome://greasemonkey-modules/content/GM_notification.js");
 Components.utils.import('chrome://greasemonkey-modules/content/prefmanager.js');
 Components.utils.import('chrome://greasemonkey-modules/content/remoteScript.js');
 Components.utils.import('chrome://greasemonkey-modules/content/util.js');
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
-var NS_XHTML = 'http://www.w3.org/1999/xhtml';
 var SCRIPT_ID_SUFFIX = '@greasespot.net';
 var SCRIPT_ADDON_TYPE = 'greasemonkey-user-script';
 
@@ -101,6 +101,7 @@ function ScriptAddon(aScript) {
   this.iconURL = this._script.icon && this._script.icon.fileURL;
   this.id = aScript.id + SCRIPT_ID_SUFFIX;
   this.name = this._script.localized.name;
+  this.namespace = this._script.namespace;
   this.providesUpdatesSecurely = aScript.updateIsSecure;
   this.updateDate = this._script.modifiedDate;
   this.version = this._script.version;
@@ -130,64 +131,74 @@ ScriptAddon.prototype.description = null;
 // Private and custom attributes.
 ScriptAddon.prototype._script = null;
 
-ScriptAddon.prototype.__defineGetter__('applyBackgroundUpdates',
-function ScriptAddon_getApplyBackgroundUpdates() {
-  return this._script.checkRemoteUpdates;
+Object.defineProperty(ScriptAddon.prototype, "applyBackgroundUpdates", {
+  get: function ScriptAddon_getApplyBackgroundUpdates() {
+    return this._script.checkRemoteUpdates;
+  },
+  set: function ScriptAddon_setApplyBackgroundUpdates(aVal) {
+    this._script.checkRemoteUpdates = aVal;
+    this._script._changed('modified', null);
+    AddonManagerPrivate.callAddonListeners(
+        'onPropertyChanged', this, ['applyBackgroundUpdates']);
+  },
+  configurable: true,
+  enumerable: true
 });
 
-ScriptAddon.prototype.__defineSetter__('applyBackgroundUpdates',
-function ScriptAddon_SetApplyBackgroundUpdates(aVal) {
-  this._script.checkRemoteUpdates = aVal;
-  this._script._changed('modified', null);
-  AddonManagerPrivate.callAddonListeners(
-      'onPropertyChanged', this, ['applyBackgroundUpdates']);
-});
-
-ScriptAddon.prototype.__defineGetter__('executionIndex',
-function ScriptAddon_getExecutionIndex() {
-  return GM_util.getService().config._scripts.indexOf(this._script);
+Object.defineProperty(ScriptAddon.prototype, "executionIndex", {
+  get: function ScriptAddon_getExecutionIndex() {
+    return GM_util.getService().config._scripts.indexOf(this._script);
+  },
+  enumerable: true
 });
 
 // Getters/setters/functions for API attributes.
-ScriptAddon.prototype.__defineGetter__('isActive',
-function ScriptAddon_getIsActive() {
-  return this._script.enabled;
+Object.defineProperty(ScriptAddon.prototype, "isActive", {
+  get: function ScriptAddon_getIsActive() {
+    return this._script.enabled;
+  },
+  enumerable: true
 });
 
-ScriptAddon.prototype.__defineGetter__('optionsURL',
-function ScriptAddon_getOptionsURL() {
-  return 'chrome://greasemonkey/content/scriptprefs.xul#'
-      + encodeURIComponent(this._script.id);
+Object.defineProperty(ScriptAddon.prototype, "optionsURL", {
+  get: function ScriptAddon_getOptionsURL() {
+    return 'chrome://greasemonkey/content/scriptprefs.xul#'
+        + encodeURIComponent(this._script.id);
+  },
+  enumerable: true
 });
 
-ScriptAddon.prototype.__defineGetter__('userDisabled',
-function ScriptAddon_getUserDisabled() {
-  return !this._script.enabled;
+Object.defineProperty(ScriptAddon.prototype, "userDisabled", {
+  get: function ScriptAddon_getUserDisabled() {
+    return !this._script.enabled;
+  },
+  set: function ScriptAddon_setUserDisabled(val) {
+    if (val == this.userDisabled) {
+      return val;
+    }
+
+    AddonManagerPrivate.callAddonListeners(
+        val ? 'onEnabling' : 'onDisabling', this, false);
+    this._script.enabled = !val;
+    AddonManagerPrivate.callAddonListeners(
+        val ? 'onEnabled' : 'onDisabled', this);
+  },
+  configurable: true,
+  enumerable: true
 });
 
-ScriptAddon.prototype.__defineSetter__('userDisabled',
-function ScriptAddon_prototype_setter_userDisabled(val) {
-  if (val == this.userDisabled) {
-    return val;
-  }
-
-  AddonManagerPrivate.callAddonListeners(
-      val ? 'onEnabling' : 'onDisabling', this, false);
-  this._script.enabled = !val;
-  AddonManagerPrivate.callAddonListeners(
-      val ? 'onEnabled' : 'onDisabled', this);
-});
-
-ScriptAddon.prototype.__defineGetter__('permissions',
-function ScriptAddon_getPermissions() {
-  var perms = AddonManager.PERM_CAN_UNINSTALL;
-  perms |= this.userDisabled
-      ? AddonManager.PERM_CAN_ENABLE
-      : AddonManager.PERM_CAN_DISABLE;
-  if (this.forceUpdate || this._script.isRemoteUpdateAllowed()) {
-    perms |= AddonManager.PERM_CAN_UPGRADE;
-  }
-  return perms;
+Object.defineProperty(ScriptAddon.prototype, "permissions", {
+  get: function ScriptAddon_getPermissions() {
+    var perms = AddonManager.PERM_CAN_UNINSTALL;
+    perms |= this.userDisabled
+        ? AddonManager.PERM_CAN_ENABLE
+        : AddonManager.PERM_CAN_DISABLE;
+    if (this.forceUpdate || this._script.isRemoteUpdateAllowed()) {
+      perms |= AddonManager.PERM_CAN_UPGRADE;
+    }
+    return perms;
+  },
+  enumerable: true
 });
 
 ScriptAddon.prototype.isCompatibleWith = function() {
@@ -200,34 +211,59 @@ ScriptAddon.prototype.findUpdates = function(aUpdateListener, aReason) {
 };
 
 ScriptAddon.prototype._handleRemoteUpdate = function(
-    aUpdateListener, aAvailable) {
+    aUpdateListener, aResult, aInfo) {
   function tryToCall(obj, methName) {
     if (obj && ('undefined' != typeof obj[methName])) {
       obj[methName].apply(obj, Array.prototype.slice.call(arguments, 2));
     }
   }
 
+  var stringBundle = Components
+      .classes["@mozilla.org/intl/stringbundle;1"]
+      .getService(Components.interfaces.nsIStringBundleService)
+      .createBundle("chrome://greasemonkey/locale/gm-addons.properties");
+
+  var _scriptUpdatesFailure = stringBundle.GetStringFromName(
+      "script.updated.failure");
+
   try {
-    if (aAvailable) {
-      // Purge any possible ScriptInstall cache.
-      if (this.id in ScriptInstallCache) {
-        delete ScriptInstallCache[this.id];
-      }
-      // Then create one with this newly found update info.
-      var scriptInstall = ScriptInstallFactoryByAddon(
-          this, this._script);
-      AddonManagerPrivate.callInstallListeners(
-          'onNewInstall', [], scriptInstall);
-      tryToCall(aUpdateListener, 'onUpdateAvailable', this, scriptInstall);
-    } else {
-      tryToCall(aUpdateListener, 'onNoUpdateAvailable', this);
+    switch (aResult) {
+      case "updateAvailable":
+        // Purge any possible ScriptInstall cache.
+        if (this.id in ScriptInstallCache) {
+          delete ScriptInstallCache[this.id];
+        }
+        // Then create one with this newly found update info.
+        var scriptInstall = ScriptInstallFactoryByAddon(
+            this, this._script);
+        AddonManagerPrivate.callInstallListeners(
+            'onNewInstall', [], scriptInstall);
+        tryToCall(aUpdateListener, 'onUpdateAvailable', this, scriptInstall);
+        tryToCall(aUpdateListener, 'onUpdateFinished', this,
+            AddonManager.UPDATE_STATUS_NO_ERROR);
+        break;
+      case "noUpdateAvailable":
+        var _info = _scriptUpdatesFailure +
+            " " + aInfo.name + " - \"" + aInfo.url + "\"" +
+            (aInfo.info ? aInfo.info : "");
+        if (aInfo.log) {
+          GM_util.logError(_info, false, aInfo.fileURL, null);
+        }
+        if (aInfo.notification) {
+          GM_notification(_info, "script-update-failed");
+        }
+        tryToCall(aUpdateListener, "onNoUpdateAvailable", this);
+        tryToCall(aUpdateListener, "onUpdateFinished", this,
+            AddonManager[aInfo.updateStatus]);
+        break;
     }
-    tryToCall(aUpdateListener, 'onUpdateFinished', this,
-        AddonManager.UPDATE_STATUS_NO_ERROR);
   } catch (e) {
     // See #1621.  Don't die if (e.g.) an addon listener doesn't provide
     // the entire interface and thus a method is undefined.
-    Components.utils.reportError(e);
+    GM_util.logError(
+        _scriptUpdatesFailure +
+        " " + aInfo.name + " - \"" + aInfo.url + "\" = " + e, false,
+        aInfo.fileURL, null);
     tryToCall(aUpdateListener, 'onUpdateFinished', this,
         AddonManager.UPDATE_STATUS_DOWNLOAD_ERROR);
   }

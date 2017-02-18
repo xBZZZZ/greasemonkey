@@ -24,14 +24,14 @@ var GM_util = {};
 
 // Do not edit below this line.  Use `util.sh` to auto-populate.
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'alert', 'chrome://greasemonkey-modules/content/util/alert.js');
-XPCOMUtils.defineLazyModuleGetter(GM_util, 'channelFromUri', 'chrome://greasemonkey-modules/content/util/channelFromUri.js');
-XPCOMUtils.defineLazyModuleGetter(GM_util, 'compareFirefoxVersion', 'chrome://greasemonkey-modules/content/util/compareFirefoxVersion.js');
+XPCOMUtils.defineLazyModuleGetter(GM_util, 'compareVersion', 'chrome://greasemonkey-modules/content/util/compareVersion.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'emptyEl', 'chrome://greasemonkey-modules/content/util/emptyEl.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'enqueueRemoveFile', 'chrome://greasemonkey-modules/content/util/enqueueRemoveFile.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'fileXhr', 'chrome://greasemonkey-modules/content/util/fileXhr.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'getBestLocaleMatch', 'chrome://greasemonkey-modules/content/util/getBestLocaleMatch.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'getBinaryContents', 'chrome://greasemonkey-modules/content/util/getBinaryContents.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'getBrowserWindow', 'chrome://greasemonkey-modules/content/util/getBrowserWindow.js');
+XPCOMUtils.defineLazyModuleGetter(GM_util, 'getChannelFromUri', 'chrome://greasemonkey-modules/content/util/getChannelFromUri.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'getContents', 'chrome://greasemonkey-modules/content/util/getContents.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'getEditor', 'chrome://greasemonkey-modules/content/util/getEditor.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'getEnabled', 'chrome://greasemonkey-modules/content/util/getEnabled.js');
@@ -41,6 +41,7 @@ XPCOMUtils.defineLazyModuleGetter(GM_util, 'getService', 'chrome://greasemonkey-
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'getTempDir', 'chrome://greasemonkey-modules/content/util/getTempDir.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'getTempFile', 'chrome://greasemonkey-modules/content/util/getTempFile.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'getUriFromFile', 'chrome://greasemonkey-modules/content/util/getUriFromFile.js');
+XPCOMUtils.defineLazyModuleGetter(GM_util, 'getUriFromUrl', 'chrome://greasemonkey-modules/content/util/getUriFromUrl.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'hitch', 'chrome://greasemonkey-modules/content/util/hitch.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'inArray', 'chrome://greasemonkey-modules/content/util/inArray.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'installScriptFromSource', 'chrome://greasemonkey-modules/content/util/installScriptFromSource.js');
@@ -58,7 +59,6 @@ XPCOMUtils.defineLazyModuleGetter(GM_util, 'sha1', 'chrome://greasemonkey-module
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'showInstallDialog', 'chrome://greasemonkey-modules/content/util/showInstallDialog.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'sniffGrants', 'chrome://greasemonkey-modules/content/util/sniffGrants.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'timeout', 'chrome://greasemonkey-modules/content/util/timeout.js');
-XPCOMUtils.defineLazyModuleGetter(GM_util, 'uriFromUrl', 'chrome://greasemonkey-modules/content/util/uriFromUrl.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'uuid', 'chrome://greasemonkey-modules/content/util/uuid.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'windowIdForEvent', 'chrome://greasemonkey-modules/content/util/windowIdForEvent.js');
 XPCOMUtils.defineLazyModuleGetter(GM_util, 'windowId', 'chrome://greasemonkey-modules/content/util/windowId.js');

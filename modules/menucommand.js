@@ -10,6 +10,7 @@ var Ci = Components.interfaces;
 var Cu = Components.utils;
 
 
+Components.utils.import("resource://gre/modules/Services.jsm");
 Components.utils.import('chrome://greasemonkey-modules/content/prefmanager.js');
 
 
@@ -36,9 +37,7 @@ function MenuCommandListRequest(aContent, aMessage) {
 // Callback from script scope, pass "list menu commands" response up to
 // parent process as a message.
 function MenuCommandRespond(aCookie, aData) {
-  var cpmm = Cc["@mozilla.org/childprocessmessagemanager;1"]
-      .getService(Ci.nsIMessageSender);
-  cpmm.sendAsyncMessage(
+  Services.cpmm.sendAsyncMessage(
       'greasemonkey:menu-command-response',
       {'commands': aData, 'cookie': aCookie});
 }
@@ -57,7 +56,11 @@ function MenuCommandRun(aContent, aMessage) {
 // This function is injected into the sandbox, in a private scope wrapper, BY
 // SOURCE.  Data and sensitive references are wrapped up inside its closure.
 function MenuCommandSandbox(
-    aScriptUuid, aScriptName, aCommandResponder, aInvalidAccesskeyErrorStr,
+    aScriptUuid, aScriptName, aScriptFileURL,
+    aCommandResponder,
+    aMenuCommandCallbackIsNotFunctionErrorStr,
+    aMenuCommandCouldNotRunErrorStr,
+    aMenuCommandInvalidAccesskeyErrorStr,
     aMenuCommandEventNameSuffix) {
   // 1) Internally to this function's private scope, maintain a set of
   // registered menu commands.
@@ -82,7 +85,15 @@ function MenuCommandSandbox(
         e.stopImmediatePropagation();
         var commandFunc = commandFuncs[detail.cookie];
         if (!commandFunc) {
-          throw new Error('Could not run requested menu command!');
+          throw new Error(
+              aMenuCommandCouldNotRunErrorStr.replace(
+                  "%1", commands[detail.cookie].name),
+              aScriptFileURL, null);
+        } else if ("function" !== typeof commandFunc) {
+          throw new Error(
+              aMenuCommandCallbackIsNotFunctionErrorStr.replace(
+                  "%1", commands[detail.cookie].name),
+              aScriptFileURL, null);
         } else {
           commandFunc.call();
         }
@@ -99,7 +110,9 @@ function MenuCommandSandbox(
     if (accessKey
         && (("string" != typeof accessKey) || (accessKey.length != 1))
     ) {
-      throw new Error(aInvalidAccesskeyErrorStr.replace('%1', commandName));
+      throw new Error(
+          aMenuCommandInvalidAccesskeyErrorStr.replace('%1', commandName),
+          aScriptFileURL, null);
     }
 
     var command = {

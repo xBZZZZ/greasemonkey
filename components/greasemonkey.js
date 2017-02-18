@@ -48,38 +48,32 @@ function startup(aService) {
   loader.loadSubScript("chrome://greasemonkey/content/third-party/mpl-utils.js");
 
   // Most incoming messages go to the "global" message manager.
-  var globalMessageManager = Cc["@mozilla.org/globalmessagemanager;1"]
-      .getService(Ci.nsIMessageListenerManager);
-
   var scriptValHandler = aService.handleScriptValMsg.bind(aService);
-  globalMessageManager.addMessageListener(
+  Services.mm.addMessageListener(
       'greasemonkey:scriptVal-delete', scriptValHandler);
-  globalMessageManager.addMessageListener(
+  Services.mm.addMessageListener(
       'greasemonkey:scriptVal-get', scriptValHandler);
-  globalMessageManager.addMessageListener(
+  Services.mm.addMessageListener(
       'greasemonkey:scriptVal-list', scriptValHandler);
-  globalMessageManager.addMessageListener(
+  Services.mm.addMessageListener(
       'greasemonkey:scriptVal-set', scriptValHandler);
 
   // Others go to the "parent" message manager.
-  var parentMessageManager = Cc["@mozilla.org/parentprocessmessagemanager;1"]
-      .getService(Ci.nsIMessageListenerManager);
-
-  parentMessageManager.addMessageListener(
+  Services.ppmm.addMessageListener(
       'greasemonkey:scripts-update', function(message) {
         return aService.scriptUpdateData();
       });
-  parentMessageManager.addMessageListener(
+  Services.ppmm.addMessageListener(
       'greasemonkey:broadcast-script-updates', function (message) {
         return aService.broadcastScriptUpdates();
       });
-  parentMessageManager.addMessageListener(
+  Services.ppmm.addMessageListener(
       'greasemonkey:script-install', aService.scriptInstall.bind(aService));
-  parentMessageManager.addMessageListener(
+  Services.ppmm.addMessageListener(
       'greasemonkey:url-is-temp-file', aService.urlIsTempFile.bind(aService));
 
   // Yes, we have to load the frame script once here in the parent scope. Why!?
-  globalMessageManager.loadFrameScript(
+  Services.mm.loadFrameScript(
       'chrome://greasemonkey/content/framescript.js', true);
 
   // Beam down initial set of scripts.
@@ -101,6 +95,7 @@ function startup(aService) {
   }});
 
   Cu.import("chrome://greasemonkey-modules/content/requestObserver.js", {});
+  Cu.import("chrome://greasemonkey-modules/content/responseObserver.js", {});
 
   Services.obs.addObserver(aService, 'quit-application', false);
 
@@ -139,16 +134,19 @@ service.prototype.observe = function(aSubject, aTopic, aData) {
 ///////////////////////////// Greasemonkey Service /////////////////////////////
 
 service.prototype._config = null;
-service.prototype.__defineGetter__('config', function() {
-  if (!this._config) {
-    // First guarantee instantiation and existence.  (So that anything,
-    // including stuff inside i.e. config._load(), can call
-    // i.e. config._changed().)
-    this._config = new Config();
-    // Then initialize.
-    this._config.initialize();
-  }
-  return this._config;
+Object.defineProperty(service.prototype, "config", {
+  get: function service_getConfig() {
+    if (!this._config) {
+      // First guarantee instantiation and existence.  (So that anything,
+      // including stuff inside i.e. config._load(), can call
+      // i.e. config._changed().)
+      this._config = new Config();
+      // Then initialize.
+      this._config.initialize();
+    }
+    return this._config;
+  },
+  enumerable: true
 });
 
 service.prototype.scriptUpdateData = function() {
@@ -160,18 +158,15 @@ service.prototype.scriptUpdateData = function() {
 };
 
 service.prototype.broadcastScriptUpdates = function() {
-  var ppmm = Cc["@mozilla.org/parentprocessmessagemanager;1"]
-      .getService(Ci.nsIMessageBroadcaster);
-
   // Check if initialProcessData is supported, else child will use sync message.
   var data = this.scriptUpdateData();
-  if (ppmm.initialProcessData) {
+  if (Services.ppmm.initialProcessData) {
     // Initial data for any new processes.
-    ppmm.initialProcessData["greasemonkey:scripts-update"] = data;
+    Services.ppmm.initialProcessData["greasemonkey:scripts-update"] = data;
   }
 
   // Updates for existing ones.
-  ppmm.broadcastAsyncMessage("greasemonkey:scripts-update", data);
+  Services.ppmm.broadcastAsyncMessage("greasemonkey:scripts-update", data);
 };
 
 service.prototype.closeAllScriptValStores = function() {

@@ -43,7 +43,7 @@
 <!ENTITY options.newScript.removeUnused "未使用の行を削除">
 <!ENTITY Uninstall "削除">
 <!ENTITY AnonymousStatistics "匿名の統計">
-<!ENTITY EnableFirefoxSync "Firefox Sync でユーザスクリプトを同期する">
+<!ENTITY EnableSync "Pale Moon Sync でユーザスクリプトを同期する">
 <!ENTITY SubmitStats "Greasemonkey を改善するために匿名の利用統計を収集し送信する。">
 <!ENTITY UpdateChecking "更新の確認">
 <!ENTITY RequireSecureUpdates "安全に更新">

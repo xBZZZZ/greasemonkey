@@ -72,24 +72,28 @@ function MatchPattern(pattern) {
     pattern = "http" + pattern.slice(1);
   }
 
-  var uri = GM_util.uriFromUrl(pattern);
+  var uri = GM_util.getUriFromUrl(pattern);
   if (!uri) {
-    throw new Error(getString("error.matchPattern.parse"));
+    throw new Error(
+        getString("error.matchPattern.parse").replace("%1", pattern));
   }
 
   var scheme = this._wildScheme ? "all" : uri.scheme;
   if (scheme != "all" && validSchemes.indexOf(scheme) == -1) {
-    throw new Error(getString("error.matchPattern.scheme"));
+    throw new Error(
+        getString("error.matchPattern.scheme").replace("%1", scheme));
   }
 
   var host = uri.host;
   if (!REG_HOST.test(host)) {
-    throw new Error(getString("error.matchPattern.host"));
+    throw new Error(
+        getString("error.matchPattern.host").replace("%1", host));
   }
 
   var path = uri.path;
   if (path[0] !== "/") {
-    throw new Error(getString("error.matchPattern.path"));
+    throw new Error(
+        getString("error.matchPattern.path").replace("%1", path));
   }
 
   this._scheme = scheme;
@@ -113,11 +117,15 @@ function MatchPattern(pattern) {
   this._pathExpr = GM_convert2RegExp(path, false, true);
 }
 
-MatchPattern.prototype.__defineGetter__('pattern',
-function MatchPattern_getPattern() { return '' + this._pattern; });
+Object.defineProperty(MatchPattern.prototype, "pattern", {
+  get: function MatchPattern_getPattern() {
+    return '' + this._pattern;
+  },
+  enumerable: true
+});
 
 MatchPattern.prototype.doMatch = function(uriSpec) {
-  var matchURI = GM_util.uriFromUrl(uriSpec);
+  var matchURI = GM_util.getUriFromUrl(uriSpec);
 
   if (validSchemes.indexOf(matchURI.scheme) == -1) {
     return false;

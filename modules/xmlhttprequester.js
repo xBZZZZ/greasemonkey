@@ -11,15 +11,12 @@ var gStringBundle = Components
 Components.utils.importGlobalProperties(['XMLHttpRequest']);
 
 
-function GM_xmlhttpRequester(wrappedContentWin, originUrl, sandbox) {
+function GM_xmlhttpRequester(wrappedContentWin, sandbox, fileURL, originUrl) {
   this.wrappedContentWin = wrappedContentWin;
+  this.fileURL = fileURL;
   this.originUrl = originUrl;
   this.sandbox = sandbox;
-  // Firefox < 29 (i.e. PaleMoon) does not support getObjectPrincipal in a
-  // scriptable context.  Greasemonkey users on this platform otherwise would
-  // use an older version without this check, so skipping is no worse.
-  this.sandboxPrincipal = 'function' == typeof Components.utils.getObjectPrincipal
-      ? Components.utils.getObjectPrincipal(sandbox) : null;
+  this.sandboxPrincipal = Components.utils.getObjectPrincipal(sandbox);
 }
 
 // this function gets called by user scripts in content security scope to
@@ -33,17 +30,18 @@ function GM_xmlhttpRequester(wrappedContentWin, originUrl, sandbox) {
 GM_xmlhttpRequester.prototype.contentStartRequest = function(details) {
   if (!details) {
     throw new this.wrappedContentWin.Error(
-        gStringBundle.GetStringFromName('error.xhrNoDetails'));
+        gStringBundle.GetStringFromName('error.xhrNoDetails'),
+        this.fileURL, null);
   }
   try {
     // Validate and parse the (possibly relative) given URL.
-    var uri = GM_util.uriFromUrl(details.url, this.originUrl);
+    var uri = GM_util.getUriFromUrl(details.url, this.originUrl);
     var url = uri.spec;
   } catch (e) {
     // A malformed URL won't be parsed properly.
     throw new this.wrappedContentWin.Error(
         gStringBundle.GetStringFromName('error.invalidUrl')
-            .replace('%1', details.url)
+            .replace('%1', details.url), this.fileURL, null
         );
   }
 
@@ -60,7 +58,7 @@ GM_xmlhttpRequester.prototype.contentStartRequest = function(details) {
     default:
       throw new this.wrappedContentWin.Error(
           gStringBundle.GetStringFromName('error.disallowedScheme')
-              .replace('%1', details.url)
+              .replace('%1', details.url), this.fileURL, null
           );
   }
 
@@ -106,7 +104,8 @@ GM_xmlhttpRequester.prototype.contentStartRequest = function(details) {
 GM_xmlhttpRequester.prototype.chromeStartRequest =
 function(safeUrl, details, req) {
   var setupRequestEvent = GM_util.hitch(
-      this, 'setupRequestEvent', this.wrappedContentWin, this.sandbox);
+      this, 'setupRequestEvent', this.wrappedContentWin, this.sandbox,
+      this.fileURL);
 
   setupRequestEvent(req, "abort", details);
   setupRequestEvent(req, "error", details);
@@ -127,8 +126,15 @@ function(safeUrl, details, req) {
 
   req.mozBackgroundRequest = !!details.mozBackgroundRequest;
 
-  req.open(details.method, safeUrl,
-      !details.synchronous, details.user || "", details.password || "");
+  // See #2423
+  // http://bugzil.la/1275746
+  try {
+    req.open(details.method, safeUrl,
+        !details.synchronous, details.user || "", details.password || "");
+  } catch (e) {
+    throw new this.wrappedContentWin.Error(
+        "GM_xmlhttpRequest(): " + details.url + "\n" + e, this.fileURL, null);
+  }
 
   var channel;
 
@@ -138,9 +144,13 @@ function(safeUrl, details, req) {
     channel.setPrivate(true);
   }
 
-  channel = req.channel
-      .QueryInterface(Components.interfaces.nsIHttpChannelInternal);
-  channel.forceAllowThirdPartyCookie = true;
+  try {
+    channel = req.channel
+        .QueryInterface(Components.interfaces.nsIHttpChannelInternal);
+    channel.forceAllowThirdPartyCookie = true;
+  } catch (e) {
+    // Ignore.  e.g. ftp://
+  }
 
   if (details.overrideMimeType) {
     req.overrideMimeType(details.overrideMimeType);
@@ -174,15 +184,22 @@ function(safeUrl, details, req) {
   }
 
   var body = details.data ? details.data : null;
-  if (details.binary && (body !== null)) {
-    var bodyLength = body.length;
-    var bodyData = new Uint8Array(bodyLength);
-    for (var i = 0; i < bodyLength; i++) {
-      bodyData[i] = body.charCodeAt(i) & 0xff;
+  // See #2423
+  // http://bugzil.la/918751
+  try {
+    if (details.binary && (body !== null)) {
+      var bodyLength = body.length;
+      var bodyData = new Uint8Array(bodyLength);
+      for (var i = 0; i < bodyLength; i++) {
+        bodyData[i] = body.charCodeAt(i) & 0xff;
+      }
+      req.send(new Blob([bodyData]));
+    } else {
+      req.send(body);
     }
-    req.send(new Blob([bodyData]));
-  } else {
-    req.send(body);
+  } catch (e) {
+    throw new this.wrappedContentWin.Error(
+        "GM_xmlhttpRequest(): " + details.url + "\n" + e, this.fileURL, null);
   }
 };
 
@@ -190,7 +207,7 @@ function(safeUrl, details, req) {
 // method by the same name which is a property of 'details' in the content
 // window's security context.
 GM_xmlhttpRequester.prototype.setupRequestEvent =
-function(wrappedContentWin, sandbox, req, event, details) {
+function(wrappedContentWin, sandbox, fileURL, req, event, details) {
   // Waive Xrays so that we can read callback function properties ...
   details = Components.utils.waiveXrays(details);
   var eventCallback = details["on" + event];
@@ -198,11 +215,8 @@ function(wrappedContentWin, sandbox, req, event, details) {
 
   // ... but ensure that the callback came from a script, not content, by
   // checking that its principal equals that of the sandbox.
-  if ('function' == typeof Components.utils.getObjectPrincipal) {
-    // Firefox < 29; i.e. PaleMoon.
-    var callbackPrincipal = Components.utils.getObjectPrincipal(eventCallback);
-    if (!this.sandboxPrincipal.equals(callbackPrincipal)) return;
-  }
+  var callbackPrincipal = Components.utils.getObjectPrincipal(eventCallback);
+  if (!this.sandboxPrincipal.equals(callbackPrincipal)) return;
 
   req.addEventListener(event, function(evt) {
     var responseState = {
@@ -235,7 +249,16 @@ function(wrappedContentWin, sandbox, req, event, details) {
     }
     if (responseXML) {
       // Clone the XML object into a content-window-scoped document.
-      var xmlDoc = new wrappedContentWin.Document();
+      try {
+        var xmlDoc = new wrappedContentWin.Document();
+      } catch (e) {
+        try {
+          req.abort();
+        } catch (e) {
+          GM_util.logError(details.url + ": " + e, true, fileURL, null);
+        }
+        return;
+      }
       var clone = xmlDoc.importNode(responseXML.documentElement, true);
       xmlDoc.appendChild(clone);
       responseState.responseXML = xmlDoc;
@@ -250,7 +273,7 @@ function(wrappedContentWin, sandbox, req, event, details) {
       case "error":
         break;
       default:
-        if (4 != req.readyState) break;
+        if (2 > req.readyState) break;
         responseState.responseHeaders = req.getAllResponseHeaders();
         responseState.status = req.status;
         responseState.statusText = req.statusText;
@@ -274,6 +297,11 @@ function(wrappedContentWin, sandbox, req, event, details) {
     }, sandbox, {cloneFunctions: true, wrapReflectors: true});
 
     if (GM_util.windowIsClosed(wrappedContentWin)) {
+      try {
+        req.abort();
+      } catch (e) {
+        GM_util.logError(details.url + ": " + e, true, fileURL, null);
+      }
       return;
     }
 

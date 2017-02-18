@@ -24,13 +24,7 @@ window.addEventListener('load', function() {
 
     if (!Scratchpad.initialized) return;
 
-    if ('function' == typeof Scratchpad.editor.setCursor) {
-      // Firefox >= 28
-      Scratchpad.editor.setCursor({line: 0, ch: 0});
-    } else {
-      // Firefox <= 27; i.e. PaleMoon
-      Scratchpad.editor.setCaretPosition(0, 0);
-    }
+    Scratchpad.editor.setCursor({line: 0, ch: 0});
 
     clearInterval(initializeCheckTimer);
   }
@@ -53,6 +47,8 @@ window.addEventListener('load', function() {
   setNodeAttr('sp-key-run', 'disabled', true);
   setNodeAttr('sp-key-inspect', 'disabled', true);
   setNodeAttr('sp-key-display', 'disabled', true);
+  setNodeAttr('sp-key-evalFunction', 'disabled', true);
+  setNodeAttr('sp-key-reloadAndRun', 'disabled', true);
 
   // But the context menu items can't be accessed by ID (?!) so iterate.
   var textPopup = document.getElementById('scratchpad-text-popup');
@@ -60,10 +56,21 @@ window.addEventListener('load', function() {
     for (var i = 0, node = null; node = textPopup.childNodes[i]; i++) {
       if ('sp-text-run' == node.id) {
         node.collapsed = true;
-        node.previousSibling.collapsed = true;
+        if (node.previousSibling && (node.previousSibling.tagName.toLowerCase()
+            == "menuseparator")) {
+          node.previousSibling.collapsed = true;
+        }
       }
       if ('sp-text-inspect' == node.id) node.collapsed = true;
       if ('sp-text-display' == node.id) node.collapsed = true;
+      if ('sp-text-evalFunction' == node.id) node.collapsed = true;
+      if ('sp-text-reloadAndRun' == node.id) {
+        node.collapsed = true;
+        if (node.previousSibling && (node.previousSibling.tagName.toLowerCase()
+            == "menuseparator")) {
+          node.previousSibling.collapsed = true;
+        }
+      }
     }
   }
 }, true);

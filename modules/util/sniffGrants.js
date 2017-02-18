@@ -10,6 +10,7 @@ var APIS = [
     'GM_getValue',
     'GM_listValues',
     'GM_log',
+    'GM_notification',
     'GM_openInTab',
     'GM_registerMenuCommand',
     'GM_setClipboard',

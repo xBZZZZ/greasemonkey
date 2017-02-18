@@ -24,5 +24,7 @@
 <!ENTITY Sort.Status "狀態">
 <!ENTITY Sort.ByName "依名稱排序">
 <!ENTITY Sort.Name "名稱">
+<!ENTITY Sort.ByNamespace "Sort by namespace">
+<!ENTITY Sort.Namespace "Namespace">
 <!ENTITY Sort.ByExecution "依執行順序排序">
 <!ENTITY Sort.Execution "執行順序">

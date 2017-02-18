@@ -24,5 +24,7 @@
 <!ENTITY Sort.Status "Stav">
 <!ENTITY Sort.ByName "Zoradiť podľa mena">
 <!ENTITY Sort.Name "Meno">
+<!ENTITY Sort.ByNamespace "Sort by namespace">
+<!ENTITY Sort.Namespace "Namespace">
 <!ENTITY Sort.ByExecution "Zoradiť podľa prevedenia príkazu">
 <!ENTITY Sort.Execution "Podľa poradia">

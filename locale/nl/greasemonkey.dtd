@@ -43,7 +43,7 @@
 <!ENTITY options.newScript.removeUnused "Ongebruikte regels verwijderen">
 <!ENTITY Uninstall "Deïnstalleren">
 <!ENTITY AnonymousStatistics "Anonieme statistieken">
-<!ENTITY EnableFirefoxSync "Firefox Sync voor gebruikersscript activeren">
+<!ENTITY EnableSync "Pale Moon Sync voor gebruikersscript activeren">
 <!ENTITY SubmitStats "Verzamel en verstuur anonieme gebruiksstatistieken om Greasemonkey te verbeteren.">
 <!ENTITY UpdateChecking "Updatecontrole">
 <!ENTITY RequireSecureUpdates "Beveiligde updates vereisen">

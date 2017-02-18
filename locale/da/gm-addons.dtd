@@ -24,5 +24,7 @@
 <!ENTITY Sort.Status "Status">
 <!ENTITY Sort.ByName "Sorter efter navn">
 <!ENTITY Sort.Name "Navn">
+<!ENTITY Sort.ByNamespace "Sort by namespace">
+<!ENTITY Sort.Namespace "Namespace">
 <!ENTITY Sort.ByExecution "Sorter efter kørselsrækkefølge">
 <!ENTITY Sort.Execution "Kørselsrækkefølge">

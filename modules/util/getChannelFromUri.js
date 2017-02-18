@@ -1,4 +1,4 @@
-var EXPORTED_SYMBOLS = ['channelFromUri'];
+var EXPORTED_SYMBOLS = ['getChannelFromUri'];
 
 var Cc = Components.classes;
 var Ci = Components.interfaces;
@@ -10,7 +10,7 @@ var ioService = Cc['@mozilla.org/network/io-service;1']
     .getService(Ci.nsIIOService);
 
 
-function channelFromUri(aUri) {
+function getChannelFromUri(aUri) {
   if (ioService.newChannelFromURI2) {
     return ioService.newChannelFromURI2(
         aUri, null, Services.scriptSecurityManager.getSystemPrincipal(),

@@ -42,15 +42,29 @@ function showInstallDialog(aUrlOrRemoteScript, aBrowser, aRequest) {
     });
   }
 
-  rs.download(function(aSuccess, aType) {
+  rs.download(function(aSuccess, aType, aStatus) {
     if (aRequest && 'script' == aType) {
       if (aSuccess) {
         aRequest.cancel(Components.results.NS_BINDING_ABORTED);
-        var browser = aRequest
-            .QueryInterface(Ci.nsIHttpChannel)
-            .notificationCallbacks.getInterface(Ci.nsILoadContext)
-            .topFrameElement;
-        browser.webNavigation.stop(Ci.nsIWebNavigation.STOP_ALL);
+        // See #1717
+        try {
+          var browser = aRequest
+              .QueryInterface(Ci.nsIHttpChannel)
+              .notificationCallbacks.getInterface(Ci.nsILoadContext)
+              .topFrameElement;
+          browser.webNavigation.stop(Ci.nsIWebNavigation.STOP_ALL);
+        } catch (e) {
+          // Ignore.
+          /*
+          dump("URL: " + aRequest.URI.spec + "\n"
+              + "aRequest.isPending(): " + aRequest.isPending().toString()
+              + "\n" + "e:" + "\n" + e);
+          */
+        }
+      } else if ((aStatus == 429) || (aStatus >= 500)) {
+        // HTTP status code:
+        // client errors (429 "Too Many Requests"), server errors
+        aRequest.cancel(Components.results.NS_BINDING_FAILED);
       } else {
         aRequest.resume();
       }

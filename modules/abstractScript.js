@@ -14,14 +14,14 @@ Cu.import('chrome://greasemonkey-modules/content/util.js');
 function AbstractScript() { }
 
 Object.defineProperty(AbstractScript.prototype, "globalExcludes", {
-  get: function() {
+  get: function AbstractScript_getGlobalExcludes() {
     return [];
   },
   configurable: true
 });
 
 AbstractScript.prototype.matchesURL = function(url) {
-  var uri = GM_util.uriFromUrl(url);
+  var uri = GM_util.getUriFromUrl(url);
 
   function testClude(glob) {
     // Do not run in about:blank unless _specifically_ requested. See #1298

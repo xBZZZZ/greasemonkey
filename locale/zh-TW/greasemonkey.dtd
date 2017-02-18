@@ -43,7 +43,7 @@
 <!ENTITY options.newScript.removeUnused "移除未使用的行">
 <!ENTITY Uninstall "腳本移除設定">
 <!ENTITY AnonymousStatistics "匿名統計">
-<!ENTITY EnableFirefoxSync "使用 Firefox Sync 來同步使用者腳本">
+<!ENTITY EnableSync "使用 Pale Moon Sync 來同步使用者腳本">
 <!ENTITY SubmitStats "收集並送出匿名統計資訊以幫助改進 Greasemonkey。">
 <!ENTITY UpdateChecking "檢查更新">
 <!ENTITY RequireSecureUpdates "要求透過安全通道更新">

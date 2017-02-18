@@ -84,23 +84,26 @@ GM_BrowserUI.openInTab = function(aMessage) {
   // See #2107 and #2234
   // Todo: Remove timeout when http://bugzil.la/1200334 is resolved.
   GM_util.timeout(function () {
-    var newTab = tabBrowser.addTab(
-        aMessage.data.url,
-        {
-            'ownerTab': scriptTab,
-            'relatedToCurrent': scriptTabIsCurrentTab,
-        });
-
     var getBool = Services.prefs.getBoolPref;
 
     var prefBg = (aMessage.data.inBackground === null)
         ? getBool("browser.tabs.loadInBackground")
         : aMessage.data.inBackground;
-    if (scriptTabIsCurrentTab && !prefBg) tabBrowser.selectedTab = newTab;
-
     var prefRel = (aMessage.data.afterCurrent === null)
         ? getBool("browser.tabs.insertRelatedAfterCurrent")
         : aMessage.data.afterCurrent;
+
+    var newTab = tabBrowser.addTab(
+        aMessage.data.url,
+        {
+            'ownerTab': prefBg ? null : tabBrowser.selectedTab,
+            'relatedToCurrent': scriptTabIsCurrentTab,
+        });
+
+    if (scriptTabIsCurrentTab && !prefBg) {
+      tabBrowser.selectedTab = newTab;
+    }
+
     if (prefRel) {
       tabBrowser.moveTabTo(newTab, scriptTab._tPos + 1);
     } else {
@@ -126,6 +129,22 @@ GM_BrowserUI.contextMenuShowing = function() {
     var contextItem = document.getElementById("greasemonkey-view-userscript");
     var contextSep = document.getElementById("greasemonkey-install-sep");
     contextItem.hidden = contextSep.hidden = !aUrl;
+    // See #1914
+    if (contextSep.nextElementSibling) {
+      var contextSepNES = contextSep.nextElementSibling;
+      while (contextSepNES) {
+        var contextSepNESStyleDisplay = contextSepNES.ownerDocument.defaultView
+            .getComputedStyle(contextSepNES, null).getPropertyValue("display");
+        if ((contextSepNESStyleDisplay.toLowerCase() != "none")
+            && !contextSepNES.hidden) {
+          if (contextSepNES.tagName.toLowerCase() == "menuseparator") {
+            contextSep.hidden = true;
+          }
+          break;
+        }
+        contextSepNES = contextSepNES.nextElementSibling;
+      }
+    }
   });
 };
 

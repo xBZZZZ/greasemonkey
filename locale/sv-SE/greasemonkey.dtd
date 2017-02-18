@@ -43,7 +43,7 @@
 <!ENTITY options.newScript.removeUnused "Ta bort oanvända rader">
 <!ENTITY Uninstall "Avinstallera">
 <!ENTITY AnonymousStatistics "Anonym statistik">
-<!ENTITY EnableFirefoxSync "Aktivera Firefox Sync för användarskript">
+<!ENTITY EnableSync "Aktivera Pale Moon Sync för användarskript">
 <!ENTITY SubmitStats "Samla in och skicka in anonym användningsstatistik för att förbättra Greasemonkey.">
 <!ENTITY UpdateChecking "Uppdateringskontroll">
 <!ENTITY RequireSecureUpdates "Kräv säkra uppdateringar">

@@ -1,6 +1,6 @@
-var EXPORTED_SYMBOLS = ['compareFirefoxVersion'];
+var EXPORTED_SYMBOLS = ['compareVersion'];
 
-function compareFirefoxVersion(aTarget) {
+function compareVersion(aTarget) {
   var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
       .getService(Components.interfaces.nsIXULAppInfo);
   var versionChecker = Components

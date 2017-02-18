@@ -24,5 +24,7 @@
 <!ENTITY Sort.Status "Būsena">
 <!ENTITY Sort.ByName "Rikiuoti pagal pavadinimą">
 <!ENTITY Sort.Name "Pavadinimas">
+<!ENTITY Sort.ByNamespace "Sort by namespace">
+<!ENTITY Sort.Namespace "Namespace">
 <!ENTITY Sort.ByExecution "Rikiuoti pagal vykdymo eilę">
 <!ENTITY Sort.Execution "Vykdymo eilė">

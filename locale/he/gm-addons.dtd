@@ -24,5 +24,7 @@
 <!ENTITY Sort.Status "מצב">
 <!ENTITY Sort.ByName "מיין לפי שם">
 <!ENTITY Sort.Name "שם">
+<!ENTITY Sort.ByNamespace "Sort by namespace">
+<!ENTITY Sort.Namespace "Namespace">
 <!ENTITY Sort.ByExecution "מיין לפי סדר ביצוע">
 <!ENTITY Sort.Execution "סדר ביצוע">

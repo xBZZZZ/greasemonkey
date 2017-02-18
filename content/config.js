@@ -215,19 +215,24 @@ Config.prototype.move = function(script, destination) {
   this._changed(script, "move", to);
 },
 
-Config.prototype.__defineGetter__('globalExcludes',
-function Config_getGlobalExcludes() { return this._globalExcludes.concat(); }
-);
-
-Config.prototype.__defineSetter__('globalExcludes',
-function Config_setGlobalExcludes(val) {
-  this._globalExcludes = val.concat();
-  GM_prefRoot.setValue("globalExcludes", JSON.stringify(this._globalExcludes));
+Object.defineProperty(Config.prototype, "globalExcludes", {
+  get: function Config_getGlobalExcludes() {
+    return this._globalExcludes.concat();
+  },
+  set: function Config_setGlobalExcludes(val) {
+    this._globalExcludes = val.concat();
+    GM_prefRoot.setValue("globalExcludes", JSON.stringify(this._globalExcludes));
+  },
+  configurable: true,
+  enumerable: true
 });
 
-Config.prototype.__defineGetter__('scripts',
-function Config_getScripts() { return this._scripts.concat(); }
-);
+Object.defineProperty(Config.prototype, "scripts", {
+  get: function Config_getScripts() {
+    return this._scripts.concat();
+  },
+  enumerable: true
+});
 
 Config.prototype.getMatchingScripts = function(testFunc) {
   return this._scripts.filter(testFunc);
@@ -249,7 +254,7 @@ Config.prototype.updateModifiedScripts = function(
       var scope = {};
       Cu.import('chrome://greasemonkey-modules/content/parseScript.js', scope);
       var parsedScript = scope.parse(
-          script.textContent, GM_util.uriFromUrl(script.downloadURL));
+          script.textContent, GM_util.getUriFromUrl(script.downloadURL));
       if (!parsedScript || parsedScript.parseErrors.length) {
         var msg = "(" + script.localized.name + ") "
             + gStringBundle.GetStringFromName("error.parsingScript")
@@ -333,7 +338,7 @@ Config.prototype._updateVersion = function() {
       Cu.import('chrome://greasemonkey-modules/content/parseScript.js', scope);
       for (var i = 0, script = null; script = this._scripts[i]; i++) {
         var parsedScript = scope.parse(
-            script.textContent, GM_util.uriFromUrl(script.downloadURL));
+            script.textContent, GM_util.getUriFromUrl(script.downloadURL));
         try {
           script.updateFromNewScript(parsedScript);
         } catch (e) {

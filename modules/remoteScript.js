@@ -5,12 +5,13 @@ var Ci = Components.interfaces;
 var Cu = Components.utils;
 
 Cu.import("chrome://greasemonkey-modules/content/GM_notification.js");
-Cu.import('chrome://greasemonkey-modules/content/addons4.js');
+Cu.import('chrome://greasemonkey-modules/content/addons.js');
 Cu.import('chrome://greasemonkey-modules/content/script.js');
 Cu.import('chrome://greasemonkey-modules/content/scriptIcon.js');
 Cu.import('chrome://greasemonkey-modules/content/util.js');
 
 Cu.import("resource://gre/modules/NetUtil.jsm");
+Cu.import("resource://gre/modules/PrivateBrowsingUtils.jsm");
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 Cu.import("resource://gre/modules/Services.jsm");
 
@@ -37,7 +38,7 @@ var windowsMaxNameLen = (240 - GM_util.scriptDir().path.length) / 2;
 /////////////////////////////// Private Helpers ////////////////////////////////
 
 function assertIsFunction(aFunc, aMessage) {
-  if (typeof aFunc !== typeof function() {}) throw Error(aMessage);
+  if (typeof aFunc !== typeof function() {}) throw new Error(aMessage);
 }
 
 var disallowedFilenameCharacters = new RegExp('[\\\\/:*?\'"<>|]', 'g');
@@ -52,7 +53,7 @@ function cleanFilename(aFilename, aDefault) {
   // Limit length on Windows (#1548; http://goo.gl/vDSk9)
   if ('WINNT' == xulRuntime.OS) {
     if (windowsMaxNameLen <= 0) {
-      throw Error('Could not make a valid file name to save.');
+      throw new Error('Could not make a valid file name to save.');
     }
 
     var match = filename.match(/^(.+?)(\.(:?user\.js)|[^.{,8}])$/);
@@ -162,12 +163,18 @@ DownloadListener.prototype = {
   onStartRequest: function(aRequest, aContext) {
     // For the first file (the script) detect an HTML page and abort if so.
     if (this._tryToParse) {
+      var contentType = false;
       try {
         aRequest.QueryInterface(Ci.nsIHttpChannel);
       } catch (e) {
         return;  // Non-http channel?  Ignore.
       }
-      if (this._htmlTypeRegex.test(aRequest.contentType)) {
+      try {
+        contentType = this._htmlTypeRegex.test(aRequest.contentType);
+      } catch (e) {
+        return;  // Problem loading page (Unable to connect)?  Ignore.
+      }
+      if (contentType) {
         // Cancel this request immediately and let onStopRequest handle the
         // cleanup for everything else.
         aRequest.cancel(Components.results.NS_BINDING_ABORTED);
@@ -182,10 +189,12 @@ DownloadListener.prototype = {
 
     var error = !Components.isSuccessCode(aStatusCode);
     var errorMessage = stringBundle.GetStringFromName('error.unknown');
+    var status = -1;
     try {
       var httpChannel = aRequest.QueryInterface(Ci.nsIHttpChannel);
       error |= !httpChannel.requestSucceeded;
       error |= httpChannel.responseStatus >= 400;
+      status = httpChannel.responseStatus;
       errorMessage = stringBundle.GetStringFromName('error.serverReturned')
           + ' ' + httpChannel.responseStatus + ' '
           + httpChannel.responseStatusText + '.';
@@ -212,7 +221,8 @@ DownloadListener.prototype = {
     }
 
     this._progressCallback(aRequest, 1);
-    this._completionCallback(aRequest, !error, errorMessage);
+    this._completionCallback(
+        aRequest, !error, errorMessage, status);
   },
 
   // nsIProgressEventSink
@@ -247,7 +257,7 @@ function RemoteScript(aUrl) {
   this._scriptMetaCallbacks = [];
   this._silent = false;
   this._tempDir = GM_util.getTempDir();
-  this._uri = GM_util.uriFromUrl(aUrl);
+  this._uri = GM_util.getUriFromUrl(aUrl);
   this._url = aUrl;
 
   this.done = false;
@@ -256,8 +266,12 @@ function RemoteScript(aUrl) {
   this.script = null;
 }
 
-RemoteScript.prototype.__defineGetter__(
-    'url', function() { return new String(this._url); });
+Object.defineProperty(RemoteScript.prototype, "url", {
+  get: function RemoteScript_getUrl() {
+    return new String(this._url);
+  },
+  enumerable: true
+});
 
 RemoteScript.prototype.cancel = function() {
   this._cancelled = true;
@@ -297,9 +311,9 @@ RemoteScript.prototype.download = function(aCompletionCallback) {
   if (this.script) {
     this._downloadDependencies(aCompletionCallback);
   } else {
-    this.downloadScript(GM_util.hitch(this, function(aSuccess, aPoint) {
+    this.downloadScript(GM_util.hitch(this, function(aSuccess, aPoint, aStatus) {
       if (aSuccess) this._downloadDependencies(aCompletionCallback);
-      aCompletionCallback(this._cancelled || aSuccess, aPoint);
+      aCompletionCallback(this._cancelled || aSuccess, aPoint, aStatus);
     }));
   }
 };
@@ -313,7 +327,7 @@ RemoteScript.prototype.downloadMetadata = function(aCallback) {
 RemoteScript.prototype.downloadScript = function(aCompletionCallback) {
   assertIsFunction(
       aCompletionCallback, 'Completion callback is not a function.');
-  if (!this._url) throw Error('Tried to download script, but have no URL.');
+  if (!this._url) throw new Error('Tried to download script, but have no URL.');
 
   this._scriptFile = GM_util.getTempFile(
       this._tempDir, filenameFromUri(this._uri, 'gm_script'));
@@ -487,7 +501,7 @@ RemoteScript.prototype.showSource = function(aBrowser) {
         // installation process.
         tab.removeEventListener("TabClose", cleanup, false);
         // Timeout puts this after the notification closes itself for the
-        // button click, avoiding an error inside that (Firefox) code.
+        // button click, avoiding an error inside that (Pale Moon) code.
         GM_util.timeout(function() { tabBrowser.removeTab(tab); }, 0);
       })
     }];
@@ -512,7 +526,7 @@ RemoteScript.prototype.toString = function() {
 RemoteScript.prototype._dispatchCallbacks = function(aType, aData) {
   var callbacks = this['_' + aType + 'Callbacks'];
   if (!callbacks) {
-    throw Error('Invalid callback type: ' + aType);
+    throw new Error('Invalid callback type: ' + aType);
   }
   for (var i = 0, callback = null; callback = callbacks[i]; i++) {
     callback(this, aType, aData);
@@ -539,7 +553,7 @@ RemoteScript.prototype._downloadDependencies = function(aCompletionCallback) {
   // Because _progressIndex includes the base script at 0, subtract one to
   // get the dependency index.
   var dependency = this._dependencies[this._progressIndex - 1];
-  var uri = GM_util.uriFromUrl(dependency.downloadURL);
+  var uri = GM_util.getUriFromUrl(dependency.downloadURL);
   var file = GM_util.getTempFile(this._tempDir, filenameFromUri(uri, 'gm_script'));
   dependency.setFilename(file);
 
@@ -604,6 +618,22 @@ RemoteScript.prototype._downloadFile = function(
   // 1. It creates temporary folder ("gm-temp-...") - permanently (see #2069)
   // 2. Infinite loading web page
   channel.loadFlags |= channel.LOAD_BYPASS_CACHE;
+  // See #1717
+  // A page with a userscript - http auth
+  // Private browsing
+  if (channel instanceof Ci.nsIPrivateBrowsingChannel) {
+    var isPrivate = true;
+    var chromeWin = GM_util.getBrowserWindow();
+    if (chromeWin.gBrowser) {
+      // i.e. the Private Browsing autoStart pref:
+      // "browser.privatebrowsing.autostart"
+      isPrivate = PrivateBrowsingUtils.isBrowserPrivate(chromeWin.gBrowser);
+    }
+    if (isPrivate) {
+      channel = channel.QueryInterface(Ci.nsIPrivateBrowsingChannel);
+      channel.setPrivate(true);
+    }
+  }
   this._channels.push(channel);
   var dsl = new DownloadListener(
       0 == this._progressIndex,  // aTryToParse
@@ -627,7 +657,7 @@ RemoteScript.prototype._downloadFileProgress = function(
 };
 
 RemoteScript.prototype._downloadScriptCb = function(
-    aCompletionCallback, aChannel, aSuccess, aErrorMessage) {
+    aCompletionCallback, aChannel, aSuccess, aErrorMessage, aStatus) {
 
   if (aSuccess) {
     // At this point downloading the script itself is definitely done.
@@ -648,18 +678,18 @@ RemoteScript.prototype._downloadScriptCb = function(
       // Fake a successful download, so the install window will show, with
       // the error message.
       this._dispatchCallbacks('scriptMeta', new Script());
-      return aCompletionCallback(true, 'script');
+      return aCompletionCallback(true, 'script', aStatus);
     }
 
     if (!this.script) {
       dump('RemoteScript: finishing with error because no script was found.\n');
       // If we STILL don't have a script, this is a fatal error.
-      return aCompletionCallback(false, 'script');
+      return aCompletionCallback(false, 'script', aStatus);
     }
   } else {
     this.cleanup(aErrorMessage);
   }
-  aCompletionCallback(aSuccess, 'script');
+  aCompletionCallback(aSuccess, 'script', aStatus);
 };
 
 RemoteScript.prototype._parseScriptFile = function() {

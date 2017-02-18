@@ -110,7 +110,7 @@ function getStatsObj() {
   for (var i = 0, script = null; script = scripts[i]; i++) {
     var valueStats = new GM_ScriptStorageBack(script).getStats();
 
-    var downloadUri = GM_util.uriFromUrl(script.downloadURL);
+    var downloadUri = GM_util.getUriFromUrl(script.downloadURL);
     var domain = null;
     try {
       // Ignore errors here; i.e. invalid/empty URLs.

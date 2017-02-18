@@ -24,5 +24,7 @@
 <!ENTITY Sort.Status "Стан">
 <!ENTITY Sort.ByName "Сортувати за назвою">
 <!ENTITY Sort.Name "Назва">
+<!ENTITY Sort.ByNamespace "Sort by namespace">
+<!ENTITY Sort.Namespace "Namespace">
 <!ENTITY Sort.ByExecution "Сортувати за порядком виконання">
 <!ENTITY Sort.Execution "Порядок виконання">

@@ -17,10 +17,6 @@ Cu.import('chrome://greasemonkey-modules/content/util.js');
 var gHaveDoneInit = false;
 var gScriptEndingRegexp = new RegExp('\\.user\\.js$');
 
-XPCOMUtils.defineLazyServiceGetter(
-    this, 'cpmm',
-    '@mozilla.org/childprocessmessagemanager;1', 'nsIMessageSender');
-
 ////////////////////////////////////////////////////////////////////////////////
 
 var InstallPolicy = {
@@ -77,13 +73,13 @@ var InstallPolicy = {
       return ACCEPT;
     }
     // Ignore temporary files, e.g. "Show script source".
-    var tmpResult = cpmm.sendSyncMessage(
+    var tmpResult = Services.cpmm.sendSyncMessage(
         'greasemonkey:url-is-temp-file', {'url': aContentURI.spec});
     if (tmpResult.length && tmpResult[0]) {
       return ACCEPT;
     }
 
-    cpmm.sendAsyncMessage(
+    Services.cpmm.sendAsyncMessage(
         'greasemonkey:script-install', {'url': aContentURI.spec});
 
     return REJECT;

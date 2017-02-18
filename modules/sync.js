@@ -8,7 +8,7 @@ var Cu = Components.utils;
 
 var gWeave = {};
 try {
-  // The files we're trying to import below don't exist in Firefox builds
+  // The files we're trying to import below don't exist in Pale Moon builds
   // without sync service, causing the import to throw.
   Cu.import('resource://services-sync/engines.js', gWeave);
   Cu.import('resource://services-sync/record.js', gWeave);
@@ -92,7 +92,7 @@ ScriptStore.prototype = {
         dump('Ignoring incoming sync record with empty downloadURL!\n');
         return;
       }
-      if (!GM_util.uriFromUrl(url)) {
+      if (!GM_util.getUriFromUrl(url)) {
         dump('Ignoring incoming sync record with bad downloadURL:\n'
             + url + '\n');
         return;

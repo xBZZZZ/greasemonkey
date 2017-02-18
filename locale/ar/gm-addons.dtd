@@ -24,5 +24,7 @@
 <!ENTITY Sort.Status "الحالة">
 <!ENTITY Sort.ByName "فرز حسب الأسم">
 <!ENTITY Sort.Name "الأسم">
+<!ENTITY Sort.ByNamespace "Sort by namespace">
+<!ENTITY Sort.Namespace "Namespace">
 <!ENTITY Sort.ByExecution "فرز حسب التنفيذ">
 <!ENTITY Sort.Execution "فرز التنفيذ">

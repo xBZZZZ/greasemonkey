@@ -24,5 +24,7 @@
 <!ENTITY Sort.Status "وضعیت">
 <!ENTITY Sort.ByName "مرتب کردن بر اساس نام">
 <!ENTITY Sort.Name "نام">
+<!ENTITY Sort.ByNamespace "Sort by namespace">
+<!ENTITY Sort.Namespace "Namespace">
 <!ENTITY Sort.ByExecution "مرتب کردن بر اساس ترتیب اجرا">
 <!ENTITY Sort.Execution "ترتیب اجرا">

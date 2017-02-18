@@ -86,7 +86,7 @@ function parse(aSource, aUri, aFailWhenMissing) {
       resourceNames[name] = true;
 
       try {
-        var resUri = GM_util.uriFromUrl(url, aUri);
+        var resUri = GM_util.getUriFromUrl(url, aUri);
         var scriptResource = new ScriptResource(script);
         scriptResource._name = name;
         scriptResource._downloadURL = resUri.spec;
@@ -128,7 +128,7 @@ function parse(aSource, aUri, aFailWhenMissing) {
     case 'homepageURL':
     case 'updateURL':
       try {
-        var uri = GM_util.uriFromUrl(data.value, aUri);
+        var uri = GM_util.getUriFromUrl(data.value, aUri);
         script[data.keyword] = uri.spec;
       } catch (e) {
         dump('Failed to parse ' + data.keyword
@@ -159,7 +159,7 @@ function parse(aSource, aUri, aFailWhenMissing) {
 
     case 'require':
       try {
-        var reqUri = GM_util.uriFromUrl(data.value, aUri);
+        var reqUri = GM_util.getUriFromUrl(data.value, aUri);
         var scriptRequire = new ScriptRequire(script);
         scriptRequire._downloadURL = reqUri.spec;
         script._requires.push(scriptRequire);
