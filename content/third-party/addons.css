@@ -42,7 +42,7 @@
 .sorter[checkState="1"],
 .sorter[checkState="2"] {
   background-color: rgba(194, 200, 206, 0.4);
-  box-shadow: 1px 1px 2px #B6BBC4 inset;
+  box-shadow: 1px 1px 2px #b6bbc4 inset;
 }
 
 .sorter[checkState="1"] {

@@ -5,7 +5,7 @@ category   profile-after-change @greasemonkey.mozdev.org/greasemonkey-service;1 
 content    greasemonkey content/
 skin       greasemonkey classic/1.0 skin/
 
-overlay	   chrome://browser/content/browser.xul chrome://greasemonkey/content/browser.xul
+overlay    chrome://browser/content/browser.xul chrome://greasemonkey/content/browser.xul
 style      chrome://global/content/customizeToolbar.xul chrome://greasemonkey/skin/browser.css
 
 content    greasemonkey-modules modules/
@@ -20,4 +20,4 @@ overlay    chrome://greasemonkey/content/install.xul chrome://greasemonkey/conte
 overlay    chrome://greasemonkey/content/newscript.xul chrome://greasemonkey/content/closewindow.xul
 overlay    chrome://greasemonkey/content/options.xul chrome://greasemonkey/content/closewindow.xul
 
-locale  greasemonkey  en-US  locale/en-US/
+locale     greasemonkey en-US locale/en-US/

@@ -1,37 +1,40 @@
-Components.utils.import('resource://gre/modules/NetUtil.jsm');
-Components.utils.import('chrome://greasemonkey-modules/content/constants.js');
+const EXPORTED_SYMBOLS = ["writeToFile"];
 
-var EXPORTED_SYMBOLS = ['writeToFile'];
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-var NORMAL_FILE_TYPE = Components.interfaces.nsIFile.NORMAL_FILE_TYPE;
-//                   PR_WRONLY PR_CREATE_FILE PR_TRUNCATE
-var STREAM_FLAGS = 0x02      | 0x08         | 0x20;
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
-var converter = Components
-    .classes["@mozilla.org/intl/scriptableunicodeconverter"]
-    .createInstance(Components.interfaces.nsIScriptableUnicodeConverter);
-converter.charset = "UTF-8";
+Cu.import("resource://gre/modules/NetUtil.jsm");
 
 
-/** Given string data and an nsIFile, write it safely to that file. */
+const FILE_TYPE = Ci.nsIFile.NORMAL_FILE_TYPE;
+//                   PR_WRONLY   PR_CREATE_FILE PR_TRUNCATE
+const STREAM_FLAGS = 0x02      | 0x08         | 0x20;
+
+var converter = Cc["@mozilla.org/intl/scriptableunicodeconverter"]
+    .createInstance(Ci.nsIScriptableUnicodeConverter);
+converter.charset = GM_CONSTANTS.fileScriptCharset;
+
+// Given string data and an nsIFile, write it safely to that file.
 function writeToFile(aData, aFile, aCallback) {
   // Assume aData is a string; convert it to a UTF-8 stream.
-  var istream = converter.convertToInputStream(aData);
+  let istream = converter.convertToInputStream(aData);
 
   // Create a temporary file (stream) to hold the data.
-  var tmpFile = aFile.clone();
-  tmpFile.createUnique(NORMAL_FILE_TYPE, GM_constants.fileMask);
-  var ostream = Components
-      .classes["@mozilla.org/network/safe-file-output-stream;1"]
-      .createInstance(Components.interfaces.nsIFileOutputStream);
-  ostream.init(tmpFile, STREAM_FLAGS, GM_constants.fileMask, 0);
+  let tmpFile = aFile.clone();
+  tmpFile.createUnique(FILE_TYPE, GM_CONSTANTS.fileMask);
+  let ostream = Cc["@mozilla.org/network/safe-file-output-stream;1"]
+      .createInstance(Ci.nsIFileOutputStream);
+  ostream.init(tmpFile, STREAM_FLAGS, GM_CONSTANTS.fileMask, 0);
 
-  NetUtil.asyncCopy(istream, ostream, function(status) {
+  NetUtil.asyncCopy(istream, ostream, function (status) {
     if (Components.isSuccessCode(status)) {
       // On successful write, move it to the real location.
       tmpFile.moveTo(aFile.parent, aFile.leafName);
 
-      if (aCallback) aCallback();
+      if (aCallback) {
+        aCallback();
+      }
     }
   });
 }

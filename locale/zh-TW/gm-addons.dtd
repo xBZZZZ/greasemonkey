@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "C">
 <!ENTITY Show "顯示腳本所在的資料夾">
 <!ENTITY Show.accesskey "S">
-<!ENTITY Sort.ByStatus "依狀態排序">
-<!ENTITY Sort.Status "狀態">
-<!ENTITY Sort.ByName "依名稱排序">
-<!ENTITY Sort.Name "名稱">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "依執行順序排序">
-<!ENTITY Sort.Execution "執行順序">
+<!ENTITY Sort.byExecution "依執行順序排序">
+<!ENTITY Sort.byName "依名稱排序">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "依狀態排序">
+<!ENTITY Sort.execution "執行順序">
+<!ENTITY Sort.name "名稱">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "狀態">

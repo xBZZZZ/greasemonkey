@@ -44,8 +44,9 @@ fi
 echo "Gathering all locales into chrome.manifest ..."
 for entry in locale/*; do
   entry=`basename $entry`
+  entryf=`printf "%-5s" $entry`
   if [ $entry != en-US ]; then
-    echo "locale  greasemonkey  $entry  locale/$entry/" >> chrome.manifest
+    echo "locale     greasemonkey $entryf locale/$entry/" >> chrome.manifest
   fi
 done
 

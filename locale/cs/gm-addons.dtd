@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "V">
 <!ENTITY Show "Zobrazit složku skriptu">
 <!ENTITY Show.accesskey "Z">
-<!ENTITY Sort.ByStatus "Řadit podle stavu">
-<!ENTITY Sort.Status "Stav">
-<!ENTITY Sort.ByName "Řadit podle názvu">
-<!ENTITY Sort.Name "Název">
-<!ENTITY Sort.ByNamespace "Řadit podle jmenného prostoru">
-<!ENTITY Sort.Namespace "Jmenný prostor">
-<!ENTITY Sort.ByExecution "Řadit podle pořadí spouštění">
-<!ENTITY Sort.Execution "Pořadí spouštění">
+<!ENTITY Sort.byExecution "Řadit podle pořadí spouštění">
+<!ENTITY Sort.byName "Řadit podle názvu">
+<!ENTITY Sort.byNamespace "Řadit podle jmenného prostoru">
+<!ENTITY Sort.byStatus "Řadit podle stavu">
+<!ENTITY Sort.execution "Pořadí spouštění">
+<!ENTITY Sort.name "Název">
+<!ENTITY Sort.namespace "Jmenný prostor">
+<!ENTITY Sort.status "Stav">

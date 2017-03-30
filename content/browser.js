@@ -1,59 +1,76 @@
-Components.utils.import("resource://gre/modules/Services.jsm");
-Components.utils.import('chrome://greasemonkey-modules/content/prefmanager.js');
-Components.utils.import('chrome://greasemonkey-modules/content/util.js');
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-var gStringBundle = Components
-    .classes["@mozilla.org/intl/stringbundle;1"]
-    .getService(Components.interfaces.nsIStringBundleService)
-    .createBundle("chrome://greasemonkey/locale/gm-browser.properties");
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
-var GM_GUID = "{e4a8a97b-f2ed-450b-b12d-ee082ba24781}";
+Cu.import("resource://gre/modules/Services.jsm");
+
+Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/util.js");
+
 var gGreasemonkeyVersion = "unknown";
-Components.utils.import("resource://gre/modules/AddonManager.jsm");
-AddonManager.getAddonByID(GM_GUID, function (addon) {
+Cu.import("resource://gre/modules/AddonManager.jsm");
+AddonManager.getAddonByID(GM_CONSTANTS.addonGUID, function (addon) {
   gGreasemonkeyVersion = "" + addon.version;
 });
 
 
-// this file is the JavaScript backing for the UI wrangling which happens in
-// browser.xul. It also initializes the Greasemonkey singleton which contains
-// all the main injection logic, though that should probably be a proper XPCOM
-// service and wouldn't need to be initialized in that case.
+// This file is the JavaScript backing for the UI wrangling which happens
+// in browser.xul.
+// It also initializes the Greasemonkey singleton which contains
+// all the main injection logic, though that should probably be
+// a proper XPCOM service and wouldn't need to be initialized in that case.
 
 function GM_BrowserUI() {};
 
-GM_BrowserUI.init = function() {
+GM_BrowserUI.init = function () {
   window.addEventListener("load", GM_BrowserUI.chromeLoad, false);
   window.addEventListener("unload", GM_BrowserUI.chromeUnload, false);
-  window.messageManager.addMessageListener('greasemonkey:open-in-tab',
+  window.messageManager.addMessageListener("greasemonkey:open-in-tab",
       GM_BrowserUI.openInTab);
   window.messageManager.addMessageListener("greasemonkey:DOMContentLoaded",
       function (aMessage) {
-        var contentType = aMessage.data.contentType;
-        var href = aMessage.data.href;
+        let contentType = aMessage.data.contentType;
+        let href = aMessage.data.href;
         GM_BrowserUI.checkDisabledScriptNavigation(contentType, href);
       });
+  /*
+  window.messageManager.addMessageListener("greasemonkey:is-window-visible",
+      function (aMessage) {
+        let browser = aMessage.target;
+        let contentWin = browser.ownerDocument.defaultView;
+
+        let winUtils = contentWin
+            .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
+            .getInterface(Components.interfaces.nsIDOMWindowUtils);
+
+        // Always is true. (sendSyncMessage)
+        if (winUtils && winUtils.isParentWindowMainWidgetVisible) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+  */
 };
 
 /**
- * The browser XUL has loaded. Find the elements we need and set up our
- * listeners and wrapper objects.
+ * The browser XUL has loaded. Find the elements we need
+ * and set up our listeners and wrapper objects.
  */
-GM_BrowserUI.chromeLoad = function(aEvent) {
-  GM_BrowserUI.bundle = Components.classes["@mozilla.org/intl/stringbundle;1"]
-      .getService(Components.interfaces.nsIStringBundleService)
-      .createBundle("chrome://greasemonkey/locale/gm-browser.properties");
+GM_BrowserUI.chromeLoad = function (aEvent) {
+  GM_BrowserUI.bundle = GM_CONSTANTS.localeStringBundle.createBundle(
+      GM_CONSTANTS.localeGmBrowserProperties);
 
   // Update visual status when enabled state changes.
   GM_prefRoot.watch("enabled", GM_BrowserUI.refreshStatus);
   GM_BrowserUI.refreshStatus();
 
   document.getElementById("contentAreaContextMenu")
-    .addEventListener("popupshowing", GM_BrowserUI.contextMenuShowing, false);
+      .addEventListener("popupshowing", GM_BrowserUI.contextMenuShowing, false);
 
   GM_BrowserUI.gmSvc = GM_util.getService();
-  // Reference this once, so that the getter is called at least once, and the
-  // initialization routines will run, no matter what.
+  // Reference this once, so that the getter is called at least once,
+  // and the initialization routines will run, no matter what.
   GM_BrowserUI.gmSvc.config;
 
   // Initialize the chrome side handling of menu commands.
@@ -62,42 +79,43 @@ GM_BrowserUI.chromeLoad = function(aEvent) {
   GM_BrowserUI.showToolbarButton();
 
   // Make sure this is imported at least once, so its internal timer starts.
-  Components.utils.import('chrome://greasemonkey-modules/content/stats.js');
+  Cu.import("chrome://greasemonkey-modules/content/stats.js");
 };
 
 /**
  * Opens the specified URL in a new tab.
  */
-GM_BrowserUI.openTab = function(url) {
+GM_BrowserUI.openTab = function (url) {
   gBrowser.selectedTab = gBrowser.addTab(url);
 };
 
 /**
  * Handles tab opening for a GM_openInTab API call.
  */
-GM_BrowserUI.openInTab = function(aMessage) {
+GM_BrowserUI.openInTab = function (aMessage) {
   var browser = aMessage.target;
   var tabBrowser = browser.getTabBrowser();
   var scriptTab = tabBrowser.getTabForBrowser(browser);
   var scriptTabIsCurrentTab = scriptTab == tabBrowser.mCurrentTab;
   // Work around a race condition in Firefox code with E10S disabled.
-  // See #2107 and #2234
-  // Todo: Remove timeout when http://bugzil.la/1200334 is resolved.
+  // See #2107 and #2234.
+  // TODO:
+  // Remove timeout when http://bugzil.la/1200334 is resolved.
   GM_util.timeout(function () {
-    var getBool = Services.prefs.getBoolPref;
+    let getBool = Services.prefs.getBoolPref;
 
-    var prefBg = (aMessage.data.inBackground === null)
+    let prefBg = (aMessage.data.inBackground === null)
         ? getBool("browser.tabs.loadInBackground")
         : aMessage.data.inBackground;
-    var prefRel = (aMessage.data.afterCurrent === null)
+    let prefRel = (aMessage.data.afterCurrent === null)
         ? getBool("browser.tabs.insertRelatedAfterCurrent")
         : aMessage.data.afterCurrent;
 
-    var newTab = tabBrowser.addTab(
+    let newTab = tabBrowser.addTab(
         aMessage.data.url,
         {
-            'ownerTab': prefBg ? null : tabBrowser.selectedTab,
-            'relatedToCurrent': scriptTabIsCurrentTab,
+          "ownerTab": prefBg ? null : tabBrowser.selectedTab,
+          "relatedToCurrent": scriptTabIsCurrentTab,
         });
 
     if (scriptTabIsCurrentTab && !prefBg) {
@@ -115,7 +133,7 @@ GM_BrowserUI.openInTab = function(aMessage) {
 /**
  * The browser XUL has unloaded. Destroy references/watchers/listeners.
  */
-GM_BrowserUI.chromeUnload = function() {
+GM_BrowserUI.chromeUnload = function () {
   GM_prefRoot.unwatch("enabled", GM_BrowserUI.refreshStatus);
   GM_MenuCommander.uninitialize();
 };
@@ -124,16 +142,16 @@ GM_BrowserUI.chromeUnload = function() {
  * Called when the content area context menu is showing. We figure out whether
  * to show our context items.
  */
-GM_BrowserUI.contextMenuShowing = function() {
-  GM_BrowserUI.getUserScriptUrlUnderPointer(function(aUrl) {
+GM_BrowserUI.contextMenuShowing = function () {
+  GM_BrowserUI.getUserScriptUrlUnderPointer(function (aUrl) {
     var contextItem = document.getElementById("greasemonkey-view-userscript");
     var contextSep = document.getElementById("greasemonkey-install-sep");
     contextItem.hidden = contextSep.hidden = !aUrl;
-    // See #1914
+    // See #1914.
     if (contextSep.nextElementSibling) {
       var contextSepNES = contextSep.nextElementSibling;
       while (contextSepNES) {
-        var contextSepNESStyleDisplay = contextSepNES.ownerDocument.defaultView
+        let contextSepNESStyleDisplay = contextSepNES.ownerDocument.defaultView
             .getComputedStyle(contextSepNES, null).getPropertyValue("display");
         if ((contextSepNESStyleDisplay.toLowerCase() != "none")
             && !contextSepNES.hidden) {
@@ -148,11 +166,11 @@ GM_BrowserUI.contextMenuShowing = function() {
   });
 };
 
-GM_BrowserUI.getUserScriptUrlUnderPointer = function(callback) {
-  var culprit = gContextMenu.target || document.popupNode;
+GM_BrowserUI.getUserScriptUrlUnderPointer = function (callback) {
+  let culprit = gContextMenu.target || document.popupNode;
   if (!culprit) {
     callback(null);
-    return;
+    return undefined;
   }
 
   var mm = gBrowser.selectedBrowser.messageManager;
@@ -160,8 +178,9 @@ GM_BrowserUI.getUserScriptUrlUnderPointer = function(callback) {
   messageHandler = function (aMessage) {
     mm.removeMessageListener("greasemonkey:context-menu-end", messageHandler);
 
-    var href = aMessage.data.href;
-    if (href && href.match(/\.user\.js(\?|$)/i)) {
+    let href = aMessage.data.href;
+    if (href && href.match(
+        new RegExp(GM_CONSTANTS.fileScriptExtensionRegexp + "(\\?|$)", "i"))) {
       callback(href);
     } else {
       callback(null);
@@ -170,34 +189,38 @@ GM_BrowserUI.getUserScriptUrlUnderPointer = function(callback) {
   mm.addMessageListener("greasemonkey:context-menu-end", messageHandler);
 
   mm.sendAsyncMessage(
-      "greasemonkey:context-menu-start", {}, {"culprit": culprit});
+      "greasemonkey:context-menu-start", {}, {
+        "culprit": culprit,
+      });
 };
 
-GM_BrowserUI.refreshStatus = function() {
-  var enabledEl = document.getElementById("gm_toggle_enabled");
-  var checkedEl = document.getElementById("gm_toggle_checked");
+GM_BrowserUI.refreshStatus = function () {
+  let enabledElm = document.getElementById("gm_toggle_enabled");
+  let checkedElm = document.getElementById("gm_toggle_checked");
 
   if (GM_util.getEnabled()) {
-    checkedEl.setAttribute('checked', true);
-    enabledEl.removeAttribute('disabled');
+    checkedElm.setAttribute("checked", true);
+    enabledElm.removeAttribute("disabled");
   } else {
-    checkedEl.setAttribute('checked', false);
-    enabledEl.setAttribute('disabled', 'yes');
+    checkedElm.setAttribute("checked", false);
+    enabledElm.setAttribute("disabled", "yes");
   }
 };
 
-// Not used directly, kept for GreaseFire.  See #1507.
-GM_BrowserUI.startInstallScript = function(aUri) {
+// See #1507.
+// Not used directly, kept for GreaseFire.
+GM_BrowserUI.startInstallScript = function (aUri) {
   GM_util.showInstallDialog(aUri.spec, gBrowser);
 };
 
-GM_BrowserUI.viewContextItemClicked = function() {
-  GM_BrowserUI.getUserScriptUrlUnderPointer(function(aUrl) {
-    if (!aUrl) return;
+GM_BrowserUI.viewContextItemClicked = function () {
+  GM_BrowserUI.getUserScriptUrlUnderPointer(function (aUrl) {
+    if (!aUrl) {
+      return undefined;
+    }
 
-    var scope = {};
-    Components.utils.import(
-        "chrome://greasemonkey-modules/content/remoteScript.js", scope);
+    let scope = {};
+    Cu.import("chrome://greasemonkey-modules/content/remoteScript.js", scope);
     var rs = new scope.RemoteScript(aUrl);
     rs.downloadScript(function (aSuccess) {
       if (aSuccess) {
@@ -209,63 +232,79 @@ GM_BrowserUI.viewContextItemClicked = function() {
   });
 };
 
-GM_BrowserUI.showToolbarButton = function() {
-  // See #1652.  During transition, this might be set, but not readable yet;
-  // transition happens in an async callback to get addon version.  If existing
-  // version is "0.0" (the default), this hasn't happened yet, so try later.
-  if ('0.0' == GM_prefRoot.getValue("version")) {
+GM_BrowserUI.showToolbarButton = function () {
+  // See #1652.
+  // During transition, this might be set, but not readable yet;
+  // transition happens in an async callback to get addon version.
+  // If existing version is "0.0" (the default), this hasn't happened yet,
+  // so try later.
+  if (GM_prefRoot.getValue("version") == "0.0") {
     setTimeout(GM_BrowserUI.showToolbarButton, 50);
-    return;
+    return undefined;
   }
 
-  // Once, enforce that the toolbar button is present.  For discoverability.
-  if (!GM_prefRoot.getValue('haveInsertedToolbarbutton')) {
-    GM_prefRoot.setValue('haveInsertedToolbarbutton', true);
+  // Once, enforce that the toolbar button is present.
+  // For discoverability.
+  if (!GM_prefRoot.getValue("haveInsertedToolbarbutton")) {
+    GM_prefRoot.setValue("haveInsertedToolbarbutton", true);
 
-    var navbar = document.getElementById("nav-bar");
-    var newset = navbar.currentSet + ",greasemonkey-tbb";
+    let navbar = document.getElementById("nav-bar");
+    let newset = navbar.currentSet + ",greasemonkey-tbb";
     navbar.currentSet = newset;
     navbar.setAttribute("currentset", newset);
     document.persist("nav-bar", "currentset");
   }
 };
 
-GM_BrowserUI.openOptions = function() {
-  openDialog('chrome://greasemonkey/content/options.xul', null, 'modal,resizable');
+GM_BrowserUI.openOptions = function () {
+  openDialog(
+      "chrome://greasemonkey/content/options.xul", null, "modal,resizable");
 };
 
-GM_BrowserUI.checkDisabledScriptNavigation = function(aContentType, aHref) {
-  if (GM_util.getEnabled()) return;
-  if (!aHref.match(/\.user\.js$/)) return;
-  if (aContentType.match(/^text\/(x|ht)ml/)) return;
+GM_BrowserUI.checkDisabledScriptNavigation = function (aContentType, aHref) {
+  if (GM_util.getEnabled()) {
+    return undefined;
+  }
+  if (!aHref.match(
+      new RegExp(GM_CONSTANTS.fileScriptExtensionRegexp + "$", ""))) {
+    return undefined;
+  }
+  if (new RegExp(GM_CONSTANTS.fileScriptContentTypeRegexp, "i")
+      .test(aContentType)) {
+    return undefined;
+  }
 
-  var buttons = [{
-    'label': GM_BrowserUI.bundle.GetStringFromName('disabledWarning.enable'),
-    'accessKey': GM_BrowserUI.bundle.GetStringFromName('disabledWarning.enable.accessKey'),
-    'popup': null,
-    'callback': function() {
+  let buttons = [{
+    "accessKey": GM_BrowserUI.bundle
+        .GetStringFromName("disabledWarning.enable.accesskey"),
+    "callback": function () {
       GM_util.setEnabled(true);
-    }
-  },{
-    'label': GM_BrowserUI.bundle.GetStringFromName('disabledWarning.enableAndInstall'),
-    'accessKey': GM_BrowserUI.bundle.GetStringFromName('disabledWarning.enableAndInstall.accessKey'),
-    'popup': null,
-    'callback': function() {
+    },
+    "label": GM_BrowserUI.bundle.GetStringFromName("disabledWarning.enable"),
+    "popup": null,
+  }, {
+    "callback": function () {
       GM_util.setEnabled(true);
       GM_util.showInstallDialog(aHref, gBrowser);
-    }
-  },{
-    'label': GM_BrowserUI.bundle.GetStringFromName('disabledWarning.install'),
-    'accessKey': GM_BrowserUI.bundle.GetStringFromName('disabledWarning.install.accessKey'),
-    'popup': null,
-    'callback': function() {
+    },
+    "accessKey": GM_BrowserUI.bundle
+        .GetStringFromName("disabledWarning.enableAndInstall.accesskey"),
+    "label": GM_BrowserUI.bundle
+        .GetStringFromName("disabledWarning.enableAndInstall"),
+    "popup": null,
+  }, {
+    "accessKey": GM_BrowserUI.bundle
+        .GetStringFromName("disabledWarning.install.accesskey"),
+    "callback": function () {
       GM_util.showInstallDialog(aHref, gBrowser);
-    }
+    },
+    "label": GM_BrowserUI.bundle.GetStringFromName("disabledWarning.install"),
+    "popup": null,
   }];
 
-  var notificationBox = gBrowser.getNotificationBox();
-  var notification = notificationBox.appendNotification(
-    GM_BrowserUI.bundle.GetStringFromName('greeting.msg'),
+  let notificationBox = gBrowser.getNotificationBox();
+  let notification = notificationBox.appendNotification(
+    GM_BrowserUI.bundle.GetStringFromName("greeting.msg"),
     "install-userscript",
     "chrome://greasemonkey/skin/icon16.png",
     notificationBox.PRIORITY_WARNING_MEDIUM,
@@ -276,20 +315,21 @@ GM_BrowserUI.checkDisabledScriptNavigation = function(aContentType, aHref) {
 
 GM_BrowserUI.init();
 
-
 /**
- * Handle clicking one of the items in the popup. Left-click toggles the enabled
- * state, right-click opens in an editor.
+ * Handle clicking one of the items in the popup.
+ * Left-click toggles the enabled state, right-click opens in an editor.
  */
 function GM_popupClicked(aEvent) {
-  var script = aEvent.target.script;
-  if (!script) return;
+  let script = aEvent.target.script;
+  if (!script) {
+    return undefined;
+  }
 
-  if ('command' == aEvent.type) {
-    // left-click: toggle enabled state
+  if (aEvent.type == "command") {
+    // Left-click: toggle enabled state.
     script.enabled =! script.enabled;
-  } else if ('click' == aEvent.type && aEvent.button == 2) {
-    // right-click: open in editor
+  } else if ((aEvent.type == "click") && (aEvent.button == 2)) {
+    // Right-click: open in editor.
     GM_util.openInEditor(script);
   }
 
@@ -302,18 +342,20 @@ function GM_popupClicked(aEvent) {
 function GM_showPopup(aEvent) {
   // Make sure this event was triggered by opening the actual monkey menu,
   // not one of its submenus.
-  if (aEvent.currentTarget != aEvent.target) return;
+  if (aEvent.currentTarget != aEvent.target) {
+    return undefined;
+  }
 
   var mm = getBrowser().mCurrentBrowser.frameLoader.messageManager;
 
-  // See #2276
+  // See #2276.
   var aEventTarget = aEvent.target;
 
   var callback = null;
-  callback = function(message) {
+  callback = function (message) {
     mm.removeMessageListener("greasemonkey:frame-urls", callback);
 
-    var urls = message.data.urls;
+    let urls = message.data.urls;
     asyncShowPopup(aEventTarget, urls);
   };
 
@@ -323,11 +365,12 @@ function GM_showPopup(aEvent) {
 
 function getScripts() {
   function uniq(a) {
-    var seen = {}, list = [], item;
-    for (var i = 0; i < a.length; i++) {
+    let seen = {}, list = [], item;
+    for (let i = 0, iLen = a.length; i < iLen; i++) {
       item = a[i];
-      if (!seen.hasOwnProperty(item))
+      if (!seen.hasOwnProperty(item)) {
         seen[item] = list.push(item);
+      }
     }
     return list;
   }
@@ -345,8 +388,10 @@ function getScripts() {
   getScripts.scriptsMatching = scriptsMatching;
 
   function appendScriptAfter(script, point, noInsert) {
-    if (script.needsUninstall) return;
-    var mi = document.createElement("menuitem");
+    if (script.needsUninstall) {
+      return undefined;
+    }
+    let mi = document.createElement("menuitem");
     mi.setAttribute("label", script.localized.name);
     if (script.noframes) {
       mi.setAttribute("tooltiptext", "noframes");
@@ -357,36 +402,44 @@ function getScripts() {
     if (!noInsert) {
       point.parentNode.insertBefore(mi, point.nextSibling);
     }
-    return {"menuItem": mi, "noframes": script.noframes};
+    return {
+      "menuItem": mi,
+      "noframes": script.noframes,
+    };
   }
   getScripts.appendScriptAfter = appendScriptAfter;
 }
 getScripts();
 
 function asyncShowPopup(aEventTarget, urls) {
-  var popup = aEventTarget;
-  var scriptsFramedEl = popup.getElementsByClassName("scripts-framed-point")[0];
-  var scriptsTopEl = popup.getElementsByClassName("scripts-top-point")[0];
-  var scriptsSepEl = popup.getElementsByClassName("scripts-sep")[0];
-  var noScriptsEl = popup.getElementsByClassName("no-scripts")[0];
+  let popup = aEventTarget;
+  let scriptsFramedElm = popup
+      .getElementsByClassName("scripts-framed-point")[0];
+  let scriptsTopElm = popup.getElementsByClassName("scripts-top-point")[0];
+  let scriptsSepElm = popup.getElementsByClassName("scripts-sep")[0];
+  let noScriptsElm = popup.getElementsByClassName("no-scripts")[0];
 
   // Remove existing menu items, between separators.
   function removeMenuitemsAfter(el) {
     while (true) {
-      var sibling = el.nextSibling;
-      if (!sibling || 'menuseparator' == sibling.tagName) break;
+      let sibling = el.nextSibling;
+      if (!sibling || (sibling.tagName == "menuseparator")) {
+        break;
+      }
       sibling.parentNode.removeChild(sibling);
     }
   }
-  removeMenuitemsAfter(scriptsFramedEl);
-  removeMenuitemsAfter(scriptsTopEl);
+  removeMenuitemsAfter(scriptsFramedElm);
+  removeMenuitemsAfter(scriptsTopElm);
 
   urls = getScripts.uniq(urls);
-  var runsOnTop = getScripts.scriptsMatching( [urls.shift()] ); // first url = top window
-  var runsFramed = getScripts.scriptsMatching( urls ); // remainder are all its subframes
+  // First url = top window.
+  var runsOnTop = getScripts.scriptsMatching([urls.shift()]);
+  // Remainder are all its subframes.
+  var runsFramed = getScripts.scriptsMatching(urls);
 
-  // drop all runsFramed scripts already present in runsOnTop
-  for (var i = 0; i < runsOnTop.length; i++) {
+  // Drop all runsFramed scripts already present in runsOnTop.
+  for (let i = 0, iLen = runsOnTop.length; i < iLen; i++) {
     var j = 0, item = runsOnTop[i];
     while (j < runsFramed.length) {
       if (item === runsFramed[j]) {
@@ -397,18 +450,18 @@ function asyncShowPopup(aEventTarget, urls) {
     }
   }
 
-  scriptsSepEl.collapsed = !(runsOnTop.length && runsFramed.length);
-  noScriptsEl.collapsed = !!(runsOnTop.length || runsFramed.length);
+  scriptsSepElm.collapsed = !(runsOnTop.length && runsFramed.length);
+  noScriptsElm.collapsed = !!(runsOnTop.length || runsFramed.length);
 
-  var point;
+  let point;
   if (runsFramed.length) {
-    point = scriptsFramedEl;
+    point = scriptsFramedElm;
     runsFramed.forEach(
         function (script) {
           point = getScripts.appendScriptAfter(script, point).menuItem;
         });
   }
-  point = scriptsTopEl;
+  point = scriptsTopElm;
   runsOnTop.forEach(
       function (script) {
         point = getScripts.appendScriptAfter(script, point).menuItem;
@@ -423,37 +476,47 @@ function asyncShowPopup(aEventTarget, urls) {
  */
 function GM_hidePopup(aEvent) {
   // Only handle the actual monkey menu event.
-  if (aEvent.currentTarget != aEvent.target) return;
+  if (aEvent.currentTarget != aEvent.target) {
+    return undefined;
+  }
   // Propagate to commands sub-menu.
   GM_MenuCommander.onPopupHiding();
 }
 
-// Short-term workaround for #1406: Tab Mix Plus breaks opening links in
-// new tabs because it depends on this function, and incorrectly checks for
-// existance of GM_BrowserUI instead of it.
+// Short-term workaround for #1406: Tab Mix Plus breaks opening links
+// in new tabs because it depends on this function,
+// and incorrectly checks for existance of GM_BrowserUI instead of it.
 function GM_getEnabled() {
   return GM_util.getEnabled();
 }
 
 function GM_showTooltip(aEvent) {
   function setTooltip(aUrls) {
-    var urls = getScripts.uniq(aUrls);
-    var runsOnTop = getScripts.scriptsMatching( [urls.shift()] ); // first url = top window
-    var runsFramed = getScripts.scriptsMatching( urls ); // remainder are all its subframes
+    let urls = getScripts.uniq(aUrls);
+    // First url = top window.
+    let runsOnTop = getScripts.scriptsMatching([urls.shift()]);
+    // Remainder are all its subframes.
+    let runsFramed = getScripts.scriptsMatching(urls);
 
-    var versionElm = aEvent.target
+    let versionElm = aEvent.target
         .getElementsByClassName("greasemonkey-tooltip-version")[0];
     versionElm.setAttribute("value",
-        gStringBundle.GetStringFromName("tooltip.greasemonkeyVersion")
+        GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGmBrowserProperties)
+            .GetStringFromName("tooltip.greasemonkeyVersion")
             .replace("%1", gGreasemonkeyVersion)
     );
 
-    var enabled = GM_util.getEnabled();
-    var enabledElm = aEvent.target
+    let enabled = GM_util.getEnabled();
+    let enabledElm = aEvent.target
         .getElementsByClassName("greasemonkey-tooltip-enabled")[0];
     enabledElm.setAttribute("value", enabled
-        ? gStringBundle.GetStringFromName("tooltip.enabled")
-        : gStringBundle.GetStringFromName("tooltip.disabled")
+        ? GM_CONSTANTS.localeStringBundle.createBundle(
+              GM_CONSTANTS.localeGmBrowserProperties)
+              .GetStringFromName("tooltip.enabled")
+        : GM_CONSTANTS.localeStringBundle.createBundle(
+              GM_CONSTANTS.localeGmBrowserProperties)
+              .GetStringFromName("tooltip.disabled")
     );
 
     if (enabled) {
@@ -466,11 +529,13 @@ function GM_showTooltip(aEvent) {
         totalEnable = totalEnable + (script.enabled ? 1 : 0);
       });
 
-      var total = totalEnable + "/" + total;
-      var totalElm = aEvent.target
+      total = totalEnable + "/" + total;
+      let totalElm = aEvent.target
           .getElementsByClassName("greasemonkey-tooltip-total")[0];
       totalElm.setAttribute("value",
-          gStringBundle.GetStringFromName("tooltip.total")
+          GM_CONSTANTS.localeStringBundle.createBundle(
+              GM_CONSTANTS.localeGmBrowserProperties)
+              .GetStringFromName("tooltip.total")
               .replace("%1", total)
       );
 
@@ -501,19 +566,23 @@ function GM_showTooltip(aEvent) {
                 .menuItem.getAttribute("checked") == "true") ? 1 : 0);
       });
 
-      var activeFrames = runsFramedNoframesDisable + "/"
+      let activeFrames = runsFramedNoframesDisable + "/"
           + runsFramedEnable + "/" + runsFramed.length;
-      var activeFramesElm = aEvent.target
+      let activeFramesElm = aEvent.target
           .getElementsByClassName("greasemonkey-tooltip-active")[1];
       activeFramesElm.setAttribute("value",
-          gStringBundle.GetStringFromName("tooltip.activeFrames")
+          GM_CONSTANTS.localeStringBundle.createBundle(
+              GM_CONSTANTS.localeGmBrowserProperties)
+              .GetStringFromName("tooltip.activeFrames")
               .replace("%1", activeFrames)
       );
-      var activeTop = runsOnTopEnable + "/" + runsOnTop.length;
-      var activeTopElm = aEvent.target
+      let activeTop = runsOnTopEnable + "/" + runsOnTop.length;
+      let activeTopElm = aEvent.target
           .getElementsByClassName("greasemonkey-tooltip-active")[0];
       activeTopElm.setAttribute("value",
-          gStringBundle.GetStringFromName("tooltip.activeTop")
+          GM_CONSTANTS.localeStringBundle.createBundle(
+              GM_CONSTANTS.localeGmBrowserProperties)
+              .GetStringFromName("tooltip.activeTop")
               .replace("%1", activeTop)
       );
     } else {
@@ -528,7 +597,7 @@ function GM_showTooltip(aEvent) {
   callback = function (aMessage) {
     mm.removeMessageListener("greasemonkey:frame-urls", callback);
 
-    var urls = aMessage.data.urls;
+    let urls = aMessage.data.urls;
     setTooltip(urls);
   };
 

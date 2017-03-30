@@ -1,30 +1,52 @@
-window.addEventListener('load', function() {
-  var args = window.arguments;
-  if (!args) return;
-  if (!(args[0] instanceof Ci.nsIDialogParamBlock)) return;
-  args = args[0].GetString(1);
-  if (!args) return;
-  args = JSON.parse(args);
-  if (!args.filename) return;
-  if (!args.filename.match(/\.user\.js$/)) return;
+window.addEventListener("load", function () {
+  let {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-  Components.utils.import('chrome://greasemonkey-modules/content/util.js');
+  Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
+  let args = window.arguments;
+  if (!args) {
+    return undefined;
+  }
+  if (!(args[0] instanceof Ci.nsIDialogParamBlock)) {
+    return undefined;
+  }
+  args = args[0].GetString(1);
+  if (!args) {
+    return undefined;
+  }
+  args = JSON.parse(args);
+  if (!args.filename) {
+    return undefined;
+  }
+  if (!args.filename.match(
+      new RegExp(GM_CONSTANTS.fileScriptExtensionRegexp + "$", ""))) {
+    return undefined;
+  }
+
+  Cu.import("chrome://greasemonkey-modules/content/util.js");
 
   // If we're opening a user script:
-  // Put the cursor at the top.  Workaround for #1708 ; remove when
-  // http://bugzil.la/843597 is fixed.
+  // Put the cursor at the top.
+  // See #1708.
+  // Remove when http://bugzil.la/843597 is fixed.
   var initializeCheckCount = 0;
   var initializeCheckTimer = null;
   function moveCursorToTop() {
     if (initializeCheckCount > 50) {
-      GM_util.logError('Gave up waiting for Scratchpad.initialized!');
+      GM_util.logError(
+          "Greasemonkey - Gave up waiting for Scratchpad.initialized.");
       clearInterval(initializeCheckTimer);
     }
     initializeCheckCount++;
 
-    if (!Scratchpad.initialized) return;
+    if (!Scratchpad.initialized) {
+      return undefined;
+    }
 
-    Scratchpad.editor.setCursor({line: 0, ch: 0});
+    Scratchpad.editor.setCursor({
+      "line": 0,
+      "ch": 0,
+    });
 
     clearInterval(initializeCheckTimer);
   }
@@ -33,38 +55,47 @@ window.addEventListener('load', function() {
   // Hide all the elements which don't make sense when editing a script.
   // See #1771 and #1774.
   function setNodeAttr(aId, aAttr, aVal) {
-    var el = document.getElementById(aId);
-    if (el) el.setAttribute(aAttr, aVal);
+    let el = document.getElementById(aId);
+    if (el) {
+      el.setAttribute(aAttr, aVal);
+    }
   }
 
-  setNodeAttr('sp-execute-menu', 'collapsed', true);
-  setNodeAttr('sp-environment-menu', 'collapsed', true);
-  setNodeAttr('sp-toolbar-run', 'collapsed', true);
-  setNodeAttr('sp-toolbar-inspect', 'collapsed', true);
-  setNodeAttr('sp-toolbar-display', 'collapsed', true);
+  setNodeAttr("sp-execute-menu", "collapsed", true);
+  setNodeAttr("sp-environment-menu", "collapsed", true);
+  setNodeAttr("sp-toolbar-run", "collapsed", true);
+  setNodeAttr("sp-toolbar-inspect", "collapsed", true);
+  setNodeAttr("sp-toolbar-display", "collapsed", true);
 
   // Plus the keyboard shortcuts for them.
-  setNodeAttr('sp-key-run', 'disabled', true);
-  setNodeAttr('sp-key-inspect', 'disabled', true);
-  setNodeAttr('sp-key-display', 'disabled', true);
-  setNodeAttr('sp-key-evalFunction', 'disabled', true);
-  setNodeAttr('sp-key-reloadAndRun', 'disabled', true);
+  setNodeAttr("sp-key-run", "disabled", true);
+  setNodeAttr("sp-key-inspect", "disabled", true);
+  setNodeAttr("sp-key-display", "disabled", true);
+  setNodeAttr("sp-key-evalFunction", "disabled", true);
+  setNodeAttr("sp-key-reloadAndRun", "disabled", true);
 
   // But the context menu items can't be accessed by ID (?!) so iterate.
-  var textPopup = document.getElementById('scratchpad-text-popup');
+  let textPopup = document.getElementById("scratchpad-text-popup");
   if (textPopup) {
-    for (var i = 0, node = null; node = textPopup.childNodes[i]; i++) {
-      if ('sp-text-run' == node.id) {
+    for (let i = 0, iLen = textPopup.childNodes.length; i < iLen; i++) {
+      let node = textPopup.childNodes[i];
+      if (node.id == "sp-text-run") {
         node.collapsed = true;
         if (node.previousSibling && (node.previousSibling.tagName.toLowerCase()
             == "menuseparator")) {
           node.previousSibling.collapsed = true;
         }
       }
-      if ('sp-text-inspect' == node.id) node.collapsed = true;
-      if ('sp-text-display' == node.id) node.collapsed = true;
-      if ('sp-text-evalFunction' == node.id) node.collapsed = true;
-      if ('sp-text-reloadAndRun' == node.id) {
+      if (node.id == "sp-text-inspect") {
+        node.collapsed = true;
+      }
+      if (node.id == "sp-text-display") {
+        node.collapsed = true;
+      }
+      if (node.id == "sp-text-evalFunction") {
+        node.collapsed = true;
+      }
+      if (node.id == "sp-text-reloadAndRun") {
         node.collapsed = true;
         if (node.previousSibling && (node.previousSibling.tagName.toLowerCase()
             == "menuseparator")) {

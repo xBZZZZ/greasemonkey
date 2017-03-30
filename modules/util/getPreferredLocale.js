@@ -1,13 +1,27 @@
-Components.utils.import("resource://gre/modules/Services.jsm");
-Components.utils.import('chrome://greasemonkey-modules/content/util.js');
+const EXPORTED_SYMBOLS = ["getPreferredLocale"];
 
-var EXPORTED_SYMBOLS = ['getPreferredLocale'];
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-var preferredLocale = (function() {
-  var matchOS = Services.prefs.getBoolPref("intl.locale.matchOS");
+Cu.import("resource://gre/modules/Services.jsm");
 
-  if (matchOS)
-    return Services.locale.getLocaleComponentForUserAgent();
+Cu.import("chrome://greasemonkey-modules/content/util.js");
+
+
+var preferredLocale = (function () {
+  let matchOS = Services.prefs.getBoolPref("intl.locale.matchOS");
+
+  if (matchOS) {
+    try {
+      return Services.locale.getLocaleComponentForUserAgent();
+    } catch (e) {
+      // Firefox 54+
+      // http://bugzil.la/1337551
+      // http://bugzil.la/1344901
+      return Cc["@mozilla.org/intl/ospreferences;1"]
+          .getService(Ci.mozIOSPreferences)
+          .systemLocale;
+    }
+  }
 
   return Services.prefs.getCharPref("general.useragent.locale") || "en-US";
 })();

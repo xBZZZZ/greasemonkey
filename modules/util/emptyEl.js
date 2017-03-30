@@ -1,5 +1,8 @@
-var EXPORTED_SYMBOLS = ['emptyEl'];
+const EXPORTED_SYMBOLS = ["emptyEl"];
+
 
 function emptyEl(el) {
-  while (el.firstChild) el.removeChild(el.firstChild);
+  while (el.firstChild) {
+    el.removeChild(el.firstChild);
+  }
 }

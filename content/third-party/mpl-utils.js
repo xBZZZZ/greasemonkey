@@ -31,27 +31,32 @@ Contributor(s):
   Mike Medley <medleymind@gmail.com>
 ***** END LICENSE BLOCK ****/
 
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+
 function GM_openFolder(aFile) {
   try {
     // Show the directory containing the file and select the file.
-    aFile.QueryInterface(Components.interfaces.nsIFile).reveal();
+    aFile.QueryInterface(Ci.nsIFile).reveal();
   } catch (e) {
-    // Either the file doesn't exist or reveal is not implemented
+    // Either the file doesn't exist or reveal is not implemented.
     var fParent = aFile.parent;
 
     try {
       // Launch the parent directory if the file doesn't exist.
-      if (fParent.exists()) fParent.launch();
+      if (fParent.exists()) {
+        fParent.launch();
+      }
     } catch (e) {
       // If launch also fails let the OS handler try to open the parent.
-      var uri = Components.classes["@mozilla.org/network/io-service;1"]
-          .getService(Components.interfaces.nsIIOService)
+      let uri = Cc["@mozilla.org/network/io-service;1"]
+          .getService(Ci.nsIIOService)
           .newFileURI(fParent);
-      var protocolSvc = Components
-          .classes["@mozilla.org/uriloader/external-protocol-service;1"]
-          .getService(Components.interfaces.nsIExternalProtocolService);
+      let externalProtocolSvc = 
+          Cc["@mozilla.org/uriloader/external-protocol-service;1"]
+          .getService(Ci.nsIExternalProtocolService);
 
-      protocolSvc.loadUrl(uri);
+      externalProtocolSvc.loadUrl(uri);
     }
   }
 }

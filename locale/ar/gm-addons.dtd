@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "أ">
 <!ENTITY Show "عرض المجلد المتضمن">
 <!ENTITY Show.accesskey "ع">
-<!ENTITY Sort.ByStatus "فرز حسب الحالة">
-<!ENTITY Sort.Status "الحالة">
-<!ENTITY Sort.ByName "فرز حسب الأسم">
-<!ENTITY Sort.Name "الأسم">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "فرز حسب التنفيذ">
-<!ENTITY Sort.Execution "فرز التنفيذ">
+<!ENTITY Sort.byExecution "فرز حسب التنفيذ">
+<!ENTITY Sort.byName "فرز حسب الأسم">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "فرز حسب الحالة">
+<!ENTITY Sort.execution "فرز التنفيذ">
+<!ENTITY Sort.name "الأسم">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "الحالة">

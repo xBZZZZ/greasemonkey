@@ -17,12 +17,11 @@ toolbar[iconsize="small"] #greasemonkey-tbb {
 
 /* The "blank" ID prevents loops; it's not on the replacement. */
 #greasemonkey-tbb menupopup#blank {
-  -moz-binding: url('chrome://greasemonkey/content/bindings.xml#greasemonkey-tbb')/**/
+  -moz-binding: url("chrome://greasemonkey/content/bindings.xml#greasemonkey-tbb");
 }
 
 .popup-notification-icon[popupid="greasemonkey-grants"],
-.popup-notification-icon[popupid="greasemonkey-notification"]
-{
+.popup-notification-icon[popupid="greasemonkey-notification"] {
   list-style-image: url("chrome://greasemonkey/skin/icon32.png");
 }
 
@@ -35,12 +34,10 @@ toolbar[iconsize="small"] #greasemonkey-tbb {
   padding-top: 5px;
 }
 .greasemonkey-tooltip-total,
-.greasemonkey-tooltip-active
-{
+.greasemonkey-tooltip-active {
   display: none;
 }
 .greasemonkey-tooltip-isActive .greasemonkey-tooltip-total,
-.greasemonkey-tooltip-isActive .greasemonkey-tooltip-active
-{
+.greasemonkey-tooltip-isActive .greasemonkey-tooltip-active {
   display: -moz-box;
 }

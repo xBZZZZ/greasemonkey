@@ -1,55 +1,57 @@
-<!ENTITY menu.install "Gebruikersscript installeren…">
-<!ENTITY menu.install.accesskey "S">
-<!ENTITY menu.show "Broncode van gebruikersscript bekijken">
-<!ENTITY menu.show.accesskey "k">
-<!ENTITY menu.commands "Gebruikersscriptopdrachten…">
-<!ENTITY menu.commands.accesskey "r">
-<!ENTITY menu.new "Nieuw gebruikersscript…">
-<!ENTITY menu.new.accesskey "N">
-<!ENTITY menu.manage "Gebruikersscripts beheren…">
-<!ENTITY menu.manage.accesskey "U">
-<!ENTITY menu.options "Greasemonkey-opties…">
-<!ENTITY menu.options.accesskey "O">
-<!ENTITY menu.websites "Websites…">
-<!ENTITY menu.websites.accesskey "W">
-<!ENTITY menu.websites.greasespot "Greasespot Blog">
-<!ENTITY menu.websites.greasespotwiki "Greasespot Wiki">
-<!ENTITY menu.websites.manual "Greasemonkey-handleiding">
-<!ENTITY menu.websites.getuserscripts "Verkrijg gebruikersscripts">
-<!ENTITY statusbar.enabled "Ingeschakeld">
-<!ENTITY statusbar.enabled.accesskey "I">
-<!ENTITY install.title "Greasemonkey-installatie">
-<!ENTITY install.runson "draait op:">
-<!ENTITY install.matches "overeenkomsten:">
-<!ENTITY install.butnoton "draait niet op:">
-<!ENTITY install.warning1 "Kwaadaardige programmatuur kan uw privacy schenden en namens u handelen zonder uw medeweten.">
-<!ENTITY install.warning2 "Installeer alleen scripts van auteurs die u vertrouwt.">
-<!ENTITY install.showscriptsource "Scriptbron weergeven">
-<!ENTITY install.installbutton "Installeren">
-<!ENTITY install.downloadError "Downloadfout">
-<!ENTITY loading "Downloaden…">
-<!ENTITY newscript.name "Naam">
-<!ENTITY newscript.namespace "Namespace">
-<!ENTITY newscript.description "Beschrijving">
-<!ENTITY newscript.includes "Beïnvloedt (één per regel)">
-<!ENTITY newscript.excludes "Sluit uit (één per regel)">
-<!ENTITY newscript.fromClipboard "Script van klembord gebruiken">
-<!ENTITY options.editor "Tekstverwerker">
-<!ENTITY options.experimental "Experimenteel">
-<!ENTITY options.defaultEditor "Standaard bewerkingsprogramma gebruiken">
-<!ENTITY options.browseForEditor "Naar bewerkingsprogramma bladeren">
-<!ENTITY options.globalExcludes "Sluit globaal uit">
-<!ENTITY options.newScript.template "Nieuw scriptsjabloon">
-<!ENTITY options.newScript.removeUnused "Ongebruikte regels verwijderen">
-<!ENTITY Uninstall "Deïnstalleren">
 <!ENTITY AnonymousStatistics "Anonieme statistieken">
 <!ENTITY EnableSync "Pale Moon Sync voor gebruikersscript activeren">
-<!ENTITY SubmitStats "Verzamel en verstuur anonieme gebruiksstatistieken om Greasemonkey te verbeteren.">
-<!ENTITY UpdateChecking "Updatecontrole">
+<!ENTITY greasemonkey.getUserScripts "Gebruikersscripts verkrijgen">
+<!ENTITY greasemonkey.noScriptShere "Op deze pagina draaien geen geïnstalleerde scripts.">
+<!ENTITY greasemonkey.youHaveNoScripts "Er zijn geen gebruikersscripts geïnstalleerd">
+<!ENTITY install.butNotOn "draait niet op:">
+<!ENTITY install.downloadError "Downloadfout">
+<!ENTITY install.installButton "Installeren">
+<!ENTITY install.matches "overeenkomsten:">
+<!ENTITY install.runsOn "draait op:">
+<!ENTITY install.showScriptSource "Scriptbron weergeven">
+<!ENTITY install.title "Greasemonkey-installatie">
+<!ENTITY install.warning1 "Kwaadaardige programmatuur kan uw privacy schenden en namens u handelen zonder uw medeweten.">
+<!ENTITY install.warning2 "Installeer alleen scripts van auteurs die u vertrouwt.">
+<!ENTITY loading "Downloaden…">
+<!ENTITY menu.commands "Gebruikersscriptopdrachten…">
+<!ENTITY menu.commands.accesskey "r">
+<!ENTITY menu.install "Gebruikersscript installeren…">
+<!ENTITY menu.install.accesskey "S">
+<!ENTITY menu.manage "Gebruikersscripts beheren…">
+<!ENTITY menu.manage.accesskey "U">
+<!ENTITY menu.new "Nieuw gebruikersscript…">
+<!ENTITY menu.new.accesskey "N">
+<!ENTITY menu.options "Greasemonkey-opties…">
+<!ENTITY menu.options.accesskey "O">
+<!ENTITY menu.show "Broncode van gebruikersscript bekijken">
+<!ENTITY menu.show.accesskey "k">
+<!ENTITY menu.webSites "Websites…">
+<!ENTITY menu.webSites.accesskey "W">
+<!ENTITY menu.webSites.getUserScripts "Verkrijg gebruikersscripts">
+<!ENTITY menu.webSites.greasespot "Greasespot Blog">
+<!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
+<!ENTITY menu.webSites.manual "Greasemonkey-handleiding">
+<!ENTITY newscript.description "Beschrijving">
+<!ENTITY newscript.excludes "Sluit uit (één per regel)">
+<!ENTITY newscript.fromClipboard "Script van klembord gebruiken">
+<!ENTITY newscript.includes "Beïnvloedt (één per regel)">
+<!ENTITY newscript.name "Naam">
+<!ENTITY newscript.namespace "Namespace">
+<!ENTITY options.browseForEditor "Naar bewerkingsprogramma bladeren">
+<!ENTITY options.defaultEditor "Standaard bewerkingsprogramma gebruiken">
+<!ENTITY options.editor "Tekstverwerker">
+<!ENTITY options.experimental "Experimenteel">
+<!ENTITY options.globalExcludes "Sluit globaal uit">
+<!ENTITY options.newScript.removeUnused "Ongebruikte regels verwijderen">
+<!ENTITY options.newScript.template "Nieuw scriptsjabloon">
 <!ENTITY RequireSecureUpdates "Beveiligde updates vereisen">
-<!ENTITY greasemonkey.noscriptshere "Op deze pagina draaien geen geïnstalleerde scripts.">
-<!ENTITY greasemonkey.youhavenoscripts "Er zijn geen gebruikersscripts geïnstalleerd">
-<!ENTITY greasemonkey.getuserscripts "Gebruikersscripts verkrijgen">
+<!ENTITY RequireTimeoutUpdates "Require timeout updates">
+<!ENTITY scriptprefs.scriptSettings "Scriptinstellingen">
 <!ENTITY scriptprefs.title "Greasemonkey-gebruikersscriptvoorkeuren - !!">
-<!ENTITY scriptprefs.usersettings "Gebruikersinstellingen">
-<!ENTITY scriptprefs.scriptsettings "Scriptinstellingen">
+<!ENTITY scriptprefs.userSettings "Gebruikersinstellingen">
+<!ENTITY statusbar.enabled "Ingeschakeld">
+<!ENTITY statusbar.enabled.accesskey "I">
+<!ENTITY SubmitStats "Verzamel en verstuur anonieme gebruiksstatistieken om Greasemonkey te verbeteren.">
+<!ENTITY TimeoutUpdatesUnits "Seconds">
+<!ENTITY Uninstall "Deïnstalleren">
+<!ENTITY UpdateChecking "Updatecontrole">

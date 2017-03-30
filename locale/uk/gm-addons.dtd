@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "т">
 <!ENTITY Show "Показати теку, що містить скрипт">
 <!ENTITY Show.accesskey "к">
-<!ENTITY Sort.ByStatus "Сортувати за станом">
-<!ENTITY Sort.Status "Стан">
-<!ENTITY Sort.ByName "Сортувати за назвою">
-<!ENTITY Sort.Name "Назва">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "Сортувати за порядком виконання">
-<!ENTITY Sort.Execution "Порядок виконання">
+<!ENTITY Sort.byExecution "Сортувати за порядком виконання">
+<!ENTITY Sort.byName "Сортувати за назвою">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "Сортувати за станом">
+<!ENTITY Sort.execution "Порядок виконання">
+<!ENTITY Sort.name "Назва">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "Стан">

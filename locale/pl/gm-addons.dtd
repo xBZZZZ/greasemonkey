@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "U">
 <!ENTITY Show "Wyświetl folder skryptów">
 <!ENTITY Show.accesskey "W">
-<!ENTITY Sort.ByStatus "Porządkuj wg statusu">
-<!ENTITY Sort.Status "Status">
-<!ENTITY Sort.ByName "Porządkuj wg nazwy">
-<!ENTITY Sort.Name "Nazwa">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "Porządkuj wg kolejności wykonania">
-<!ENTITY Sort.Execution "Kolejność wykonania">
+<!ENTITY Sort.byExecution "Porządkuj wg kolejności wykonania">
+<!ENTITY Sort.byName "Porządkuj wg nazwy">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "Porządkuj wg statusu">
+<!ENTITY Sort.execution "Kolejność wykonania">
+<!ENTITY Sort.name "Nazwa">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "Status">

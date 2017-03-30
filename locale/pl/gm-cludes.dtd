@@ -1,14 +1,14 @@
-<!ENTITY promptForNewPage.msg "Podaj nowy adres URL. Możesz określić wiele stron, używając wieloznacznika (*).">
-<!ENTITY promptForNewPage.title "Dodaj stronę">
-<!ENTITY promptForNewPage.defVal "http://przyklad.pl/*">
-<!ENTITY promptForEdit.msg "Modyfikuj adres URL strony. Możesz określić wiele stron, używając wieloznacznika (*).">
-<!ENTITY promptForEdit.title "Edytuj stronę">
 <!ENTITY button.add "Dodaj">
 <!ENTITY button.addUserExclude "Dodaj do wykluczonych">
-<!ENTITY button.addUserMatch "Dodaj jako dopasowanie użytkownika">
 <!ENTITY button.addUserInclude "Dodaj do dozwolonych">
+<!ENTITY button.addUserMatch "Dodaj jako dopasowanie użytkownika">
 <!ENTITY button.edit "Edytuj">
 <!ENTITY button.remove "Usuń">
+<!ENTITY label.grpExcluded "Witryny, na których skrypt nie jest uruchamiany">
 <!ENTITY label.grpIncluded "Witryny, na których skrypt jest uruchamiany">
 <!ENTITY label.grpMatched "Dopasowane strony">
-<!ENTITY label.grpExcluded "Witryny, na których skrypt nie jest uruchamiany">
+<!ENTITY promptForEdit.msg "Modyfikuj adres URL strony. Możesz określić wiele stron, używając wieloznacznika (*).">
+<!ENTITY promptForEdit.title "Edytuj stronę">
+<!ENTITY promptForNewPage.defVal "http://przyklad.pl/*">
+<!ENTITY promptForNewPage.msg "Podaj nowy adres URL. Możesz określić wiele stron, używając wieloznacznika (*).">
+<!ENTITY promptForNewPage.title "Dodaj stronę">

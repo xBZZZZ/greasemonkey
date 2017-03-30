@@ -38,23 +38,27 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-var EXPORTED_SYMBOLS = ['MatchPattern'];
+const EXPORTED_SYMBOLS = ["MatchPattern"];
 
-Components.utils.import("chrome://greasemonkey-modules/content/third-party/convert2RegExp.js");
-Components.utils.import("chrome://greasemonkey-modules/content/util.js");
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-var validSchemes = ['http', 'https', 'ftp', 'file'];
-var REG_HOST = /^(?:\*\.)?[^*\/]+$|^\*$|^$/;
-var getString = (function() {
-  var stringBundleService = Components.classes["@mozilla.org/intl/stringbundle;1"]
-      .getService(Components.interfaces.nsIStringBundleService);
-  return stringBundleService.createBundle(
-      'chrome://greasemonkey/locale/greasemonkey.properties')
-      .GetStringFromName;
-})();
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
-// For the format of "pattern", see:
-//   http://code.google.com/chrome/extensions/match_patterns.html
+Cu.import("chrome://greasemonkey-modules/content/third-party/convert2RegExp.js");
+Cu.import("chrome://greasemonkey-modules/content/util.js");
+
+
+const SCHEMES_VALID = ["file", "ftp", "http", "https"];
+// const SCHEMES_VALID_REGEXP = SCHEMES_VALID.join("|");
+
+const HOST_REGEXP = /^(?:\*\.)?[^*\/]+$|^\*$|^$/;
+
+// Firefox - copied this from resource://gre/modules/MatchPattern.jsm
+// const PARTS_REGEXP = new RegExp(`^([a-z]+|\\*)://(\\*|\\*\\.[^*/]+|[^*/]+|)(/.*)$`, "");
+const PARTS_REGEXP = new RegExp("^([a-z*]+)://([^/]+)(?:(/.*))$", "");
+
+// For the format of "pattern".
+// http://code.google.com/chrome/extensions/match_patterns.html
 function MatchPattern(pattern) {
   this._pattern = pattern;
 
@@ -62,41 +66,51 @@ function MatchPattern(pattern) {
   if (pattern == "<all_urls>") {
     this._all = true;
     this._scheme = "all_urls";
-    return;
+    return undefined;
+  } else {
+    this._all = false;
   }
 
-  // Special case wild scheme.
-  if (pattern[0] == "*") {
-    this._wildScheme = true;
-    // Forge http, to satisfy the URI parser, and get a host.
-    pattern = "http" + pattern.slice(1);
-  }
-
-  var uri = GM_util.getUriFromUrl(pattern);
-  if (!uri) {
+  let match = pattern.match(PARTS_REGEXP);
+  // We allow the host to be empty for file URLs.
+  // if (!match || ((match[1] != "file") && (match[2] == ""))) {
+  if (!match) {
+    pattern = "[" + (typeof pattern) + "] " + pattern;
     throw new Error(
-        getString("error.matchPattern.parse").replace("%1", pattern));
+        GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.matchPattern.parse")
+            .replace("%1", pattern));
   }
+  let scheme = match[1];
+  this._scheme = scheme;
+  let host = match[2];
+  let path = match[3];
 
-  var scheme = this._wildScheme ? "all" : uri.scheme;
-  if (scheme != "all" && validSchemes.indexOf(scheme) == -1) {
+  if ((scheme != "*") && (SCHEMES_VALID.indexOf(scheme) == -1)) {
     throw new Error(
-        getString("error.matchPattern.scheme").replace("%1", scheme));
+        GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.matchPattern.scheme")
+            .replace("%1", scheme));
   }
 
-  var host = uri.host;
-  if (!REG_HOST.test(host)) {
+  if (!HOST_REGEXP.test(host)) {
     throw new Error(
-        getString("error.matchPattern.host").replace("%1", host));
+        GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.matchPattern.host")
+            .replace("%1", host));
   }
 
-  var path = uri.path;
   if (path[0] !== "/") {
     throw new Error(
-        getString("error.matchPattern.path").replace("%1", path));
+        GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.matchPattern.path")
+            .replace("%1", path));
   }
 
-  this._scheme = scheme;
   if (host) {
     // We have to manually create the hostname regexp (instead of using
     // GM_convert2RegExp) to properly handle *.example.tld, which should match
@@ -107,8 +121,9 @@ function MatchPattern(pattern) {
         //   - if the hostname only consists of "*" (i.e. full wildcard),
         //     replace it with .*
         host.replace(/\./g, "\\.").replace(/^\*$/, ".*")
-        // Then, handle the special case of "*." (any or no subdomain) for match
-        // patterns. "*." has been escaped to "*\." by the replace above.
+        // Then, handle the special case of "*." (any or no subdomain)
+        // for match patterns. "*." has been escaped to "*\."
+        // by the replace above.
             .replace("*\\.", "(.*\\.)?") + "$", "i");
   } else {
     // If omitted, then it means "", an alias for localhost.
@@ -118,23 +133,23 @@ function MatchPattern(pattern) {
 }
 
 Object.defineProperty(MatchPattern.prototype, "pattern", {
-  get: function MatchPattern_getPattern() {
-    return '' + this._pattern;
+  "get": function MatchPattern_getPattern() {
+    return "" + this._pattern;
   },
-  enumerable: true
+  "enumerable": true,
 });
 
-MatchPattern.prototype.doMatch = function(uriSpec) {
-  var matchURI = GM_util.getUriFromUrl(uriSpec);
+MatchPattern.prototype.doMatch = function (uriSpec) {
+  let matchURI = GM_util.getUriFromUrl(uriSpec);
 
-  if (validSchemes.indexOf(matchURI.scheme) == -1) {
+  if (SCHEMES_VALID.indexOf(matchURI.scheme) == -1) {
     return false;
   }
 
   if (this._all) {
     return true;
   }
-  if (!this._wildScheme && this._scheme != matchURI.scheme) {
+  if ((this._scheme != "*") && (this._scheme != matchURI.scheme)) {
     return false;
   }
   return this._hostExpr.test(matchURI.host)

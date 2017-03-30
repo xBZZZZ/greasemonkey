@@ -1,62 +1,70 @@
-Components.utils.import('chrome://greasemonkey-modules/content/util.js'); // ref'd in XUL
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+// Ref'd in XUL.
+Cu.import('chrome://greasemonkey-modules/content/util.js');
+
 
 var gScriptId = decodeURIComponent(location.hash.substring(1));
-var gScript = GM_util.getService().config.getMatchingScripts(function(script) {
+var gScript = GM_util.getService().config.getMatchingScripts(function (script) {
   return script && (script.id == gScriptId);
 })[0];
 
-var gScriptExcludesEl;
-var gScriptMatchesEl;
-var gScriptIncludesEl;
-var gTabboxEl;
-var gUserExcludesEl;
-var gUserMatchesEl;
-var gUserIncludesEl;
-var gUserTabEl;
+var gElmTabbox = null;
+var gElmUserTab = null;
 
-window.addEventListener('load', function() {
+var gElm = {
+  "scriptIncludes": "script-includes",
+  "scriptMatches": "script-matches",
+  "scriptExcludes": "script-excludes",
+  "userIncludes": "user-includes",
+  "userMatches": "user-matches",
+  "userExcludes": "user-excludes",
+};
+
+window.addEventListener("load", function () {
   // I wanted "%s" but % is reserved in a DTD and I don't know the literal.
-  document.title = document.title.replace('!!', gScript.localized.name);
+  document.title = document.title.replace("!!", gScript.localized.name);
 
-  var gTabboxEl = document.getElementsByTagName('tabbox')[0];
-  gUserTabEl = gTabboxEl.tabs.getItemAtIndex(0);
+  gElmTabbox = document.getElementsByTagName("tabbox")[0];
+  gElmUserTab = gElmTabbox.tabs.getItemAtIndex(0);
 
-  gUserIncludesEl = document.getElementById('user-includes');
-  gUserMatchesEl = document.getElementById('user-matches');
-  gUserExcludesEl = document.getElementById('user-excludes');
-  gScriptIncludesEl = document.getElementById('script-includes');
-  gScriptMatchesEl = document.getElementById('script-matches');
-  gScriptExcludesEl = document.getElementById('script-excludes');
+  Object.getOwnPropertyNames(gElm).forEach(function (prop) {
+    gElm[prop] = document.getElementById(gElm[prop]);
+  });
 
-  gScriptIncludesEl.pages = gScript.includes;
-  gScriptIncludesEl.onAddUserExclude = function(url) {
-    gUserExcludesEl.addPage(url);
-    gTabboxEl.selectedTab = gUserTabEl;
+  gElm.scriptIncludes.pages = gScript.includes;
+  gElm.scriptIncludes.onAddUserExclude = function (page) {
+    gElm.userExcludes.addPage(page);
+    gElmTabbox.selectedTab = gElmUserTab;
   };
-  gUserIncludesEl.pages = gScript.userIncludes;
+  gElm.userIncludes.pages = gScript.userIncludes;
 
-  var matchesPattern = [];
-  for (var i = 0, count = gScript.matches.length; i < count; i++) {
+  let matchesPattern = [];
+  for (let i = 0, iLen = gScript.matches.length; i < iLen; i++) {
     matchesPattern.push(gScript.matches[i].pattern);
   }
-  gScriptMatchesEl.pages = matchesPattern;
-  var userMatchesPattern = [];
-  for (var i = 0, count = gScript.userMatches.length; i < count; i++) {
+  gElm.scriptMatches.pages = matchesPattern;
+  let userMatchesPattern = [];
+  for (var i = 0, iLen = gScript.userMatches.length; i < iLen; i++) {
     userMatchesPattern.push(gScript.userMatches[i].pattern);
   }
-  gUserMatchesEl.pages = userMatchesPattern;
+  gElm.userMatches.pages = userMatchesPattern;
 
-  gScriptExcludesEl.pages = gScript.excludes;
-  gScriptExcludesEl.onAddUserInclude = function(url) {
-    gUserIncludesEl.addPage(url);
-    gTabboxEl.selectedTab = gUserTabEl;
+  gElm.scriptExcludes.pages = gScript.excludes;
+  gElm.scriptExcludes.onAddUserInclude = function (page) {
+    gElm.userIncludes.addPage(page);
+    gElmTabbox.selectedTab = gElmUserTab;
   };
-  gUserExcludesEl.pages = gScript.userExcludes;
+  gElm.userExcludes.pages = gScript.userExcludes;
+
+  if (navigator.platform.indexOf("Win") != -1) {
+    document.getElementById("resizer").style.display = "block";
+  }
 }, false);
 
 function onDialogAccept() {
-  gScript.userIncludes = gUserIncludesEl.pages;
-  gScript.userMatches = gUserMatchesEl.pages;
-  gScript.userExcludes = gUserExcludesEl.pages;
+  gScript.userIncludes = gElm.userIncludes.pages;
+  gScript.userMatches = gElm.userMatches.pages;
+  gScript.userExcludes = gElm.userExcludes.pages;
   GM_util.getService().config._changed(gScript, "cludes");
 }

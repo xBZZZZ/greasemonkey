@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "Н">
 <!ENTITY Show "Прикажи фасциклу у којој се налази">
 <!ENTITY Show.accesskey "Ф">
-<!ENTITY Sort.ByStatus "Поређај по стању">
-<!ENTITY Sort.Status "Стање">
-<!ENTITY Sort.ByName "Поређај по називу">
-<!ENTITY Sort.Name "Назив">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "Поређај по редоследу извршавања">
-<!ENTITY Sort.Execution "Ред. извршавања">
+<!ENTITY Sort.byExecution "Поређај по редоследу извршавања">
+<!ENTITY Sort.byName "Поређај по називу">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "Поређај по стању">
+<!ENTITY Sort.execution "Ред. извршавања">
+<!ENTITY Sort.name "Назив">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "Стање">

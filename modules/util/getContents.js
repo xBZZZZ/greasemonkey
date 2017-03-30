@@ -1,40 +1,51 @@
-var EXPORTED_SYMBOLS = ['getContents'];
+const EXPORTED_SYMBOLS = ["getContents"];
 
-Components.utils.import("resource://gre/modules/Services.jsm");
-Components.utils.import('chrome://greasemonkey-modules/content/util.js');
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-var scriptableStream=Components
-    .classes["@mozilla.org/scriptableinputstream;1"]
-    .getService(Components.interfaces.nsIScriptableInputStream);
-var unicodeConverter = Components
-    .classes["@mozilla.org/intl/scriptableunicodeconverter"]
-    .createInstance(Components.interfaces.nsIScriptableUnicodeConverter);
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
+Cu.import("resource://gre/modules/Services.jsm");
+
+Cu.import("chrome://greasemonkey-modules/content/util.js");
+
+
+const SCRIPTABLE_INPUT_STREAM = Cc["@mozilla.org/scriptableinputstream;1"]
+    .getService(Ci.nsIScriptableInputStream);
+const SCRIPTABLE_UNICODE_CONVERTER = 
+    Cc["@mozilla.org/intl/scriptableunicodeconverter"]
+    .createInstance(Ci.nsIScriptableUnicodeConverter);
 
 function getContents(aFile, aCharset, aFatal) {
   if (!aFile.isFile()) {
     throw new Error(
-        'Greasemonkey tried to get contents of non-file:\n' + aFile.path);
+        "Greasemonkey tried to get contents of non-file:" + "\n" + aFile.path);
   }
-  unicodeConverter.charset = aCharset || 'UTF-8';
+  SCRIPTABLE_UNICODE_CONVERTER.charset = aCharset
+      || GM_CONSTANTS.fileScriptCharset;
 
-  var channel = GM_util.getChannelFromUri(GM_util.getUriFromFile(aFile));
+  let channel = GM_util.getChannelFromUri(GM_util.getUriFromFile(aFile));
+  let input = null;
   try {
-    var input = channel.open();
+    input = channel.open();
   } catch (e) {
-    GM_util.logError(new Error("Could not open file: " + aFile.path));
+    GM_util.logError(
+        "getContents - Could not open file:" + "\n" + aFile.path, false,
+        e.fileName, e.lineNumber);
     return "";
   }
 
-  scriptableStream.init(input);
-  var str = scriptableStream.read(input.available());
-  scriptableStream.close();
+  SCRIPTABLE_INPUT_STREAM.init(input);
+  let str = SCRIPTABLE_INPUT_STREAM.read(input.available());
+  SCRIPTABLE_INPUT_STREAM.close();
+
   input.close();
 
   try {
-    return unicodeConverter.ConvertToUnicode(str);
+    return SCRIPTABLE_UNICODE_CONVERTER.ConvertToUnicode(str);
   } catch (e) {
-    if (aFatal) throw e;
+    if (aFatal) {
+      throw e;
+    }
     return str;
   }
 }

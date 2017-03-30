@@ -4,8 +4,8 @@
 
 <commandset>
   <command id="cmd_close"
-      oncommand="if ('undefined' != typeof GM_onClose) GM_onClose(); window.close();"
-      />
+    oncommand="if (typeof GM_onClose != 'undefined') { GM_onClose(); }
+      window.close();" />
 </commandset>
 
 <keyset>

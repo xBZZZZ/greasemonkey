@@ -1,8 +1,6 @@
-var EXPORTED_SYMBOLS = [];
+const EXPORTED_SYMBOLS = [];
 
-var Cc = Components.classes;
-var Ci = Components.interfaces;
-var Cu = Components.utils;
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
 (function initSync() {
 
@@ -10,98 +8,113 @@ var gWeave = {};
 try {
   // The files we're trying to import below don't exist in Pale Moon builds
   // without sync service, causing the import to throw.
-  Cu.import('resource://services-sync/engines.js', gWeave);
-  Cu.import('resource://services-sync/record.js', gWeave);
-  Cu.import('resource://services-sync/status.js', gWeave);
-  Cu.import('resource://services-sync/util.js', gWeave);
+  Cu.import("resource://services-sync/engines.js", gWeave);
+  Cu.import("resource://services-sync/record.js", gWeave);
+  Cu.import("resource://services-sync/status.js", gWeave);
+  Cu.import("resource://services-sync/util.js", gWeave);
 } catch (e) {
   // If there's no sync service, it doesn't make sense to continue.
-  return;
+  return undefined;
 }
 
+Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
-Cu.import('resource://gre/modules/XPCOMUtils.jsm');
-Cu.import('resource://services-crypto/utils.js');
+Cu.import("resource://services-crypto/utils.js");
 
 Cu.import("chrome://greasemonkey-modules/content/miscapis.js");
-Cu.import('chrome://greasemonkey-modules/content/prefmanager.js');
-Cu.import('chrome://greasemonkey-modules/content/remoteScript.js');
+Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/remoteScript.js");
 Cu.import("chrome://greasemonkey-modules/content/storageBack.js");
-Cu.import('chrome://greasemonkey-modules/content/util.js');
+Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
 var gSyncInitialized = false;
 
 var SyncServiceObserver = {
-  init: function() {
+  "init": function () {
     if (gWeave.Status.ready) {
       this.initEngine();
     } else {
-      // See #2335 -- The 'weave:service:ready' observer has been identified
-      // as unreliable (e10s?).  Manually poll instead.
-      GM_util.timeout(GM_util.hitch(SyncServiceObserver, 'init'), 1000);
+      // See #2335.
+      // The "weave:service:ready" observer has been identified
+      // as unreliable (e10s?).
+      // Manually poll instead.
+      GM_util.timeout(GM_util.hitch(SyncServiceObserver, "init"), 1000);
     }
   },
 
-  initEngine: function() {
-    if (gSyncInitialized) return;
+  "initEngine": function () {
+    if (gSyncInitialized) {
+      return undefined;
+    }
     gSyncInitialized = true;
 
-    // Delay importing the actual Sync service to prevent conflicts with
-    // the master password dialog during browser startup. See #1852.
-    Cu.import('resource://services-sync/service.js', gWeave);
+    // See #1852.
+    // Delay importing the actual Sync service to prevent conflicts
+    // with the master password dialog during browser startup.
+    Cu.import("resource://services-sync/service.js", gWeave);
 
     gWeave.Service.engineManager.register(ScriptEngine);
   },
 
-  QueryInterface: XPCOMUtils.generateQI([Ci.nsISupportsWeakReference]),
+  "QueryInterface": XPCOMUtils.generateQI([Ci.nsISupportsWeakReference]),
 };
-
 
 function ScriptRecord(aCollection, aId) {
   gWeave.CryptoWrapper.call(this, aCollection, aId);
 }
-ScriptRecord.prototype = {
-  __proto__: gWeave.CryptoWrapper.prototype,
-  _logName: 'Record.GreasemonkeyScript',
-};
-gWeave.Utils.deferGetSet(
-    ScriptRecord, 'cleartext',
-    ['id', 'downloadURL', 'enabled', 'installed',
-     'userExcludes', 'userMatches', 'userIncludes',
-     'values', 'valuesTooBig',
-    ]);
 
+ScriptRecord.prototype = {
+  "__proto__": gWeave.CryptoWrapper.prototype,
+
+  "_logName": "Record.GreasemonkeyScript",
+};
+
+gWeave.Utils.deferGetSet(
+    ScriptRecord, "cleartext",
+    [
+      "downloadURL",
+      "enabled",
+      "id",
+      "installed",
+      "userExcludes",
+      "userIncludes",
+      "userMatches",
+      "values",
+      "valuesTooBig",
+    ]);
 
 function ScriptStore(aName, aEngine) {
   gWeave.Store.call(this, aName, aEngine);
 }
-ScriptStore.prototype = {
-  __proto__: gWeave.Store.prototype,
 
-  changeItemID: function(aOldId, aNewId) {
-    dump('>>> ScriptStore.changeItemID() ... '
-        + aOldId.substr(0, 8) + ' ' + aNewId.substr(0, 8) + '\n');
+ScriptStore.prototype = {
+  "__proto__": gWeave.Store.prototype,
+
+  "changeItemID": function (aOldId, aNewId) {
+    dump(">>> Sync - ScriptStore.changeItemID... "
+        + aOldId.substr(0, 8) + " " + aNewId.substr(0, 8) + "\n");
   },
 
-  /// Incoming Sync record, create local version.
-  create: function(aRecord) {
+  // Incoming Sync record, create local version.
+  "create": function (aRecord) {
     if (aRecord.cleartext.installed) {
-      var url = aRecord.cleartext.downloadURL;
+      let url = aRecord.cleartext.downloadURL;
       if (!url) {
-        dump('Ignoring incoming sync record with empty downloadURL!\n');
-        return;
+        dump("Sync - Ignoring incoming sync record with empty downloadURL."
+            + "\n");
+        return undefined;
       }
       if (!GM_util.getUriFromUrl(url)) {
-        dump('Ignoring incoming sync record with bad downloadURL:\n'
-            + url + '\n');
-        return;
+        dump("Sync - Ignoring incoming sync record with bad downloadURL:"
+            + "\n" + url + "\n");
+        return undefined;
       }
 
       var rs = new RemoteScript(aRecord.cleartext.downloadURL);
       rs.setSilent();
-      rs.download(GM_util.hitch(this, function(aSuccess, aType) {
-        if (aSuccess && 'dependencies' == aType) {
+      rs.download(GM_util.hitch(this, function (aSuccess, aType) {
+        if (aSuccess && (aType == "dependencies")) {
           rs.install();
           rs.script.enabled = aRecord.cleartext.enabled;
           rs.script.userExcludes = aRecord.cleartext.userExcludes;
@@ -111,15 +124,17 @@ ScriptStore.prototype = {
         }
       }));
     } else {
-      var script = scriptForSyncId(aRecord.cleartext.id);
-      if (script) GM_util.getService().config.uninstall(script);
+      let script = scriptForSyncId(aRecord.cleartext.id);
+      if (script) {
+        GM_util.getService().config.uninstall(script);
+      }
     }
   },
 
   /// New local item, create sync record.
-  createRecord: function(aId, aCollection) {
-    var script = scriptForSyncId(aId);
-    var record = new ScriptRecord();
+  "createRecord": function (aId, aCollection) {
+    let script = scriptForSyncId(aId);
+    let record = new ScriptRecord();
     record.cleartext.id = aId;
     if (!script) {
       // Assume this script was not found because it was uninstalled.
@@ -133,24 +148,26 @@ ScriptStore.prototype = {
       record.cleartext.userMatches = script.userMatches;
       record.cleartext.userIncludes = script.userIncludes;
 
-      if (GM_prefRoot.getValue('sync.values')) {
-        var storage = new GM_ScriptStorageBack(script);
-        var totalSize = 0;
-        var maxSize = GM_prefRoot.getValue('sync.values_max_size_per_script');
+      if (GM_prefRoot.getValue("sync.values")) {
+        let storage = new GM_ScriptStorageBack(script);
+        let totalSize = 0;
+        let maxSize = GM_prefRoot.getValue("sync.values_maxSizePerScript");
         record.cleartext.values = {};
         record.cleartext.valuesTooBig = false;
-        var names = storage.listValues();
-        for (var i = 0, name = null; name = names[i]; i++) {
-          var val = storage.getValue(name);
+        let names = storage.listValues();
+        for (let i = 0, iLen = names.length; i < iLen; i++) {
+          let name = names[i];
+          let val = storage.getValue(name);
           try {
             val = JSON.parse(val);
           } catch (e) {
-            dump('JSON parse error? ' + uneval(e) + '\n');
+            dump("Sync - JSON parse error?" + "\n" + uneval(e) + "\n");
             continue;
           }
           record.cleartext.values[name] = val;
           totalSize += name.length;
-          totalSize += val.length || 4;  // 4 for number / bool (no length).
+          // 4 for number / bool (no length).
+          totalSize += val.length || 4;
 
           if (totalSize > maxSize) {
             record.cleartext.values = [];
@@ -160,39 +177,49 @@ ScriptStore.prototype = {
         }
       }
     }
+
     return record;
   },
 
-  getAllIDs: function() {
-    var syncIds = {};
-    var scripts = GM_util.getService().config.scripts;
-    for (var i = 0, script = null; script = scripts[i]; i++) {
-      if (!script.downloadURL) continue;
-      if (script.downloadURL.match(/^file:/)) continue;
+  "getAllIDs": function () {
+    let syncIds = {};
+    let scripts = GM_util.getService().config.scripts;
+    for (let i = 0, iLen = scripts.length; i < iLen; i++) {
+      let script = scripts[i];
+      if (!script.downloadURL) {
+        continue;
+      }
+      if (script.downloadURL.match(new RegExp("^file:", ""))) {
+        continue;
+      }
       syncIds[syncId(script)] = 1;
     }
+
     return syncIds;
   },
 
-  isAddonSyncable: function(aAddon) {
+  "isAddonSyncable": function (aAddon) {
     return true;
   },
 
-  itemExists: function(aId) {
-    var script = scriptForSyncId(aId);
+  "itemExists": function (aId) {
+    let script = scriptForSyncId(aId);
     return !!script;
   },
 
-  remove: function(aRecord) {
-    var script = scriptForSyncId(aRecord.cleartext.id);
-    if (script) GM_util.getService().config.uninstall(script);
+  "remove": function (aRecord) {
+    let script = scriptForSyncId(aRecord.cleartext.id);
+    if (script) {
+      GM_util.getService().config.uninstall(script);
+    }
   },
 
-  update: function(aRecord) {
-    var script = scriptForSyncId(aRecord.cleartext.id);
+  "update": function (aRecord) {
+    let script = scriptForSyncId(aRecord.cleartext.id);
     if (!script) {
-      dump('Could not find script for record ' + aRecord.cleartext + '\n');
-      return;
+      dump("Sync - Could not find script for record:"
+          + "\n" + aRecord.cleartext + "\n");
+      return undefined;
     }
     if (!aRecord.cleartext.installed) {
       GM_util.getService().config.uninstall(script);
@@ -205,79 +232,83 @@ ScriptStore.prototype = {
     }
   },
 
-  wipe: function() {
-    dump('>>> ScriptStore.wipe() ...\n');
+  "wipe": function () {
+    dump(">>> Sync - ScriptStore.wipe..." + "\n");
     // Delete everything!
   },
 };
-
 
 function ScriptTracker(aName, aEngine) {
   gWeave.Tracker.call(this, aName, aEngine);
   GM_util.getService().config.addObserver(this);
 }
 ScriptTracker.prototype = {
-  __proto__: gWeave.Tracker.prototype,
+  "__proto__": gWeave.Tracker.prototype,
 
-  notifyEvent: function(aScript, aEvent, aData) {
+  "notifyEvent": function (aScript, aEvent, aData) {
     if (aEvent in {
-        'install': 1, 'uninstall': 1, 'modified': 1, 'edit-enabled': 1}) {
+        "edit-enabled": 1,
+        "install": 1,
+        "modified": 1,
+        "uninstall": 1,
+    }) {
       if (this.addChangedID(syncId(aScript))) {
         this.score = Math.min(100, this.score + 5);
       }
-    } else if (aEvent in {'cludes': 1, 'val-set': 1, 'val-del': 1}) {
+    } else if (aEvent in {
+      "cludes": 1,
+      "val-del": 1,
+      "val-set": 1,
+    }) {
       if (this.addChangedID(syncId(aScript))) {
         this.score = Math.min(100, this.score + 1);
       }
     }
-  }
+  },
 };
-
 
 function ScriptEngine() {
-  gWeave.SyncEngine.call(this, 'Greasemonkey', gWeave.Service);
+  gWeave.SyncEngine.call(this, "Greasemonkey", gWeave.Service);
 
-  this.enabled = GM_prefRoot.getValue('sync.enabled');
-  GM_prefRoot.watch('sync.enabled', GM_util.hitch(this, function() {
-    this.enabled = GM_prefRoot.getValue('sync.enabled');
+  this.enabled = GM_prefRoot.getValue("sync.enabled");
+  GM_prefRoot.watch("sync.enabled", GM_util.hitch(this, function () {
+    this.enabled = GM_prefRoot.getValue("sync.enabled");
   }));
 }
+
 ScriptEngine.prototype = {
-  __proto__: gWeave.SyncEngine.prototype,
-  _recordObj: ScriptRecord,
-  _storeObj: ScriptStore,
-  _trackerObj: ScriptTracker,
+  "__proto__": gWeave.SyncEngine.prototype,
+  "_recordObj": ScriptRecord,
+  "_storeObj": ScriptStore,
+  "_trackerObj": ScriptTracker,
 };
 
-
 function scriptForSyncId(aSyncId) {
-  var scripts = GM_util.getService().config.scripts;
-  for (var i = 0, script = null; script = scripts[i]; i++) {
+  let scripts = GM_util.getService().config.scripts;
+  for (let i = 0, iLen = scripts.length; i < iLen; i++) {
+    let script = scripts[i];
     if (syncId(script) == aSyncId) {
       return script;
     }
   }
 }
 
-
 // The sync ID for a given script.
 function syncId(aScript) {
-  return GM_util.sha1(aScript.id);
+  return GM_util.hash(aScript.id);
 }
 
-
 function setScriptValuesFromSyncRecord(aScript, aRecord) {
-  if (GM_prefRoot.getValue('sync.values')
-      && !aRecord.cleartext.valuesTooBig
-  ) {
-    // TODO: Clear any locally set values not in the sync record?
-    var storage = new GM_ScriptStorageBack(aScript);
-    for (var name in aRecord.cleartext.values) {
+  if (GM_prefRoot.getValue("sync.values")
+      && !aRecord.cleartext.valuesTooBig) {
+    // TODO:
+    // Clear any locally set values not in the sync record?
+    let storage = new GM_ScriptStorageBack(aScript);
+    for (let name in aRecord.cleartext.values) {
       storage.setValue(name, aRecord.cleartext.values[name]);
     }
   }
 }
-
 
 SyncServiceObserver.init();
 })();

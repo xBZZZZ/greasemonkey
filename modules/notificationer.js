@@ -1,11 +1,10 @@
-var EXPORTED_SYMBOLS = ["GM_notificationer"];
+const EXPORTED_SYMBOLS = ["GM_notificationer"];
 
-Components.utils.import("chrome://greasemonkey-modules/content/util.js");
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-var gStringBundle = Components
-    .classes["@mozilla.org/intl/stringbundle;1"]
-    .getService(Components.interfaces.nsIStringBundleService)
-    .createBundle("chrome://greasemonkey/locale/greasemonkey.properties");
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
+Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
 function GM_notificationer(
@@ -13,7 +12,7 @@ function GM_notificationer(
   this.chromeWin = aChromeWin;  
   this.fileURL = aFileURL;
   this.sandbox = aSandbox;
-  this.sandboxPrincipal = Components.utils.getObjectPrincipal(aSandbox);
+  this.sandboxPrincipal = Cu.getObjectPrincipal(aSandbox);
   this.scriptName = aScriptName;
   this.setupEvent = GM_util.hitch(
       this, "setupEvent", aWrappedContentWin, aSandbox,
@@ -22,9 +21,9 @@ function GM_notificationer(
 }
 
 // This function gets called by user scripts in content security scope.
-GM_notificationer.prototype.contentStart = function(
+GM_notificationer.prototype.contentStart = function (
     aDetailsOrText, aOnDoneOrTitle, aImage, aOnClick) {
-  var _functionEmpty = function () {};
+  let _functionEmpty = function () {};
 
   var details = {
     "highlight": true,
@@ -41,9 +40,9 @@ GM_notificationer.prototype.contentStart = function(
   var _details = {};
 
   if (aDetailsOrText) {
-    if ("object" == typeof aDetailsOrText) {
+    if (typeof aDetailsOrText == "object") {
       // Part 1: Waive Xrays so that we can read callback function properties...
-      aDetailsOrText = Components.utils.waiveXrays(aDetailsOrText);
+      aDetailsOrText = Cu.waiveXrays(aDetailsOrText);
       _details.highlight = aDetailsOrText.highlight;
       _details.image = aDetailsOrText.image;
       _details.message = aDetailsOrText.text;
@@ -56,14 +55,14 @@ GM_notificationer.prototype.contentStart = function(
     }
   }
 
-  if ("undefined" !== typeof _details.highlight) {
+  if (typeof _details.highlight !== "undefined") {
     details.highlight = _details.highlight;
   }
   // i.e. a data scheme
-  if (_details.image && ("string" == typeof _details.image)) {
+  if (_details.image && (typeof _details.image == "string")) {
     details.image = _details.image;
   }
-  if (_details.message && ("string" == typeof _details.message)) {
+  if (_details.message && (typeof _details.message == "string")) {
     details.message = _details.message;
   }
   if (_details.onclick) {
@@ -75,21 +74,21 @@ GM_notificationer.prototype.contentStart = function(
   if (_details.timeout && Number.isInteger(_details.timeout)) {
     details.timeout = _details.timeout;
   }
-  if (_details.title && ("string" == typeof _details.title)) {
+  if (_details.title && (typeof _details.title == "string")) {
     details.title = _details.title;
   }
 
   if (aOnDoneOrTitle) {
-    if ("object" == typeof aDetailsOrText) {
+    if (typeof aDetailsOrText == "object") {
       details.ondone = aOnDoneOrTitle;
-    } else if ("string" == typeof aOnDoneOrTitle) {
+    } else if (typeof aOnDoneOrTitle == "string") {
       details.title = aOnDoneOrTitle;
     }
   }
 
   if (aImage) {
     // i.e. a data scheme
-    if ("string" == typeof aImage) {
+    if (typeof aImage == "string") {
       details.image = aImage;
     }
   }
@@ -100,7 +99,8 @@ GM_notificationer.prototype.contentStart = function(
 
   if ((details.message == "") && !details.highlight) {
     throw new this.wrappedContentWin.Error(
-        gStringBundle
+        GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
             .GetStringFromName("error.notification.messageOrHighlight")
             .replace("%1", details.title),
         this.fileURL, null);
@@ -112,17 +112,19 @@ GM_notificationer.prototype.contentStart = function(
     "onDone": details.ondone,
   };
 
-  if ("function" !== typeof notification.onClick) {
+  if (typeof notification.onClick !== "function") {
     throw new this.wrappedContentWin.Error(
-        gStringBundle
+        GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
             .GetStringFromName("error.notification.callbackIsNotFunction")
             .replace("%1", notification.details.title)
             .replace("%2", "onclick"),
         this.fileURL, null);
   }
-  if ("function" !== typeof notification.onDone) {
+  if (typeof notification.onDone !== "function") {
     throw new this.wrappedContentWin.Error(
-        gStringBundle
+        GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
             .GetStringFromName("error.notification.callbackIsNotFunction")
             .replace("%1", notification.details.title)
             .replace("%2", "ondone"),
@@ -171,7 +173,7 @@ GM_notificationer.prototype.contentStart = function(
 
 // This function is intended to be called in chrome's security context.
 GM_notificationer.prototype.chromeStart =
-function(notification, details) {
+function (notification, details) {
   this.setupEvent(notification, "click", details);
   // Deprecated.
   this.setupEvent(notification, "close", details);
@@ -189,9 +191,9 @@ GM_notificationer.prototype.setupEvent = function (
   // Part 2: ...but ensure that the callback came from a script, not content,
   // by checking that its principal equals that of the sandbox.
   if (eventCallback) {
-    var callbackPrincipal = Components.utils.getObjectPrincipal(eventCallback);
+    let callbackPrincipal = Cu.getObjectPrincipal(eventCallback);
     if (!this.sandboxPrincipal.equals(callbackPrincipal)) {
-      return;
+      return undefined;
     }
   }
 
@@ -207,7 +209,7 @@ GM_notificationer.prototype.setupEvent = function (
       case "click":
         startEventCallback(
             details["on" + "done"],
-            ("undefined" !== notification.onclose));
+            (notification.onclose !== "undefined"));
         break;
       case "close":
         if (!details.timeoutWasReached) {
@@ -216,7 +218,9 @@ GM_notificationer.prototype.setupEvent = function (
         break;
       case "error":
         throw new wrappedContentWin.Error(
-            gStringBundle.GetStringFromName("error.notification.error")
+            GM_CONSTANTS.localeStringBundle.createBundle(
+                GM_CONSTANTS.localeGreasemonkeyProperties)
+                .GetStringFromName("error.notification.error")
                 .replace("%1", details.title),
             fileURL, null);
         break;
@@ -228,10 +232,10 @@ GM_notificationer.prototype.startEventCallback = function (
     wrappedContentWin, details, eventCallback,
     isNothingOrOnCloseExists) {
   if (!eventCallback || isNothingOrOnCloseExists) {
-    return;
+    return undefined;
   }
   if (GM_util.windowIsClosed(wrappedContentWin)) {
-    return;
+    return undefined;
   }
 
   // Pop back onto browser thread and call event handler.

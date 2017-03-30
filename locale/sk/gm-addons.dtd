@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "V">
 <!ENTITY Show "Zobraziť zahrnuté zložky">
 <!ENTITY Show.accesskey "Z">
-<!ENTITY Sort.ByStatus "Zoradiť podľa stavu">
-<!ENTITY Sort.Status "Stav">
-<!ENTITY Sort.ByName "Zoradiť podľa mena">
-<!ENTITY Sort.Name "Meno">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "Zoradiť podľa prevedenia príkazu">
-<!ENTITY Sort.Execution "Podľa poradia">
+<!ENTITY Sort.byExecution "Zoradiť podľa prevedenia príkazu">
+<!ENTITY Sort.byName "Zoradiť podľa mena">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "Zoradiť podľa stavu">
+<!ENTITY Sort.execution "Podľa poradia">
+<!ENTITY Sort.name "Meno">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "Stav">

@@ -1,15 +1,14 @@
-Components.utils.import('chrome://greasemonkey-modules/content/prefmanager.js');
-Components.utils.import('chrome://greasemonkey-modules/content/util.js');
-Components.utils.import("resource://gre/modules/Services.jsm");
+const EXPORTED_SYMBOLS = ["setEditor"];
 
-var EXPORTED_SYMBOLS = ['setEditor'];
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-var stringBundle = Components
-    .classes["@mozilla.org/intl/stringbundle;1"]
-    .getService(Components.interfaces.nsIStringBundleService)
-    .createBundle("chrome://greasemonkey/locale/gm-browser.properties");
-var EDITOR_PROMPT = stringBundle.GetStringFromName("editor.prompt");
-var PICK_EXE = stringBundle.GetStringFromName("editor.please_pick_executable");
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
+Cu.import("resource://gre/modules/Services.jsm");
+
+Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/util.js");
+
 
 function setEditor(aScratchpad) {
   if (aScratchpad) {
@@ -21,26 +20,29 @@ function setEditor(aScratchpad) {
   // pick a non-executable file, so we set this up in a loop so that if they do
   // that we can give them an error and try again.
   while (true) {
-    var nsIFilePicker = Components.interfaces.nsIFilePicker;
-    var filePicker = Components.classes["@mozilla.org/filepicker;1"]
-        .createInstance(nsIFilePicker);
+    let filePicker = Cc["@mozilla.org/filepicker;1"]
+        .createInstance(Ci.nsIFilePicker);
 
     filePicker.init(
-        GM_util.getBrowserWindow(), EDITOR_PROMPT, nsIFilePicker.modeOpen);
-    filePicker.appendFilters(nsIFilePicker.filterApps);
+        GM_util.getBrowserWindow(),
+        GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGmBrowserProperties)
+            .GetStringFromName("editor.prompt"),
+        Ci.nsIFilePicker.modeOpen);
+    filePicker.appendFilters(Ci.nsIFilePicker.filterApps);
     if (Services.appShell.hiddenDOMWindow.navigator.platform
         .indexOf("Win") != -1) {
       filePicker.appendFilter("*.cmd", "*.cmd");
     }
     
-    var editor = GM_util.getEditor();
+    let editor = GM_util.getEditor();
     if (editor) {
       filePicker.defaultString = editor.leafName;
       filePicker.displayDirectory = editor.parent;
     }
 
-    if (filePicker.show() != nsIFilePicker.returnOK) {
-      // The user canceled, return false.
+    if (filePicker.show() != Ci.nsIFilePicker.returnOK) {
+      // The user canceled.
       return false;
     }
 
@@ -48,7 +50,10 @@ function setEditor(aScratchpad) {
       GM_prefRoot.setValue("editor", filePicker.file.path);
       return true;
     } else {
-      GM_util.alert(PICK_EXE);
+      GM_util.alert(
+          GM_CONSTANTS.localeStringBundle.createBundle(
+              GM_CONSTANTS.localeGmBrowserProperties)
+              .GetStringFromName("editor.pleasePickExecutable"));
       return false;
     }
   }

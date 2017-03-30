@@ -1,21 +1,23 @@
-Components.utils.import('chrome://greasemonkey-modules/content/constants.js');
-Components.utils.import('chrome://greasemonkey-modules/content/util.js');
+const EXPORTED_SYMBOLS = ["scriptDir"];
 
-var EXPORTED_SYMBOLS = ['scriptDir'];
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-var SCRIPT_DIR = Components
-    .classes["@mozilla.org/file/directory_service;1"]
-    .getService(Components.interfaces.nsIProperties)
-    .get("ProfD", Components.interfaces.nsIFile);
-SCRIPT_DIR.append("gm_scripts");
-if (!SCRIPT_DIR.exists()) {
-  SCRIPT_DIR.create(
-      Components.interfaces.nsIFile.DIRECTORY_TYPE,
-      GM_constants.directoryMask);
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
+
+const DIRECTORY_SCRIPT = GM_CONSTANTS.directoryService
+    .get(GM_CONSTANTS.directoryServiceScriptName, Ci.nsIFile);
+const DIRECTORY_TYPE = Ci.nsIFile.DIRECTORY_TYPE;
+
+DIRECTORY_SCRIPT.append(GM_CONSTANTS.directoryScriptsName);
+if (!DIRECTORY_SCRIPT.exists()) {
+  DIRECTORY_SCRIPT.create(
+      DIRECTORY_TYPE,
+      GM_CONSTANTS.directoryMask);
 }
-SCRIPT_DIR.normalize();  // in case of symlinks
-
+// In case of symlinks.
+DIRECTORY_SCRIPT.normalize();
 
 function scriptDir() {
-  return SCRIPT_DIR.clone();
+  return DIRECTORY_SCRIPT.clone();
 }

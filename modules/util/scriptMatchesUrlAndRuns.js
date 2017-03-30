@@ -1,9 +1,10 @@
-var EXPORTED_SYMBOLS = ['scriptMatchesUrlAndRuns'];
+const EXPORTED_SYMBOLS = ["scriptMatchesUrlAndRuns"];
+
 
 function scriptMatchesUrlAndRuns(script, url, when) {
   return !script.pendingExec.length
       && script.enabled
       && !script.needsUninstall
-      && (script.runAt == when || 'any' == when)
+      && ((when == script.runAt) || (when == "any"))
       && script.matchesURL(url);
 }

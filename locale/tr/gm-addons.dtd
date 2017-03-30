@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "C">
 <!ENTITY Show "İçeren Klasörü Göster">
 <!ENTITY Show.accesskey "S">
-<!ENTITY Sort.ByStatus "Duruma göre sırala">
-<!ENTITY Sort.Status "Durum">
-<!ENTITY Sort.ByName "İsme göre sırala">
-<!ENTITY Sort.Name "Isim">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "Yürütme sırasına göre sırala">
-<!ENTITY Sort.Execution "Yürütme Sırası">
+<!ENTITY Sort.byExecution "Yürütme sırasına göre sırala">
+<!ENTITY Sort.byName "İsme göre sırala">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "Duruma göre sırala">
+<!ENTITY Sort.execution "Yürütme Sırası">
+<!ENTITY Sort.name "Isim">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "Durum">

@@ -1,31 +1,35 @@
-Components.utils.import('chrome://greasemonkey-modules/content/prefmanager.js');
+const EXPORTED_SYMBOLS = ["enqueueRemoveFile"];
 
-var EXPORTED_SYMBOLS = ['enqueueRemoveFile'];
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
 
 
 function addEnqueuedPath(aPath) {
-  var paths = getEnqueuedPaths();
+  let paths = getEnqueuedPaths();
   paths.push(aPath);
-  GM_prefRoot.setValue('enqueuedRemovals', JSON.stringify(paths));
+  GM_prefRoot.setValue("enqueuedRemovals", JSON.stringify(paths));
 }
 
 function getEnqueuedPaths() {
-  return JSON.parse(GM_prefRoot.getValue('enqueuedRemovals', '[]'));
+  return JSON.parse(GM_prefRoot.getValue("enqueuedRemovals", "[]"));
 }
 
 function removeEnqueuedPath(aPath) {
-  var paths = getEnqueuedPaths();
+  let paths = getEnqueuedPaths();
   do {
     var i = paths.indexOf(aPath);
-    if (i != -1) paths.splice(i, 1);
+    if (i != -1) {
+      paths.splice(i, 1);
+    }
   } while (i != -1);
-  GM_prefRoot.setValue('enqueuedRemovals', JSON.stringify(paths));
+  GM_prefRoot.setValue("enqueuedRemovals", JSON.stringify(paths));
 }
 
-/** Try to remove a file identified by path; return true for success. */
+// Try to remove a file identified by path; return true for success.
 function removePath(aPath, aDoEnqueueFailure) {
-  var file = Components.classes["@mozilla.org/file/local;1"]
-      .createInstance(Components.interfaces.nsILocalFile);
+  let file = Cc["@mozilla.org/file/local;1"]
+      .createInstance(Ci.nsILocalFile);
   try {
     file.initWithPath(aPath);
   } catch (e) {
@@ -37,7 +41,10 @@ function removePath(aPath, aDoEnqueueFailure) {
     try {
       file.remove(false);
     } catch (e) {
-      if (aDoEnqueueFailure) addEnqueuedPath(aPath);
+      if (aDoEnqueueFailure) {
+        addEnqueuedPath(aPath);
+      }
+
       return false;
     }
   }
@@ -50,11 +57,15 @@ function enqueueRemoveFile(aFile) {
 }
 
 // Once at start up, try to remove all enqueued paths.
-(function() {
-  var paths = getEnqueuedPaths();
-  for (var i = 0, path = null; path = paths[i]; i++) {
-    if (removePath(path, false)) {
-      removeEnqueuedPath(path);
+(function () {
+  let _enqueueRemoveFilePaths = getEnqueuedPaths();
+  for (let _enqueueRemoveFileI = 0,
+      _enqueueRemoveFileILen = _enqueueRemoveFilePaths.length;
+      _enqueueRemoveFileI < _enqueueRemoveFileILen;
+      _enqueueRemoveFileI++) {
+    let _enqueueRemoveFilePath = _enqueueRemoveFilePaths[_enqueueRemoveFileI];
+    if (removePath(_enqueueRemoveFilePath, false)) {
+      removeEnqueuedPath(_enqueueRemoveFilePath);
     }
   }
 })();

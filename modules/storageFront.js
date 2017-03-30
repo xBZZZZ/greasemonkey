@@ -1,16 +1,43 @@
-// The "front end" implementation of GM_ScriptStorageFront().  This is loaded into
-// the content process scope and simply delegates to the back end..
+// The "front end" implementation of GM_ScriptStorageFront().
+// This is loaded into the content process scope
+// and simply delegates to the back end.
 
-var Cu = Components.utils;
+const EXPORTED_SYMBOLS = ["GM_ScriptStorageFront"];
+
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
 Cu.import("resource://gre/modules/Services.jsm");
 
-Cu.import("chrome://greasemonkey-modules/content/third-party/getChromeWinForContentWin.js");
-Cu.import('chrome://greasemonkey-modules/content/prefmanager.js');
+Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
-var EXPORTED_SYMBOLS = ['GM_ScriptStorageFront'];
+const MESSAGE_ERROR_PREFIX = "Script storage front end: ";
+const CACHE_AFTER_N_GETS = 3;
+const CACHE_MAX_VALUE = 4096;
+const CACHE_SIZE = 1024;
+
+// \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
+
+var cache = new Map();
+var cacheHitCounter = new Map();
+
+Services.cpmm.addMessageListener("greasemonkey:value-invalidate",
+    function (message) {
+      let data = message.data;
+      data.keys.forEach(invalidateCache);
+    });
+
+function invalidateCache(key) {
+  cache["delete"](key);
+  cacheHitCounter["delete"](key);
+}
+
+function cacheKey(script, name) {
+  return script.uuid + ":" + name;
+}
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
@@ -19,90 +46,141 @@ function GM_ScriptStorageFront(aScript, aMessageManager, aSandbox) {
   this._messageManager = aMessageManager;
   this._sandbox = aSandbox;
   this._script = aScript;
-  this.stringBundle = Components
-    .classes["@mozilla.org/intl/stringbundle;1"]
-    .getService(Components.interfaces.nsIStringBundleService)
-    .createBundle("chrome://greasemonkey/locale/greasemonkey.properties");
 }
 
-
 Object.defineProperty(GM_ScriptStorageFront.prototype, "dbFile", {
-  get: function GM_ScriptStorageFront_getDbFile() {
-    throw 'Script storage front end has no DB file.'
+  "get": function GM_ScriptStorageFront_getDbFile() {
+    throw new Error(MESSAGE_ERROR_PREFIX + "Has no DB file.");
   },
-  enumerable: true
+  "enumerable": true,
 });
-
 
 Object.defineProperty(GM_ScriptStorageFront.prototype, "db", {
-  get: function GM_ScriptStorageFront_getDb() {
-    throw 'Script storage front end has no DB connection.';
+  "get": function GM_ScriptStorageFront_getDb() {
+    throw new Error(MESSAGE_ERROR_PREFIX + "Has no DB connection.");
   },
-  enumerable: true
+  "enumerable": true,
 });
 
-
-GM_ScriptStorageFront.prototype.close = function() {
-  throw 'Script storage front end has no DB connection.';
+GM_ScriptStorageFront.prototype.close = function () {
+  throw new Error(MESSAGE_ERROR_PREFIX + "Has no DB connection.");
 };
 
-
-GM_ScriptStorageFront.prototype.setValue = function(name, val) {
+GM_ScriptStorageFront.prototype.setValue = function (name, val) {
   if (2 !== arguments.length) {
-    throw new Error(this.stringBundle.GetStringFromName('error.args.setValue'));
+    throw new Error(
+        GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.args.setValue"));
   }
 
-  if ('undefined' == typeof val) val = null;
+  let key = cacheKey(this._script, name);
+
+  invalidateCache(key);
+
+  if (typeof val == "undefined") {
+    val = null;
+  }
   this._messageManager.sendSyncMessage(
-      'greasemonkey:scriptVal-set',
-      {scriptId: this._script.id, name: name, val: val});
+      "greasemonkey:scriptVal-set", {
+        "scriptId": this._script.id,
+        "name": name,
+        "val": val,
+      });
 };
 
+GM_ScriptStorageFront.prototype.getValue = function (name, defVal) {
+  var value;
 
-GM_ScriptStorageFront.prototype.getValue = function(name, defVal) {
-  var value = this._messageManager.sendSyncMessage(
-      'greasemonkey:scriptVal-get',
-      {scriptId: this._script.id, name: name});
-  value = value.length && value[0];
+  let key = cacheKey(this._script, name);
 
-  if ('undefined' == typeof defVal) defVal = undefined;
-  if (value === undefined || value === null) return defVal;
+  if (cache.has(key)) {
+    value = cache.get(key);
+  } else {
+    let count = (cacheHitCounter.get(key) || 0) + 1;
+    let intentToCache = count > CACHE_AFTER_N_GETS;
 
-  try {
-    value = JSON.parse(value);
-    return Components.utils.cloneInto(
-        value, this._sandbox, { wrapReflectors: true });
-  } catch (e) {
-    dump('JSON parse error? ' + uneval(e) + '\n');
+    value = this._messageManager.sendSyncMessage(
+        "greasemonkey:scriptVal-get", {
+          "cacheKey": key,
+          "name": name,
+          "scriptId": this._script.id,
+          "willCache": intentToCache,
+        });
+    value = value.length && value[0];
+
+    // Avoid caching large values.
+    if ((typeof value === "string") && (value.length > CACHE_MAX_VALUE)) {
+      count = 0;
+      intentToCache = false;
+    }
+
+    try {
+      value = JSON.parse(value);
+    } catch (e) {
+      GM_util.logError(
+          MESSAGE_ERROR_PREFIX + "JSON parse error:" + "\n" + e, false,
+          e.fileName, e.lineNumber);
+      return defVal;
+    }
+
+    if (intentToCache) {
+      // Clean caches if scripts dynamically generate lots of keys.
+      if (cache.size > CACHE_SIZE) {
+        cache.clear();
+        cacheHitCounter.clear();
+      }
+      cache.set(key, value);
+    }
+
+    cacheHitCounter.set(key, count);
+  }
+
+  if (typeof defVal == "undefined") {
+    defVal = undefined;
+  }
+  if ((value === undefined) || (value === null)) {
     return defVal;
   }
+
+  return Cu.cloneInto(value, this._sandbox, {
+    "wrapReflectors": true,
+  });
 };
 
+GM_ScriptStorageFront.prototype.deleteValue = function (name) {
+  let key = cacheKey(this._script, name);
 
-GM_ScriptStorageFront.prototype.deleteValue = function(name) {
+  invalidateCache(key);
+
   this._messageManager.sendSyncMessage(
-      'greasemonkey:scriptVal-delete',
-      {scriptId: this._script.id, name: name});
+      "greasemonkey:scriptVal-delete", {
+        "cacheKey": key,
+        "name": name,
+        "scriptId": this._script.id,
+      });
 };
 
-
-GM_ScriptStorageFront.prototype.listValues = function() {
+GM_ScriptStorageFront.prototype.listValues = function () {
   var value = this._messageManager.sendSyncMessage(
-      'greasemonkey:scriptVal-list',
-      {scriptId: this._script.id});
+      "greasemonkey:scriptVal-list", {
+        "scriptId": this._script.id,
+      });
   value = value.length && value[0] || [];
 
   try {
     value = JSON.parse(JSON.stringify(value));
-    return Components.utils.cloneInto(
-        value, this._sandbox, { wrapReflectors: true });
+    return Cu.cloneInto(value, this._sandbox, {
+      "wrapReflectors": true,
+    });
   } catch (e) {
-    dump('JSON parse error? ' + uneval(e) + '\n');
-    return Components.utils.cloneInto([], this._sandbox);
+    GM_util.logError(
+        MESSAGE_ERROR_PREFIX + "JSON parse error?" + "\n" + e, false,
+        e.fileName, e.lineNumber);
+    return Cu.cloneInto([], this._sandbox);
   }
 };
 
-
-GM_ScriptStorageFront.prototype.getStats = function() {
-  throw 'Script storage front end does not expose stats.';
+GM_ScriptStorageFront.prototype.getStats = function () {
+  throw new Error(MESSAGE_ERROR_PREFIX + "Does not expose stats.");
 };

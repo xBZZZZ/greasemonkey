@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "N">
 <!ENTITY Show "Arată dosarul ce-l conține">
 <!ENTITY Show.accesskey "D">
-<!ENTITY Sort.ByStatus "Sortează după stare">
-<!ENTITY Sort.Status "Stare">
-<!ENTITY Sort.ByName "Sortează după nume">
-<!ENTITY Sort.Name "Nume">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "Sortează după ordinea de executare">
-<!ENTITY Sort.Execution "Ordine de executare">
+<!ENTITY Sort.byExecution "Sortează după ordinea de executare">
+<!ENTITY Sort.byName "Sortează după nume">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "Sortează după stare">
+<!ENTITY Sort.execution "Ordine de executare">
+<!ENTITY Sort.name "Nume">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "Stare">

@@ -1,8 +1,13 @@
-var EXPORTED_SYMBOLS = ['IPCScript'];
+const EXPORTED_SYMBOLS = ["IPCScript"];
 
-Components.utils.import("resource://gre/modules/Services.jsm");
-Components.utils.import("chrome://greasemonkey-modules/content/util.js");
-Components.utils.import('chrome://greasemonkey-modules/content/abstractScript.js');
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
+Cu.import("resource://gre/modules/Services.jsm");
+
+Cu.import("chrome://greasemonkey-modules/content/abstractScript.js");
+Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
 function IPCScript(aScript, addonVersion) {
@@ -33,129 +38,134 @@ function IPCScript(aScript, addonVersion) {
   this.version = aScript.version;
   this.willUpdate = aScript.isRemoteUpdateAllowed();
 
-  this.matches = aScript.matches.map(function(m) {
-    return m.pattern;
+  this.matches = aScript.matches.map(function (match) {
+    return match.pattern;
   });
-  this.userMatches = aScript.userMatches.map(function(m) {
-    return m.pattern;
+  this.userMatches = aScript.userMatches.map(function (match) {
+    return match.pattern;
   });
 
-  this.requires = aScript.requires.map(function(req) {
+  this.requires = aScript.requires.map(function (req) {
     return {
-      'fileURL': req.fileURL
+      "fileURL": req.fileURL,
     };
   });
 
-  this.resources = aScript.resources.map(function(res) {
+  this.resources = aScript.resources.map(function (res) {
     return {
-      'name': res.name,
-      'mimetype': res.mimetype,
-      'file_url': GM_util.getUriFromFile(res.file).spec,
-      'gm_url': ['greasemonkey-script:', aScript.uuid, '/', res.name].join(''),
+      "name": res.name,
+      "mimetype": res.mimetype,
+      "file_url": GM_util.getUriFromFile(res.file).spec,
+      "gm_url": [
+        GM_CONSTANTS.addonScriptProtocolScheme + ":",
+        aScript.uuid,
+        GM_CONSTANTS.addonScriptProtocolSeparator, res.name
+      ].join(""),
     };
   });
 };
 
-
 IPCScript.prototype = Object.create(AbstractScript.prototype, {
-  constructor: {
-    value: IPCScript
-  }
+  "constructor": {
+    "value": IPCScript,
+  },
 });
 
-
-IPCScript.scriptsForUrl = function(url, when, windowId) {
-  var result = scripts.filter(function(script) {
+IPCScript.scriptsForUrl = function (url, when, windowId) {
+  let result = scripts.filter(function (script) {
     try {
       return GM_util.scriptMatchesUrlAndRuns(script, url, when);
     } catch (e) {
-      // See #1692; Prevent failures like that from being so severe.
+      // See #1692.
+      // Prevent failures like that from being so severe.
       GM_util.logError(e, false, e.fileName, e.lineNumber);
       return false;
     }
   });
+
   return result;
 };
 
-
-IPCScript.prototype.info = function() {
-  var resources = {};
-  for (var i = 0, r = null; r = this.resources[i]; i++) {
-    resources[r.name] = {
-      'name': r.name,
-      'mimetype': r.mimetype,
-      'url': r.gm_url,
+IPCScript.prototype.info = function () {
+  let resources = this.resources.map(function (res) {
+    return {
+      "name": res.name,
+      "mimetype": res.mimetype,
+      "url": res.gm_url,
     };
-  }
+  });
 
   return {
-    'uuid': this.uuid,
-    'version': this.addonVersion,
-    'scriptWillUpdate': this.willUpdate,
-    'script': {
-      'author': this.author,
-      'description': this.description,
-      'excludes': this.excludes,
-      'homepage': this.homepage,
-      // 'icon': ??? source URL?
-      'includes': this.includes,
-      'lastUpdated': this.lastUpdated,
-      'localizedDescription': this.localized.description,
-      'localizedName': this.localized.name,
-      'matches': this.matches,
-      'name': this.name,
-      'namespace': this.namespace,
-      'noframes': this.noframes,
-      // 'requires': ??? source URL?
-      'resources': resources,
-      'run-at': this.runAt,
-      'version': this.version
-    }
+    "script": {
+      "author": this.author,
+      "description": this.description,
+      "excludes": this.excludes,
+      "homepage": this.homepage,
+      // "icon": ? source URL,
+      "includes": this.includes,
+      "lastUpdated": this.lastUpdated,
+      "localizedDescription": this.localized.description,
+      "localizedName": this.localized.name,
+      "matches": this.matches,
+      "name": this.name,
+      "namespace": this.namespace,
+      "noframes": this.noframes,
+      // "requires": ? source URL,
+      "resources": resources,
+      "run-at": this.runAt,
+      "version": this.version,
+    },
+    "scriptWillUpdate": this.willUpdate,
+    "uuid": this.uuid,
+    "version": this.addonVersion,
   };
 };
 
-
 var scripts = [];
-
 
 function objectToScript(obj) {
   var script = Object.create(IPCScript.prototype);
-  Object.keys(obj).forEach(function(k) {
+
+  Object.keys(obj).forEach(function (k) {
     script[k] = obj[k];
   });
+
   Object.freeze(script);
+
   return script;
 }
 
 IPCScript.getByUuid = function (id) {
-  return scripts.find(function(e) {
+  return scripts.find(function (e) {
     return e.uuid == id;
   });
 }
 
 function updateData(data) {
-  if (!data) return;
+  if (!data) {
+    return undefined;
+  }
   var newScripts = data.scripts.map(objectToScript);
   Object.freeze(newScripts);
   scripts = newScripts;
   Object.defineProperty(IPCScript.prototype, "globalExcludes", {
-    get: function IPCScript_getGlobalExcludes() {
+    "get": function IPCScript_getGlobalExcludes() {
       return data.globalExcludes;
     },
-    configurable: true,
-    enumerable: true
+    "configurable": true,
+    "enumerable": true,
   });
 }
 
-
+// Check if initialProcessData is supported, else child will use sync message.
 if (Services.cpmm.initialProcessData) {
   updateData(Services.cpmm.initialProcessData["greasemonkey:scripts-update"]);
 } else {
-  // Support FF < 41.
-  var results = Services.cpmm.sendSyncMessage("greasemonkey:scripts-update");
+  let results = Services.cpmm.sendSyncMessage("greasemonkey:scripts-update");
   updateData(results[0]);
 }
 
-Services.cpmm.addMessageListener("greasemonkey:scripts-update", function(aMessage) {
-  updateData(aMessage.data);
-});
+Services.cpmm.addMessageListener(
+    "greasemonkey:scripts-update", function (aMessage) {
+      updateData(aMessage.data);
+    });

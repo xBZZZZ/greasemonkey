@@ -1,23 +1,27 @@
-Components.utils.import('chrome://greasemonkey-modules/content/prefmanager.js');
-Components.utils.import('chrome://greasemonkey-modules/content/util.js');
+const EXPORTED_SYMBOLS = ["getEditor"];
 
-var EXPORTED_SYMBOLS = ['getEditor'];
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/util.js");
+
 
 function getEditor() {
-  var editorPath = GM_prefRoot.getValue("editor");
-  if (!editorPath) return null;
+  let editorPath = GM_prefRoot.getValue("editor");
+  if (!editorPath) {
+    return null;
+  }
 
-  var editor = null;
+  let editor = null;
   try {
-    editor = Components.classes["@mozilla.org/file/local;1"]
-        .createInstance(Components.interfaces.nsIFile);
+    editor = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsIFile);
     editor.followLinks = true;
     editor.initWithPath(editorPath);
   } catch (e) {
     GM_util.logError(e, false, e.fileName, e.lineNumber);
   }
 
-  // make sure the editor preference is still valid
+  // Make sure the editor preference is still valid.
   if (!editor || !editor.exists() || !editor.isExecutable()) {
     GM_prefRoot.remove("editor");
     editor = null;

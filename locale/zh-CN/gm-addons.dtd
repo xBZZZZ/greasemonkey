@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "C">
 <!ENTITY Show "显示脚本所在目录">
 <!ENTITY Show.accesskey "S">
-<!ENTITY Sort.ByStatus "按状态排序">
-<!ENTITY Sort.Status "状态">
-<!ENTITY Sort.ByName "按名称排序">
-<!ENTITY Sort.Name "名称">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "按执行顺序排序">
-<!ENTITY Sort.Execution "执行顺序">
+<!ENTITY Sort.byExecution "按执行顺序排序">
+<!ENTITY Sort.byName "按名称排序">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "按状态排序">
+<!ENTITY Sort.execution "执行顺序">
+<!ENTITY Sort.name "名称">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "状态">

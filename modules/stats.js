@@ -1,180 +1,233 @@
 /*
-This module implements the reporting side of the pseudo-anonymous usage
-statistic gathering first described at:
+This module implements the reporting side of the pseudo-anonymous
+usage statistic gathering first described at:
 https://github.com/greasemonkey/greasemonkey/issues/1651
 
-It does not export anything.  It only sets an interval and periodically does
-the work to send data to the server.
+It does not export anything.
+It only sets an interval and periodically does the work
+to send data to the server.
 */
-var EXPORTED_SYMBOLS = [];
 
-Components.utils.import('resource://services-common/utils.js');
-Components.utils.import('chrome://greasemonkey-modules/content/miscapis.js');
-Components.utils.import('chrome://greasemonkey-modules/content/parseScript.js');
-Components.utils.import('chrome://greasemonkey-modules/content/prefmanager.js');
-Components.utils.import("chrome://greasemonkey-modules/content/storageBack.js");
-Components.utils.import('chrome://greasemonkey-modules/content/util.js');
+const EXPORTED_SYMBOLS = [];
+
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
+Cu.import("resource://gre/modules/PrivateBrowsingUtils.jsm");
+
+Cu.import("resource://services-common/utils.js");
+
+Cu.import("chrome://greasemonkey-modules/content/miscapis.js");
+Cu.import("chrome://greasemonkey-modules/content/parseScript.js");
+Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/storageBack.js");
+Cu.import("chrome://greasemonkey-modules/content/util.js");
+
+
+const STAT_URL_EXAMPLE =
+    "http://www.greasespot.net/2012/11/anonymous-statistic-gathering.html";
+// Milliseconds.
+const STAT_TIMEOUT_1 = 10000;
+const STAT_TIMEOUT_2 = 3600000;
 
 var gPrefMan = new GM_PrefManager();
-var gStringBundle = Components
-    .classes["@mozilla.org/intl/stringbundle;1"]
-    .getService(Components.interfaces.nsIStringBundleService)
-    .createBundle("chrome://greasemonkey/locale/greasemonkey.properties");
-var gTldService = Components
-    .classes["@mozilla.org/network/effective-tld-service;1"]
-    .getService(Components.interfaces.nsIEffectiveTLDService);
 
 // Check once, soon.
-GM_util.timeout(check, 1000 * 10); // ms = 10 seconds
+GM_util.timeout(check, STAT_TIMEOUT_1);
 // And forever, as long as the browser stays open.
 GM_util.timeout(
-    check, 1000 * 60 * 60,  // ms = 1 hour
-    Components.interfaces.nsITimer.TYPE_REPEATING_PRECISE_CAN_SKIP);
+    check, STAT_TIMEOUT_2, Ci.nsITimer.TYPE_REPEATING_PRECISE_CAN_SKIP);
 
+var gGreasemonkeyVersion = "unknown";
+Cu.import("resource://gre/modules/AddonManager.jsm");
+AddonManager.getAddonByID(GM_CONSTANTS.addonGUID, function (addon) {
+  gGreasemonkeyVersion = "" + addon.version;
+});
 
 function check() {
-  if (!gPrefMan.getValue('stats.optedin')) {
+  if (!gPrefMan.getValue("stats.optedIn")) {
     promptUser();
-    return;
+    return undefined;
   }
 
-  var lastSubmit = new Date(gPrefMan.getValue('stats.lastsubmittime'));
-  var nextSubmit = new Date(
-      (lastSubmit.valueOf()) + gPrefMan.getValue('stats.interval'));
-  var now = new Date();
+  let lastSubmit = new Date(gPrefMan.getValue("stats.lastSubmitTime"));
+  let nextSubmit = new Date(
+      (lastSubmit.valueOf()) + gPrefMan.getValue("stats.interval"));
+  let now = new Date();
 
-  if (nextSubmit > now) return;
+  if (nextSubmit > now) {
+    return undefined;
+  }
 
-  if (!gPrefMan.getValue('stats.id')) {
-    var rng = Components.classes["@mozilla.org/security/random-generator;1"]
-        .createInstance(Components.interfaces.nsIRandomGenerator);
-    var bytes = rng.generateRandomBytes(18);
-    var id = CommonUtils.encodeBase64URL(CommonUtils.byteArrayToString(bytes));
-    gPrefMan.setValue('stats.id', id);
+  if (!gPrefMan.getValue("stats.id")) {
+    let rng = Cc["@mozilla.org/security/random-generator;1"]
+        .createInstance(Ci.nsIRandomGenerator);
+    let bytes = rng.generateRandomBytes(18);
+    let id = CommonUtils.encodeBase64URL(CommonUtils.byteArrayToString(bytes));
+    gPrefMan.setValue("stats.id", id);
   }
 
   try {
     submit();
   } catch (e) {
-    // Ignore errors, just log.
-    GM_util.logError(e);
+    // Just log.
+    // Ignore.
+    GM_util.logError(e, false, e.fileName, e.lineNumber);
   }
 
-  gPrefMan.setValue('stats.lastsubmittime', now.toString());
+  gPrefMan.setValue("stats.lastSubmitTime", now.toString());
 }
 
-
 function submit() {
-  var url = gPrefMan.getValue('stats.url') + gPrefMan.getValue('stats.id');
-  var stats = JSON.stringify(getStatsObj());
+  let url = gPrefMan.getValue("stats.url") + gPrefMan.getValue("stats.id");
+  let stats = JSON.stringify(getStatsObj());
 
-  var req = Components.classes['@mozilla.org/xmlextras/xmlhttprequest;1']
-      .createInstance(Components.interfaces.nsIXMLHttpRequest);
-  req.open('POST', url, true);
+  let req = Cc["@mozilla.org/xmlextras/xmlhttprequest;1"]
+      .createInstance(Ci.nsIXMLHttpRequest);
+  req.open("POST", url, true);
+
+  let channel;
+
+  // Private browsing.
+  if (req.channel instanceof Ci.nsIPrivateBrowsingChannel) {
+    let isPrivate = true;
+    let chromeWin = GM_util.getBrowserWindow();
+    if (chromeWin && chromeWin.gBrowser) {
+      // i.e. the Private Browsing autoStart pref:
+      // "browser.privatebrowsing.autostart"
+      isPrivate = PrivateBrowsingUtils.isBrowserPrivate(chromeWin.gBrowser);
+    }
+    if (isPrivate) {
+      channel = req.channel.QueryInterface(Ci.nsIPrivateBrowsingChannel);
+      channel.setPrivate(true);
+    }
+  }
+
   req.onload = GM_util.hitch(null, submitOnload, req);
+
   req.send(stats);
 }
 
-
 function submitOnload(req) {
-  if (!req.responseText) return;
+  if (!req.responseText) {
+    return undefined;
+  }
+  let response;
   try {
-    var response = JSON.parse(req.responseText);
+    response = JSON.parse(req.responseText);
     if (response.interval) {
-      gPrefMan.setValue('stats.interval', response.interval);
+      gPrefMan.setValue("stats.interval", response.interval);
     }
   } catch (e) {
-    GM_util.logError('stats submitOnload: Couldn\'t handle response: ' + e);
+    GM_util.logError(
+        "Stats - submitOnload: Couldn't handle response:" + "\n" + e, false,
+        e.fileName, e.lineNumber);
   }
 }
 
 function getStatsObj() {
-  var xulAppInfo = Components.classes["@mozilla.org/xre/app-info;1"]
-      .getService(Components.interfaces.nsIXULAppInfo);
-  var xulRuntime = Components.classes["@mozilla.org/xre/app-info;1"]
-      .getService(Components.interfaces.nsIXULRuntime);
-  var stats = {
-      'firefoxVersion': xulAppInfo.name + ' ' + xulAppInfo.version
-          + ' ('  + xulAppInfo.appBuildID + ')',
-      'platform': xulRuntime.OS,
+  let stats = {
+    "firefoxVersion": GM_CONSTANTS.xulAppInfo.name
+        + " " + GM_CONSTANTS.xulAppInfo.version
+        + " ("  + GM_CONSTANTS.xulAppInfo.appBuildID + ")",
+    "globalExcludeCount": GM_util.getService().config.globalExcludes.length,
+    "greasemonkeyEnabled": gPrefMan.getValue("enabled"),
+    // "greasemonkeyVersion": gPrefMan.getValue("version"),
+    "greasemonkeyVersion": gGreasemonkeyVersion,
+    "platform": GM_CONSTANTS.xulRuntime.OS,
+    "scripts": [],
+  };
 
-      // TODO: Ask AddonManager for version?  Async makes that difficult.
-      'greasemonkeyVersion': gPrefMan.getValue('version'),
-      'greasemonkeyEnabled': gPrefMan.getValue('enabled'),
-      'globalExcludeCount': GM_util.getService().config.globalExcludes.length,
+  let scripts = GM_util.getService().config.scripts;
+  for (let i = 0, iLen = scripts.length; i < iLen; i++) {
+    let script = scripts[i];
+    let valueStats = new GM_ScriptStorageBack(script).getStats();
 
-      'scripts': [],
-      };
-
-  var scripts = GM_util.getService().config.scripts;
-  for (var i = 0, script = null; script = scripts[i]; i++) {
-    var valueStats = new GM_ScriptStorageBack(script).getStats();
-
-    var downloadUri = GM_util.getUriFromUrl(script.downloadURL);
-    var domain = null;
+    let downloadUri = GM_util.getUriFromUrl(script.downloadURL);
+    let domain = null;
     try {
-      // Ignore errors here; i.e. invalid/empty URLs.
-      domain = gTldService.getBaseDomain(downloadUri);
-    } catch (e) { }
+      domain = Cc["@mozilla.org/network/effective-tld-service;1"]
+          .getService(Ci.nsIEffectiveTLDService)
+          .getBaseDomain(downloadUri);
+    } catch (e) {
+      // Ignore errors here, i.e. invalid/empty URLs.
+    }
 
-    var sizes = [script.textContent.length];
-    for (var j = 0, require = null; require = script.requires[j]; j++) {
+    let sizes = [script.textContent.length];
+    for (let j = 0, jLen = script.requires.length; j < jLen; j++) {
+      let require = script.requires[j];
       sizes[sizes.length] = require.textContent.length;
     }
 
-    var scriptStat = {
-        'enabled': script.enabled,
-        'id': script.id,
-        'installScheme': downloadUri.scheme,
-        'installDomain': domain,
-        'installTime': script.installDate.toISOString(),
-        'modifiedTime': script.modifiedDate.toISOString(),
-        'sizes': sizes,
-        'userExcludeCount': script.userExcludes.length,
-        'userMatchCount': script.userMatches.length,
-        'userIncludeCount': script.userIncludes.length,
-        'valueCount': valueStats.count,
-        'valueSize': valueStats.size,
-        };
+    let scriptStat = {
+      "enabled": script.enabled,
+      "id": script.id,
+      "installDomain": domain,
+      "installScheme": downloadUri.scheme,
+      "installTime": script.installDate.toISOString(),
+      "modifiedTime": script.modifiedDate.toISOString(),
+      "sizes": sizes,
+      "userExcludeCount": script.userExcludes.length,
+      "userIncludeCount": script.userIncludes.length,
+      "userMatchCount": script.userMatches.length,
+      "valueCount": valueStats.count,
+      "valueSize": valueStats.size,
+    };
+
     stats.scripts[stats.scripts.length] = scriptStat;
   }
 
-  // TODO: Specify "ui" metrics, i.e. clicks on various things.
+  // TODO:
+  // Specify "ui" metrics, i.e. clicks on various things.
 
   return stats;
 }
 
-
 function promptUser() {
-  if (gPrefMan.getValue('stats.prompted')) return;
-  gPrefMan.setValue('stats.prompted', true);
+  if (gPrefMan.getValue("stats.prompted")) {
+    return undefined;
+  }
+  gPrefMan.setValue("stats.prompted", true);
 
-  var win = GM_util.getBrowserWindow();
+  let win = GM_util.getBrowserWindow();
   var browser = win.gBrowser;
 
-  var notificationBox = browser.getNotificationBox();
-  var notification = notificationBox.appendNotification(
-    gStringBundle.GetStringFromName('stats-prompt.msg'),
-    "greasemonkey-stats-opt-in",
-    "chrome://greasemonkey/skin/icon16.png",
-    notificationBox.PRIORITY_INFO_MEDIUM,
-    [{
-      'label': gStringBundle.GetStringFromName('stats-prompt.readmore'),
-      'accessKey': gStringBundle.GetStringFromName('stats-prompt.readmore.accesskey'),
-      'popup': null,
-      'callback': function() {
-        browser.loadOneTab(
-            'http://www.greasespot.net/2012/11/anonymous-statistic-gathering.html',
-            {'inBackground': false});
-      }
-    },{
-      'label': gStringBundle.GetStringFromName('stats-prompt.optin'),
-      'accessKey': gStringBundle.GetStringFromName('stats-prompt.optin.accesskey'),
-      'popup': null,
-      'callback': function() {
-        gPrefMan.setValue('stats.optedin', true);
-        check();
-      }
+  let notificationBox = browser.getNotificationBox();
+  let notification = notificationBox.appendNotification(
+      GM_CONSTANTS.localeStringBundle.createBundle(
+          GM_CONSTANTS.localeGreasemonkeyProperties)
+          .GetStringFromName("stats.prompt.msg"),
+      "greasemonkey-stats-opt-in",
+      "chrome://greasemonkey/skin/icon16.png",
+      notificationBox.PRIORITY_INFO_MEDIUM,
+      [{
+        "accessKey": GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("stats.prompt.readmore.accesskey"),
+        "callback": function () {
+          browser.loadOneTab(
+              STAT_URL_EXAMPLE,
+              {
+                "inBackground": false,
+              });
+        },
+        "label": GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("stats.prompt.readmore"),
+        "popup": null,
+      }, {
+        "accessKey": GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("stats.prompt.optin.accesskey"),
+        "callback": function () {
+          gPrefMan.setValue("stats.optedIn", true);
+          check();
+        },
+        "label": GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("stats.prompt.optin"),
+        "popup": null,
     }]
   );
   notification.persistence = -1;

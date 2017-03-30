@@ -1,33 +1,38 @@
-Components.utils.import('chrome://greasemonkey-modules/content/GM_notification.js');
-Components.utils.import('chrome://greasemonkey-modules/content/parseScript.js');
-Components.utils.import('chrome://greasemonkey-modules/content/remoteScript.js');
-Components.utils.import('chrome://greasemonkey-modules/content/util.js');
+const EXPORTED_SYMBOLS = ["installScriptFromSource"];
 
-var EXPORTED_SYMBOLS = ['installScriptFromSource'];
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-var gCouldNotDownloadString = Components
-    .classes["@mozilla.org/intl/stringbundle;1"]
-    .getService(Components.interfaces.nsIStringBundleService)
-    .createBundle("chrome://greasemonkey/locale/greasemonkey.properties")
-    .GetStringFromName('error.could-not-download-dependencies');
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
+Cu.import("chrome://greasemonkey-modules/content/GM_notification.js");
+Cu.import("chrome://greasemonkey-modules/content/parseScript.js");
+Cu.import("chrome://greasemonkey-modules/content/remoteScript.js");
+Cu.import("chrome://greasemonkey-modules/content/util.js");
+
 
 function installScriptFromSource(aSource, aCallback) {
   var remoteScript = new RemoteScript();
   var script = parse(aSource);
-  var tempFileName = cleanFilename(script.name, 'gm_script') + '.user.js';
+  var tempFileName = cleanFilename(script.name, GM_CONSTANTS.fileScriptName)
+      + GM_CONSTANTS.fileScriptExtension;
   var tempFile = GM_util.getTempFile(remoteScript._tempDir, tempFileName);
-  GM_util.writeToFile(aSource, tempFile, function() {
+
+  GM_util.writeToFile(aSource, tempFile, function () {
     remoteScript.setScript(script, tempFile);
-    remoteScript.download(function(aSuccess) {
+    remoteScript.download(function (aSuccess) {
       if (!aSuccess) {
-        GM_notification(
-            gCouldNotDownloadString.replace('%1', remoteScript.errorMessage),
-            'dependency-download-failed');
-        return;
+        GM_notification(GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.couldNotDownloadDependencies")
+            .replace("%1", remoteScript.errorMessage),
+            "dependency-download-failed");
+        return undefined;
       }
       remoteScript.install();
       GM_util.openInEditor(script);
-      if (aCallback) aCallback();
+      if (aCallback) {
+        aCallback();
+      }
     });
   });
 }

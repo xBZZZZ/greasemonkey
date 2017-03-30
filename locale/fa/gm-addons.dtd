@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "س">
 <!ENTITY Show "نمایش پوشه حاوی">
 <!ENTITY Show.accesskey "ح">
-<!ENTITY Sort.ByStatus "مرتب کردن بر اساس وضعیت">
-<!ENTITY Sort.Status "وضعیت">
-<!ENTITY Sort.ByName "مرتب کردن بر اساس نام">
-<!ENTITY Sort.Name "نام">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "مرتب کردن بر اساس ترتیب اجرا">
-<!ENTITY Sort.Execution "ترتیب اجرا">
+<!ENTITY Sort.byExecution "مرتب کردن بر اساس ترتیب اجرا">
+<!ENTITY Sort.byName "مرتب کردن بر اساس نام">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "مرتب کردن بر اساس وضعیت">
+<!ENTITY Sort.execution "ترتیب اجرا">
+<!ENTITY Sort.name "نام">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "وضعیت">

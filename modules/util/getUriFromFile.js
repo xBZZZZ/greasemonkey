@@ -1,8 +1,10 @@
-var EXPORTED_SYMBOLS = ['getUriFromFile'];
+const EXPORTED_SYMBOLS = ["getUriFromFile"];
 
-var ioService = Components.classes["@mozilla.org/network/io-service;1"]
-    .getService(Components.interfaces.nsIIOService);
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
 
 function getUriFromFile(file) {
-  return ioService.newFileURI(file);
+  return GM_CONSTANTS.ioService.newFileURI(file);
 }

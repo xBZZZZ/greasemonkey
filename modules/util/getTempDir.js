@@ -1,15 +1,18 @@
-Components.utils.import('chrome://greasemonkey-modules/content/constants.js');
+const EXPORTED_SYMBOLS = ["getTempDir"];
 
-var EXPORTED_SYMBOLS = ['getTempDir'];
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-var DIRECTORY_TYPE = Components.interfaces.nsIFile.DIRECTORY_TYPE;
-var TMP_DIR = Components.classes["@mozilla.org/file/directory_service;1"]
-    .getService(Components.interfaces.nsIProperties)
-    .get("TmpD", Components.interfaces.nsIFile);
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
+
+const DIRECTORY_TEMP = GM_CONSTANTS.directoryService
+    .get(GM_CONSTANTS.directoryServiceTempName, Ci.nsIFile);
+const DIRECTORY_TYPE = Ci.nsIFile.DIRECTORY_TYPE;
 
 function getTempDir(aRoot) {
-  var file = (aRoot || TMP_DIR).clone();
-  file.append("gm-temp");
-  file.createUnique(DIRECTORY_TYPE, GM_constants.directoryMask);
+  let file = (aRoot || DIRECTORY_TEMP).clone();
+  file.append(GM_CONSTANTS.directoryTempName);
+  file.createUnique(DIRECTORY_TYPE, GM_CONSTANTS.directoryMask);
+
   return file;
 }

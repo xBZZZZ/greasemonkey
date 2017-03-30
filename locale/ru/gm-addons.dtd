@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "C">
 <!ENTITY Show "Показать содержащую папку">
 <!ENTITY Show.accesskey "S">
-<!ENTITY Sort.ByStatus "Сортировать по статусу">
-<!ENTITY Sort.Status "Статус">
-<!ENTITY Sort.ByName "Сортировать по имени">
-<!ENTITY Sort.Name "Имя">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "Сортировать по порядку выполнения">
-<!ENTITY Sort.Execution "Порядок выполнения">
+<!ENTITY Sort.byExecution "Сортировать по порядку выполнения">
+<!ENTITY Sort.byName "Сортировать по имени">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "Сортировать по статусу">
+<!ENTITY Sort.execution "Порядок выполнения">
+<!ENTITY Sort.name "Имя">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "Статус">

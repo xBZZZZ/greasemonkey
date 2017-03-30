@@ -1,21 +1,18 @@
-var EXPORTED_SYMBOLS = ['getChannelFromUri'];
+const EXPORTED_SYMBOLS = ["getChannelFromUri"];
 
-var Cc = Components.classes;
-var Ci = Components.interfaces;
-var Cu = Components.utils;
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
 Cu.import("resource://gre/modules/Services.jsm");
 
-var ioService = Cc['@mozilla.org/network/io-service;1']
-    .getService(Ci.nsIIOService);
-
 
 function getChannelFromUri(aUri) {
-  if (ioService.newChannelFromURI2) {
-    return ioService.newChannelFromURI2(
+  if (GM_CONSTANTS.ioService.newChannelFromURI2) {
+    return GM_CONSTANTS.ioService.newChannelFromURI2(
         aUri, null, Services.scriptSecurityManager.getSystemPrincipal(),
         null, Ci.nsILoadInfo.SEC_NORMAL, Ci.nsIContentPolicy.TYPE_OTHER);
   } else {
-    return ioService.newChannelFromURI(aUri);
+    return GM_CONSTANTS.ioService.newChannelFromURI(aUri);
   }
 }

@@ -1,11 +1,14 @@
-Components.utils.import('chrome://greasemonkey-modules/content/util.js');
+const EXPORTED_SYMBOLS = ["windowIdForEvent"];
 
-var EXPORTED_SYMBOLS = ['windowIdForEvent'];
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("chrome://greasemonkey-modules/content/util.js");
+
 
 function windowIdForEvent(aEvent) {
-  var doc = aEvent.originalTarget;
+  let doc = aEvent.originalTarget;
   try {
-    doc.QueryInterface(Components.interfaces.nsIDOMHTMLDocument);
+    doc.QueryInterface(Ci.nsIDOMHTMLDocument);
   } catch (e) {
     return null;
   }

@@ -1,9 +1,10 @@
-var EXPORTED_SYMBOLS = ['getBrowserWindow'];
+const EXPORTED_SYMBOLS = ["getBrowserWindow"];
 
-var windowMediator = Components
-   .classes['@mozilla.org/appshell/window-mediator;1']
-   .getService(Components.interfaces.nsIWindowMediator);
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
 
 function getBrowserWindow() {
-  return windowMediator.getMostRecentWindow("navigator:browser");
+  return Cc["@mozilla.org/appshell/window-mediator;1"]
+      .getService(Ci.nsIWindowMediator)
+      .getMostRecentWindow("navigator:browser");
 }

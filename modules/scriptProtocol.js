@@ -1,22 +1,27 @@
-var EXPORTED_SYMBOLS = ['initScriptProtocol'];
+const EXPORTED_SYMBOLS = ["initScriptProtocol"];
 
-Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");
-Components.utils.import("resource://gre/modules/Services.jsm");
-Components.utils.import("chrome://greasemonkey-modules/content/ipcscript.js");
-Components.utils.import('chrome://greasemonkey-modules/content/util.js');
-
-var Cc = Components.classes;
-var Ci = Components.interfaces;
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 var Cr = Components.results;
-var schemeName = 'greasemonkey-script';
+
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
+Cu.import("resource://gre/modules/Services.jsm");
+Cu.import("resource://gre/modules/XPCOMUtils.jsm");
+
+Cu.import("chrome://greasemonkey-modules/content/ipcscript.js");
+Cu.import('chrome://greasemonkey-modules/content/util.js');
 
 
 var gHaveDoneInit = false;
 var gScope = this;
 
 function initScriptProtocol() {
-  if (gHaveDoneInit) return;
+  if (gHaveDoneInit) {
+    return undefined;
+  }
+
   gHaveDoneInit = true;
+
   ScriptProtocol.init();
 }
 
@@ -28,12 +33,12 @@ function DummyChannel(aUri, aScript) {
   this.loadGroup = null;
   this.name = aUri.spec;
   this.status = 404;
-  this.content = '';
+  this.content = "";
 
   // nsIChannel
-  this.contentCharset = 'utf-8';
+  this.contentCharset = GM_CONSTANTS.fileScriptCharset;
   this.contentLength = this.content.length;
-  this.contentType = 'application/javascript';
+  this.contentType = "application/javascript";
   this.notificationCallbacks = null;
   this.originalURI = aUri;
   this.owner = null;
@@ -42,90 +47,92 @@ function DummyChannel(aUri, aScript) {
 }
 
 // nsIChannel
-DummyChannel.prototype.asyncOpen = function(aListener, aContext) { };
+DummyChannel.prototype.asyncOpen = function (aListener, aContext) {};
 
 ////////////////////////////////////////////////////////////////////////////////
 
 var ScriptProtocol = {
-  _classDescription: 'Protocol handler for "greasemonkey-script:"',
-  _classID: Components.ID('20d898f3-2fb8-4b3a-b8c7-7ad6c2c48598'),
-  _contractID:  '@mozilla.org/network/protocol;1?name=' + schemeName,
+  "_classDescription": GM_CONSTANTS.addonScriptProtocolClassDescription,
+  "_classID": GM_CONSTANTS.addonScriptProtocolClassID,
+  "_contractID": GM_CONSTANTS.addonScriptProtocolContractID,
 
-  QueryInterface: XPCOMUtils.generateQI([
-      Ci.nsIFactory,
-      Ci.nsIProtocolHandler,
-      Ci.nsISupportsWeakReference
-      ]),
-
-  init: function() {
+  "init": function () {
     try {
-      var registrar = Components.manager.QueryInterface(
+      let registrar = Components.manager.QueryInterface(
           Ci.nsIComponentRegistrar);
       registrar.registerFactory(
           this._classID, this._classDescription, this._contractID, this);
     } catch (e) {
-      if ('NS_ERROR_FACTORY_EXISTS' == e.name) {
-        // No-op, ignore these.  But why do they happen!?
+      if (e.name == "NS_ERROR_FACTORY_EXISTS") {
+        // No-op, ignore these.
+        // But why do they happen?!
       } else {
-        dump('Error registering ScriptProtocol factory:\n' + e + '\n');
+        GM_util.logError(
+            "Greasemonkey - Script protocol - Error registering:" + "\n" + e);
       }
-      return;
+      return undefined;
     };
   },
 
-////////////////////////////////// nsIFactory //////////////////////////////////
-
-  createInstance: function(outer, iid) {
-    if (outer) {
-      throw Cr.NS_ERROR_NO_AGGREGATION;
-    }
-    return this.QueryInterface(iid);
-  },
+  "QueryInterface": XPCOMUtils.generateQI([
+    Ci.nsIFactory,
+    Ci.nsIProtocolHandler,
+    Ci.nsISupportsWeakReference
+  ]),
 
 ////////////////////////////// nsIProtocolHandler //////////////////////////////
 
-  scheme: schemeName,
-  defaultPort: -1,
-  protocolFlags: 0
+  "scheme": GM_CONSTANTS.addonScriptProtocolScheme,
+  "defaultPort": -1,
+  "protocolFlags": 0
       | Ci.nsIProtocolHandler.URI_INHERITS_SECURITY_CONTEXT
       | Ci.nsIProtocolHandler.URI_IS_LOCAL_RESOURCE
       | Ci.nsIProtocolHandler.URI_LOADABLE_BY_ANYONE
       | Ci.nsIProtocolHandler.URI_NOAUTH
       | Ci.nsIProtocolHandler.URI_NON_PERSISTABLE
       | Ci.nsIProtocolHandler.URI_NORELATIVE
-      ,
+  ,
 
-  allowPort: function(aPort, aScheme) {
+  "allowPort": function (aPort, aScheme) {
     return false;
   },
 
-  newURI: function(aSpec, aCharset, aBaseUri) {
-    var uri = Cc['@mozilla.org/network/simple-uri;1']
+  "newURI": function (aSpec, aCharset, aBaseUri) {
+    let uri = Cc["@mozilla.org/network/simple-uri;1"]
         .createInstance(Ci.nsIURI);
     uri.spec = aSpec;
+
     return uri;
   },
 
-  newChannel: function(aUri) {
-    var m = aUri.spec.match(/greasemonkey-script:([-0-9a-f]+)\/(.*)/);
-    var dummy = new DummyChannel(aUri);
+  "newChannel": function (aUri) {
+    let m = aUri.spec.match(
+        new RegExp(GM_CONSTANTS.addonScriptProtocolScheme
+            + ":" + "([-0-9a-f]+)\/(.*)", ""));
+    let dummy = new DummyChannel(aUri);
 
     // Incomplete URI, send a 404.
-    if (!m) return dummy;
+    if (!m) {
+      return dummy;
+    }
 
-    var script = IPCScript.getByUuid(m[1]);
+    let script = IPCScript.getByUuid(m[1]);
 
     // Fail fast if we couldn't find the script.
-    if (!script) return dummy;
+    if (!script) {
+      return dummy;
+    }
 
-    for (var i = 0, resource = null; resource = script.resources[i]; i++) {
+    for (let i = 0, iLen = script.resources.length; i < iLen; i++) {
+      let resource = script.resources[i];
       if (resource.name == m[2]) {
-        var uri = GM_util.getUriFromUrl(resource.file_url);
+        let uri = GM_util.getUriFromUrl(resource.file_url);
 
-        // Get the channel for the file URI, but set its originalURI to the
-        // greasemonkey-script: protocol URI, to ensure it can still be loaded
-        // in unprivileged contexts (bug #2326).
-        var channel = GM_util.getChannelFromUri(uri);
+        // See #2326.
+        // Get the channel for the file URI, but set its originalURI
+        // to the greasemonkey-script: protocol URI,
+        // to ensure it can still be loaded in unprivileged contexts.
+        let channel = GM_util.getChannelFromUri(uri);
         channel.originalURI = aUri;
 
         return channel;
@@ -134,5 +141,14 @@ var ScriptProtocol = {
 
     // Default fall-through case, send a 404.
     return dummy;
-  }
+  },
+
+////////////////////////////////// nsIFactory //////////////////////////////////
+
+  "createInstance": function (outer, iid) {
+    if (outer) {
+      throw Cr.NS_ERROR_NO_AGGREGATION;
+    }
+    return this.QueryInterface(iid);
+  },
 };

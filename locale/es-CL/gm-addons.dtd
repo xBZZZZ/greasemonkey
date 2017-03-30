@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "C">
 <!ENTITY Show "Mostrar carpeta contenedora">
 <!ENTITY Show.accesskey "M">
-<!ENTITY Sort.ByStatus "Ordenar por estado">
-<!ENTITY Sort.Status "Estado">
-<!ENTITY Sort.ByName "Ordenar por nombre">
-<!ENTITY Sort.Name "Nombre">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "Ordenar por orden de funcionamiento">
-<!ENTITY Sort.Execution "Orden de funcionamiento">
+<!ENTITY Sort.byExecution "Ordenar por orden de funcionamiento">
+<!ENTITY Sort.byName "Ordenar por nombre">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "Ordenar por estado">
+<!ENTITY Sort.execution "Orden de funcionamiento">
+<!ENTITY Sort.name "Nombre">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "Estado">

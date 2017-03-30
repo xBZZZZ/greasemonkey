@@ -1,17 +1,15 @@
-var EXPORTED_SYMBOLS = ['GM_openInTab'];
+const EXPORTED_SYMBOLS = ["GM_openInTab"];
 
-var Cu = Components.utils;
-var Ci = Components.interfaces;
-var Cc = Components.classes;
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-Cu.import('resource://gre/modules/Services.jsm');
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
 
 function GM_openInTab(aFrame, aBaseUrl, aUrl, aOptions) {
-  var loadInBackground = null;
-  if ("undefined" != typeof aOptions) {
-    if ("undefined" == typeof aOptions.active) {
-      if ("object" != typeof aOptions) {
+  let loadInBackground = null;
+  if (typeof aOptions != "undefined") {
+    if (typeof aOptions.active == "undefined") {
+      if (typeof aOptions != "object") {
         loadInBackground = !!aOptions;
       }
     } else {
@@ -19,20 +17,20 @@ function GM_openInTab(aFrame, aBaseUrl, aUrl, aOptions) {
     }
   }
 
-  var insertRelatedAfterCurrent = null;
-  if ("undefined" != typeof aOptions) {
-    if ("undefined" != typeof aOptions.insert) {
+  let insertRelatedAfterCurrent = null;
+  if (typeof aOptions != "undefined") {
+    if (typeof aOptions.insert != "undefined") {
       insertRelatedAfterCurrent = !!aOptions.insert;
     }
   }
 
   // Resolve URL relative to the location of the content window.
-  var baseUri = Services.io.newURI(aBaseUrl, null, null);
-  var uri = Services.io.newURI(aUrl, null, baseUri);
+  let baseUri = GM_CONSTANTS.ioService.newURI(aBaseUrl, null, null);
+  let uri = GM_CONSTANTS.ioService.newURI(aUrl, null, baseUri);
 
-  aFrame.sendAsyncMessage('greasemonkey:open-in-tab', {
-    afterCurrent: insertRelatedAfterCurrent,
-    inBackground: loadInBackground,
-    url: uri.spec,
+  aFrame.sendAsyncMessage("greasemonkey:open-in-tab", {
+    "afterCurrent": insertRelatedAfterCurrent,
+    "inBackground": loadInBackground,
+    "url": uri.spec,
   });
 };

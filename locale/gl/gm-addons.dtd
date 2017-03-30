@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "C">
 <!ENTITY Show "Mostrar o cartafol">
 <!ENTITY Show.accesskey "M">
-<!ENTITY Sort.ByStatus "Ordenar polo estado">
-<!ENTITY Sort.Status "Estado">
-<!ENTITY Sort.ByName "Ordenar polo nome">
-<!ENTITY Sort.Name "Nome">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "Ordenar pola orde de execución">
-<!ENTITY Sort.Execution "Orde de execución">
+<!ENTITY Sort.byExecution "Ordenar pola orde de execución">
+<!ENTITY Sort.byName "Ordenar polo nome">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "Ordenar polo estado">
+<!ENTITY Sort.execution "Orde de execución">
+<!ENTITY Sort.name "Nome">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "Estado">

@@ -1,10 +1,10 @@
-var EXPORTED_SYMBOLS = ['getService'];
+const EXPORTED_SYMBOLS = ["getService"];
 
-var GM_SERVICE = Components
-    .classes["@greasemonkey.mozdev.org/greasemonkey-service;1"]
-    .getService()
-    .wrappedJSObject;
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
 
 function getService() {
-  return GM_SERVICE;
+  return Cc[GM_CONSTANTS.addonServiceContractID].getService().wrappedJSObject;
 }

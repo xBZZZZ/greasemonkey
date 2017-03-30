@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "U">
 <!ENTITY Show "Näytä tallennuskansio">
 <!ENTITY Show.accesskey "T">
-<!ENTITY Sort.ByStatus "Järjestä tilan mukaan">
-<!ENTITY Sort.Status "Tila">
-<!ENTITY Sort.ByName "Järjestä nimen mukaan">
-<!ENTITY Sort.Name "Nimi">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "Järjestä suoritusjärjestyksen mukaan">
-<!ENTITY Sort.Execution "Suoritusjärjestys">
+<!ENTITY Sort.byExecution "Järjestä suoritusjärjestyksen mukaan">
+<!ENTITY Sort.byName "Järjestä nimen mukaan">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "Järjestä tilan mukaan">
+<!ENTITY Sort.execution "Suoritusjärjestys">
+<!ENTITY Sort.name "Nimi">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "Tila">

@@ -1,81 +1,81 @@
-// The "back end" implementation of GM_ScriptStorageBack().  This is loaded into
-// the component scope and is capable of accessing the file based SQL store.
+// The "back end" implementation of GM_ScriptStorageBack().
+// This is loaded into the component scope and is capable of accessing
+// the file based SQL store.
 
-var Cu = Components.utils;
+const EXPORTED_SYMBOLS = ["GM_ScriptStorageBack"];
+
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
 Cu.import("resource://gre/modules/Services.jsm");
 
-Cu.import("chrome://greasemonkey-modules/content/third-party/getChromeWinForContentWin.js");
-Cu.import('chrome://greasemonkey-modules/content/prefmanager.js');
+Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
-var EXPORTED_SYMBOLS = ['GM_ScriptStorageBack'];
+const MESSAGE_ERROR_PREFIX = "Script storage back end: ";
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
 function GM_ScriptStorageBack(script) {
   this._db = null;
   this._script = script;
-  this.stringBundle = Components
-    .classes["@mozilla.org/intl/stringbundle;1"]
-    .getService(Components.interfaces.nsIStringBundleService)
-    .createBundle("chrome://greasemonkey/locale/greasemonkey.properties");
 }
 
-
 Object.defineProperty(GM_ScriptStorageBack.prototype, "dbFile", {
-  get: function GM_ScriptStorageBack_getDbFile() {
-    var file = GM_util.scriptDir();
-    file.append(this._script.baseDirName + '.db');
+  "get": function GM_ScriptStorageBack_getDbFile() {
+    let file = GM_util.scriptDir();
+    file.append(this._script.baseDirName + GM_CONSTANTS.fileScriptDBExtension);
+
     return file;
   },
-  enumerable: true
+  "enumerable": true,
 });
 
-
 Object.defineProperty(GM_ScriptStorageBack.prototype, "db", {
-  get: function GM_ScriptStorageBack_getDb() {
+  "get": function GM_ScriptStorageBack_getDb() {
     if (null == this._db) {
       this._db = Services.storage.openDatabase(this.dbFile);
 
       // The auto_vacuum pragma has to be set before the table is created.
-      this._db.executeSimpleSQL('PRAGMA auto_vacuum = INCREMENTAL;');
-      this._db.executeSimpleSQL('PRAGMA incremental_vacuum(10);');
-      this._db.executeSimpleSQL('PRAGMA journal_mode = MEMORY;');
-      this._db.executeSimpleSQL('PRAGMA synchronous = OFF;');
-      this._db.executeSimpleSQL('PRAGMA temp_store = MEMORY;');
-      this._db.executeSimpleSQL('PRAGMA wal_autocheckpoint = 10;');
+      this._db.executeSimpleSQL("PRAGMA auto_vacuum = INCREMENTAL;");
+      this._db.executeSimpleSQL("PRAGMA incremental_vacuum(10);");
+      this._db.executeSimpleSQL("PRAGMA journal_mode = MEMORY;");
+      this._db.executeSimpleSQL("PRAGMA synchronous = OFF;");
+      this._db.executeSimpleSQL("PRAGMA temp_store = MEMORY;");
+      this._db.executeSimpleSQL("PRAGMA wal_autocheckpoint = 10;");
 
       this._db.executeSimpleSQL(
-          'CREATE TABLE IF NOT EXISTS scriptvals ('
-          + 'name TEXT PRIMARY KEY NOT NULL, '
-          + 'value TEXT '
-          + ')'
-          );
+          "CREATE TABLE IF NOT EXISTS scriptvals ("
+          + "name TEXT PRIMARY KEY NOT NULL, "
+          + "value TEXT "
+          + ")");
 
-      // Run vacuum once manually to switch to the correct auto_vacuum mode for
-      // databases that were created with incorrect auto_vacuum. See #1879.
-      this._db.executeSimpleSQL('VACUUM;');
+      // See #1879.
+      // Run vacuum once manually to switch to the correct auto_vacuum mode
+      // for databases that were created with incorrect auto_vacuum.
+      this._db.executeSimpleSQL("VACUUM;");
     }
     return this._db;
   },
-  enumerable: true
+  "enumerable": true,
 });
 
-
-GM_ScriptStorageBack.prototype.close = function() {
+GM_ScriptStorageBack.prototype.close = function () {
   this._db.close();
 };
 
-
-GM_ScriptStorageBack.prototype.setValue = function(name, val) {
+GM_ScriptStorageBack.prototype.setValue = function (name, val) {
   if (2 !== arguments.length) {
-    throw new Error(this.stringBundle.GetStringFromName('error.args.setValue'));
+    throw new Error(
+        GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.args.setValue"));
   }
 
   var stmt = this.db.createStatement(
-      'INSERT OR REPLACE INTO scriptvals (name, value) VALUES (:name, :value)');
+      "INSERT OR REPLACE INTO scriptvals (name, value) VALUES (:name, :value)");
   try {
     stmt.params.name = name;
     stmt.params.value = JSON.stringify(val);
@@ -84,21 +84,22 @@ GM_ScriptStorageBack.prototype.setValue = function(name, val) {
     stmt.reset();
   }
 
-  this._script.changed('val-set', name);
+  this._script.changed("val-set", name);
 };
 
-
-GM_ScriptStorageBack.prototype.getValue = function(name) {
+GM_ScriptStorageBack.prototype.getValue = function (name) {
   var value = null;
   var stmt = this.db.createStatement(
-      'SELECT value FROM scriptvals WHERE name = :name');
+      "SELECT value FROM scriptvals WHERE name = :name");
   try {
     stmt.params.name = name;
     while (stmt.step()) {
       value = stmt.row.value;
     }
   } catch (e) {
-    dump('getValue err: ' + uneval(e) + '\n');
+    GM_util.logError(
+        MESSAGE_ERROR_PREFIX + "getValue error:" + "\n" + e, false,
+        e.fileName, e.lineNumber);
   } finally {
     stmt.reset();
   }
@@ -106,10 +107,9 @@ GM_ScriptStorageBack.prototype.getValue = function(name) {
   return value;
 };
 
-
-GM_ScriptStorageBack.prototype.deleteValue = function(name) {
+GM_ScriptStorageBack.prototype.deleteValue = function (name) {
   var stmt = this.db.createStatement(
-      'DELETE FROM scriptvals WHERE name = :name');
+      "DELETE FROM scriptvals WHERE name = :name");
   try {
     stmt.params.name = name;
     stmt.execute();
@@ -117,14 +117,13 @@ GM_ScriptStorageBack.prototype.deleteValue = function(name) {
     stmt.reset();
   }
 
-  this._script.changed('val-del', name);
+  this._script.changed("val-del", name);
 };
 
-
-GM_ScriptStorageBack.prototype.listValues = function() {
+GM_ScriptStorageBack.prototype.listValues = function () {
   var valueNames = [];
 
-  var stmt = this.db.createStatement('SELECT name FROM scriptvals');
+  var stmt = this.db.createStatement("SELECT name FROM scriptvals");
   try {
     while (stmt.executeStep()) {
       valueNames.push(stmt.row.name);
@@ -136,21 +135,22 @@ GM_ScriptStorageBack.prototype.listValues = function() {
   return valueNames;
 };
 
-
-GM_ScriptStorageBack.prototype.getStats = function() {
+GM_ScriptStorageBack.prototype.getStats = function () {
   var stats = {
-      count: undefined,
-      size: undefined,
-      };
+    "count": undefined,
+    "size": undefined,
+  };
   var stmt = this.db.createStatement(
-      'SELECT COUNT(0) AS count, SUM(LENGTH(value)) AS size FROM scriptvals');
+      "SELECT COUNT(0) AS count, SUM(LENGTH(value)) AS size FROM scriptvals");
   try {
     while (stmt.step()) {
       stats.count = stmt.row.count;
       stats.size = stmt.row.size || 0;
     }
   } catch (e) {
-    dump('getStats err: ' + uneval(e) + '\n');
+    GM_util.logError(
+        MESSAGE_ERROR_PREFIX + "getStats error:" + "\n" + e, false,
+        e.fileName, e.lineNumber);
   } finally {
     stmt.reset();
   }

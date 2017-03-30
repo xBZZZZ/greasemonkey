@@ -1,16 +1,22 @@
-var EXPORTED_SYMBOLS = ['logError'];
+const EXPORTED_SYMBOLS = ["logError"];
 
-var consoleService = Components.classes["@mozilla.org/consoleservice;1"]
-    .getService(Components.interfaces.nsIConsoleService);
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-function logError(e, opt_warn, fileName, lineNumber) {
-  if ("string" == typeof e) e = new Error(e);
 
-  var consoleError = Components.classes["@mozilla.org/scripterror;1"]
-      .createInstance(Components.interfaces.nsIScriptError);
+function logError(e, warning, fileName, lineNumber) {
+  if (typeof e == "string") {
+    e = new Error(e);
+  }
+
+  let consoleError = Cc["@mozilla.org/scripterror;1"]
+      .createInstance(Ci.nsIScriptError);
   // Third parameter "sourceLine" is supposed to be the line, of the source,
-  // on which the error happened.  We don't know it.  (Directly...)
-  consoleError.init(e.message, fileName, null, lineNumber, e.columnNumber,
-      (opt_warn ? 1 : 0), null);
-  consoleService.logMessage(consoleError);
+  // on which the error happened.
+  // We don't know it. (Directly...)
+  consoleError.init(
+      e.message, fileName, null, lineNumber, e.columnNumber,
+      (warning ? 1 : 0), null);
+
+  Cc["@mozilla.org/consoleservice;1"].getService(Ci.nsIConsoleService)
+      .logMessage(consoleError);
 }

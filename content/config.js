@@ -1,17 +1,15 @@
-var Cu = Components.utils;
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-Cu.import('chrome://greasemonkey-modules/content/constants.js');
-Cu.import('chrome://greasemonkey-modules/content/miscapis.js');
-Cu.import('chrome://greasemonkey-modules/content/prefmanager.js');
-Cu.import('chrome://greasemonkey-modules/content/script.js');
-Cu.import('chrome://greasemonkey-modules/content/third-party/MatchPattern.js');
-Cu.import('chrome://greasemonkey-modules/content/util.js');
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
-var gStringBundle = Components
-    .classes["@mozilla.org/intl/stringbundle;1"]
-    .getService(Components.interfaces.nsIStringBundleService)
-    .createBundle("chrome://greasemonkey/locale/greasemonkey.properties");
+Cu.import("chrome://greasemonkey-modules/content/miscapis.js");
+Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/script.js");
+Cu.import("chrome://greasemonkey-modules/content/third-party/MatchPattern.js");
+Cu.import("chrome://greasemonkey-modules/content/util.js");
 
+
+const TAG_USER_SCRIPT_CONFIG = "UserScriptConfig";
 
 function Config() {
   this._saveTimer = null;
@@ -22,33 +20,36 @@ function Config() {
   this._observers = [];
 }
 
-Config.prototype.GM_GUID = "{e4a8a97b-f2ed-450b-b12d-ee082ba24781}";
+Config.prototype.GM_GUID = GM_CONSTANTS.addonGUID;
 
-Config.prototype.initialize = function() {
+Config.prototype.initialize = function () {
   this._updateVersion();
   this._load();
 };
 
-Config.prototype.addObserver = function(observer, script) {
-  var observers = script ? script._observers : this._observers;
+Config.prototype.addObserver = function (observer, script) {
+  let observers = script ? script._observers : this._observers;
   observers.push(observer);
 };
 
-Config.prototype.removeObserver = function(observer, script) {
-  var observers = script ? script._observers : this._observers;
-  var index = observers.indexOf(observer);
-  if (index == -1) throw new Error("Observer not found");
+Config.prototype.removeObserver = function (observer, script) {
+  let observers = script ? script._observers : this._observers;
+  let index = observers.indexOf(observer);
+  if (index == -1) {
+    throw new Error("Config: Observer not found.");
+  }
   observers.splice(index, 1);
 },
 
-Config.prototype._notifyObservers = function(script, event, data) {
-  var observers = this._observers.concat(script._observers);
-  for (var i = 0, observer; observer = observers[i]; i++) {
+Config.prototype._notifyObservers = function (script, event, data) {
+  let observers = this._observers.concat(script._observers);
+  for (let i = 0, iLen = observers.length; i < iLen; i++) {
+    let observer = observers[i];
     observer.notifyEvent(script, event, data);
   }
 };
 
-Config.prototype._changed = function(script, event, data, dontSave) {
+Config.prototype._changed = function (script, event, data, dontSave) {
   if (!dontSave) {
     this._save();
   }
@@ -56,12 +57,13 @@ Config.prototype._changed = function(script, event, data, dontSave) {
   this._notifyObservers(script, event, data);
 };
 
-Config.prototype.installIsUpdate = function(script) {
+Config.prototype.installIsUpdate = function (script) {
   return this._find(script) > -1;
 };
 
-Config.prototype._find = function(aScript) {
-  for (var i = 0, script; script = this._scripts[i]; i++) {
+Config.prototype._find = function (aScript) {
+  for (let i = 0, iLen = this._scripts.length; i < iLen; i++) {
+    let script = this._scripts[i]; 
     if (script.id == aScript.id) {
       return i;
     }
@@ -70,21 +72,21 @@ Config.prototype._find = function(aScript) {
   return -1;
 };
 
-Config.prototype._load = function() {
-  var domParser = Components.classes["@mozilla.org/xmlextras/domparser;1"]
+Config.prototype._load = function () {
+  let domParser = Components.classes["@mozilla.org/xmlextras/domparser;1"]
       .createInstance(Components.interfaces.nsIDOMParser);
 
-  var configContents = "<UserScriptConfig/>";
+  let configContents = "<" + TAG_USER_SCRIPT_CONFIG + "/>";
   if (this._configFile.exists()) {
     configContents = GM_util.getContents(this._configFile);
   }
-  var doc = domParser.parseFromString(configContents, "text/xml");
-  var nodes = doc.evaluate("/UserScriptConfig/Script", doc, null,
+  let doc = domParser.parseFromString(configContents, "text/xml");
+  let nodes = doc.evaluate("/" + TAG_USER_SCRIPT_CONFIG + "/Script", doc, null,
       7 /* XPathResult.ORDERED_NODE_SNAPSHOT_TYPE */,
       null);
 
   this._scripts = [];
-  for (var i=0, node=null; node=nodes.snapshotItem(i); i++) {
+  for (let i = 0, node = null; node = nodes.snapshotItem(i); i++) {
     try {
       var script = new Script(node);
     } catch (e) {
@@ -95,16 +97,17 @@ Config.prototype._load = function() {
     if (script.allFilesExist()) {
       this._scripts.push(script);
     } else {
-      // TODO: Add a user prompt to restore the missing script here?
-      // Perhaps sometime after update works, and we know where to
-      // download the script from?
+      // TODO:
+      // Add a user prompt to restore the missing script here?
+      // Perhaps sometime after update works,
+      // and we know where to download the script from?
       node.parentNode.removeChild(node);
       this._changed(script, "missing-removed", null);
     }
   }
 };
 
-Config.prototype._save = function(saveNow) {
+Config.prototype._save = function (saveNow) {
   // If we have not explicitly been told to save now, then defer execution
   // via a timer, to avoid locking up the UI.
   if (!saveNow) {
@@ -116,34 +119,37 @@ Config.prototype._save = function(saveNow) {
     this._saveTimer = Components.classes["@mozilla.org/timer;1"]
         .createInstance(Components.interfaces.nsITimer);
 
-    // dereference 'this' for the closure
+    // Dereference "this" for the closure.
     var _save = GM_util.hitch(this, "_save");
 
-    this._saveTimer.initWithCallback(
-        {'notify': function() { _save(true); }}, 250,
-        Components.interfaces.nsITimer.TYPE_ONE_SHOT);
-    return;
+    this._saveTimer.initWithCallback({
+      "notify": function () {
+        _save(true);
+      },
+    }, 250, Ci.nsITimer.TYPE_ONE_SHOT);
+    return undefined;
   }
 
-  var doc = Components.classes["@mozilla.org/xmlextras/domparser;1"]
+  let doc = Components.classes["@mozilla.org/xmlextras/domparser;1"]
       .createInstance(Components.interfaces.nsIDOMParser)
-      .parseFromString("<UserScriptConfig></UserScriptConfig>", "text/xml");
+      .parseFromString("<" + TAG_USER_SCRIPT_CONFIG + "></" + TAG_USER_SCRIPT_CONFIG + ">", "text/xml");
 
-  for (var i = 0, scriptObj; scriptObj = this._scripts[i]; i++) {
+  for (let i = 0, iLen = this._scripts.length; i < iLen; i++) {
+    let scriptObj = this._scripts[i];
     doc.firstChild.appendChild(doc.createTextNode("\n\t"));
     doc.firstChild.appendChild(scriptObj.toConfigNode(doc));
   }
 
   doc.firstChild.appendChild(doc.createTextNode("\n"));
 
-  var domSerializer = Components
+  let domSerializer = Components
       .classes["@mozilla.org/xmlextras/xmlserializer;1"]
       .createInstance(Components.interfaces.nsIDOMSerializer);
   GM_util.writeToFile(domSerializer.serializeToString(doc), this._configFile);
 };
 
-Config.prototype.install = function(script, oldScript, tempDir) {
-  var existingIndex = this._find(oldScript || script);
+Config.prototype.install = function (script, oldScript, tempDir) {
+  let existingIndex = this._find(oldScript || script);
   if (!oldScript && (existingIndex > -1)) {
     oldScript = this.scripts[existingIndex];
   }
@@ -159,7 +165,7 @@ Config.prototype.install = function(script, oldScript, tempDir) {
     this.uninstall(oldScript, true);
   }
 
-  script._dependhash = GM_util.sha1(script._rawMeta);
+  script._dependhash = GM_util.hash(script._rawMeta);
   script._installTime = new Date().getTime();
 
   this._scripts.push(script);
@@ -169,16 +175,18 @@ Config.prototype.install = function(script, oldScript, tempDir) {
   }
 
   if (oldScript) {
-    this._changed(script, 'modified', oldScript.id);
+    this._changed(script, "modified", oldScript.id);
   } else {
-    this._changed(script, 'install', existingIndex);
+    this._changed(script, "install", existingIndex);
   }
 };
 
-Config.prototype.uninstall = function(script, forUpdate) {
-  if ('undefined' == typeof(forUpdate)) forUpdate = false;
+Config.prototype.uninstall = function (script, forUpdate) {
+  if (typeof forUpdate == "undefined") {
+    forUpdate = false;
+  }
 
-  var idx = this._find(script);
+  let idx = this._find(script);
   if (idx > -1) {
     this._scripts.splice(idx, 1);
     script.uninstall(forUpdate);
@@ -186,93 +194,109 @@ Config.prototype.uninstall = function(script, forUpdate) {
 };
 
 /**
- * Moves an installed user script to a new position in the array of installed scripts.
+ * Moves an installed user script to a new position
+ * in the array of installed scripts.
  *
  * @param script The script to be moved.
  * @param destination Can be either (a) a numeric offset for the script to be
  *                    moved by, or (b) another installed script to which
  *                    position the script will be moved.
  */
-Config.prototype.move = function(script, destination) {
-  var from = this._scripts.indexOf(script);
-  var to = -1;
+Config.prototype.move = function (script, destination) {
+  let from = this._scripts.indexOf(script);
+  let to = -1;
 
-  // Make sure the user script is installed
-  if (from == -1) return;
+  // Make sure the user script is installed.
+  if (from == -1) {
+    return undefined;
+  }
 
-  if (typeof destination == "number") { // if destination is an offset
+  if (typeof destination == "number") {
+    // If destination is an offset.
     to = from + destination;
     to = Math.max(0, to);
     to = Math.min(this._scripts.length - 1, to);
-  } else { // if destination is a script object
+  } else {
+    // If destination is a script object.
     to = this._scripts.indexOf(destination);
   }
 
-  if (to == -1) return;
+  if (to == -1) {
+    return undefined;
+  }
 
-  var tmp = this._scripts.splice(from, 1)[0];
+  let tmp = this._scripts.splice(from, 1)[0];
   this._scripts.splice(to, 0, tmp);
   this._changed(script, "move", to);
 },
 
 Object.defineProperty(Config.prototype, "globalExcludes", {
-  get: function Config_getGlobalExcludes() {
+  "get": function Config_getGlobalExcludes() {
     return this._globalExcludes.concat();
   },
-  set: function Config_setGlobalExcludes(val) {
+  "set": function Config_setGlobalExcludes(val) {
     this._globalExcludes = val.concat();
     GM_prefRoot.setValue("globalExcludes", JSON.stringify(this._globalExcludes));
   },
-  configurable: true,
-  enumerable: true
+  "configurable": true,
+  "enumerable": true,
 });
 
 Object.defineProperty(Config.prototype, "scripts", {
-  get: function Config_getScripts() {
+  "get": function Config_getScripts() {
     return this._scripts.concat();
   },
-  enumerable: true
+  "enumerable": true,
 });
 
-Config.prototype.getMatchingScripts = function(testFunc) {
+Config.prototype.getMatchingScripts = function (testFunc) {
   return this._scripts.filter(testFunc);
 };
 
-Config.prototype.updateModifiedScripts = function(
-    aWhen, aUrl, aWindowId, aBrowser
-) {
-  // Find any updated scripts or scripts with delayed injection
-  var scripts = this.getMatchingScripts(
+Config.prototype.updateModifiedScripts = function (
+    aWhen, aUrl, aWindowId, aBrowser) {
+  // Find any updated scripts or scripts with delayed injection.
+  let scripts = this.getMatchingScripts(
       function (script) {
-        return script.runAt == aWhen
-            && (script.isModified() || 0 != script.pendingExec.length);
+        return (script.runAt == aWhen)
+            && (script.isModified() || (script.pendingExec.length != 0));
       });
-  if (0 == scripts.length) return;
+  if (scripts.length == 0) {
+    return undefined;
+  }
 
-  for (var i = 0, script; script = scripts[i]; i++) {
-    if (0 == script.pendingExec.length) {
-      var scope = {};
-      Cu.import('chrome://greasemonkey-modules/content/parseScript.js', scope);
-      var parsedScript = scope.parse(
+  for (let i = 0, iLen = scripts.length; i < iLen; i++) {
+    let script = scripts[i];
+    if (script.pendingExec.length == 0) {
+      let scope = {};
+      Cu.import("chrome://greasemonkey-modules/content/parseScript.js", scope);
+      let parsedScript = scope.parse(
           script.textContent, GM_util.getUriFromUrl(script.downloadURL));
       if (!parsedScript || parsedScript.parseErrors.length) {
-        var msg = "(" + script.localized.name + ") "
-            + gStringBundle.GetStringFromName("error.parsingScript")
+        let msg = "(" + script.localized.name + ") "
+            + GM_CONSTANTS.localeStringBundle.createBundle(
+                GM_CONSTANTS.localeGreasemonkeyProperties)
+                .GetStringFromName("error.parsingScript")
             + "\n" + (parsedScript
                 ? parsedScript.parseErrors
-                : gStringBundle.GetStringFromName("error.unknown"));
-        var chromeWin = GM_util.getBrowserWindow();
+                : GM_CONSTANTS.localeStringBundle.createBundle(
+                    GM_CONSTANTS.localeGreasemonkeyProperties)
+                    .GetStringFromName("error.unknown"));
+        let chromeWin = GM_util.getBrowserWindow();
         if (chromeWin && chromeWin.gBrowser) {
-          var buttons = [];
+          let buttons = [];
           buttons.push({
-            "label": gStringBundle.GetStringFromName("notification.ok.label"),
-            "accessKey": gStringBundle
+            "accessKey": GM_CONSTANTS.localeStringBundle.createBundle(
+                GM_CONSTANTS.localeGreasemonkeyProperties)
                 .GetStringFromName("notification.ok.accesskey"),
+            "callback": function () {},
+            "label": GM_CONSTANTS.localeStringBundle.createBundle(
+                GM_CONSTANTS.localeGreasemonkeyProperties)
+                .GetStringFromName("notification.ok.label"),
             "popup": null,
-            "callback": function () {}
           });
-          var notificationBox = chromeWin.gBrowser.getNotificationBox();
-          var notification = notificationBox.appendNotification(
+          let notificationBox = chromeWin.gBrowser.getNotificationBox();
+          let notification = notificationBox.appendNotification(
             msg,
             "parse-userscript",
             "chrome://greasemonkey/skin/icon16.png",
@@ -286,11 +310,11 @@ Config.prototype.updateModifiedScripts = function(
       script.updateFromNewScript(parsedScript, aUrl, aWindowId, aBrowser);
     } else {
       // We are already downloading dependencies for this script
-      // so add its window to the list
+      // so add its window to the list.
       script.pendingExec.push({
-        'browser': aBrowser,
-        'url': aUrl,
-        'windowId': aWindowId
+        "browser": aBrowser,
+        "url": aUrl,
+        "windowId": aWindowId,
       });
     }
   }
@@ -298,8 +322,9 @@ Config.prototype.updateModifiedScripts = function(
   this._save();
 };
 
-Config.prototype.getScriptById = function(scriptId) {
-  for (var i = 0, script = null; script = this.scripts[i]; i++) {
+Config.prototype.getScriptById = function (scriptId) {
+  for (let i = 0, iLen = this.scripts.length; i < iLen ; i++) {
+    let script = this.scripts[i];
     if (scriptId == script.id) {
       return script;
     }
@@ -310,9 +335,9 @@ Config.prototype.getScriptById = function(scriptId) {
  * Checks whether the version has changed since the last run and performs
  * any necessary upgrades.
  */
-Config.prototype._updateVersion = function() {
+Config.prototype._updateVersion = function () {
   Cu.import("resource://gre/modules/AddonManager.jsm");
-  AddonManager.getAddonByID(this.GM_GUID, GM_util.hitch(this, function(addon) {
+  AddonManager.getAddonByID(this.GM_GUID, GM_util.hitch(this, function (addon) {
     var oldVersion = GM_prefRoot.getValue("version");
     var newVersion = addon.version;
 
@@ -321,23 +346,29 @@ Config.prototype._updateVersion = function() {
 
     if ("0.0" == oldVersion) {
       // This is the first launch.  Show the welcome screen.
-      var chromeWin = GM_util.getBrowserWindow();
-      if (chromeWin && chromeWin.gBrowser) chromeWin.setTimeout(function() {
-        var url = 'http://www.greasespot.net/p/welcome.html'
-            + '?utm_source=xpi&utm_medium=xpi&utm_campaign=welcome'
-            + '&utm_content=' + newVersion;
-        // the setTimeout makes sure we do not execute too early -- sometimes
-        // the window isn't quite ready to add a tab yet
+      let chromeWin = GM_util.getBrowserWindow();
+      if (chromeWin && chromeWin.gBrowser) chromeWin.setTimeout(function () {
+        let url = "http://www.greasespot.net/p/welcome.html"
+            + "?utm_source=xpi&utm_medium=xpi&utm_campaign=welcome"
+            + "&utm_content=" + newVersion;
+        // The setTimeout makes sure we do not execute too early
+        // - sometimes the window isn't quite ready to add a tab yet.
         chromeWin.gBrowser.selectedTab = chromeWin.gBrowser.addTab(url);
       }, 1000);
     }
 
-    if (newVersion.match(/^3\.5/) && oldVersion != newVersion) {
-      // #1944 Re-scan config to load new metadata values.
+    let _versionMajor = "3";
+    let _versionMinor = "5";
+    if (newVersion.match(
+        new RegExp("^" + _versionMajor + "\\." + _versionMinor, ""))
+        && (oldVersion != newVersion)) {
+      // See #1944.
+      // Re-scan config to load new metadata values.
       var scope = {};
-      Cu.import('chrome://greasemonkey-modules/content/parseScript.js', scope);
-      for (var i = 0, script = null; script = this._scripts[i]; i++) {
-        var parsedScript = scope.parse(
+      Cu.import("chrome://greasemonkey-modules/content/parseScript.js", scope);
+      for (let i = 0, iLen = this._scripts.length; i < iLen; i++) {
+        let script = this._scripts[i];
+        let parsedScript = scope.parse(
             script.textContent, GM_util.getUriFromUrl(script.downloadURL));
         try {
           script.updateFromNewScript(parsedScript);

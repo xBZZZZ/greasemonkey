@@ -1,11 +1,10 @@
 "use strict";
 
-var EXPORTED_SYMBOLS = [];
+const EXPORTED_SYMBOLS = [];
 
-var Cc = Components.classes;
-var Ci = Components.interfaces;
-var Cr = Components.results;
-var Cu = Components.utils;
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
 // try {
 Cu.import("resource://gre/modules/Services.jsm");
@@ -18,9 +17,6 @@ Cu.import("chrome://greasemonkey-modules/content/third-party/convert2RegExp.js")
 Cu.import("chrome://greasemonkey-modules/content/third-party/MatchPattern.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
-var gStringBundle = Cc["@mozilla.org/intl/stringbundle;1"]
-    .getService(Ci.nsIStringBundleService)
-    .createBundle("chrome://greasemonkey/locale/greasemonkey.properties");
 
 var gCorsCspName = "Greasemonkey CORS/CSP";
 
@@ -69,7 +65,6 @@ var gCorsOverridePrefBase = gCorsType
 var gCspOverridePrefBase = gCspType
     + gCorsCspOverridePrefSeparator + gCorsCspOverridePrefSuffix;
 var gCorsCspOverrideDumpPrefix = "corsCspOverride";
-
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
@@ -133,7 +128,9 @@ function _corsCspTestUrl(aUrl) {
         matchPattern = new MatchPattern(matchPattern);
       } catch (e) {
         dump(gCorsCspOverrideDumpPrefix + " - testUrl (" + aUrl + "): "
-            + gStringBundle.GetStringFromName("parse.ignoring-match")
+            + GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("parse.ignoringMatch")
             .replace("%1", matchPattern).replace("%2", e));
         return false;
       }
@@ -257,7 +254,7 @@ function corsCspOverride(aSubject, aTopic, aData) {
       var httpChannel = channel.QueryInterface(Ci.nsIHttpChannel);
       _info.status = httpChannel.responseStatus;
     } catch (e) {
-      // dump(gCorsCspOverrideDumpPrefix + " - http - file:///? - e:" + "\n" + e + "\n");
+      // dump(gCorsCspOverrideDumpPrefix + " - http - file:// ? - e:" + "\n" + e + "\n");
       return null;
     }
   } else {
@@ -338,7 +335,7 @@ function corsCspOverride(aSubject, aTopic, aData) {
     // dump(gCorsCspOverrideDumpPrefix + " - headers - details - responseHeaders - before: " + JSON.stringify(inHeaders) + "\n");
   }
 
-  for (var i = 0, i_count = corsCspHeaders.length; i < i_count; i++) {
+  for (var i = 0, iLen = corsCspHeaders.length; i < iLen; i++) {
     if ((corsOverride && (corsCspHeaders[i].type == gCorsType))
         || (cspOverride && (corsCspHeaders[i].type == gCspType))) {
       try {    
@@ -349,8 +346,8 @@ function corsCspOverride(aSubject, aTopic, aData) {
             "index": [],
             "value": [],
           };
-          for (var j = 0, j_count = inHeaders.length;
-              j < j_count; j++) {
+          for (var j = 0, jLen = inHeaders.length;
+              j < jLen; j++) {
             if (inHeaders[j].name.toLowerCase()
                 == corsCspHeaders[i].value) {
               corsCspRulesIn.index.push(j);
@@ -379,8 +376,8 @@ function corsCspOverride(aSubject, aTopic, aData) {
                 corsCspHeaders[i].value, corsCspRulesMy, false);
           }
         } else {
-          for (var j = 0, j_count = corsCspRulesIn.index.length;
-              j < j_count; j++) {
+          for (var j = 0, jLen = corsCspRulesIn.index.length;
+              j < jLen; j++) {
             if (_corsCspOverride) {
               corsCspRulesMy = _corsCspRulesOverride(
                   corsCspRulesIn.value[j], corsCspHeaders[i]);
@@ -397,8 +394,8 @@ function corsCspOverride(aSubject, aTopic, aData) {
               "index": [],
               "value": [],
             };
-            for (var j = 0, j_count = corsCspRulesIn.index.length;
-                j < j_count; j++) {
+            for (var j = 0, jLen = corsCspRulesIn.index.length;
+                j < jLen; j++) {
               if (corsCspRulesIn.value[j].toLowerCase()
                   == corsCspHeaders[i].value) {
                 corsCspRulesOut.index.push(j);
@@ -563,7 +560,7 @@ function _cspOverride(aCspRules) {
     },
   ];
 
-  // "*" - see http://bugzil.la/1086999
+  // "*" - http://bugzil.la/1086999
 
   var rulesMyDefault = [
     {
@@ -772,8 +769,8 @@ function _cspOverride(aCspRules) {
       "value": JSON.parse(JSON.stringify(rulesMyDefault)),
     },
   ];
-  for (var i = 0, i_count = rulesSpec.length; i < i_count; i++) {
-    for (var j = 0, j_count = rulesMy.length; j < j_count; j++) {
+  for (var i = 0, iLen = rulesSpec.length; i < iLen; i++) {
+    for (var j = 0, jLen = rulesMy.length; j < jLen; j++) {
       if (rulesSpec[i].name == rulesMy[j].name) {
         rulesMy[j].value.push(
           {
@@ -792,10 +789,10 @@ function _cspOverride(aCspRules) {
 
   // dump(gCorsCspOverrideDumpPrefix + " - csp - rules - my - preset - before: " + JSON.stringify(rulesMy) + "\n");
   var _pref = "";
-  for (var i = 0, i_count = rulesMy.length; i < i_count; i++) {
+  for (var i = 0, iLen = rulesMy.length; i < iLen; i++) {
     labelCspOverride1:
-    for (var j = 0, j_count = rulesMy[i].value.length; j < j_count; j++) {
-      for (var k = 0, k_count = rulesMyDefault.length; k < k_count; k++) {
+    for (var j = 0, jLen = rulesMy[i].value.length; j < jLen; j++) {
+      for (var k = 0, kLen = rulesMyDefault.length; k < kLen; k++) {
         if (rulesMyDefault[k].override
             && (rulesMyDefault[k].name == rulesMy[i].value[j].name)) {
           continue labelCspOverride1;
@@ -862,10 +859,10 @@ function _cspOverride(aCspRules) {
   var ruleSourceListValue = "";
   var ruleSourceListValues = [];
   var ruleSourceListRewriteValue = "";
-    for (var i = 0, i_count = rules.length; i < i_count; i++) {
+    for (var i = 0, iLen = rules.length; i < iLen; i++) {
     if (rules[i].trim() != "") {
       // dump(gCorsCspOverrideDumpPrefix + " - csp - rules: " + rules[i].trim() + "\n");
-      for (var j = 0, j_count = rulesMy.length; j < j_count; j++) {
+      for (var j = 0, jLen = rulesMy.length; j < jLen; j++) {
         if (rules[i].toLowerCase().trim().indexOf(rulesMy[j].name) == 0) {
           // dump(gCorsCspOverrideDumpPrefix + " - csp - rules - my (" + rulesMy[j].name + ") - before: " + rules[i] + "\n");
           ruleRewriteHash = false;
@@ -876,7 +873,7 @@ function _cspOverride(aCspRules) {
               + rulesMy[j].name.length);
           ruleValue = rules[i].slice(rules[i].toLowerCase()
               .indexOf(rulesMy[j].name) + rulesMy[j].name.length);
-          for (var k = 0, k_count = rulesMy[j].value.length; k < k_count; k++) {
+          for (var k = 0, kLen = rulesMy[j].value.length; k < kLen; k++) {
             if (rulesMy[j].value[k].override) {
               if (rulesMy[j].value[k].name == gCorsCspOverrideAllAllow) {
                 // dump(gCorsCspOverrideDumpPrefix + " - csp - rules - my (" + rulesMy[j].name + ") - rewrite (" + rulesMy[j].value[k].name + "): " + rulesMy[j].value[k].value + "\n");
@@ -890,11 +887,11 @@ function _cspOverride(aCspRules) {
                   ruleSourceListValue = rulesMy[j].value[k].value;
                   ruleSourceListValues = ruleSourceListValue.split(
                       rulesValuesSeparator);
-                  for (var l = 0, l_count = ruleSourceListValues.length;
-                      l < l_count; l++) {
+                  for (var l = 0, lLen = ruleSourceListValues.length;
+                      l < lLen; l++) {
                     ruleSourceListRewriteValue = ruleSourceListValues[l];
-                    for (var m = 0, m_count = ruleValues.length;
-                        m < m_count; m++) {
+                    for (var m = 0, mLen = ruleValues.length;
+                        m < mLen; m++) {
                       if (ruleValues[m].toLowerCase().trim()
                           == ruleSourceListValues[l]) {
                         // dump(gCorsCspOverrideDumpPrefix + " - csp - rules - my (" + rulesMy[j].name + ") - rewrite (" + rulesMy[j].value[k].name + ") - they are identical: " + ruleValues[m].toLowerCase().trim() + " / " + ruleSourceListValues[l] + "\n");
@@ -906,8 +903,8 @@ function _cspOverride(aCspRules) {
                         + ruleSourceListRewriteValue).trim();
                   }
                 } else {
-                  for (var l = 0, l_count = rulesMySpec.length;
-                      l < l_count; l++) {
+                  for (var l = 0, lLen = rulesMySpec.length;
+                      l < lLen; l++) {
                     if (rulesMySpec[l].value == rulesMy[j].value[k].value) {
                       if (rulesMySpec[l].delete.hash) {
                         ruleRewriteHash = true;
@@ -920,8 +917,8 @@ function _cspOverride(aCspRules) {
                   }
                   ruleRewriteNone = true;
                   ruleRewriteValue = rulesMy[j].value[k].value;
-                  for (var l = 0, l_count = ruleValues.length;
-                      l < l_count; l++) {
+                  for (var l = 0, lLen = ruleValues.length;
+                      l < lLen; l++) {
                     if (ruleValues[l].toLowerCase().trim()
                         == rulesMy[j].value[k].value) {
                       // dump(gCorsCspOverrideDumpPrefix + " - csp - rules - my (" + rulesMy[j].name + ") - rewrite (" + rulesMy[j].value[k].name + ") - they are identical: " + ruleValues[l].toLowerCase().trim() + " / " + rulesMy[j].value[k].value + "\n");

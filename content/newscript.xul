@@ -3,20 +3,21 @@
 
 <!DOCTYPE dialog SYSTEM "chrome://greasemonkey/locale/greasemonkey.dtd">
 
-<dialog id="greasemonkey"
+<dialog
   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
   buttons="accept,cancel,extra2"
-  ondialogaccept="return doInstall();"
+  id="greasemonkey"
   title="&menu.new;"
+  ondialogaccept="return doInstall();"
   orient="vertical"
-
   buttonlabelextra2="&newscript.fromClipboard;"
-  ondialogextra2="installFromClipboard(); window.close();"
-  >
+  ondialogextra2="installFromClipboard(); window.close();">
 
-  <stringbundle id="gm-browser-bundle" src="chrome://greasemonkey/locale/gm-browser.properties" />
+  <stringbundle id="gm-browser-bundle"
+    src="chrome://greasemonkey/locale/gm-browser.properties" />
 
-  <script type="application/x-javascript" src="chrome://greasemonkey/content/newscript.js" />
+  <script type="application/x-javascript"
+    src="chrome://greasemonkey/content/newscript.js" />
 
   <vbox flex="1">
     <label value="&newscript.name;" control="name" />

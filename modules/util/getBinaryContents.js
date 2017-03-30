@@ -1,15 +1,18 @@
-var EXPORTED_SYMBOLS = ['getBinaryContents'];
+const EXPORTED_SYMBOLS = ["getBinaryContents"];
 
-Components.utils.import('resource://gre/modules/Services.jsm');
-Components.utils.import('chrome://greasemonkey-modules/content/util.js');
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("resource://gre/modules/Services.jsm");
+
+Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
 function getBinaryContents(aFile) {
-  var channel = GM_util.getChannelFromUri(GM_util.getUriFromFile(aFile));
-  var input = channel.open();
+  let channel = GM_util.getChannelFromUri(GM_util.getUriFromFile(aFile));
+  let input = channel.open();
 
-  var bstream = Components.classes["@mozilla.org/binaryinputstream;1"]
-      .createInstance(Components.interfaces.nsIBinaryInputStream);
+  let bstream = Cc["@mozilla.org/binaryinputstream;1"]
+      .createInstance(Ci.nsIBinaryInputStream);
   bstream.setInputStream(input);
 
   return bstream.readBytes(bstream.available());

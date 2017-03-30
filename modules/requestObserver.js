@@ -1,53 +1,57 @@
-'use strict';
+"use strict";
 
-var EXPORTED_SYMBOLS = [];
+const EXPORTED_SYMBOLS = [];
 
-var Cc = Components.classes;
-var Ci = Components.interfaces;
-var Cu = Components.utils;
-var Cr = Components.results;
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
 Cu.import("resource://gre/modules/Services.jsm");
 
-Cu.import("chrome://greasemonkey-modules/content/util.js");
 Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/util.js");
 
-var gDisallowedSchemes = {
-    'chrome': 1, 'greasemonkey-script': 1, 'view-source': 1};
-var gScriptEndingRegexp = new RegExp('\\.user\\.js$');
-var gContentTypes = Ci.nsIContentPolicy;
+
+var SCHEMES_DISALLOWED = {
+  "chrome": 1,
+  "view-source": 1,
+};
+SCHEMES_DISALLOWED[GM_CONSTANTS.addonScriptProtocolScheme] = 1;
+Object.freeze(SCHEMES_DISALLOWED);
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
 function checkScriptRefresh(channel) {
-  // .loadInfo is part of nsiChannel -> implicit QI needed
-  if (!(channel instanceof Components.interfaces.nsIChannel)) return;
-  if (!channel.loadInfo) return;
+  // .loadInfo is part of nsiChannel -> implicit QI needed.
+  if (!(channel instanceof Ci.nsIChannel)) {
+    return undefined;
+  }
+  if (!channel.loadInfo) {
+    return undefined;
+  }
 
-  // See http://bugzil.la/1182571
-  var type = channel.loadInfo.externalContentPolicyType
+  // http://bugzil.la/1182571
+  let type = channel.loadInfo.externalContentPolicyType
       ? channel.loadInfo.externalContentPolicyType
       : channel.loadInfo.contentPolicyType;
 
-  // only check for updated scripts when tabs/iframes are loaded
-  if (type != gContentTypes.TYPE_DOCUMENT
-      && type != gContentTypes.TYPE_SUBDOCUMENT
-  ) {
-    return;
+  // Only check for updated scripts when tabs/iframes are loaded.
+  if (type != Ci.nsIContentPolicy.TYPE_DOCUMENT
+      && type != Ci.nsIContentPolicy.TYPE_SUBDOCUMENT) {
+    return undefined;
   }
 
-  // forward compatibility: https://bugzilla.mozilla.org/show_bug.cgi?id=1124477
-  var browser = channel.loadInfo.topFrameElement;
+  // Forward compatibility: http://bugzil.la/1124477
+  let browser = channel.loadInfo.topFrameElement;
 
   if (!browser && channel.notificationCallbacks) {
-    // current API: https://bugzilla.mozilla.org/show_bug.cgi?id=1123008#c7
-    var loadCtx = channel.notificationCallbacks.QueryInterface(
-        Components.interfaces.nsIInterfaceRequestor).getInterface(
-        Components.interfaces.nsILoadContext);
+    // Current API: http://bugzil.la/1123008#c7
+    let loadCtx = channel.notificationCallbacks.QueryInterface(
+        Ci.nsIInterfaceRequestor).getInterface(Ci.nsILoadContext);
     browser = loadCtx.topFrameElement;
   }
 
-  var windowId = channel.loadInfo.innerWindowID;
+  let windowId = channel.loadInfo.innerWindowID;
 
   GM_util.getService().scriptRefresh(channel.URI.spec, windowId, browser);
 }
@@ -55,54 +59,57 @@ function checkScriptRefresh(channel) {
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
 function installObserver(aSubject, aTopic, aData) {
-  // When observing a new request, inspect it to determine if it should be
-  // a user script install.  If so, abort and restart as an install rather
-  // than a navigation.
+  // When observing a new request, inspect it to determine
+  // if it should be a user script install.
+  // If so, abort and restart as an install rather than a navigation.
   if (!GM_util.getEnabled()) {
-    return;
+    return undefined;
   }
 
-  var channel = aSubject.QueryInterface(Ci.nsIChannel);
+  let channel = aSubject.QueryInterface(Ci.nsIChannel);
   if (!channel || !channel.loadInfo) {
-    return;
+    return undefined;
   }
 
-  // See http://bugzil.la/1182571
-  var type = channel.loadInfo.externalContentPolicyType
+  // http://bugzil.la/1182571
+  let type = channel.loadInfo.externalContentPolicyType
       || channel.loadInfo.contentPolicyType;
-  if (type != gContentTypes.TYPE_DOCUMENT) {
-    return;
+  if (type != Ci.nsIContentPolicy.TYPE_DOCUMENT) {
+    return undefined;
   }
 
-  if (channel.URI.scheme in gDisallowedSchemes) {
-    return;
+  if (channel.URI.scheme in SCHEMES_DISALLOWED) {
+    return undefined;
   }
 
+  let httpChannel;
   try {
-    var httpChannel = channel.QueryInterface(Ci.nsIHttpChannel);
-    if ('POST' == httpChannel.requestMethod) {
-      return;
+    httpChannel = channel.QueryInterface(Ci.nsIHttpChannel);
+    if (httpChannel.requestMethod == "POST") {
+      return undefined;
     }
   } catch (e) {
-    // Ignore completely, e.g. file:/// URIs.
+    // Ignore completely, e.g. file:// URIs.
   }
 
-  if (!channel.URI.spec.match(gScriptEndingRegexp)) {
-    return;
+  if (!channel.URI.spec.match(
+      new RegExp(GM_CONSTANTS.fileScriptExtensionRegexp + "$", ""))) {
+    return undefined;
   }
 
   // We've done an early return above for all non-user-script navigations.  If
   // execution has proceeded to this point, we want to cancel the existing
   // request (i.e. navigation) and instead start a script installation for
   // this same URI.
+  let request;
   try {
-    var request = channel.QueryInterface(Ci.nsIRequest);
-    // See #1717
+    request = channel.QueryInterface(Ci.nsIRequest);
+    // See #1717.
     if (request.isPending()) {
       request.suspend();
     }
 
-    var browser = channel
+    let browser = channel
         .QueryInterface(Ci.nsIHttpChannel)
         .notificationCallbacks
         .getInterface(Ci.nsILoadContext)
@@ -110,25 +117,25 @@ function installObserver(aSubject, aTopic, aData) {
 
     GM_util.showInstallDialog(channel.URI.spec, browser, request);
   } catch (e) {
-    dump('Greasemonkey could not do script install!\n'+e+'\n');
+    dump("Greasemonkey could not do script install:" + "\n" + e + "\n");
     // Ignore.
-    return;
+    return undefined;
   }
 }
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
 Services.obs.addObserver({
-  observe: function(aSubject, aTopic, aData) {
+  "observe": function (aSubject, aTopic, aData) {
     try {
       installObserver(aSubject, aTopic, aData);
     } catch (e) {
-      dump('Greasemonkey install observer failed:\n' + e + '\n');
+      dump("Greasemonkey install observer failed:" + "\n" + e + "\n");
     }
     try {
       checkScriptRefresh(aSubject);
     } catch (e) {
-      dump('Greasemonkey refresh observer failed:\n' + e + '\n');
+      dump("Greasemonkey refresh observer failed:" + "\n" + e + "\n");
     }
-  }
+  },
 }, "http-on-modify-request", false);

@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "U">
 <!ENTITY Show "Prikaži vsebujočo mapo">
 <!ENTITY Show.accesskey "P">
-<!ENTITY Sort.ByStatus "Razvrsti po stanju">
-<!ENTITY Sort.Status "Stanje">
-<!ENTITY Sort.ByName "Razvrsti po imenu">
-<!ENTITY Sort.Name "Ime">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "Razvrsti po vrstnem redu izvajanja">
-<!ENTITY Sort.Execution "Vrstni red izvajanja">
+<!ENTITY Sort.byExecution "Razvrsti po vrstnem redu izvajanja">
+<!ENTITY Sort.byName "Razvrsti po imenu">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "Razvrsti po stanju">
+<!ENTITY Sort.execution "Vrstni red izvajanja">
+<!ENTITY Sort.name "Ime">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "Stanje">

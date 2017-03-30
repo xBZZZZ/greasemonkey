@@ -1,9 +1,9 @@
-var EXPORTED_SYMBOLS = ['GM_PrefManager', 'GM_prefRoot'];
+const EXPORTED_SYMBOLS = ["GM_PrefManager", "GM_prefRoot"];
 
-var gStringBundle = Components
-    .classes["@mozilla.org/intl/stringbundle;1"]
-    .getService(Components.interfaces.nsIStringBundleService)
-    .createBundle("chrome://greasemonkey/locale/greasemonkey.properties");
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
 
 /**
  * Simple API on top of preferences for greasemonkey.
@@ -13,36 +13,35 @@ var gStringBundle = Components
 function GM_PrefManager(startPoint) {
   startPoint = "extensions.greasemonkey." + (startPoint || "");
 
-  this.pref = Components.classes["@mozilla.org/preferences-service;1"]
-     .getService(Components.interfaces.nsIPrefService)
-     .getBranch(startPoint);
+  this.pref = Cc["@mozilla.org/preferences-service;1"]
+      .getService(Ci.nsIPrefService)
+      .getBranch(startPoint);
 
   this.observers = new Map();
 };
 
 GM_PrefManager.prototype.MIN_INT_32 = -0x80000000;
 GM_PrefManager.prototype.MAX_INT_32 = 0x7FFFFFFF;
-GM_PrefManager.prototype.nsISupportsString = Components.interfaces
-    .nsISupportsString;
+GM_PrefManager.prototype.nsISupportsString = Ci.nsISupportsString;
 
 /**
- * whether a preference exists
+ * Whether a preference exists.
  */
-GM_PrefManager.prototype.exists = function(prefName) {
+GM_PrefManager.prototype.exists = function (prefName) {
   return this.pref.getPrefType(prefName) != 0;
 };
 
 /**
- * enumerate preferences
+ * Enumerate preferences.
  */
-GM_PrefManager.prototype.listValues = function() {
+GM_PrefManager.prototype.listValues = function () {
   return this.pref.getChildList("", {});
 };
 
 /**
- * returns the named preference, or defaultValue if it does not exist
+ * Returns the named preference, or defaultValue if it does not exist.
  */
-GM_PrefManager.prototype.getValue = function(prefName, defaultValue) {
+GM_PrefManager.prototype.getValue = function (prefName, defaultValue) {
   var prefType = this.pref.getPrefType(prefName);
 
   // underlying preferences object throws an exception if pref doesn't exist
@@ -62,26 +61,27 @@ GM_PrefManager.prototype.getValue = function(prefName, defaultValue) {
   } catch(e) {
     return defaultValue != undefined ? defaultValue : null;
   }
+
   return null;
 };
 
 /**
- * sets the named preference to the specified value. values must be strings,
- * booleans, or integers.
+ * Sets the named preference to the specified value. values must be booleans,
+ * integers, or strings.
  */
-GM_PrefManager.prototype.setValue = function(prefName, value) {
-  var prefType = typeof(value);
-  var goodType = false;
+GM_PrefManager.prototype.setValue = function (prefName, value) {
+  let prefType = typeof value;
+  let goodType = false;
 
   switch (prefType) {
-    case "string":
     case "boolean":
+    case "string":
       goodType = true;
       break;
     case "number":
-      if (value % 1 == 0 &&
-          value >= this.MIN_INT_32 &&
-          value <= this.MAX_INT_32) {
+      if (((value % 1) == 0)
+          && (value >= this.MIN_INT_32)
+          && (value <= this.MAX_INT_32)) {
         goodType = true;
       }
       break;
@@ -89,64 +89,68 @@ GM_PrefManager.prototype.setValue = function(prefName, value) {
 
   if (!goodType) {
     throw new Error(
-        gStringBundle.GetStringFromName('error.args.getValue'));
+        GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.args.getValue"));
   }
 
-  // underlying preferences object throws an exception if new pref has a
-  // different type than old one. i think we should not do this, so delete
-  // old pref first if this is the case.
-  if (this.exists(prefName) && prefType != typeof(this.getValue(prefName))) {
+  // Underlying preferences object throws an exception if new pref has
+  // a different type than old one. i think we should not do this,
+  // so delete old pref first if this is the case.
+  if (this.exists(prefName) && (typeof this.getValue(prefName) != prefType)) {
     this.remove(prefName);
   }
 
   // set new value using correct method
   switch (prefType) {
-    case "string":
-      var str = Components.classes["@mozilla.org/supports-string;1"]
-          .createInstance(this.nsISupportsString);
-      str.data = value;
-      this.pref.setComplexValue(prefName, this.nsISupportsString, str);
-      break;
     case "boolean":
       this.pref.setBoolPref(prefName, value);
       break;
     case "number":
       this.pref.setIntPref(prefName, Math.floor(value));
       break;
+    case "string":
+      let str = Cc["@mozilla.org/supports-string;1"]
+          .createInstance(this.nsISupportsString);
+      str.data = value;
+      this.pref.setComplexValue(prefName, this.nsISupportsString, str);
+      break;
   }
 };
 
 /**
- * deletes the named preference or subtree
+ * Deletes the named preference or subtree.
  */
-GM_PrefManager.prototype.remove = function(prefName) {
+GM_PrefManager.prototype.remove = function (prefName) {
   this.pref.deleteBranch(prefName);
 };
 
 /**
- * call a function whenever the named preference subtree changes
+ * Call a function whenever the named preference subtree changes.
  */
-GM_PrefManager.prototype.watch = function(prefName, watcher) {
-  // construct an observer
-  var observer = {
-    observe: function(subject, topic, prefName) { watcher(prefName); }
+GM_PrefManager.prototype.watch = function (prefName, watcher) {
+  // Construct an observer.
+  let observer = {
+    "observe": function (subject, topic, prefName) {
+      watcher(prefName);
+    },
   };
 
-  // store the observer in case we need to remove it later
+  // Store the observer in case we need to remove it later.
   this.observers.set(watcher, observer);
 
-  this.pref.QueryInterface(Components.interfaces.nsIPrefBranchInternal)
+  this.pref.QueryInterface(Ci.nsIPrefBranchInternal)
       .addObserver(prefName, observer, false);
 };
 
 /**
- * stop watching
+ * Stop watching.
  */
-GM_PrefManager.prototype.unwatch = function(prefName, watcher) {
-  var obs = this.observers.get(watcher);
+GM_PrefManager.prototype.unwatch = function (prefName, watcher) {
+  let obs = this.observers.get(watcher);
   if (obs) {
     this.observers.delete(watcher);
-    this.pref.QueryInterface(Components.interfaces.nsIPrefBranchInternal)
+    this.pref.QueryInterface(Ci.nsIPrefBranchInternal)
         .removeObserver(prefName, obs);
   }
 };

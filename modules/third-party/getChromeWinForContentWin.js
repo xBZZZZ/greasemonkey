@@ -42,9 +42,10 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-var EXPORTED_SYMBOLS = ["getChromeWinForContentWin"];
+const EXPORTED_SYMBOLS = ["getChromeWinForContentWin"];
 
-var Ci = Components.interfaces;
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
 
 function getChromeWinForContentWin(aContentWin) {
   // Only with e10s disabled.

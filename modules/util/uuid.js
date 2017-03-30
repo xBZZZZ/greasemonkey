@@ -1,10 +1,12 @@
-var EXPORTED_SYMBOLS = ['uuid'];
+const EXPORTED_SYMBOLS = ["uuid"];
 
-var uuidGenerator = Components
-    .classes["@mozilla.org/uuid-generator;1"]
-    .getService(Components.interfaces.nsIUUIDGenerator);
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-function uuid(msg) {
-  var uuid = uuidGenerator.generateUUID().toString();
-  return uuid.substring(1,uuid.length-1);
+
+function uuid() {
+  let uuid = Cc["@mozilla.org/uuid-generator;1"]
+      .getService(Ci.nsIUUIDGenerator)
+      .generateUUID().toString();
+
+  return uuid.substring(1, uuid.length - 1);
 }

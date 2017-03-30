@@ -1,30 +1,39 @@
-Components.utils.import("resource://gre/modules/Services.jsm");
-Components.utils.import('chrome://greasemonkey-modules/content/util.js');
+const EXPORTED_SYMBOLS = ["getBestLocaleMatch"];
 
-var EXPORTED_SYMBOLS = ['getBestLocaleMatch'];
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("resource://gre/modules/Services.jsm");
+
+Cu.import("chrome://greasemonkey-modules/content/util.js");
+
+
+const SEPARATOR = "-";
 
 // This function tries to find the best matching locale.
 // Locales should be given in the form "lang[-COUNTRY]".
-// If an exact match (i.e. both lang and country match) can be found, it is
-// returned. Otherwise, a partial match based on the lang part is attempted.
-// Partial matches without country are preferred over lang matches with
-// non-matching country.
+// If an exact match (i.e. both lang and country match) can be found,
+// it is returned.
+// Otherwise, a partial match based on the lang part is attempted.
+// Partial matches without country are preferred over lang matches
+// with non-matching country.
 // If no locale matches, null is returned.
 function getBestLocaleMatch(aPreferred, aAvailable) {
-  var preferredLang = aPreferred.split("-")[0];
+  let preferredLang = aPreferred.split(SEPARATOR)[0];
 
-  var langMatch = null;
-  var partialMatch = null;
-  for (var i = 0, current; current = aAvailable[i]; i++) {
-    // Both lang and country match
-    if (current == aPreferred)
+  let langMatch = null;
+  let partialMatch = null;
+  for (let i = 0, iLen = aAvailable.length; i < iLen; i++) {
+    let current = aAvailable[i];
+    // Both lang and country match.
+    if (current == aPreferred) {
       return current;
+    }
 
     if (current == preferredLang) {
-      // Only lang matches, no country
+      // Only lang matches, no country.
       langMatch = current;
-    } else if (current.split("-")[0] == preferredLang) {
-      // Only lang matches, non-matching country
+    } else if (current.split(SEPARATOR)[0] == preferredLang) {
+      // Only lang matches, non-matching country.
       partialMatch = current;
     }
   }

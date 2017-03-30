@@ -1,11 +1,13 @@
-Components.utils.import('chrome://greasemonkey-modules/content/util.js');
+const EXPORTED_SYMBOLS = ["alert"];
 
-var EXPORTED_SYMBOLS = ['alert'];
-var promptService = Components
-    .classes["@mozilla.org/embedcomp/prompt-service;1"]
-    .getService(Components.interfaces.nsIPromptService);
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("chrome://greasemonkey-modules/content/util.js");
+
 
 // Because alert is not defined in component/module scope.
 function alert(msg) {
-  promptService.alert(null, "Greasemonkey alert", msg);
+  Cc["@mozilla.org/embedcomp/prompt-service;1"]
+      .getService(Ci.nsIPromptService)
+      .alert(null, "Greasemonkey alert", msg);
 }

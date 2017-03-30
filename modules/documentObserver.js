@@ -1,12 +1,15 @@
-'use strict';
+"use strict";
 
-var EXPORTED_SYMBOLS = ['onNewDocument'];
+const EXPORTED_SYMBOLS = ["onNewDocument"];
 
-var Cu = Components.utils;
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-Cu.import('resource://gre/modules/Services.jsm');
-Cu.import('chrome://greasemonkey-modules/content/util.js');
+Cu.import("resource://gre/modules/Services.jsm");
 
+Cu.import("chrome://greasemonkey-modules/content/util.js");
+
+
+const OBSERVER_TOPIC = "document-element-inserted";
 
 var callbacks = new WeakMap();
 
@@ -14,26 +17,35 @@ function onNewDocument(topWindow, callback) {
   callbacks.set(topWindow, callback);
 }
 
-var contentObserver = {
-  observe: function (aSubject, aTopic, aData) {
-    if (!GM_util.getEnabled()) return;
+let contentObserver = {
+  "observe": function (aSubject, aTopic, aData) {
+    if (!GM_util.getEnabled()) {
+      return undefined;
+    }
 
     switch (aTopic) {
-    case 'document-element-inserted':
-      var doc = aSubject;
-      var win = doc && doc.defaultView;
-      if (!doc || !win) return;
-      var topWin = win.top;
+      case OBSERVER_TOPIC:
+        let doc = aSubject;
+        let win = doc && doc.defaultView;
 
-      var frameCallback = callbacks.get(topWin);
-      if (!frameCallback) return;
-      frameCallback(win);
+        if (!doc || !win) {
+          return undefined;
+        }
 
+        let topWin = win.top;
+
+        let frameCallback = callbacks.get(topWin);
+        if (!frameCallback) {
+          return undefined;
+        }
+
+        frameCallback(win);
       break;
-    default:
-      dump('Content frame observed unknown topic: ' + aTopic + '\n');
+      default:
+        dump("Content frame observed unknown topic: " + aTopic + "\n");
+        break;
     }
-  }
+  },
 };
 
-Services.obs.addObserver(contentObserver, 'document-element-inserted', false);
+Services.obs.addObserver(contentObserver, OBSERVER_TOPIC, false);

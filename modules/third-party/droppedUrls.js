@@ -2,27 +2,28 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-var EXPORTED_SYMBOLS = ['droppedUrls'];
+const EXPORTED_SYMBOLS = ["droppedUrls"];
+
 
 function droppedUrls(aEvent) {
-  var dataTransfer = aEvent.dataTransfer;
-  var urls = [];
+  let dataTransfer = aEvent.dataTransfer;
+  let urls = [];
 
-  // Convert every dropped item into a url
-  for (var i = 0; i < dataTransfer.mozItemCount; i++) {
-    var url = dataTransfer.mozGetDataAt('text/uri-list', i);
+  // Convert every dropped item into a url.
+  for (let i = 0, iLen = dataTransfer.mozItemCount; i < iLen; i++) {
+    let url = dataTransfer.mozGetDataAt("text/uri-list", i);
     if (url) {
       urls.push(url);
       continue;
     }
 
-    url = dataTransfer.mozGetDataAt('text/x-moz-url', i);
+    url = dataTransfer.mozGetDataAt("text/x-moz-url", i);
     if (url) {
-      urls.push(url.split('\n')[0]);
+      urls.push(url.split("\n")[0]);
       continue;
     }
 
-    var file = dataTransfer.mozGetDataAt('application/x-moz-file', i);
+    let file = dataTransfer.mozGetDataAt("application/x-moz-file", i);
     if (file) {
       urls.push(Services.io.newFileURI(file).spec);
       continue;

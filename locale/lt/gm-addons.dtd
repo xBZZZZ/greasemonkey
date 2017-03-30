@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "N">
 <!ENTITY Show "Atverti aplanką">
 <!ENTITY Show.accesskey "a">
-<!ENTITY Sort.ByStatus "Rikiuoti pagal būseną">
-<!ENTITY Sort.Status "Būsena">
-<!ENTITY Sort.ByName "Rikiuoti pagal pavadinimą">
-<!ENTITY Sort.Name "Pavadinimas">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "Rikiuoti pagal vykdymo eilę">
-<!ENTITY Sort.Execution "Vykdymo eilė">
+<!ENTITY Sort.byExecution "Rikiuoti pagal vykdymo eilę">
+<!ENTITY Sort.byName "Rikiuoti pagal pavadinimą">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "Rikiuoti pagal būseną">
+<!ENTITY Sort.execution "Vykdymo eilė">
+<!ENTITY Sort.name "Pavadinimas">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "Būsena">

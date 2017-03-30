@@ -1,11 +1,13 @@
-var EXPORTED_SYMBOLS = ['compareVersion'];
+const EXPORTED_SYMBOLS = ["compareVersion"];
+
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
 
 function compareVersion(aTarget) {
-  var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
-      .getService(Components.interfaces.nsIXULAppInfo);
-  var versionChecker = Components
-      .classes["@mozilla.org/xpcom/version-comparator;1"]
-      .getService(Components.interfaces.nsIVersionComparator);
+  let versionChecker = Cc["@mozilla.org/xpcom/version-comparator;1"]
+      .getService(Ci.nsIVersionComparator);
 
-  return versionChecker.compare(appInfo.version, aTarget);
+  return versionChecker.compare(GM_CONSTANTS.xulAppInfo.version, aTarget);
 }

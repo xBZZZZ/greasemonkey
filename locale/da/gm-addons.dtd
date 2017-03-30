@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "C">
 <!ENTITY Show "Vis indeholdende mappe">
 <!ENTITY Show.accesskey "S">
-<!ENTITY Sort.ByStatus "Sorter efter status">
-<!ENTITY Sort.Status "Status">
-<!ENTITY Sort.ByName "Sorter efter navn">
-<!ENTITY Sort.Name "Navn">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "Sorter efter kørselsrækkefølge">
-<!ENTITY Sort.Execution "Kørselsrækkefølge">
+<!ENTITY Sort.byExecution "Sorter efter kørselsrækkefølge">
+<!ENTITY Sort.byName "Sorter efter navn">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "Sorter efter status">
+<!ENTITY Sort.execution "Kørselsrækkefølge">
+<!ENTITY Sort.name "Navn">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "Status">

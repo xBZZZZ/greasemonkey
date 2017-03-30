@@ -1,8 +1,11 @@
-var EXPORTED_SYMBOLS = ['ScriptDependency'];
+const EXPORTED_SYMBOLS = ["ScriptDependency"];
 
-Components.utils.import('chrome://greasemonkey-modules/content/util.js');
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-/** Base implementation for Icon, Require, Resource. */
+Cu.import("chrome://greasemonkey-modules/content/util.js");
+
+
+// Base implementation for Icon, Require, Resource.
 function ScriptDependency(aScript) {
   this._charset = null;
   this._dataURI = null;
@@ -13,72 +16,76 @@ function ScriptDependency(aScript) {
   this._script = aScript || null;
   this._tempFile = null;
 
-  this.type = 'UnknownDependency';
+  this.type = "UnknownDependency";
 }
 
 ScriptDependency.prototype = {
-  setCharset: function(aCharset) {
+  "setCharset": function (aCharset) {
     this._charset = aCharset;
   },
 
-  setFilename: function(aFile) {
+  "setFilename": function (aFile) {
     aFile.QueryInterface(Components.interfaces.nsIFile);
     this._filename = aFile.leafName;
   },
 
-  setMimetype: function(aMimetype) {
+  "setMimetype": function (aMimetype) {
     this._mimetype = aMimetype;
   },
 
-  toString: function() {
-    return '[' + this.type + '; ' + this.filename + ']';
+  "toString": function () {
+    return "[" + this.type + "; " + this.filename + "]";
   },
 };
 
 Object.defineProperty(ScriptDependency.prototype, "downloadURL", {
-  get: function ScriptDependency_getDownloadURL() {
-    return '' + (this._downloadURL || '');
+  "get": function ScriptDependency_getDownloadURL() {
+    return "" + (this._downloadURL || "");
   },
-  enumerable: true
+  "enumerable": true,
 });
 
 Object.defineProperty(ScriptDependency.prototype, "file", {
-  get: function ScriptDependency_getFile() {
-    var file = this._script.baseDirFile;
+  "get": function ScriptDependency_getFile() {
+    let file = this._script.baseDirFile;
+
     file.append(this._filename);
+
     return file;
   },
-  enumerable: true
+  "enumerable": true,
 });
 
 Object.defineProperty(ScriptDependency.prototype, "filename", {
-  get: function ScriptDependency_getFilename() {
-    return '' + (this._filename || this._dataURI || '');
+  "get": function ScriptDependency_getFilename() {
+    return "" + (this._filename || this._dataURI || "");
   },
-  enumerable: true
+  "enumerable": true,
 });
 
 Object.defineProperty(ScriptDependency.prototype, "mimetype", {
-  get: function ScriptDependency_getMimetype() {
-    var mimetype = this._mimetype;
-    if (this._charset && this._charset.length > 0) {
-      mimetype += ';charset=' + this._charset;
+  "get": function ScriptDependency_getMimetype() {
+    let mimetype = this._mimetype;
+
+    if (this._charset && (this._charset.length > 0)) {
+      mimetype += ";charset=" + this._charset;
     }
+
     return mimetype;
   },
-  enumerable: true
+  "enumerable": true,
 });
 
 Object.defineProperty(ScriptDependency.prototype, "name", {
-  get: function ScriptDependency_getName() {
-    return '' + this._name;
+  "get": function ScriptDependency_getName() {
+    return "" + this._name;
   },
-  enumerable: true
+  "enumerable": true,
 });
 
 Object.defineProperty(ScriptDependency.prototype, "textContent", {
-  get: function ScriptDependency_getTextContent() {
+  "get": function ScriptDependency_getTextContent() {
     return GM_util.getContents(this.file);
   },
-  enumerable: true
+  "enumerable": true,
 });

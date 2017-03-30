@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "M">
 <!ENTITY Show "Map weergeven">
 <!ENTITY Show.accesskey "g">
-<!ENTITY Sort.ByStatus "Op status sorteren">
-<!ENTITY Sort.Status "Status">
-<!ENTITY Sort.ByName "Op naam sorteren">
-<!ENTITY Sort.Name "Naam">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "Op uitvoervolgorde sorteren">
-<!ENTITY Sort.Execution "Uitvoervolgorde">
+<!ENTITY Sort.byExecution "Op uitvoervolgorde sorteren">
+<!ENTITY Sort.byName "Op naam sorteren">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "Op status sorteren">
+<!ENTITY Sort.execution "Uitvoervolgorde">
+<!ENTITY Sort.name "Naam">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "Status">

@@ -1,11 +1,23 @@
-var EXPORTED_SYMBOLS = ['extractMeta'];
+const EXPORTED_SYMBOLS = ["extractMeta"];
 
-var gAllMetaRegexp = new RegExp(
-    '^(\u00EF\u00BB\u00BF)?// ==UserScript==([\\s\\S]*?)^// ==/UserScript==', 'm');
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-/** Get just the stuff between ==UserScript== lines. */
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
+
+const SCRIPT_PARSE_META_ALL_REGEXP = new RegExp(
+    "^("
+    + GM_CONSTANTS.scriptParseBOM
+    + ")?"
+    + GM_CONSTANTS.scriptParseMetaRegexp,
+    "m");
+
+// Get just the stuff between ==UserScript== lines.
 function extractMeta(aSource) {
-  var meta = aSource.match(gAllMetaRegexp);
-  if (meta) return meta[2].replace(/^\s+/, '');
-  return '';
+  let meta = aSource.match(SCRIPT_PARSE_META_ALL_REGEXP);
+  if (meta) {
+    return meta[2].replace(/^\s+/, "");
+  }
+
+  return "";
 }

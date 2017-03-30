@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "C">
 <!ENTITY Show "Tampilkan Folder">
 <!ENTITY Show.accesskey "S">
-<!ENTITY Sort.ByStatus "Urutkan berdasarkan status">
-<!ENTITY Sort.Status "Status">
-<!ENTITY Sort.ByName "Urutkan berdasarkan nama">
-<!ENTITY Sort.Name "Nama">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "Urutkan berdasarkan urutan eksekusi">
-<!ENTITY Sort.Execution "Urutan Eksekusi">
+<!ENTITY Sort.byExecution "Urutkan berdasarkan urutan eksekusi">
+<!ENTITY Sort.byName "Urutkan berdasarkan nama">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "Urutkan berdasarkan status">
+<!ENTITY Sort.execution "Urutan Eksekusi">
+<!ENTITY Sort.name "Nama">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "Status">

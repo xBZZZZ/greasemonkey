@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "C">
 <!ENTITY Show "保存先フォルダを表示">
 <!ENTITY Show.accesskey "S">
-<!ENTITY Sort.ByStatus "状態で並び替え">
-<!ENTITY Sort.Status "状態">
-<!ENTITY Sort.ByName "名前で並び替え">
-<!ENTITY Sort.Name "名前">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "実行する順序で並び替え">
-<!ENTITY Sort.Execution "実行する順序">
+<!ENTITY Sort.byExecution "実行する順序で並び替え">
+<!ENTITY Sort.byName "名前で並び替え">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "状態で並び替え">
+<!ENTITY Sort.execution "実行する順序">
+<!ENTITY Sort.name "名前">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "状態">

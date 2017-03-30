@@ -25,60 +25,61 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-Components.utils.import('chrome://greasemonkey-modules/content/util.js');
+const EXPORTED_SYMBOLS = ["GM_convert2RegExp"];
 
-var EXPORTED_SYMBOLS = ['GM_convert2RegExp'];
-var tldRegExp = /^([^:]+:\/\/[^\/]+)\.tld(\/.*)?$/;
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-var eTldService = Components
-    .classes["@mozilla.org/network/effective-tld-service;1"]
-    .getService(Components.interfaces.nsIEffectiveTLDService);
+Cu.import("chrome://greasemonkey-modules/content/util.js");
 
+
+const TLD_REGEXP = /^([^:]+:\/\/[^\/]+)\.tld(\/.*)?$/;
 
 // Exposed outer method takes regex as string, and handles the magic TLD.
 // (Can't memoize a URI object, yet we want to do URL->URI outside this method,
-// once for efficiency.  Compromise: memoize just the internal string handling.)
+// once for efficiency. Compromise: memoize just the internal string handling.)
 function GM_convert2RegExp(pattern, uri, forceGlob) {
-  var reStr = GM_convert2RegExpInner(pattern, forceGlob);
+  let reStr = GM_convert2RegExpInner(pattern, forceGlob);
 
   // Inner returns a RegExp, not str, for input regex (not glob) patterns.
   // Use those directly without magic TLD modifications.
-  if (reStr instanceof RegExp) return reStr;
+  if (reStr instanceof RegExp) {
+    return reStr;
+  }
 
-  if (uri && reStr.match(tldRegExp)) {
-    var tld = null;
+  if (uri && reStr.match(TLD_REGEXP)) {
+    let tld = null;
     try {
-      tld = eTldService.getPublicSuffix(uri);
+      tld = Cc["@mozilla.org/network/effective-tld-service;1"]
+          .getService(Ci.nsIEffectiveTLDService)
+          .getPublicSuffix(uri);
     } catch (e) {
-      // There are expected failure modes, i.e. bare hostname -- like
-      // http://localhost/ -- has no TLD.
+      // There are expected failure modes, i.e. bare hostname
+      // - like http://localhost/ - has no TLD.
     }
     if (tld) {
-      reStr = reStr.replace(tldRegExp, '$1.' + tld + '$2');
+      reStr = reStr.replace(TLD_REGEXP, "$1." + tld + "$2");
     }
   }
 
   return new RegExp(reStr, "i");
 }
 
-
 // Memoized internal implementation just does glob -> regex translation.
 function GM_convert2RegExpInner(pattern, forceGlob) {
-  var s = new String(pattern);
+  let s = new String(pattern);
 
-  if (!forceGlob && '/' == s.substr(0, 1) && '/' == s.substr(-1, 1)) {
+  if (!forceGlob && (s.substr(0, 1) == "/") && (s.substr(-1, 1) == "/")) {
     // Leading and trailing slash means raw regex.
-    return new RegExp(s.substring(1, s.length - 1), 'i');
+    return new RegExp(s.substring(1, s.length - 1), "i");
   }
 
-  var res = "^";
+  let res = "^";
 
-  for (var i = 0 ; i < s.length ; i++) {
+  for (let i = 0, iLen = s.length; i < iLen; i++) {
     switch(s[i]) {
       case "*" :
         res += ".*";
         break;
-
       case "." :
       case "?" :
       case "^" :
@@ -94,11 +95,9 @@ function GM_convert2RegExpInner(pattern, forceGlob) {
       case "\\" :
         res += "\\" + s[i];
         break;
-
       case " " :
         // Remove spaces from URLs.
         break;
-
       default :
         res += s[i];
         break;

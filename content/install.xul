@@ -1,89 +1,74 @@
 <?xml version="1.0"?>
 
-<?xml-stylesheet href="chrome://mozapps/content/xpinstall/xpinstallConfirm.css" type="text/css"?>
-<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-<?xml-stylesheet href="chrome://mozapps/skin/xpinstall/xpinstallConfirm.css" type="text/css"?>
+<?xml-stylesheet href="chrome://mozapps/content/xpinstall/xpinstallConfirm.css"
+  type="text/css"?>
+<?xml-stylesheet href="chrome://mozapps/skin/xpinstall/xpinstallConfirm.css"
+  type="text/css"?>
+<?xml-stylesheet href="chrome://global/skin/"
+  type="text/css"?>
+<?xml-stylesheet href="chrome://greasemonkey/skin/install.css"
+  type="text/css"?>
 
 <!DOCTYPE overlay SYSTEM "chrome://greasemonkey/locale/greasemonkey.dtd">
 
 <dialog
   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
   xmlns:html="http://www.w3.org/1999/xhtml"
-
   id="greasemonkey"
   title="&install.title;"
-  style="width: 32em; height:32em;"
   onload="init();"
   ondialogaccept="return onOk();"
   ondialogcancel="return onCancel();"
   ondialogextra1="return onShowSource();"
   buttons="accept,cancel,extra1"
-  buttonlabelaccept="&install.installbutton;"
-  buttonlabelextra1="&install.showscriptsource;"
+  buttonlabelaccept="&install.installButton;"
+  buttonlabelextra1="&install.showScriptSource;"
   defaultButton="accept">
 
-  <stringbundle id="gm-browser-bundle" src="chrome://greasemonkey/locale/gm-browser.properties" />
+  <stringbundle id="gm-browser-bundle"
+    src="chrome://greasemonkey/locale/gm-browser.properties" />
 
-  <script type="application/x-javascript" src="chrome://greasemonkey/content/install.js" />
+  <script type="application/x-javascript"
+    src="chrome://greasemonkey/content/install.js" />
 
   <vbox id="dialogContentBox" flex="1">
-    <description id="heading"
-      style="margin-bottom:1em" />
-    <vbox id="itemBox"
-      flex="1"
-      style="overflow: auto; -moz-appearance: textfield; padding: 0; margin: 2px 4px;"
-    >
-      <vbox
-        style="color: #222; border-bottom: 1px black dotted; padding:0.5em; margin: 0; margin-right: 4px;"
-      >
-        <description id="scriptDescription"
-          style="margin:0" />
+    <description id="heading" />
+    <vbox id="itemBox" flex="1">
+      <vbox id="itemDescription">
+        <description id="scriptDescription" />
       </vbox>
-      <vbox id="includes"
-        style="margin-bottom:1em; display:none"
-      >
-        <label
-          value="&install.runson;" />
-        <description id="includes-desc"
-          style="font-style:italic" />
+      <vbox id="includes">
+        <label id="includes-label" value="&install.runsOn;" />
+        <description id="includes-desc" />
       </vbox>
-      <vbox id="matches"
-        style="margin-bottom:1em; display:none"
-      >
-        <label
-          value="&install.matches;" />
-        <description id="matches-desc"
-          style="font-style:italic" />
+      <vbox id="matches">
+        <label id="matches-label" value="&install.matches;" />
+        <description id="matches-desc" />
       </vbox>
-      <vbox id="excludes"
-        style="display:none"
-      >
-        <label
-          value="&install.butnoton;" />
-        <description id="excludes-desc"
-          style="font-style:italic" />
+      <vbox id="excludes">
+        <label id="excludes-label" value="&install.butNotOn;" />
+        <description id="excludes-desc" />
       </vbox>
       <spacer flex="1" />
     </vbox>
 
-    <description
-      style="margin-top:1em"
-    >&install.warning1;</description>
-    <description
-      style="margin-bottom:1em"
-      class="warning"
-    >&install.warning2;</description>
+    <description id="description-warning1">
+      &install.warning1;
+    </description>
+    <description id="description-warning2" class="warning">
+      &install.warning2;
+    </description>
 
     <vbox id="loading">
       <label value="&loading;" />
-      <progressmeter id="progressmeter"/>
+      <progressmeter id="progressmeter" />
     </vbox>
   </vbox>
 
-  <vbox id="errorContentBox" flex="1" style="display: none">
-    <description style="margin-bottom: 1em; font-weight: bold;">
+  <vbox id="errorContentBox" flex="1">
+    <description id="description-error">
       &install.downloadError;
     </description>
-    <description id="errorMessage" style="white-space: pre-line" />
+    <description id="errorMessage" />
   </vbox>
 </dialog>

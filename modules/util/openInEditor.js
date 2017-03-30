@@ -1,80 +1,75 @@
-var EXPORTED_SYMBOLS = ['openInEditor'];
+const EXPORTED_SYMBOLS = ["openInEditor"];
+
+var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
 try {
-  Components.utils.import("resource://devtools/client/scratchpad/scratchpad-manager.jsm");
+  Cu.import("resource://gre/modules/devtools/scratchpad-manager.jsm");
 } catch (e) {
   try {
-    // Moved in Firefox 44
-    // See: http://hg.mozilla.org/mozilla-central/rev/397c69fa1677
-    Components.utils.import("resource:///modules/devtools/client/scratchpad/scratchpad-manager.jsm");
+    Cu.import("resource://devtools/client/scratchpad/scratchpad-manager.jsm");
   } catch (e) {
     try {
       // Moved in Firefox 44
-      // See: http://hg.mozilla.org/mozilla-central/rev/3b90d45a2bbc
-      Components.utils.import("resource:///modules/devtools/scratchpad-manager.jsm");
+      // http://hg.mozilla.org/mozilla-central/rev/397c69fa1677
+      Cu.import("resource:///modules/devtools/client/scratchpad/scratchpad-manager.jsm");
     } catch (e) {
-      // Pale Moon
       try {
-        Components.utils.import("resource://gre/modules/devtools/scratchpad-manager.jsm");
+        // Moved in Firefox 44
+        // http://hg.mozilla.org/mozilla-central/rev/3b90d45a2bbc
+        Cu.import("resource:///modules/devtools/scratchpad-manager.jsm");
       } catch (e) {
         // Ignore.
       }
     }
   }
 }
-Components.utils.import('chrome://greasemonkey-modules/content/prefmanager.js');
-Components.utils.import('chrome://greasemonkey-modules/content/util.js');
 
-
-var COULD_NOT_LAUNCH = (function() {
-  var stringBundle = Components
-      .classes["@mozilla.org/intl/stringbundle;1"]
-      .getService(Components.interfaces.nsIStringBundleService)
-      .createBundle("chrome://greasemonkey/locale/gm-browser.properties");
-  return stringBundle.GetStringFromName("editor.could_not_launch");
-})();
+Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
 function openInEditor(script) {
-  var editor = GM_util.getEditor();
+  let editor = GM_util.getEditor();
   if (!editor) {
-    // Pale Moon - without DevTools
+    // Without DevTools.
     try {
       ScratchpadManager.openScratchpad({
-        'filename': script.file.path,
-        'text': script.textContent,
-        'saved': true,
+        "filename": script.file.path,
+        "text": script.textContent,
+        "saved": true,
       });
     } catch (e) {
       if (GM_util.setEditor(0)) {
         openInEditor(script);
       }
     }
-    return;
+    return undefined;
   }
 
   try {
-    var args=[script.file.path];
+    let args = [script.file.path];
 
-    // For the mac, wrap with a call to "open".
-    var xulRuntime = Components.classes["@mozilla.org/xre/app-info;1"]
-        .getService(Components.interfaces.nsIXULRuntime);
-    if ("Darwin"==xulRuntime.OS) {
+    // For the Mac, wrap with a call to "open".
+    if (GM_CONSTANTS.xulRuntime.OS == "Darwin") {
       args = ["-a", editor.path, script.file.path];
-      editor = Components.classes["@mozilla.org/file/local;1"]
-          .createInstance(Components.interfaces.nsIFile);
+      editor = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsIFile);
       editor.followLinks = true;
       editor.initWithPath("/usr/bin/open");
     }
 
-    var process = Components.classes["@mozilla.org/process/util;1"]
-        .createInstance(Components.interfaces.nsIProcess);
+    let process = Cc["@mozilla.org/process/util;1"]
+        .createInstance(Ci.nsIProcess);
     process.init(editor);
     process.runw(false, args, args.length);
   } catch (e) {
-    // Something may be wrong with the editor the user selected. Remove so that
-    // next time they can pick a different one.
-    GM_util.alert(COULD_NOT_LAUNCH + "\n" + e);
+    // Something may be wrong with the editor the user selected.
+    // Remove so that next time they can pick a different one.
+    GM_util.alert(GM_CONSTANTS.localeStringBundle.createBundle(
+        GM_CONSTANTS.localeGmBrowserProperties)
+        .GetStringFromName("editor.couldNotLaunch")
+        + "\n" + e);
     GM_prefRoot.remove("editor");
     throw e;
   }

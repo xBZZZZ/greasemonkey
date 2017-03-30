@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "צ">
 <!ENTITY Show "הצג תיקייה מכילה">
 <!ENTITY Show.accesskey "ג">
-<!ENTITY Sort.ByStatus "מיין לפי מצב">
-<!ENTITY Sort.Status "מצב">
-<!ENTITY Sort.ByName "מיין לפי שם">
-<!ENTITY Sort.Name "שם">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "מיין לפי סדר ביצוע">
-<!ENTITY Sort.Execution "סדר ביצוע">
+<!ENTITY Sort.byExecution "מיין לפי סדר ביצוע">
+<!ENTITY Sort.byName "מיין לפי שם">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "מיין לפי מצב">
+<!ENTITY Sort.execution "סדר ביצוע">
+<!ENTITY Sort.name "שם">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "מצב">

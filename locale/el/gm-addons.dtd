@@ -20,11 +20,11 @@
 <!ENTITY NewScript.accesskey "Δ">
 <!ENTITY Show "Προβολή Περιέχοντος Φακέλου">
 <!ENTITY Show.accesskey "Φ">
-<!ENTITY Sort.ByStatus "Ταξινόμησαη κατά κατάσταση">
-<!ENTITY Sort.Status "Κατάσταση">
-<!ENTITY Sort.ByName "Ταξινόμηση κατά όνομα">
-<!ENTITY Sort.Name "Όνομα">
-<!ENTITY Sort.ByNamespace "Sort by namespace">
-<!ENTITY Sort.Namespace "Namespace">
-<!ENTITY Sort.ByExecution "Ταξινόμηση κατά σειρά εκτέλεσης">
-<!ENTITY Sort.Execution "Σειρά Εκτέλεσης">
+<!ENTITY Sort.byExecution "Ταξινόμηση κατά σειρά εκτέλεσης">
+<!ENTITY Sort.byName "Ταξινόμηση κατά όνομα">
+<!ENTITY Sort.byNamespace "Sort by namespace">
+<!ENTITY Sort.byStatus "Ταξινόμησαη κατά κατάσταση">
+<!ENTITY Sort.execution "Σειρά Εκτέλεσης">
+<!ENTITY Sort.name "Όνομα">
+<!ENTITY Sort.namespace "Namespace">
+<!ENTITY Sort.status "Κατάσταση">
