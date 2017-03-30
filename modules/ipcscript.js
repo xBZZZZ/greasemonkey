@@ -157,6 +157,7 @@ function updateData(data) {
   });
 }
 
+// Firefox 41+
 // Check if initialProcessData is supported, else child will use sync message.
 if (Services.cpmm.initialProcessData) {
   updateData(Services.cpmm.initialProcessData["greasemonkey:scripts-update"]);
