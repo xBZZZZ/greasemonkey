@@ -12,11 +12,11 @@ Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
 
 
 var MenuCommandEventNameSuffix = (function () {
-  var suffix = GM_prefRoot.getValue('menuCommanderEventNameSuffix');
+  let suffix = GM_prefRoot.getValue("menuCommanderEventNameSuffix");
 
   if (!suffix) {
     Cu.import("resource://services-crypto/utils.js");
-    var rnd = CryptoUtils.generateRandomBytes(128);
+    let rnd = CryptoUtils.generateRandomBytes(128);
     try {
       // Pale Moon 27.2+
       suffix = CryptoUtils.sha256Base32(rnd);

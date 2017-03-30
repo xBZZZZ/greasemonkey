@@ -8,15 +8,21 @@ var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 const GM_CONSTANTS = {
   "addonGUID": "{e4a8a97b-f2ed-450b-b12d-ee082ba24781}",
   "addonInstallPolicyClassDescription": "Greasemonkey Script Install Policy",
-  "addonInstallPolicyClassID": Components.ID("c03c575c-e87e-4a0f-b88d-8be090116a0c"),
-  "addonInstallPolicyContractID": "@greasemonkey.mozdev.org/greasemonkey-install-policy;1",
-  "addonScriptProtocolClassDescription": 'Protocol handler for "greasemonkey-script:"',
-  "addonScriptProtocolClassID": Components.ID("20d898f3-2fb8-4b3a-b8c7-7ad6c2c48598"),
-  "addonScriptProtocolContractID": "@mozilla.org/network/protocol;1?name=greasemonkey-script",
+  "addonInstallPolicyClassID": Components.ID(
+      "c03c575c-e87e-4a0f-b88d-8be090116a0c"),
+  "addonInstallPolicyContractID":
+      "@greasemonkey.mozdev.org/greasemonkey-install-policy;1",
+  "addonScriptProtocolClassDescription":
+      'Protocol handler for "greasemonkey-script:"',
+  "addonScriptProtocolClassID": Components.ID(
+      "20d898f3-2fb8-4b3a-b8c7-7ad6c2c48598"),
+  "addonScriptProtocolContractID":
+      "@mozilla.org/network/protocol;1?name=greasemonkey-script",
   "addonScriptProtocolScheme": "greasemonkey-script",
   "addonScriptProtocolSeparator": "/",
   "addonServiceClassDescription": "GM_GreasemonkeyService",
-  "addonServiceClassID": Components.ID("{77bf3650-1cd6-11da-8cd6-0800200c9a66}"),
+  "addonServiceClassID": Components.ID(
+      "{77bf3650-1cd6-11da-8cd6-0800200c9a66}"),
   "addonServiceContractID": "@greasemonkey.mozdev.org/greasemonkey-service;1",
   "browserIDFirefox": "{ec8030f7-c20a-464f-9b0e-13a3a9e97384}",
   "browserIDPalemoon": "{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}",

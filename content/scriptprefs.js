@@ -1,7 +1,7 @@
 var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
 // Ref'd in XUL.
-Cu.import('chrome://greasemonkey-modules/content/util.js');
+Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
 var gScriptId = decodeURIComponent(location.hash.substring(1));

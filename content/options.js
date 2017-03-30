@@ -43,7 +43,7 @@ function GM_saveOptions(checkbox) {
   GM_prefRoot.setValue("sync.enabled",
       !!document.getElementById("check-sync").checked);
   GM_prefRoot.setValue("requireSecureUpdates",
-      !!document.getElementById('secure-update').checked);
+      !!document.getElementById("secure-update").checked);
   GM_prefRoot.setValue("requireTimeoutUpdates",
       !!document.getElementById("timeout-update").checked);
   GM_prefRoot.setValue("timeoutUpdatesInSeconds",

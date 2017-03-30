@@ -36,7 +36,7 @@ function Script(configNode) {
   this._basedir = null;
   this._dependFail = false;
   this._dependhash = null;
-  this._description = '';
+  this._description = "";
   this._downloadURL = null;
   this._enabled = true;
   this._excludes = [];
@@ -53,10 +53,10 @@ function Script(configNode) {
   this._localized = null;
   this._matches = [];
   this._modifiedTime = null;
-  this._name = 'user-script';
-  this._namespace = '';
+  this._name = GM_CONSTANTS.scriptType;
+  this._namespace = "";
   this._noframes = false;
-  this._rawMeta = '';
+  this._rawMeta = "";
   this._requires = [];
   this._resources = [];
   this._runAt = null;
