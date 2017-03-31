@@ -30,14 +30,16 @@ function checkScriptRefresh(channel) {
     return undefined;
   }
 
+  // Firefox 44+
+  // External types only.
   // http://bugzil.la/1182571
   let type = channel.loadInfo.externalContentPolicyType
       ? channel.loadInfo.externalContentPolicyType
       : channel.loadInfo.contentPolicyType;
 
-  // Only check for updated scripts when tabs/iframes are loaded.
-  if (type != Ci.nsIContentPolicy.TYPE_DOCUMENT
-      && type != Ci.nsIContentPolicy.TYPE_SUBDOCUMENT) {
+  // Only check for updated scripts when tabs/frames/iframes are loaded.
+  if ((type != Ci.nsIContentPolicy.TYPE_DOCUMENT)
+      && (type != Ci.nsIContentPolicy.TYPE_SUBDOCUMENT)) {
     return undefined;
   }
 
