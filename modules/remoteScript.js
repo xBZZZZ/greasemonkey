@@ -384,7 +384,7 @@ RemoteScript.prototype.install = function (aOldScript, aOnlyDependencies) {
             GM_CONSTANTS.localeGreasemonkeyProperties)
             .GetStringFromName("remotescript.notDownloaded"));
   }
-  // Part 2/2 (install.js - Part 1/2).
+  // Part 2/3 (install.js - Part 1/3, remoteScript - Part 3/3).
   if (!this._tempDir) {
     return undefined;
   }
@@ -449,15 +449,15 @@ RemoteScript.prototype.install = function (aOldScript, aOnlyDependencies) {
     this._baseName = file.leafName;
 
     this.script.setFilename(this._baseName, this._scriptFile.leafName);
+    // this._tempDir.moveTo(GM_util.scriptDir(), this._baseName);
     /*
-    Part 3/3 (install.js - Part 1/3, remoteScript.js - Part 2/3)?
+    Part 3/3 (install.js - Part 1/3, remoteScript.js - Part 2/3).
     See #1919.
     Sometimes - throws an errors:
       NS_ERROR_FILE_IS_LOCKED: Component returned failure code:
         0x8052000e (NS_ERROR_FILE_IS_LOCKED) [nsIFile.moveTo]
         remoteScript.js
     */
-    /*
     let _baseName = this._baseName;
     try {
       this._tempDir.moveTo(GM_util.scriptDir(), _baseName);
@@ -465,8 +465,7 @@ RemoteScript.prototype.install = function (aOldScript, aOnlyDependencies) {
       setTimeout(function () {
         try {
           this._tempDir.moveTo(GM_util.scriptDir(), _baseName);
-        }
-        catch (e) {
+        } catch (e) {
           throw new Error(
               "RemoteScript.prototype.install:" + "\n"
               + e.description + "\n"
@@ -475,8 +474,6 @@ RemoteScript.prototype.install = function (aOldScript, aOnlyDependencies) {
         }
       }, 500);
     }
-    */
-    this._tempDir.moveTo(GM_util.scriptDir(), this._baseName);
     this._tempDir = null;
 
     this.script.fixTimestampsOnInstall();

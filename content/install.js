@@ -166,7 +166,7 @@ function updateLabel(aOkAllowed) {
   }
 
   /*
-  Part 1/2 (remoteScript.js - Part 2/2).
+  Part 1/3 (remoteScript.js - Part 2/3 and 3/3).
   Sometimes - throws an errors:
     NS_ERROR_FILE_IS_LOCKED: Component returned failure code:
       0x8052000e (NS_ERROR_FILE_IS_LOCKED) [nsIFile.moveTo]
