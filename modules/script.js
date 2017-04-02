@@ -1155,6 +1155,10 @@ Script.prototype.checkForRemoteUpdate = function (aCallback, aForced) {
       channel.setPrivate(true);
     }
   }
+  /*
+  dump("Script.checkForRemoteUpdate - url:" + "\n" + url + "\n"
+      + "Private browsing mode: " + req.channel.isChannelPrivate + "\n");
+  */
 
   // Let the server know we want a user script metadata block.
   req.setRequestHeader("Accept", "text/x-userscript-meta");

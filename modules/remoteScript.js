@@ -384,6 +384,10 @@ RemoteScript.prototype.install = function (aOldScript, aOnlyDependencies) {
             GM_CONSTANTS.localeGreasemonkeyProperties)
             .GetStringFromName("remotescript.notDownloaded"));
   }
+  // Part 2/2 (install.js - Part 1/2)
+  if (!this._tempDir) {
+    return undefined;
+  }
   if (typeof aOnlyDependencies == "undefined") {
     aOnlyDependencies = false;
   }
@@ -445,16 +449,19 @@ RemoteScript.prototype.install = function (aOldScript, aOnlyDependencies) {
     this._baseName = file.leafName;
 
     this.script.setFilename(this._baseName, this._scriptFile.leafName);
-    // See #1919.
-    // NS_ERROR_FILE_IS_LOCKED:
-    // Component returned failure code: 0x8052000e (NS_ERROR_FILE_IS_LOCKED)
-    // [nsIFile.moveTo] remoteScript.js
+    /*
+    See #1919.
+    Sometimes - throws an errors:
+      NS_ERROR_FILE_IS_LOCKED:
+        Component returned failure code:
+        0x8052000e (NS_ERROR_FILE_IS_LOCKED) [nsIFile.moveTo]
+        remoteScript.js
+    */
     /*
     let _baseName = this._baseName;
     try {
       this._tempDir.moveTo(GM_util.scriptDir(), _baseName);
-    }
-    catch (e if (e.name == "NS_ERROR_FILE_IS_LOCKED")) {
+    } catch (e if (e.name == "NS_ERROR_FILE_IS_LOCKED")) {
       setTimeout(function () {
         try {
           this._tempDir.moveTo(GM_util.scriptDir(), _baseName);
@@ -740,6 +747,10 @@ RemoteScript.prototype._downloadFile = function (
       channel.setPrivate(true);
     }
   }
+  /*
+  dump("RemoteScript._downloadFile - url:" + "\n" + aUri.spec + "\n"
+      + "Private browsing mode: " + req.channel.isChannelPrivate + "\n");
+  */
   this._channels.push(channel);
   let dsl = new DownloadListener(
       this._progressIndex == 0, // aTryToParse.

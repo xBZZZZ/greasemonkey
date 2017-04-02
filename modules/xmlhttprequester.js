@@ -247,6 +247,10 @@ function (safeUrl, details, req) {
       channel.setPrivate(true);
     }
   }
+  /*
+  dump("GM_xmlhttpRequest - url:" + "\n" + safeUrl + "\n"
+      + "Private browsing mode: " + req.channel.isChannelPrivate + "\n");
+  */
 
   try {
     channel = req.channel.QueryInterface(Ci.nsIHttpChannelInternal);

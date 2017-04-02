@@ -166,8 +166,8 @@ function updateLabel(aOkAllowed) {
   }
 
   /*
-  gRemoteScript.done: This parameter also must be verified.
-  If the button "Install" is pressed too soon:
+  Part 1/2 (remoteScript.js - Part 2/2)
+  Sometimes - throws an errors:
     NS_ERROR_FILE_IS_LOCKED: Component returned failure code:
       0x8052000e (NS_ERROR_FILE_IS_LOCKED) [nsIFile.moveTo]
       remoteScript.js:394:0
@@ -176,6 +176,9 @@ function updateLabel(aOkAllowed) {
       script.js:474:0
     TypeError: this._tempDir is null
       remoteScript.js:394:4
+  Especially if it contains many requires and resources
+  and if the button "Install" is pressed too soon.
+  gRemoteScript.done: This parameter also must be verified.
   */
   let disabled = aOkAllowed
       ? ((gCurrentDelay > 0) || (gProgress < 100) || !gRemoteScript.done)

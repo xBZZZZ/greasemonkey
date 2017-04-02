@@ -103,6 +103,10 @@ function submit() {
       channel.setPrivate(true);
     }
   }
+  /*
+  dump("Stats - url:" + "\n" + url + "\n"
+      + "Private browsing mode: " + req.channel.isChannelPrivate + "\n");
+  */
 
   req.onload = GM_util.hitch(null, submitOnload, req);
 
