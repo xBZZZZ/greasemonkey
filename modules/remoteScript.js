@@ -450,10 +450,10 @@ RemoteScript.prototype.install = function (aOldScript, aOnlyDependencies) {
 
     this.script.setFilename(this._baseName, this._scriptFile.leafName);
     /*
+    Part 3/3 (install.js - Part 1/3, remoteScript.js - Part 2/3)?
     See #1919.
     Sometimes - throws an errors:
-      NS_ERROR_FILE_IS_LOCKED:
-        Component returned failure code:
+      NS_ERROR_FILE_IS_LOCKED: Component returned failure code:
         0x8052000e (NS_ERROR_FILE_IS_LOCKED) [nsIFile.moveTo]
         remoteScript.js
     */
