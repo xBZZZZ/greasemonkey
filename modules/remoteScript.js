@@ -384,7 +384,7 @@ RemoteScript.prototype.install = function (aOldScript, aOnlyDependencies) {
             GM_CONSTANTS.localeGreasemonkeyProperties)
             .GetStringFromName("remotescript.notDownloaded"));
   }
-  // Part 2/2 (install.js - Part 1/2)
+  // Part 2/2 (install.js - Part 1/2).
   if (!this._tempDir) {
     return undefined;
   }
