@@ -83,6 +83,8 @@ function onInterval() {
 }
 
 function onOk() {
+  // Stops multiple pressing of the button.
+  gAcceptButton.disabled = true;
   gRemoteScript.install();
   window.setTimeout(window.close, 0);
 }
