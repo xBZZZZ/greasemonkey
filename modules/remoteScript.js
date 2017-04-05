@@ -706,7 +706,8 @@ RemoteScript.prototype._downloadFile = function (
     } else if (aUri.scheme == this._uri.scheme) {
       // No-op, always allow files from the same scheme as the script.
     } else if (!GM_util.isGreasemonkeyable(aUri.spec)) {
-      // Otherwise, these are unsafe.  Do not download them.
+      // Otherwise, these are unsafe.
+      // Do not download them.
       this.cleanup(
           GM_CONSTANTS.localeStringBundle.createBundle(
               GM_CONSTANTS.localeGreasemonkeyProperties)
@@ -725,9 +726,21 @@ RemoteScript.prototype._downloadFile = function (
     "uri": aUri,
   });
   // When cache is used (*.user.js, e.g. MIME type: text/html):
-  // 1. It creates temporary folder ("gm-temp-...") - permanently (see #2069)
-  // 2. Infinite loading web page
-  channel.loadFlags |= channel.LOAD_BYPASS_CACHE;
+  // 1. It creates temporary folder ("gm-temp-...") - permanently (see #2069).
+  // 2. Infinite loading web page (see #2407).
+  // But see also:
+  // https://github.com/OpenUserJs/OpenUserJS.org/issues/1066
+  // Pale Moon 27.2.x-
+  // https://github.com/MoonchildProductions/Pale-Moon/pull/1002
+  // Firefox 41.0-
+  // http://bugzil.la/1170197
+  // (http://bugzil.la/1166133)
+  if (((Services.appinfo.ID == GM_CONSTANTS.browserIDPalemoon)
+      && (GM_util.compareVersion("27.3.0") < 0))
+      || ((Services.appinfo.ID == GM_CONSTANTS.browserIDFirefox)
+      && (GM_util.compareVersion("42.0") < 0))) {
+    channel.loadFlags |= channel.LOAD_BYPASS_CACHE;
+  }
   // See #1717.
   // A page with a userscript - http auth.
   // Private browsing.

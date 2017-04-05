@@ -467,7 +467,7 @@ Object.defineProperty(Script.prototype, "userMatches", {
 
     for (let i = 0, iLen = matches.length; i < iLen; i++) {
       let match = matches[i];
-      // A needed fix for script update (if contains userMatches)
+      // A needed fix for script update (if contains userMatches).
       // See #2455.
       if (typeof match == "object") {
         match = match.pattern;
