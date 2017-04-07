@@ -2,12 +2,16 @@ const EXPORTED_SYMBOLS = ["inArray"];
 
 
 function inArray(aArr, aVal) {
-  for (let i = 0, iLen = aArr.length; i < iLen; i++) {
-    let val = aArr[i];
-    if (aVal === val) {
-      return true;
+  if ("includes" in Array.prototype) {
+    return aArr.includes(aVal);
+  } else {
+    for (let i = 0, iLen = aArr.length; i < iLen; i++) {
+      let val = aArr[i];
+      if (aVal === val) {
+        return true;
+      }
     }
-  }
 
-  return false;
+    return false;
+  }
 }

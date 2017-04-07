@@ -3,6 +3,8 @@ const EXPORTED_SYMBOLS = ["showInstallDialog"];
 var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 var Cr = Components.results;
 
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
 Cu.import("chrome://greasemonkey-modules/content/remoteScript.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
@@ -42,8 +44,17 @@ function showInstallDialog(aUrlOrRemoteScript, aBrowser, aRequest) {
 
   rs.download(function (aSuccess, aType, aStatus) {
     if (aRequest && (aType == "script")) {
-      if (aSuccess) {
+      let _cancel = false;
+      if (aSuccess && !GM_CONSTANTS.installScriptBadStatus.includes(aStatus)) {
         aRequest.cancel(Cr.NS_BINDING_ABORTED);
+        _cancel = true;
+      } else if (GM_CONSTANTS.installScriptBadStatus.includes(aStatus)) {
+        aRequest.cancel(Cr.NS_BINDING_FAILED);
+        _cancel = true;
+      } else {
+        aRequest.resume();
+      }
+      if (_cancel) {
         // See #1717.
         try {
           browser = aRequest
@@ -59,12 +70,6 @@ function showInstallDialog(aUrlOrRemoteScript, aBrowser, aRequest) {
               + "\n" + "e:" + "\n" + e);
           */
         }
-      } else if ((aStatus == 429) || (aStatus >= 500)) {
-        // HTTP status code:
-        // client errors (429 "Too Many Requests"), server errors
-        aRequest.cancel(Cr.NS_BINDING_FAILED);
-      } else {
-        aRequest.resume();
       }
     }
   });

@@ -141,7 +141,10 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
   Object.getOwnPropertyNames(sandbox).forEach(function (prop) {
     if (prop.indexOf("GM_") == 0) {
       sandbox[prop] = Cu.cloneInto(
-          sandbox[prop], sandbox, {cloneFunctions: true, wrapReflectors: true});
+          sandbox[prop], sandbox, {
+            "cloneFunctions": true,
+            "wrapReflectors": true,
+          });
     }
   });
 
@@ -171,6 +174,7 @@ function injectGMInfo(aScript, sandbox, aContentWin) {
       content = GM_util.fileXhr(scriptURL, "application/javascript");
       fileCache.set("scriptSource", content);
     }
+
     return content;
   }
 
@@ -180,6 +184,7 @@ function injectGMInfo(aScript, sandbox, aContentWin) {
       meta = extractMeta(getScriptSource());
       fileCache.set("meta", meta);
     }
+
     return meta;
   }
 
@@ -201,6 +206,7 @@ function runScriptInSandbox(script, sandbox) {
       GM_CONSTANTS.jsSubScriptLoader.loadSubScript(
           url, sandbox, GM_CONSTANTS.fileScriptCharset);
     } catch (e) {
+      // js/src/js.msg: JSMSG_BAD_RETURN_OR_YIELD
       if (e.message == "return not in function") {
         // See #1592.
         // We never anon wrap anymore,
@@ -215,7 +221,8 @@ function runScriptInSandbox(script, sandbox) {
 
         let code = GM_util.fileXhr(url, "application/javascript");
         Cu.evalInSandbox(
-            "(function () { " + code + "\n})()", sandbox, gMaxJSVersion, url, 1);
+            "(function () { " + code + "\n})()",
+            sandbox, gMaxJSVersion, url, 1);
       } else {
         // Otherwise raise.
         throw e;

@@ -122,7 +122,10 @@ function MenuCommandSandbox(
           aScriptFileURL, null);
     }
 
-    let command = {
+    // var instead let
+    // Firefox 43-
+    // http://bugzil.la/932517
+    var command = {
       "accesskey": accesskey,
       "cookie": ++commandCookie,
       "name": commandName,

@@ -269,7 +269,7 @@ GM_BrowserUI.checkDisabledScriptNavigation = function (aContentType, aHref) {
       new RegExp(GM_CONSTANTS.fileScriptExtensionRegexp + "$", ""))) {
     return undefined;
   }
-  if (new RegExp(GM_CONSTANTS.fileScriptContentTypeRegexp, "i")
+  if (new RegExp(GM_CONSTANTS.fileScriptContentTypeNoRegexp, "i")
       .test(aContentType)) {
     return undefined;
   }

@@ -182,8 +182,9 @@ DownloadListener.prototype = {
         return undefined;
       }
       try {
-        contentType = new RegExp(GM_CONSTANTS.fileScriptContentTypeRegexp, "i")
-            .test(aRequest.contentType)
+        contentType = new RegExp(
+            GM_CONSTANTS.fileScriptContentTypeNoRegexp, "i")
+            .test(aRequest.contentType);
       } catch (e) {
         // Problem loading page (Unable to connect)?
         // Ignore.
@@ -192,7 +193,19 @@ DownloadListener.prototype = {
       if (contentType) {
         // Cancel this request immediately
         // and let onStopRequest handle the cleanup for everything else.
-        aRequest.cancel(Cr.NS_BINDING_ABORTED);
+        let httpChannel;
+        let status;
+        try {
+          httpChannel = aRequest.QueryInterface(Ci.nsIHttpChannel);
+          status = httpChannel.responseStatus;
+        } catch (e) {
+          // Ignore.
+        }
+        if (GM_CONSTANTS.installScriptBadStatus.includes(status)) {
+          aRequest.cancel(Cr.NS_BINDING_FAILED);
+        } else {
+          aRequest.cancel(Cr.NS_BINDING_ABORTED);
+        }
       }
     }
   },
@@ -785,7 +798,6 @@ RemoteScript.prototype._downloadFileProgress = function (
 
 RemoteScript.prototype._downloadScriptCb = function (
     aCompletionCallback, aChannel, aSuccess, aErrorMessage, aStatus) {
-
   if (aSuccess) {
     // At this point downloading the script itself is definitely done.
 
@@ -808,8 +820,8 @@ RemoteScript.prototype._downloadScriptCb = function (
     }
 
     if (this.errorMessage) {
-      // Fake a successful download, so the install window will show,
-      // with the error message.
+      // Fake a successful download,
+      // so the install window will show, with the error message.
       this._dispatchCallbacks("scriptMeta", new Script());
       return aCompletionCallback(true, "script", aStatus);
     }
@@ -823,6 +835,14 @@ RemoteScript.prototype._downloadScriptCb = function (
     }
   } else {
     this.cleanup(aErrorMessage);
+    // https://github.com/OpenUserJs/OpenUserJS.org/issues/1066
+    if (aErrorMessage
+        && GM_CONSTANTS.installScriptBadStatus.includes(aStatus)) {
+      // Fake a successful download,
+      // so the install window will show, with the error message.
+      this._dispatchCallbacks("scriptMeta", new Script());
+      return aCompletionCallback(true, "script", aStatus);
+    }
   }
   aCompletionCallback(aSuccess, "script", aStatus);
 };

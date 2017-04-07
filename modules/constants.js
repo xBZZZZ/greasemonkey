@@ -38,11 +38,14 @@ const GM_CONSTANTS = {
       .getService(Ci.nsIFileProtocolHandler),
   "fileMetaExtension": ".meta.js",
   "fileScriptCharset": "UTF-8",
-  "fileScriptContentTypeRegexp": "^text/(x|ht)ml",
+  "fileScriptContentTypeNoRegexp": "^text/(x|ht)ml",
   "fileScriptDBExtension": ".db",
   "fileScriptExtension": ".user.js",
   "fileScriptExtensionRegexp": "\\.user\\.js",
   "fileScriptName": "gm-script",
+  // HTTP status code:
+  // client errors (429 "Too Many Requests"), server errors.
+  "installScriptBadStatus": [429, 500],
   "ioService": Cc["@mozilla.org/network/io-service;1"]
       .getService(Ci.nsIIOService),
   "jsSubScriptLoader": Cc["@mozilla.org/moz/jssubscript-loader;1"]
