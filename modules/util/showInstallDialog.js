@@ -45,14 +45,21 @@ function showInstallDialog(aUrlOrRemoteScript, aBrowser, aRequest) {
   rs.download(function (aSuccess, aType, aStatus) {
     if (aRequest && (aType == "script")) {
       let _cancel = false;
-      if (aSuccess && !GM_CONSTANTS.installScriptBadStatus.includes(aStatus)) {
+      if (aSuccess
+          && GM_CONSTANTS.installScriptBadStatus(aStatus, false)) {
         aRequest.cancel(Cr.NS_BINDING_ABORTED);
         _cancel = true;
-      } else if (GM_CONSTANTS.installScriptBadStatus.includes(aStatus)) {
+      } else if (GM_CONSTANTS.installScriptBadStatus(aStatus, true)) {
         aRequest.cancel(Cr.NS_BINDING_FAILED);
         _cancel = true;
       } else {
-        aRequest.resume();
+        try {
+          aRequest.resume();
+        } catch (e) {
+          // See #1717.
+          // e.g. the HTTP status code: 401 Authorization Required
+          // Ignore.
+        }
       }
       if (_cancel) {
         // See #1717.

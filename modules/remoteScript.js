@@ -201,7 +201,7 @@ DownloadListener.prototype = {
         } catch (e) {
           // Ignore.
         }
-        if (GM_CONSTANTS.installScriptBadStatus.includes(status)) {
+        if (GM_CONSTANTS.installScriptBadStatus(status, true)) {
           aRequest.cancel(Cr.NS_BINDING_FAILED);
         } else {
           aRequest.cancel(Cr.NS_BINDING_ABORTED);
@@ -338,7 +338,11 @@ RemoteScript.prototype.cleanup = function (aErrorMessage) {
     aChannel.cancel(Cr.NS_BINDING_ABORTED);
   });
   if (this._tempDir && this._tempDir.exists()) {
-    this._tempDir.remove(true);
+    try {
+      this._tempDir.remove(true);
+    } catch (e) {
+      // Silently ignore.
+    }
   }
 
   this._dispatchCallbacks("progress", 1);
@@ -475,12 +479,12 @@ RemoteScript.prototype.install = function (aOldScript, aOnlyDependencies) {
     try {
       this._tempDir.moveTo(GM_util.scriptDir(), _baseName);
     } catch (e if (e.name == "NS_ERROR_FILE_IS_LOCKED")) {
-      setTimeout(function () {
+      GM_util.timeout(function () {
         try {
           this._tempDir.moveTo(GM_util.scriptDir(), _baseName);
         } catch (e) {
           throw new Error(
-              "RemoteScript.prototype.install:" + "\n"
+              "RemoteScript.install:" + "\n"
               + e.description + "\n"
               + 'tempDir.moveTo: "' + _baseName + '"',
               e.fileName, e.lineNumber);
@@ -837,7 +841,7 @@ RemoteScript.prototype._downloadScriptCb = function (
     this.cleanup(aErrorMessage);
     // https://github.com/OpenUserJs/OpenUserJS.org/issues/1066
     if (aErrorMessage
-        && GM_CONSTANTS.installScriptBadStatus.includes(aStatus)) {
+        && GM_CONSTANTS.installScriptBadStatus(aStatus, true)) {
       // Fake a successful download,
       // so the install window will show, with the error message.
       this._dispatchCallbacks("scriptMeta", new Script());

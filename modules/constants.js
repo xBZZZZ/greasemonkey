@@ -4,6 +4,8 @@ const EXPORTED_SYMBOLS = ["GM_CONSTANTS"];
 
 var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
+Cu.import("chrome://greasemonkey-modules/content/util.js");
+
 
 const GM_CONSTANTS = {
   "addonGUID": "{e4a8a97b-f2ed-450b-b12d-ee082ba24781}",
@@ -43,9 +45,19 @@ const GM_CONSTANTS = {
   "fileScriptExtension": ".user.js",
   "fileScriptExtensionRegexp": "\\.user\\.js",
   "fileScriptName": "gm-script",
-  // HTTP status code:
+  // The HTTP status code:
   // client errors (429 "Too Many Requests"), server errors.
-  "installScriptBadStatus": [429, 500],
+  "installScriptBadStatus": function (aStatus, aBool) {
+    let statusEqual = [429];     
+    let statusGreaterThanAndEqual = 500;
+    if (aBool) {
+      return GM_util.inArray(statusEqual, aStatus)
+          || (statusGreaterThanAndEqual <= aStatus);
+    } else {
+      return !GM_util.inArray(statusEqual, aStatus)
+          && !(statusGreaterThanAndEqual <= aStatus);
+    }
+  },
   "ioService": Cc["@mozilla.org/network/io-service;1"]
       .getService(Ci.nsIIOService),
   "jsSubScriptLoader": Cc["@mozilla.org/moz/jssubscript-loader;1"]
