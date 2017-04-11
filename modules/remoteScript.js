@@ -225,22 +225,37 @@ DownloadListener.prototype = {
     this._binOutputStream.close();
     this._fileOutputStream.close();
 
+    let httpChannel;
     let error = !Components.isSuccessCode(aStatusCode);
     let errorMessage = GM_CONSTANTS.localeStringBundle.createBundle(
         GM_CONSTANTS.localeGreasemonkeyProperties)
         .GetStringFromName("error.unknown");
     let status = -1;
-    let httpChannel;
+    let headers = {};
+    let headersProp = ["Retry-After"];
+    let _headers = "";
     try {
       httpChannel = aRequest.QueryInterface(Ci.nsIHttpChannel);
       error |= !httpChannel.requestSucceeded;
       error |= httpChannel.responseStatus >= 400;
       status = httpChannel.responseStatus;
+      for (let i = 0, iLen = headersProp.length; i < iLen; i++) {
+        try {
+          headers[headersProp[i]] = httpChannel
+              .getResponseHeader(headersProp[i]);
+        } catch (e) {
+          // Ignore.
+        }
+      }
+      Object.getOwnPropertyNames(headers).forEach(function (prop) {
+        _headers += "\n" + '"' + prop + '": "' + headers[prop] + '"';
+      });
       errorMessage = GM_CONSTANTS.localeStringBundle.createBundle(
           GM_CONSTANTS.localeGreasemonkeyProperties)
           .GetStringFromName("error.serverReturned")
           + " " + httpChannel.responseStatus + " "
-          + httpChannel.responseStatusText + ".";
+          + httpChannel.responseStatusText + "."
+          + ((_headers != "") ? "\n" + _headers : "");
     } catch (e) {
       try {
         aRequest.QueryInterface(Ci.nsIFileChannel);
@@ -271,7 +286,7 @@ DownloadListener.prototype = {
 
     this._progressCallback(aRequest, 1);
     this._completionCallback(
-        aRequest, !error, errorMessage, status);
+        aRequest, !error, errorMessage, status, headers);
   },
 
   // nsIProgressEventSink.
@@ -369,11 +384,12 @@ RemoteScript.prototype.download = function (aCompletionCallback) {
     this._downloadDependencies(aCompletionCallback);
   } else {
     this.downloadScript(
-        GM_util.hitch(this, function (aSuccess, aPoint, aStatus) {
+        GM_util.hitch(this, function (aSuccess, aPoint, aStatus, aHeaders) {
           if (aSuccess) {
             this._downloadDependencies(aCompletionCallback);
           }
-          aCompletionCallback(this._cancelled || aSuccess, aPoint, aStatus);
+          aCompletionCallback(
+              this._cancelled || aSuccess, aPoint, aStatus, aHeaders);
         }));
   }
 };
@@ -811,7 +827,7 @@ RemoteScript.prototype._downloadFileProgress = function (
 };
 
 RemoteScript.prototype._downloadScriptCb = function (
-    aCompletionCallback, aChannel, aSuccess, aErrorMessage, aStatus) {
+    aCompletionCallback, aChannel, aSuccess, aErrorMessage, aStatus, aHeaders) {
   if (aSuccess) {
     // At this point downloading the script itself is definitely done.
 
@@ -837,7 +853,7 @@ RemoteScript.prototype._downloadScriptCb = function (
       // Fake a successful download,
       // so the install window will show, with the error message.
       this._dispatchCallbacks("scriptMeta", new Script());
-      return aCompletionCallback(true, "script", aStatus);
+      return aCompletionCallback(true, "script", aStatus, aHeaders);
     }
 
     if (!this.script) {
@@ -845,7 +861,7 @@ RemoteScript.prototype._downloadScriptCb = function (
           "RemoteScript._downloadScriptCb: "
           + "Finishing with error because no script was found." + "\n");
       // If we STILL don't have a script, this is a fatal error.
-      return aCompletionCallback(false, "script", aStatus);
+      return aCompletionCallback(false, "script", aStatus, aHeaders);
     }
   } else {
     this.cleanup(aErrorMessage);
@@ -855,9 +871,10 @@ RemoteScript.prototype._downloadScriptCb = function (
       // Fake a successful download,
       // so the install window will show, with the error message.
       this._dispatchCallbacks("scriptMeta", new Script());
-      return aCompletionCallback(true, "script", aStatus);
+      return aCompletionCallback(true, "script", aStatus, aHeaders);
     }
   }
+
   aCompletionCallback(aSuccess, "script", aStatus);
 };
 

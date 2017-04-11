@@ -52,7 +52,7 @@ function showInstallDialog(aUrlOrRemoteScript, aBrowser, aRequest) {
     });
   }
 
-  rs.download(function (aSuccess, aType, aStatus) {
+  rs.download(function (aSuccess, aType, aStatus, aHeaders) {
     if (aRequest && (aType == "script")) {
       let _cancel = false;
       if (aSuccess

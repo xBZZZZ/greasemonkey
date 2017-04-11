@@ -56,8 +56,8 @@ const GM_CONSTANTS = {
   // The HTTP status code:
   // client errors (429 "Too Many Requests"), server errors.
   "installScriptBadStatus": function (aStatus, aBool) {
-    let statusEqual = [429];     
-    let statusGreaterThanAndEqual = 500;
+    let statusEqual = [429, 500];     
+    let statusGreaterThanAndEqual = 999;
     if (aBool) {
       return GM_util.inArray(statusEqual, aStatus)
           || (statusGreaterThanAndEqual <= aStatus);
