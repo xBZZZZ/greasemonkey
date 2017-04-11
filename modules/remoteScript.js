@@ -779,9 +779,9 @@ RemoteScript.prototype._downloadFile = function (
   // http://bugzil.la/1170197
   // (http://bugzil.la/1166133)
   if (((Services.appinfo.ID == GM_CONSTANTS.browserIDPalemoon)
-      && (GM_util.compareVersion("27.3.0") < 0))
+      && (GM_util.compareVersion("27.3.0a1", "20170405000000") < 0))
       || ((Services.appinfo.ID == GM_CONSTANTS.browserIDFirefox)
-      && (GM_util.compareVersion("42.0") < 0))) {
+      && (GM_util.compareVersion("42.0a1", "20150702030207") < 0))) {
     channel.loadFlags |= channel.LOAD_BYPASS_CACHE;
   }
   // See #1717.
