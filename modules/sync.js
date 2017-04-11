@@ -1,6 +1,14 @@
 const EXPORTED_SYMBOLS = [];
 
-var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+if (typeof Cc === "undefined") {
+  var Cc = Components.classes;
+}
+if (typeof Ci === "undefined") {
+  var Ci = Components.interfaces;
+}
+if (typeof Cu === "undefined") {
+  var Cu = Components.utils;
+}
 
 (function initSync() {
 
@@ -63,7 +71,6 @@ var SyncServiceObserver = {
 function ScriptRecord(aCollection, aId) {
   gWeave.CryptoWrapper.call(this, aCollection, aId);
 }
-
 ScriptRecord.prototype = {
   "__proto__": gWeave.CryptoWrapper.prototype,
 
@@ -87,7 +94,6 @@ gWeave.Utils.deferGetSet(
 function ScriptStore(aName, aEngine) {
   gWeave.Store.call(this, aName, aEngine);
 }
-
 ScriptStore.prototype = {
   "__proto__": gWeave.Store.prototype,
 
@@ -275,9 +281,9 @@ function ScriptEngine() {
     this.enabled = GM_prefRoot.getValue("sync.enabled");
   }));
 }
-
 ScriptEngine.prototype = {
   "__proto__": gWeave.SyncEngine.prototype,
+
   "_recordObj": ScriptRecord,
   "_storeObj": ScriptStore,
   "_trackerObj": ScriptTracker,

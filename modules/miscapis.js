@@ -1,8 +1,15 @@
 const EXPORTED_SYMBOLS = [
     "GM_addStyle", "GM_console", "GM_Resources", "GM_ScriptLogger"];
 
-var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
-var Cr = Components.results;
+if (typeof Cc === "undefined") {
+  var Cc = Components.classes;
+}
+if (typeof Ci === "undefined") {
+  var Ci = Components.interfaces;
+}
+if (typeof Cu === "undefined") {
+  var Cu = Components.utils;
+}
 
 Cu.import("chrome://greasemonkey-modules/content/constants.js");
 

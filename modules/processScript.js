@@ -9,7 +9,15 @@
 
 const EXPORTED_SYMBOLS = ["addFrame"];
 
-var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+if (typeof Cc === "undefined") {
+  var Cc = Components.classes;
+}
+if (typeof Ci === "undefined") {
+  var Ci = Components.interfaces;
+}
+if (typeof Cu === "undefined") {
+  var Cu = Components.utils;
+}
 
 // Each (child) process needs to handle navigation to ".user.js" via file:// .
 Cu.import("chrome://greasemonkey-modules/content/installPolicy.js");

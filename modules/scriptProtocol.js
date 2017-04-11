@@ -1,7 +1,17 @@
 const EXPORTED_SYMBOLS = ["initScriptProtocol"];
 
-var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
-var Cr = Components.results;
+if (typeof Cc === "undefined") {
+  var Cc = Components.classes;
+}
+if (typeof Ci === "undefined") {
+  var Ci = Components.interfaces;
+}
+if (typeof Cu === "undefined") {
+  var Cu = Components.utils;
+}
+if (typeof Cr === "undefined") {
+  var Cr = Components.results;
+}
 
 Cu.import("chrome://greasemonkey-modules/content/constants.js");
 

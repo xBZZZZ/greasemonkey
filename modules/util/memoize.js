@@ -12,16 +12,22 @@
 
 const EXPORTED_SYMBOLS = ["memoize"];
 
-var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+if (typeof Cc === "undefined") {
+  var Cc = Components.classes;
+}
+if (typeof Ci === "undefined") {
+  var Ci = Components.interfaces;
+}
+if (typeof Cu === "undefined") {
+  var Cu = Components.utils;
+}
 
 
 const LIMIT_DEF = 3000;
 
 function memoize(func, limit) {
   limit = limit || LIMIT_DEF;
-  var cache = {
-    "__proto__": null,
-  };
+  var cache = Object.create(null);
   var keylist = [];
 
   return function (a) {

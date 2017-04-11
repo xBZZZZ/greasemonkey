@@ -27,7 +27,15 @@
 
 const EXPORTED_SYMBOLS = ["GM_convert2RegExp"];
 
-var {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+if (typeof Cc === "undefined") {
+  var Cc = Components.classes;
+}
+if (typeof Ci === "undefined") {
+  var Ci = Components.interfaces;
+}
+if (typeof Cu === "undefined") {
+  var Cu = Components.utils;
+}
 
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 

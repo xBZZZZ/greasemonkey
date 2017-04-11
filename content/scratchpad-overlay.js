@@ -1,5 +1,13 @@
 window.addEventListener("load", function () {
-  let {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+  if (typeof Cc === "undefined") {
+    let Cc = Components.classes;
+  }
+  if (typeof Ci === "undefined") {
+    let Ci = Components.interfaces;
+  }
+  if (typeof Cu === "undefined") {
+    let Cu = Components.utils;
+  }
 
   Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
