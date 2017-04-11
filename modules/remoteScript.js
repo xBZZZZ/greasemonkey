@@ -875,7 +875,7 @@ RemoteScript.prototype._downloadScriptCb = function (
     }
   }
 
-  aCompletionCallback(aSuccess, "script", aStatus);
+  aCompletionCallback(aSuccess, "script", aStatus, aHeaders);
 };
 
 RemoteScript.prototype._parseScriptFile = function () {
