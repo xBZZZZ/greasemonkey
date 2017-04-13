@@ -37,7 +37,7 @@ var GM_util = {};
 XPCOMUtils.defineLazyModuleGetter(GM_util, "alert", "chrome://greasemonkey-modules/content/util/alert.js");
 XPCOMUtils.defineLazyModuleGetter(GM_util, "compareVersion", "chrome://greasemonkey-modules/content/util/compareVersion.js");
 XPCOMUtils.defineLazyModuleGetter(GM_util, "emptyEl", "chrome://greasemonkey-modules/content/util/emptyEl.js");
-XPCOMUtils.defineLazyModuleGetter(GM_util, "enqueueRemoveFile", "chrome://greasemonkey-modules/content/util/enqueueRemoveFile.js");
+XPCOMUtils.defineLazyModuleGetter(GM_util, "enqueueRemove", "chrome://greasemonkey-modules/content/util/enqueueRemove.js");
 XPCOMUtils.defineLazyModuleGetter(GM_util, "fileXhr", "chrome://greasemonkey-modules/content/util/fileXhr.js");
 XPCOMUtils.defineLazyModuleGetter(GM_util, "getBestLocaleMatch", "chrome://greasemonkey-modules/content/util/getBestLocaleMatch.js");
 XPCOMUtils.defineLazyModuleGetter(GM_util, "getBinaryContents", "chrome://greasemonkey-modules/content/util/getBinaryContents.js");

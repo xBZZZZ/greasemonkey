@@ -112,6 +112,7 @@ pref("extensions.greasemonkey.csp_override.worker-src.unsafe-eval", false);
 pref("extensions.greasemonkey.csp_override.worker-src.unsafe-inline", false);
 pref("extensions.greasemonkey.dataIsGreaseable", false);
 pref("extensions.greasemonkey.enableScriptRefreshing", true);
+pref("extensions.greasemonkey.enqueuedRemovals", "[]");
 pref("extensions.greasemonkey.fileIsGreaseable", false);
 pref("extensions.greasemonkey.globalExcludes", "[]");
 pref("extensions.greasemonkey.haveInsertedToolbarbutton", false);

@@ -30,6 +30,8 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 const CALLBACK_IS_NOT_FUNCTION = "callback is not a function.";
 
+const TIMEOUT = 500;
+
 // https://msdn.microsoft.com/en-us/library/aa365247.aspx#maxpath
 // Actual limit is 260; 240 ensures e.g. ".user.js" and slashes still fit.
 // The "/ 2" thing is so that we can have a directory, and a file in it.
@@ -263,8 +265,8 @@ DownloadListener.prototype = {
         // If it got this far, aStatus is accurate.
       } catch (e) {
         dump(
-            "DownloadListener - onStopRequest "
-            + "- aRequest is neither http nor file channel:"
+            "remoteScript - DownloadListener - onStopRequest"
+            + "\n" + "- aRequest is neither http nor file channel:"
             + "\n" + aRequest + "\n");
         for (let i in Ci) {
           try {
@@ -363,11 +365,23 @@ RemoteScript.prototype.cleanup = function (aErrorMessage) {
     aChannel.cancel(Cr.NS_BINDING_ABORTED);
   });
   if (this._tempDir && this._tempDir.exists()) {
-    try {
-      this._tempDir.remove(true);
-    } catch (e) {
-      // Silently ignore.
-    }
+    var _RemoteScript_Cleanup_tempDir = this._tempDir;
+    GM_util.timeout(function () {
+      if (_RemoteScript_Cleanup_tempDir
+          && _RemoteScript_Cleanup_tempDir.exists()) {
+        try {
+          _RemoteScript_Cleanup_tempDir.remove(true);
+        } catch (e) {
+          // Ignore.
+        }
+      }
+      GM_util.timeout(function () {
+        if (_RemoteScript_Cleanup_tempDir
+            && _RemoteScript_Cleanup_tempDir.exists()) {
+          GM_util.enqueueRemove(_RemoteScript_Cleanup_tempDir, true);
+        }
+      }, TIMEOUT);
+    }, TIMEOUT);
   }
 
   this._dispatchCallbacks("progress", 1);
@@ -515,7 +529,7 @@ RemoteScript.prototype.install = function (aOldScript, aOnlyDependencies) {
               + 'tempDir.moveTo: "' + _baseName + '"',
               e.fileName, e.lineNumber);
         }
-      }, 500);
+      }, TIMEOUT);
     }
     this._tempDir = null;
 

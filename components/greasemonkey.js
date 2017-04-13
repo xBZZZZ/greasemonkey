@@ -113,7 +113,7 @@ function startup(aService) {
   Services.obs.addObserver(aService, "quit-application", false);
 
   // Import this once, early, so that enqueued deletes can happen.
-  Cu.import("chrome://greasemonkey-modules/content/util/enqueueRemoveFile.js");
+  Cu.import("chrome://greasemonkey-modules/content/util/enqueueRemove.js");
 }
 
 /////////////////////////////////// Service ////////////////////////////////////

@@ -44,12 +44,29 @@ function showInstallDialog(aUrlOrRemoteScript, aBrowser, aRequest) {
             params);
   }
 
-  if (rs.script) {
-    openDialog(rs.script);
-  } else {
-    rs.onScriptMeta(function (aRemoteScript, aType, aScript) {
-      openDialog(aScript);
-    });
+  let httpChannel;
+  let status;
+  try {
+    httpChannel = aRequest.QueryInterface(Ci.nsIHttpChannel);
+    status = httpChannel.responseStatus;
+  } catch (e) {
+    // Ignore.
+  }
+  // After successful authentication the user must refresh page.
+  // Other solutions have been worse.
+  if ((typeof status === "undefined")
+      || !GM_util.inArray(GM_CONSTANTS.installScriptReloadStatus, status)) {
+    if (rs.script) {
+      openDialog(rs.script);
+    } else {
+      rs.onScriptMeta(function (aRemoteScript, aType, aScript) {
+        openDialog(aScript);
+      });
+    }
+  }
+  if ((typeof status !== "undefined")
+      && GM_util.inArray(GM_CONSTANTS.installScriptReloadStatus, status)) {
+    rs.cleanup();
   }
 
   rs.download(function (aSuccess, aType, aStatus, aHeaders) {
@@ -66,9 +83,18 @@ function showInstallDialog(aUrlOrRemoteScript, aBrowser, aRequest) {
         try {
           aRequest.resume();
         } catch (e) {
-          // See #1717.
-          // e.g. the HTTP status code: 401 Authorization Required
+          /*
+          See #1717.
+          The HTTP status code: GM_CONSTANTS.installScriptReloadStatus
+          If the user unauthorized - throws an error:
+            NS_ERROR_UNEXPECTED: Component returned failure code:
+              0x8000ffff (NS_ERROR_UNEXPECTED)
+          */
           // Ignore.
+          if (!(e instanceof Components.Exception)
+              || (e.result != Cr.NS_ERROR_UNEXPECTED)) {
+            throw e;
+          }
         }
       }
       if (_cancel) {

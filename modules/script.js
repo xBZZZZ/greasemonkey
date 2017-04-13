@@ -961,7 +961,7 @@ Script.prototype.updateFromNewScript = function (
                 GM_CONSTANTS.localeGreasemonkeyProperties)
                 .GetStringFromName("script.noDeleteDirectory"));
           } else {
-            dep.file.remove(true);
+            dep.file.remove(false);
           }
         } catch (e) {
           // Probably a locked file.
@@ -1308,25 +1308,33 @@ Script.prototype.uninstall = function (forUpdate) {
         this.file.remove(false);
       }
     } catch (e) {
-      dump("An uninstall script - Remove failed:"
-          + "\n" + this.file.path + "\n");
+      GM_util.logError(
+          "script - Script.uninstall"
+          + "\n" + "- an uninstall script - remove failed - the path:"
+          + "\n" + this.file.path + "\n" + e, false,
+          e.fileName, e.lineNumber);
+      // GM_util.enqueueRemove(this.file);
     }
   } else if (this.baseDirFile.exists()) {
     // If script has its own dir, remove the dir + contents.
     try {
       this.baseDirFile.remove(true);
     } catch (e) {
-      dump("An uninstall script - Remove failed:"
-          + "\n" + this.baseDirFile.path + "\n");
+      GM_util.logError(
+          "script - Script.uninstall"
+          + "\n" + "- an uninstall script - remove failed - the path:"
+          + "\n" + this.baseDirFile.path + "\n" + e, false,
+          e.fileName, e.lineNumber);
+      // GM_util.enqueueRemove(this.baseDirFile);
     }
   }
 
   if (!forUpdate) {
     let storage = new GM_ScriptStorageBack(this);
     let file = storage.dbFile;
-    GM_util.enqueueRemoveFile(file);
+    GM_util.enqueueRemove(file);
     file.leafName += "-journal";
-    GM_util.enqueueRemoveFile(file);
+    GM_util.enqueueRemove(file);
   }
 
   this._changed("uninstall", forUpdate);

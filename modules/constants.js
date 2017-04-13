@@ -66,6 +66,10 @@ const GM_CONSTANTS = {
           && !(statusGreaterThanAndEqual <= aStatus);
     }
   },
+  // The HTTP status code: 
+  // client errors
+  // (401 "Authorization Required", 407 "Proxy Authentication Required")
+  "installScriptReloadStatus": [401, 407],
   "ioService": Cc["@mozilla.org/network/io-service;1"]
       .getService(Ci.nsIIOService),
   "jsSubScriptLoader": Cc["@mozilla.org/moz/jssubscript-loader;1"]
