@@ -40,7 +40,8 @@ let contentObserver = {
         let win;
         switch (aTopic) {
           case OBSERVER_TOPIC_1:
-            doc = aData;
+            // aData != "null" - because of the page "about:blank".
+            doc = aData && (aData != "null");
             win = aSubject;
 
             break;

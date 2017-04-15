@@ -86,10 +86,6 @@ var observer = {
     let item;
     switch (event) {
       case "edit-enabled":
-        // Part 1/2 (addons.js - Part 2/2).
-        // To "properly" (better; also reload page) update the AOM.
-        // e.g. ScriptAddon.isCompatible
-        script._changed("modified", script.id);
         item = gListView.getListItemForID(addon.id);
         let callback = data ? item.onEnabled : item.onDisabled;
         if (!callback) {
