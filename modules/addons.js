@@ -51,12 +51,14 @@ var AddonProvider = {
     } else {
       var scriptAddons = [];
       GM_util.getService().config.scripts.forEach(function (script) {
-        // "true" - to "properly" (better; also reload page) update the AOM.
-        // e.g. ScriptAddon.isCompatible
-        // This solution cannot be used:
-        // In the case of an uninstall undo failure
-        // (this script is not uninstalled).
-        // But a simple solution: see ScriptAddonFactoryByScript()
+        /*
+        "true" - to "properly" (better; also reload page) update the AOM.
+        e.g. ScriptAddon.isCompatible
+        This solution cannot be used:
+          In the case of an uninstall undo failure
+          (this script is not uninstalled).
+        But a simple solution: see ScriptAddonFactoryByScript().
+        */
         // scriptAddons.push(ScriptAddonFactoryByScript(script, true));
         scriptAddons.push(ScriptAddonFactoryByScript(script));
       });
@@ -87,7 +89,9 @@ function ScriptAddonFactoryByScript(aScript, aReplace) {
     ScriptAddonCache[id] = new ScriptAddon(aScript);
   } else {
     // To properly update the AOM.
-    ScriptAddonCache[id].isCompatible = aScript.isRemoteUpdateAllowed(false);
+    if ("isRemoteUpdateAllowed" in aScript) {
+      ScriptAddonCache[id].isCompatible = aScript.isRemoteUpdateAllowed(false);
+    }
   }
   return ScriptAddonCache[id];
 }
