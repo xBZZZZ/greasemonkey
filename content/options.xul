@@ -34,6 +34,7 @@
   <groupbox>
     <caption label="&prefWindow.titleWin;" />
     <checkbox id="secure-update" label="&RequireSecureUpdates;" />
+    <checkbox id="disable-update" label="&RequireDisabledScriptsUpdates;" />
     <checkbox id="timeout-update" label="&RequireTimeoutUpdates;" />
     <hbox id="timeout-update-box">
     <label id="timeout-update-value-label" value="&TimeoutUpdatesUnits;" />

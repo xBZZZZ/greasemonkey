@@ -44,6 +44,7 @@
 <!ENTITY options.globalExcludes "باستثناء العالمية">
 <!ENTITY options.newScript.removeUnused "Remove unused lines">
 <!ENTITY options.newScript.template "New script template">
+<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY RequireSecureUpdates "تتطلب تحديثات آمنة">
 <!ENTITY RequireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "أعدادات السكربت">

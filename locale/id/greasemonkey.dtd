@@ -44,6 +44,7 @@
 <!ENTITY options.globalExcludes "Pengecualian Global">
 <!ENTITY options.newScript.removeUnused "Buang baris yang tidak digunakan">
 <!ENTITY options.newScript.template "Templat skrip baru">
+<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY RequireSecureUpdates "Membutuhkan pembaruan aman">
 <!ENTITY RequireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Pengaturan Skrip">

@@ -44,6 +44,7 @@
 <!ENTITY options.globalExcludes "Nevykdomi visur">
 <!ENTITY options.newScript.removeUnused "Remove unused lines">
 <!ENTITY options.newScript.template "New script template">
+<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY RequireSecureUpdates "Reikalauti saugumo atnaujinimų">
 <!ENTITY RequireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Scenarijaus nustatymai">

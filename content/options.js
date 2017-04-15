@@ -25,6 +25,8 @@ function GM_loadOptions() {
           ? "Firefox"
           : "$&")
       ));
+  document.getElementById("disable-update")
+      .checked = GM_prefRoot.getValue("requireDisabledScriptsUpdates");
   document.getElementById("secure-update")
       .checked = GM_prefRoot.getValue("requireSecureUpdates");
   document.getElementById("timeout-update")
@@ -50,6 +52,8 @@ function GM_loadOptions() {
 function GM_saveOptions(checkbox) {
   GM_prefRoot.setValue("sync.enabled",
       !!document.getElementById("check-sync").checked);
+  GM_prefRoot.setValue("requireDisabledScriptsUpdates",
+      !!document.getElementById("disable-update").checked);
   GM_prefRoot.setValue("requireSecureUpdates",
       !!document.getElementById("secure-update").checked);
   GM_prefRoot.setValue("requireTimeoutUpdates",

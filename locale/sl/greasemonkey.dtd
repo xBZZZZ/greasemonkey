@@ -44,6 +44,7 @@
 <!ENTITY options.globalExcludes "Splošne izključitve">
 <!ENTITY options.newScript.removeUnused "Odstrani neuporabljene vrstice">
 <!ENTITY options.newScript.template "Nova predloga skripta">
+<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY RequireSecureUpdates "Zahtevaj varne posodobitve">
 <!ENTITY RequireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Nastavitve skripta">

@@ -44,6 +44,7 @@
 <!ENTITY options.globalExcludes "Globale Ausschlüsse">
 <!ENTITY options.newScript.removeUnused "Unbenutzte Zeilen entfernen">
 <!ENTITY options.newScript.template "Neue Skriptvorlage">
+<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY RequireSecureUpdates "Sicherheitsupdate erforderlich">
 <!ENTITY RequireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Skript-Einstellungen">

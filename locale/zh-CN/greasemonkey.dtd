@@ -44,6 +44,7 @@
 <!ENTITY options.globalExcludes "全局排除">
 <!ENTITY options.newScript.removeUnused "移除未用的行">
 <!ENTITY options.newScript.template "新建脚本模板">
+<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY RequireSecureUpdates "需要安全更新（HTTPS）">
 <!ENTITY RequireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "脚本的设置">

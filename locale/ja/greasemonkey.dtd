@@ -44,6 +44,7 @@
 <!ENTITY options.globalExcludes "実行しないページ">
 <!ENTITY options.newScript.removeUnused "未使用の行を削除">
 <!ENTITY options.newScript.template "新規スクリプトのテンプレート">
+<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY RequireSecureUpdates "安全に更新">
 <!ENTITY RequireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "スクリプト設定">

@@ -44,6 +44,7 @@
 <!ENTITY options.globalExcludes "Globala undantag">
 <!ENTITY options.newScript.removeUnused "Ta bort oanvända rader">
 <!ENTITY options.newScript.template "Ny skriptmall">
+<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY RequireSecureUpdates "Kräv säkra uppdateringar">
 <!ENTITY RequireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Skriptinställningar">

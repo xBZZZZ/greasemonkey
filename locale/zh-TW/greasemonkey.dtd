@@ -44,6 +44,7 @@
 <!ENTITY options.globalExcludes "全域排除">
 <!ENTITY options.newScript.removeUnused "移除未使用的行">
 <!ENTITY options.newScript.template "新腳本範本">
+<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY RequireSecureUpdates "要求透過安全通道更新">
 <!ENTITY RequireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "腳本設定值">

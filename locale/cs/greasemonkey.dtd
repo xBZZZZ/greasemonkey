@@ -44,6 +44,7 @@
 <!ENTITY options.globalExcludes "Vyloučené stránky globálně">
 <!ENTITY options.newScript.removeUnused "Odebrat nepoužité řádky">
 <!ENTITY options.newScript.template "Nový skript - šablona">
+<!ENTITY RequireDisabledScriptsUpdates "Použít automatické aktualizace i pro zakázané skripty">
 <!ENTITY RequireSecureUpdates "Použít pouze zabezpečené aktualizace">
 <!ENTITY RequireTimeoutUpdates "Použít pro aktualizace timeout">
 <!ENTITY scriptprefs.scriptSettings "Nastavení skriptu">

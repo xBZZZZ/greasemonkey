@@ -831,7 +831,9 @@ Script.prototype.isRemoteUpdateAllowed = function (aForced) {
   }
   if (!aForced) {
     if (!this.enabled) {
-      return false;
+      if (!GM_prefRoot.getValue("requireDisabledScriptsUpdates")) {
+        return false;
+      }
     }
     if (this._modifiedTime > this._installTime) {
       return false;

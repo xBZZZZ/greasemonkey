@@ -44,6 +44,7 @@
 <!ENTITY options.globalExcludes "Global Çıkarılanlar">
 <!ENTITY options.newScript.removeUnused "Kullanılmayan satırları sil">
 <!ENTITY options.newScript.template "Yeni betik şablonu">
+<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY RequireSecureUpdates "Gerekli güvenlik güncellemeleri">
 <!ENTITY RequireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Betik Ayarları">

@@ -44,6 +44,7 @@
 <!ENTITY options.globalExcludes "Глобално изключени">
 <!ENTITY options.newScript.removeUnused "Премахване на неизползваните редове">
 <!ENTITY options.newScript.template "Нов шаблон за скрипт">
+<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY RequireSecureUpdates "Изискване на актуализации по сигурността">
 <!ENTITY RequireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Настройки на скрипта">

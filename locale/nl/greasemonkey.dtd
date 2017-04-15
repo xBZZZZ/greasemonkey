@@ -44,6 +44,7 @@
 <!ENTITY options.globalExcludes "Sluit globaal uit">
 <!ENTITY options.newScript.removeUnused "Ongebruikte regels verwijderen">
 <!ENTITY options.newScript.template "Nieuw scriptsjabloon">
+<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY RequireSecureUpdates "Beveiligde updates vereisen">
 <!ENTITY RequireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Scriptinstellingen">

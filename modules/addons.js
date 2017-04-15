@@ -51,7 +51,10 @@ var AddonProvider = {
     } else {
       var scriptAddons = [];
       GM_util.getService().config.scripts.forEach(function (script) {
-        scriptAddons.push(ScriptAddonFactoryByScript(script));
+        // Part 2/2 (addons-overlay.js - Part 1/2).
+        // "true" - to "properly" (better; also reload page) update the AOM.
+        // e.g. ScriptAddon.isCompatible
+        scriptAddons.push(ScriptAddonFactoryByScript(script, true));
       });
       aCallback(scriptAddons);
     }
