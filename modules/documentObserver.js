@@ -17,7 +17,10 @@ Cu.import("resource://gre/modules/Services.jsm");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
-const OBSERVER_TOPIC = "document-element-inserted";
+// See #1849.
+const OBSERVER_TOPIC_1 = "content-document-global-created";
+const OBSERVER_TOPIC_2 = "document-element-inserted";
+const OBSERVER_TOPIC = OBSERVER_TOPIC_2;
 
 var callbacks = new WeakMap();
 
@@ -33,8 +36,20 @@ let contentObserver = {
 
     switch (aTopic) {
       case OBSERVER_TOPIC:
-        let doc = aSubject;
-        let win = doc && doc.defaultView;
+        let doc;
+        let win;
+        switch (aTopic) {
+          case OBSERVER_TOPIC_1:
+            doc = aData;
+            win = aSubject;
+
+            break;
+          case OBSERVER_TOPIC_2:
+            doc = aSubject;
+            win = doc && doc.defaultView;
+
+            break;
+        }
 
         if (!doc || !win) {
           return undefined;
@@ -48,9 +63,11 @@ let contentObserver = {
         }
 
         frameCallback(win);
-      break;
+
+        break;
       default:
         dump("Content frame observed unknown topic: " + aTopic + "\n");
+
         break;
     }
   },
