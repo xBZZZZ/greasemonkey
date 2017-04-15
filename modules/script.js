@@ -1026,6 +1026,8 @@ Script.prototype.updateFromNewScript = function (
       // Part 2/2 (remoteScript.js - Part 1/2).
       // The fix update "aAddon._script.filename" (that != null) in:
       // addons-overlay.js - gViewController.commands.cmd_userscript_edit
+      // It happens when updating the icon to the wrong "URL" (data:)
+      // (e.g. "data:image" -> "data:mage").
       // Otherwise an exception occurs:
       // openInEditor.js - script.textContent; getContents.js - !aFile.isFile()
       this._changed("modified", this.id);
