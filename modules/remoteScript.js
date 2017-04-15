@@ -477,8 +477,9 @@ RemoteScript.prototype.install = function (aOldScript, aOnlyDependencies) {
       // Silently ignore.
     }
 
+    // Part 1/2 (script.js - Part 2/2).
     // The fix update icon in the AOM (after a change in the editor).
-    ScriptAddonFactoryByScript(this.script, true);
+    // ScriptAddonFactoryByScript(this.script, true);
     this.script._changed("modified", this.script.id);
   } else {
     // Completely install the new script.

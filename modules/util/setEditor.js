@@ -24,9 +24,10 @@ function setEditor(aScratchpad) {
     return true;
   }
 
-  // Ask the user to choose a new editor. Sometimes users get confused and
-  // pick a non-executable file, so we set this up in a loop so that if they do
-  // that we can give them an error and try again.
+  // Ask the user to choose a new editor.
+  // Sometimes users get confused and pick a non-executable file,
+  // so we set this up in a loop
+  // so that if they do that we can give them an error and try again.
   while (true) {
     let filePicker = Cc["@mozilla.org/filepicker;1"]
         .createInstance(Ci.nsIFilePicker);

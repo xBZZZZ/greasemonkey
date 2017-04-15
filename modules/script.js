@@ -872,7 +872,7 @@ Script.prototype.isRemoteUpdateAllowed = function (aForced) {
 Script.prototype.updateFromNewScript = function (
     newScript, url, windowId, browser) {
   // Keep a _copy_ of the old script ID, so we can eventually pass it up
-  // to the Add-ons manager UI, to update this script's old entry.
+  // to the AOM, to update this script's old entry.
   let oldScriptId = "" + this.id;
 
   // If the @name and/or @namespace have changed,
@@ -915,7 +915,7 @@ Script.prototype.updateFromNewScript = function (
   this.showGrantWarning();
   this.checkConfig();
 
-  // Update add-ons manager UI.
+  // Update the AOM.
   this._changed("modified", oldScriptId);
 
   let dependhash = GM_util.hash(newScript._rawMeta);
@@ -1023,7 +1023,12 @@ Script.prototype.updateFromNewScript = function (
         }
       }
 
-      this._changed("modified");
+      // Part 2/2 (remoteScript.js - Part 1/2).
+      // The fix update "aAddon._script.filename" (that != null) in:
+      // addons-overlay.js - gViewController.commands.cmd_userscript_edit
+      // Otherwise an exception occurs:
+      // openInEditor.js - script.textContent; getContents.js - !aFile.isFile()
+      this._changed("modified", this.id);
     }));
   }
 };
