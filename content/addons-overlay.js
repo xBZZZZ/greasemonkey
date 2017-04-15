@@ -1,4 +1,4 @@
-// This file is concerned with altering the Firefox 4+ Add-ons Manager window,
+// This file is concerned with altering the Firefox 4+ AOM window,
 // for those sorts of functionality we want that the API does not handle.
 // (As opposed to addons4.jsm which is responsible
 // for what the API does handle.)
