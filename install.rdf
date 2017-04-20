@@ -6,7 +6,7 @@
   <Description about="urn:mozilla:install-manifest">
 
     <em:id>{e4a8a97b-f2ed-450b-b12d-ee082ba24781}</em:id>
-    <em:version>3.12.1beta4</em:version>
+    <em:version>3.12.1beta6</em:version>
     <em:creator>Aaron Boodman; http://youngpup.net/ (Pale Moon: janekptacijarabaci)</em:creator>
     <em:homepageURL>https://github.com/janekptacijarabaci/greasemonkey/releases</em:homepageURL>
     <!-- <em:updateURL>https://gist.github.com/raw/[uuid]/update.rdf</em:updateURL> -->
