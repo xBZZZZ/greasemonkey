@@ -38,7 +38,7 @@ const TYPE = {
   },
 };
 
-function GM_setClipboard(aWrappedContentWin, aData, aOptions) {
+function GM_setClipboard(aWrappedContentWin, aFileURL, aData, aOptions) {
   let clipboardHelperService = Cc["@mozilla.org/widget/clipboardhelper;1"]
       .getService(Ci.nsIClipboardHelper);
   let clipboardService = Cc["@mozilla.org/widget/clipboard;1"]
@@ -113,6 +113,7 @@ function GM_setClipboard(aWrappedContentWin, aData, aOptions) {
               .replace("%1",
               ((typeof aOptions != "object")
                   ? aOptions
-                  : JSON.stringify(aOptions))));
+                  : JSON.stringify(aOptions))),
+          aFileURL, null);
   }
 }

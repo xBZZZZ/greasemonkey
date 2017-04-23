@@ -69,28 +69,29 @@ function GM_Resources(script) {
   this.script = script;
 }
 
-GM_Resources.prototype.getResourceURL = function (sandbox, aScript, name) {
-  // Verify the existence of the resource.
-  let dep = this._getDep(sandbox, name);
-  return [
-    GM_CONSTANTS.addonScriptProtocolScheme + ":",
-    aScript.uuid,
-    GM_CONSTANTS.addonScriptProtocolSeparator, name
-  ].join("");
-};
-
 GM_Resources.prototype.getResourceText = function (
-    sandbox, name, responseType) {
+    aWrappedContentWin, aSandbox, aFileURL, aName, aResponseType) {
   // Verify the existence of the resource.
-  let dep = this._getDep(sandbox, name);
+  let dep = this._getDep(aWrappedContentWin, aFileURL, aName);
   if (dep.textContent !== undefined) {
     return dep.textContent;
   }
   return Cu.cloneInto(GM_util.fileXhr(
-      dep.file_url, "text/plain", responseType), sandbox);
+      dep.file_url, "text/plain", aResponseType), aSandbox);
 };
 
-GM_Resources.prototype._getDep = function (sandbox, name) {
+GM_Resources.prototype.getResourceURL = function (
+    aWrappedContentWin, aSandbox, aScript, aName) {
+  // Verify the existence of the resource.
+  let dep = this._getDep(aWrappedContentWin, aScript.fileURL, aName);
+  return [
+    GM_CONSTANTS.addonScriptProtocolScheme + ":",
+    aScript.uuid,
+    GM_CONSTANTS.addonScriptProtocolSeparator, aName
+  ].join("");
+};
+
+GM_Resources.prototype._getDep = function (wrappedContentWin, fileURL, name) {
   let resources = this.script.resources;
   for (var i = 0, iLen = resources.length; i < iLen; i++) {
     let resource = resources[i];
@@ -99,11 +100,12 @@ GM_Resources.prototype._getDep = function (sandbox, name) {
     }
   }
 
-  throw new sandbox.Error(
+  throw new wrappedContentWin.Error(
       GM_CONSTANTS.localeStringBundle.createBundle(
           GM_CONSTANTS.localeGreasemonkeyProperties)
           .GetStringFromName("error.missingResource")
-          .replace("%1", name)
+          .replace("%1", name),
+          fileURL, null
       );
 };
 

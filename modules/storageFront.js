@@ -49,11 +49,13 @@ function cacheKey(script, name) {
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
-function GM_ScriptStorageFront(aScript, aMessageManager, aSandbox) {
+function GM_ScriptStorageFront(
+    aMessageManager, aWrappedContentWin, aSandbox, aScript) {
   this._db = null;
   this._messageManager = aMessageManager;
   this._sandbox = aSandbox;
   this._script = aScript;
+  this._wrappedContentWin = aWrappedContentWin;
 }
 
 Object.defineProperty(GM_ScriptStorageFront.prototype, "dbFile", {
@@ -71,15 +73,18 @@ Object.defineProperty(GM_ScriptStorageFront.prototype, "db", {
 });
 
 GM_ScriptStorageFront.prototype.close = function () {
-  throw new this._sandbox.Error(MESSAGE_ERROR_PREFIX + "Has no DB connection.");
+  throw new this._wrappedContentWin.Error(
+      MESSAGE_ERROR_PREFIX + "Has no DB connection.",
+      this._script.fileURL, null);
 };
 
 GM_ScriptStorageFront.prototype.setValue = function (name, val) {
   if (2 !== arguments.length) {
-    throw new this._sandbox.Error(
+    throw new this._wrappedContentWin.Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
-            .GetStringFromName("error.args.setValue"));
+            .GetStringFromName("error.args.setValue"),
+            this._script.fileURL, null);
   }
 
   let key = cacheKey(this._script, name);
@@ -190,6 +195,7 @@ GM_ScriptStorageFront.prototype.listValues = function () {
 };
 
 GM_ScriptStorageFront.prototype.getStats = function () {
-  throw new this._sandbox.Error(
-      MESSAGE_ERROR_PREFIX + "Does not expose stats.");
+  throw new this._wrappedContentWin.Error(
+      MESSAGE_ERROR_PREFIX + "Does not expose stats.",
+      this._script.fileURL, null);
 };

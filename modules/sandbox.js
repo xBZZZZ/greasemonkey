@@ -74,7 +74,8 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
         null, GM_addStyle, aContentWin.document);
   }
 
-  let scriptStorage = new GM_ScriptStorageFront(aScript, aFrameScope, sandbox);
+  let scriptStorage = new GM_ScriptStorageFront(
+      aFrameScope, aContentWin, sandbox, aScript);
   if (GM_util.inArray(aScript.grants, "GM_deleteValue")) {
     sandbox.GM_deleteValue = GM_util.hitch(scriptStorage, "deleteValue");
   }
@@ -92,11 +93,13 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
   let scriptResources = new GM_Resources(aScript);
   if (GM_util.inArray(aScript.grants, "GM_getResourceText")) {
     sandbox.GM_getResourceText = GM_util.hitch(
-        scriptResources, "getResourceText", sandbox);
+        scriptResources, "getResourceText",
+        aContentWin, sandbox, aScript.fileURL);
   }
   if (GM_util.inArray(aScript.grants, "GM_getResourceURL")) {
     sandbox.GM_getResourceURL = GM_util.hitch(
-        scriptResources, "getResourceURL", sandbox, aScript);
+        scriptResources, "getResourceURL",
+        aContentWin, sandbox, aScript);
   }
 
   if (GM_util.inArray(aScript.grants, "GM_log")) {
@@ -137,7 +140,7 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
 
   if (GM_util.inArray(aScript.grants, "GM_setClipboard")) {
     sandbox.GM_setClipboard = GM_util.hitch(
-        null, GM_setClipboard, aContentWin);
+        null, GM_setClipboard, aContentWin, aScript.fileURL);
   }
 
   if (GM_util.inArray(aScript.grants, "GM_xmlhttpRequest")) {
