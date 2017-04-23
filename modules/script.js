@@ -804,6 +804,7 @@ Script.prototype.info = function () {
       "run-at": this.runAt,
       "version": this.version,
     },
+    "scriptHandler": GM_CONSTANTS.info.scriptHandler,
     "scriptMetaStr": extractMeta(this.textContent),
     "scriptSource": this.textContent,
     "scriptWillUpdate": this.isRemoteUpdateAllowed(),

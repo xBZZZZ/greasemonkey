@@ -123,6 +123,7 @@ IPCScript.prototype.info = function () {
       "run-at": this.runAt,
       "version": this.version,
     },
+    "scriptHandler": GM_CONSTANTS.info.scriptHandler,
     "scriptWillUpdate": this.willUpdate,
     "uuid": this.uuid,
     "version": this.addonVersion,

@@ -53,6 +53,10 @@ const GM_CONSTANTS = {
   "fileScriptExtension": ".user.js",
   "fileScriptExtensionRegexp": "\\.user\\.js",
   "fileScriptName": "gm-script",
+  // GM_info
+  "info": {
+    "scriptHandler": "Greasemonkey",
+  },
   // The HTTP status code:
   // client errors (429 "Too Many Requests"), server errors.
   "installScriptBadStatus": function (aStatus, aBool) {
