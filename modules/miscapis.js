@@ -69,9 +69,9 @@ function GM_Resources(script) {
   this.script = script;
 }
 
-GM_Resources.prototype.getResourceURL = function (aScript, name) {
+GM_Resources.prototype.getResourceURL = function (sandbox, aScript, name) {
   // Verify the existence of the resource.
-  let dep = this._getDep(name);
+  let dep = this._getDep(sandbox, name);
   return [
     GM_CONSTANTS.addonScriptProtocolScheme + ":",
     aScript.uuid,
@@ -79,8 +79,10 @@ GM_Resources.prototype.getResourceURL = function (aScript, name) {
   ].join("");
 };
 
-GM_Resources.prototype.getResourceText = function (sandbox, name, responseType) {
-  let dep = this._getDep(name);
+GM_Resources.prototype.getResourceText = function (
+    sandbox, name, responseType) {
+  // Verify the existence of the resource.
+  let dep = this._getDep(sandbox, name);
   if (dep.textContent !== undefined) {
     return dep.textContent;
   }
@@ -88,7 +90,7 @@ GM_Resources.prototype.getResourceText = function (sandbox, name, responseType) 
       dep.file_url, "text/plain", responseType), sandbox);
 };
 
-GM_Resources.prototype._getDep = function (name) {
+GM_Resources.prototype._getDep = function (sandbox, name) {
   let resources = this.script.resources;
   for (var i = 0, iLen = resources.length; i < iLen; i++) {
     let resource = resources[i];
@@ -97,7 +99,7 @@ GM_Resources.prototype._getDep = function (name) {
     }
   }
 
-  throw new Error(
+  throw new sandbox.Error(
       GM_CONSTANTS.localeStringBundle.createBundle(
           GM_CONSTANTS.localeGreasemonkeyProperties)
           .GetStringFromName("error.missingResource")

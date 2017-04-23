@@ -17,11 +17,28 @@ Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
 
 const FLAVOR = {
-  "html": "text/html",
-  "text": "text/unicode",
+  "html": {
+    "type": "html",
+    "mimetype": "text/html",
+  },
+  "text": {
+    "type": "text",
+    "mimetype": "text/unicode",
+  },
 };
 
-function GM_setClipboard(aData, aType) {
+const TYPE = {
+  "html": {
+    "type": "html",
+    "mimetype": "text/html",
+  },
+  "text": {
+    "type": "text",
+    "mimetype": "text/plain",
+  },
+};
+
+function GM_setClipboard(aWrappedContentWin, aData, aOptions) {
   let clipboardHelperService = Cc["@mozilla.org/widget/clipboardhelper;1"]
       .getService(Ci.nsIClipboardHelper);
   let clipboardService = Cc["@mozilla.org/widget/clipboard;1"]
@@ -31,36 +48,71 @@ function GM_setClipboard(aData, aType) {
   let trans = Cc["@mozilla.org/widget/transferable;1"]
       .createInstance(Ci.nsITransferable);
 
-  aType = (aType || "text").toLowerCase();
+  // let _type = undefined;
+  let _type = TYPE.text.type;
+  if ((typeof aOptions != "undefined") && (aOptions != null)) {
+    if (typeof aOptions.type == "undefined") {
+      if (typeof aOptions != "object") {
+        _type = aOptions;
+      }
+    } else {
+      _type = aOptions.type;
+    }
+  }
+  _type = _type ? _type.toLowerCase() : _type;
 
-  switch (aType) {
-    case "html":
+  // let _mimetype = undefined;
+  let _mimetype = (_type == TYPE.html.type)
+      ? TYPE.html.mimetype
+      : TYPE.text.mimetype;
+  if ((typeof aOptions != "undefined") && (aOptions != null)) {
+    if (typeof aOptions.mimetype != "undefined") {
+      _mimetype = aOptions.mimetype;
+    }
+  }
+  _mimetype = _mimetype ? _mimetype.toLowerCase() : _mimetype;
+
+  if (_mimetype == TYPE.text.mimetype) {
+    _mimetype = FLAVOR.text.mimetype;
+  }
+
+  let _obj = {
+    "type": _type,
+    "mimetype": _mimetype,
+  };
+
+  switch (JSON.stringify(_obj)) {
+    case JSON.stringify(FLAVOR.html):
       // Add text/html flavor.
       let strVal = supportString;
       strVal.data = aData;
-      trans.addDataFlavor(FLAVOR.html);
-      trans.setTransferData(FLAVOR.html, strVal, (aData.length * 2));
+      trans.addDataFlavor(FLAVOR.html.mimetype);
+      trans.setTransferData(FLAVOR.html.mimetype, strVal, (aData.length * 2));
 
       // Add a text/unicode flavor (html converted to plain text).
       strVal = supportString;
       let converter = Cc["@mozilla.org/feed-textconstruct;1"]
           .createInstance(Ci.nsIFeedTextConstruct);
-      converter.type = aType;
+      converter.type = FLAVOR.html.type;
       converter.text = aData;
       strVal.data = converter.plainText();
-      trans.addDataFlavor(FLAVOR.text);
-      trans.setTransferData(FLAVOR.text, strVal, (strVal.data.length * 2));
+      trans.addDataFlavor(FLAVOR.text.mimetype);
+      trans.setTransferData(
+          FLAVOR.text.mimetype, strVal, (strVal.data.length * 2));
 
       clipboardService.setData(trans, null, clipboardService.kGlobalClipboard);
       break;
-    case "text":
+    case JSON.stringify(FLAVOR.text):
       clipboardHelperService.copyString(aData);
       break;
     default:
-      throw new Error(
+      throw new aWrappedContentWin.Error(
           GM_CONSTANTS.localeStringBundle.createBundle(
               GM_CONSTANTS.localeGreasemonkeyProperties)
               .GetStringFromName("setClipboard.unsupportedType")
-              .replace("%1", aType));
+              .replace("%1",
+              ((typeof aOptions != "object")
+                  ? aOptions
+                  : JSON.stringify(aOptions))));
   }
 }

@@ -96,7 +96,7 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
   }
   if (GM_util.inArray(aScript.grants, "GM_getResourceURL")) {
     sandbox.GM_getResourceURL = GM_util.hitch(
-        scriptResources, "getResourceURL", aScript);
+        scriptResources, "getResourceURL", sandbox, aScript);
   }
 
   if (GM_util.inArray(aScript.grants, "GM_log")) {
@@ -136,7 +136,8 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
   }
 
   if (GM_util.inArray(aScript.grants, "GM_setClipboard")) {
-    sandbox.GM_setClipboard = GM_util.hitch(null, GM_setClipboard);
+    sandbox.GM_setClipboard = GM_util.hitch(
+        null, GM_setClipboard, aContentWin);
   }
 
   if (GM_util.inArray(aScript.grants, "GM_xmlhttpRequest")) {

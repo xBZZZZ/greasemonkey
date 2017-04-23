@@ -62,6 +62,7 @@ function parse(aSource, aUri, aFailWhenMissing) {
 
     switch (data.keyword) {
       case "author":
+      case "copyright":
         script[data.keyword] = data.value;
         break;
 

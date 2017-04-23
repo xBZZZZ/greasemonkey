@@ -18,12 +18,12 @@ Cu.importGlobalProperties(["XMLHttpRequest"]);
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
-function GM_xmlhttpRequester(wrappedContentWin, sandbox, fileURL, originUrl) {
-  this.fileURL = fileURL;
-  this.originUrl = originUrl;
-  this.sandbox = sandbox;
-  this.sandboxPrincipal = Cu.getObjectPrincipal(sandbox);
-  this.wrappedContentWin = wrappedContentWin;
+function GM_xmlhttpRequester(aWrappedContentWin, aSandbox, aFileURL, aOriginUrl) {
+  this.fileURL = aFileURL;
+  this.originUrl = aOriginUrl;
+  this.sandbox = aSandbox;
+  this.sandboxPrincipal = Cu.getObjectPrincipal(aSandbox);
+  this.wrappedContentWin = aWrappedContentWin;
 }
 
 // This function gets called by user scripts in content security scope

@@ -71,12 +71,12 @@ Object.defineProperty(GM_ScriptStorageFront.prototype, "db", {
 });
 
 GM_ScriptStorageFront.prototype.close = function () {
-  throw new Error(MESSAGE_ERROR_PREFIX + "Has no DB connection.");
+  throw new this._sandbox.Error(MESSAGE_ERROR_PREFIX + "Has no DB connection.");
 };
 
 GM_ScriptStorageFront.prototype.setValue = function (name, val) {
   if (2 !== arguments.length) {
-    throw new Error(
+    throw new this._sandbox.Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
             .GetStringFromName("error.args.setValue"));
@@ -190,5 +190,6 @@ GM_ScriptStorageFront.prototype.listValues = function () {
 };
 
 GM_ScriptStorageFront.prototype.getStats = function () {
-  throw new Error(MESSAGE_ERROR_PREFIX + "Does not expose stats.");
+  throw new this._sandbox.Error(
+      MESSAGE_ERROR_PREFIX + "Does not expose stats.");
 };

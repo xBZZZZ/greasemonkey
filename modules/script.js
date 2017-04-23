@@ -41,6 +41,7 @@ function Script(configNode) {
   this._observers = [];
 
   this._author = null;
+  this._copyright = null;
   this._basedir = null;
   this._dependFail = false;
   this._dependhash = null;
@@ -135,6 +136,17 @@ Object.defineProperty(Script.prototype, "baseDirName", {
   "get": function Script_getBaseDirName() {
     return "" + this._basedir;
   },
+  "enumerable": true,
+});
+
+Object.defineProperty(Script.prototype, "copyright", {
+  "get": function Script_getCopyright() {
+    return this._copyright;
+  },
+  "set": function Script_setCopyright(aVal) {
+    this._copyright = aVal ? "" + aVal : null;
+  },
+  "configurable": true,
   "enumerable": true,
 });
 
@@ -534,6 +546,7 @@ Script.prototype._fromConfigNode = function (node) {
   this._basedir = node.getAttribute("basedir") || ".";
   this._filename = node.getAttribute("filename");
   this.author = node.getAttribute("author") || null;
+  this.copyright = node.getAttribute("copyright") || null;
   this.downloadURL = node.getAttribute("installurl") || null;
   this.homepageURL = node.getAttribute("homepageurl") || null;
   this.updateURL = node.getAttribute("updateurl") || null;
@@ -646,6 +659,7 @@ Script.prototype._fromConfigNode = function (node) {
   this._runAt = node.getAttribute("runAt") || "document-end";
   this._updateMetaStatus = node.getAttribute("updateMetaStatus") || "unknown";
   this.author = node.getAttribute("author") || "";
+  this.copyright = node.getAttribute("copyright") || null;
   this.icon.fileURL = node.getAttribute("icon");
 };
 
@@ -725,6 +739,7 @@ Script.prototype.toConfigNode = function (doc) {
   this._author && scriptNode.setAttribute("author", this._author);
   scriptNode.setAttribute("basedir", this._basedir);
   scriptNode.setAttribute("checkRemoteUpdates", this.checkRemoteUpdates);
+  this._copyright && scriptNode.setAttribute("copyright", this._copyright);
   scriptNode.setAttribute("dependhash", this._dependhash);
   scriptNode.setAttribute("description", this._description);
   scriptNode.setAttribute("enabled", this._enabled);
@@ -787,6 +802,7 @@ Script.prototype.info = function () {
   return {
     "script": {
       "author": this.author,
+      "copyright": this.copyright,
       "description": this.description,
       "excludes": this.excludes,
       "homepage": this.homepage,
@@ -899,6 +915,7 @@ Script.prototype.updateFromNewScript = function (
   // NOTE:
   // User cludes are _not_ copied. They should remain as-is.
   this._author = newScript._author;
+  this._copyright = newScript._copyright;
   this._description = newScript._description;
   this._excludes = newScript._excludes;
   this._grants = newScript._grants;

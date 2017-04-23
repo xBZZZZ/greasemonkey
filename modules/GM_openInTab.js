@@ -15,7 +15,7 @@ Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
 function GM_openInTab(aFrame, aBaseUrl, aUrl, aOptions) {
   let loadInBackground = null;
-  if (typeof aOptions != "undefined") {
+  if ((typeof aOptions != "undefined") && (aOptions != null)) {
     if (typeof aOptions.active == "undefined") {
       if (typeof aOptions != "object") {
         loadInBackground = !!aOptions;
@@ -26,7 +26,7 @@ function GM_openInTab(aFrame, aBaseUrl, aUrl, aOptions) {
   }
 
   let insertRelatedAfterCurrent = null;
-  if (typeof aOptions != "undefined") {
+  if ((typeof aOptions != "undefined") && (aOptions != null)) {
     if (typeof aOptions.insert != "undefined") {
       insertRelatedAfterCurrent = !!aOptions.insert;
     }
