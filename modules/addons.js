@@ -245,11 +245,12 @@ ScriptAddon.prototype._handleRemoteUpdate = function (
     }
   }
 
-
-  var _scriptUpdatedFailure = GM_CONSTANTS.localeStringBundle.createBundle(
+  let _scriptUpdatedFailure = GM_CONSTANTS.localeStringBundle.createBundle(
       GM_CONSTANTS.localeGmAddonsProperties)
       .GetStringFromName("script.updated.failure");
 
+  let scriptInstall;
+  let _info;
   try {
     switch (aResult) {
       case "updateAvailable":
@@ -258,8 +259,7 @@ ScriptAddon.prototype._handleRemoteUpdate = function (
           delete ScriptInstallCache[this.id];
         }
         // Then create one with this newly found update info.
-        var scriptInstall = ScriptInstallFactoryByAddon(
-            this, this._script);
+        scriptInstall = ScriptInstallFactoryByAddon(this, this._script);
         AddonManagerPrivate.callInstallListeners(
             "onNewInstall", [], scriptInstall);
         tryToCall(aUpdateListener, "onUpdateAvailable", this, scriptInstall);
@@ -267,7 +267,7 @@ ScriptAddon.prototype._handleRemoteUpdate = function (
             AddonManager.UPDATE_STATUS_NO_ERROR);
         break;
       case "noUpdateAvailable":
-        var _info = _scriptUpdatedFailure +
+        _info = _scriptUpdatedFailure +
             ' "' + aInfo.name + '" - "' + aInfo.url + '"' +
             (aInfo.info ? aInfo.info : "");
         if (aInfo.log) {
