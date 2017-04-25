@@ -26,7 +26,7 @@ Cu.import("chrome://greasemonkey-modules/content/xmlhttprequester.js");
 
 // https://hg.mozilla.org/mozilla-central/file/33031c875984/js/src/jsapi.cpp#l1072
 // Only a particular set of strings are allowed.
-const gMaxJSVersion = "ECMAv5";
+const JAVASCRIPT_MAX_VERSION = "ECMAv5";
 
 function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
   if (GM_util.inArray(aScript.grants, "none")) {
@@ -234,7 +234,7 @@ function runScriptInSandbox(script, sandbox) {
         let code = GM_util.fileXhr(url, "application/javascript");
         Cu.evalInSandbox(
             "(function () { " + code + "\n})()",
-            sandbox, gMaxJSVersion, url, 1);
+            sandbox, JAVASCRIPT_MAX_VERSION, url, 1);
       } else {
         // Otherwise raise.
         throw e;
