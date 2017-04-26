@@ -52,7 +52,7 @@
 <!ENTITY scriptprefs.userSettings "Pengaturan Pengguna">
 <!ENTITY statusbar.enabled "Diaktifkan">
 <!ENTITY statusbar.enabled.accesskey "E">
-<!ENTITY SubmitStats "Mengumpulkan dan mengirim statistik penggunaan secara anonim untuk perbaikan dan peningkatan Greasemonkey.">
+<!ENTITY SubmitStats "Mengumpulkan dan mengirim statistik penggunaan secara anonim untuk perbaikan dan peningkatan Greasemonkey">
 <!ENTITY TimeoutUpdatesUnits "Seconds">
 <!ENTITY Uninstall "Copot">
 <!ENTITY UpdateChecking "Pemeriksaan Pembaruan">

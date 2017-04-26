@@ -52,7 +52,7 @@
 <!ENTITY scriptprefs.userSettings "Användarinställningar">
 <!ENTITY statusbar.enabled "Aktiverat">
 <!ENTITY statusbar.enabled.accesskey "A">
-<!ENTITY SubmitStats "Samla in och skicka in anonym användningsstatistik för att förbättra Greasemonkey.">
+<!ENTITY SubmitStats "Samla in och skicka in anonym användningsstatistik för att förbättra Greasemonkey">
 <!ENTITY TimeoutUpdatesUnits "Seconds">
 <!ENTITY Uninstall "Avinstallera">
 <!ENTITY UpdateChecking "Uppdateringskontroll">

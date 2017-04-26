@@ -52,7 +52,7 @@
 <!ENTITY scriptprefs.userSettings "Kullanıcı Ayarları">
 <!ENTITY statusbar.enabled "Etkin">
 <!ENTITY statusbar.enabled.accesskey "E">
-<!ENTITY SubmitStats "Greasemonkey geliştirmeleri için anonim kullanım istatistiklerini topla ve gönder.">
+<!ENTITY SubmitStats "Greasemonkey geliştirmeleri için anonim kullanım istatistiklerini topla ve gönder">
 <!ENTITY TimeoutUpdatesUnits "Seconds">
 <!ENTITY Uninstall "Kaldır">
 <!ENTITY UpdateChecking "Güncelleştirme Kontrol Ediliyor">

@@ -52,7 +52,7 @@
 <!ENTITY scriptprefs.userSettings "Ustawienia użytkownika">
 <!ENTITY statusbar.enabled "Włącz">
 <!ENTITY statusbar.enabled.accesskey "W">
-<!ENTITY SubmitStats "Zbieraj i przekazuj anonimowo statystyki używania Greasemonkey, by pomóc w udoskonaleniu aplikacji.">
+<!ENTITY SubmitStats "Zbieraj i przekazuj anonimowo statystyki używania Greasemonkey, by pomóc w udoskonaleniu aplikacji">
 <!ENTITY TimeoutUpdatesUnits "Seconds">
 <!ENTITY Uninstall "Odinstaluj">
 <!ENTITY UpdateChecking "Sprawdzaj dostępność aktualizacji">

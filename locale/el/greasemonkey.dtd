@@ -52,7 +52,7 @@
 <!ENTITY scriptprefs.userSettings "Επιλογές Χρήστη">
 <!ENTITY statusbar.enabled "Ενεργοποιημένo">
 <!ENTITY statusbar.enabled.accesskey "Ρ">
-<!ENTITY SubmitStats "Συγκέντρωση και υποβολή στατιστικών ανώνυμης χρήσης για βελτίωση του Greasemonkey.">
+<!ENTITY SubmitStats "Συγκέντρωση και υποβολή στατιστικών ανώνυμης χρήσης για βελτίωση του Greasemonkey">
 <!ENTITY TimeoutUpdatesUnits "Seconds">
 <!ENTITY Uninstall "Απεγκατάσταση">
 <!ENTITY UpdateChecking "Έλεγχος Ενημέρωσης">

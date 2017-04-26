@@ -52,7 +52,7 @@
 <!ENTITY scriptprefs.userSettings "User Settings">
 <!ENTITY statusbar.enabled "Käytössä">
 <!ENTITY statusbar.enabled.accesskey "K">
-<!ENTITY SubmitStats "Gather and submit anonymous usage statistics to improve Greasemonkey.">
+<!ENTITY SubmitStats "Gather and submit anonymous usage statistics to improve Greasemonkey">
 <!ENTITY TimeoutUpdatesUnits "Seconds">
 <!ENTITY Uninstall "Poisto">
 <!ENTITY UpdateChecking "Update Checking">

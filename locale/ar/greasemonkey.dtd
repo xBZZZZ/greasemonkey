@@ -52,7 +52,7 @@
 <!ENTITY scriptprefs.userSettings "أعدادات العضوية">
 <!ENTITY statusbar.enabled "تشغيل">
 <!ENTITY statusbar.enabled.accesskey "ت">
-<!ENTITY SubmitStats "Gather and submit anonymous usage statistics to improve Greasemonkey.">
+<!ENTITY SubmitStats "Gather and submit anonymous usage statistics to improve Greasemonkey">
 <!ENTITY TimeoutUpdatesUnits "Seconds">
 <!ENTITY Uninstall "إلغاء التثبيت">
 <!ENTITY UpdateChecking "تحديث السكربت">

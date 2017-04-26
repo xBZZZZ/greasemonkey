@@ -52,7 +52,7 @@
 <!ENTITY scriptprefs.userSettings "Корисничка подешавања">
 <!ENTITY statusbar.enabled "Омогућен">
 <!ENTITY statusbar.enabled.accesskey "о">
-<!ENTITY SubmitStats "Прикупљај и шаљи анонимну статистику о коришћењу ради побољшања додатка Greasemonkey.">
+<!ENTITY SubmitStats "Прикупљај и шаљи анонимну статистику о коришћењу ради побољшања додатка Greasemonkey">
 <!ENTITY TimeoutUpdatesUnits "Seconds">
 <!ENTITY Uninstall "Уклони">
 <!ENTITY UpdateChecking "Проверавање ажурирања">

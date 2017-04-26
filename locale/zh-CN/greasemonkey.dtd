@@ -52,7 +52,7 @@
 <!ENTITY scriptprefs.userSettings "用户的设置">
 <!ENTITY statusbar.enabled "启用">
 <!ENTITY statusbar.enabled.accesskey "E">
-<!ENTITY SubmitStats "收集和提交匿名的使用统计数据以帮助改善 Greasemonkey。">
+<!ENTITY SubmitStats "收集和提交匿名的使用统计数据以帮助改善 Greasemonkey">
 <!ENTITY TimeoutUpdatesUnits "Seconds">
 <!ENTITY Uninstall "卸载">
 <!ENTITY UpdateChecking "检查更新">
