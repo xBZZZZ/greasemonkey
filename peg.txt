@@ -11,8 +11,8 @@ Test value:
 // @description:cs    Test value including all metas (cs)
 // @description:en-US Test value including all metas (en-US)
 // @downloadURL       http://example.org/foo-download.user.js
-// @exclude           http://example.com/foo1
-// @exclude           http://example.com/foo2
+// @exclude           http://example.com/1foo
+// @exclude           http://example.com/2foo
 // @grant             GM_getValue
 // @grant             GM_setValue
 // @homepageURL       http://example.org/home/
