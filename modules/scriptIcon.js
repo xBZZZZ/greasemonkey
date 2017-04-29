@@ -37,13 +37,13 @@ Object.defineProperty(ScriptIcon.prototype, "fileURL", {
       return URL_IMAGE_DEFAULT;
     }
   },
-  "set": function ScriptIcon_setFileURL(iconURL) {
-    if (MIME_TYPE_DATA.test(iconURL)) {
+  "set": function ScriptIcon_setFileURL(aIconURL) {
+    if (MIME_TYPE_DATA.test(aIconURL)) {
       // Icon is a data scheme.
-      this._dataURI = iconURL;
-    } else if (iconURL) {
+      this._dataURI = aIconURL;
+    } else if (aIconURL) {
       // Icon is a file.
-      this._filename = iconURL;
+      this._filename = aIconURL;
     }
   },
   "configurable": true,

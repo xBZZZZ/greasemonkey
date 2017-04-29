@@ -165,6 +165,7 @@ Config.prototype.install = function (script, oldScript, tempDir) {
   if (oldScript) {
     // Save the old script's state.
     script._enabled = oldScript.enabled;
+    script.checkRemoteUpdates = oldScript.checkRemoteUpdates;
     script.userExcludes = oldScript.userExcludes;
     script.userMatches = oldScript.userMatches;
     script.userIncludes = oldScript.userIncludes;
@@ -242,8 +243,8 @@ Object.defineProperty(Config.prototype, "globalExcludes", {
   "get": function Config_getGlobalExcludes() {
     return this._globalExcludes.concat();
   },
-  "set": function Config_setGlobalExcludes(val) {
-    this._globalExcludes = val.concat();
+  "set": function Config_setGlobalExcludes(aVal) {
+    this._globalExcludes = aVal.concat();
     GM_prefRoot.setValue("globalExcludes", JSON.stringify(this._globalExcludes));
   },
   "configurable": true,

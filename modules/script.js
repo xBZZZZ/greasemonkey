@@ -36,7 +36,7 @@ AddonManager.getAddonByID(GM_CONSTANTS.addonGUID, function (addon) {
 });
 
 // The <Script> element - attribute names (uppercase and lowercase letters):
-// Backward compatibility
+// Backward compatibility.
 function Script(configNode) {
   this._observers = [];
 
@@ -184,9 +184,9 @@ Object.defineProperty(Script.prototype, "enabled", {
   "get": function Script_getEnabled() {
     return this._enabled;
   },
-  "set": function Script_setEnabled(enabled) {
-    this._enabled = enabled;
-    this._changed("edit-enabled", enabled);
+  "set": function Script_setEnabled(aEnabled) {
+    this._enabled = aEnabled;
+    this._changed("edit-enabled", aEnabled);
   },
   "configurable": true,
   "enumerable": true,
@@ -196,8 +196,8 @@ Object.defineProperty(Script.prototype, "excludes", {
   "get": function Script_getExcludes() {
     return this._excludes.concat();
   },
-  "set": function Script_setExcludes(excludes) {
-    this._excludes = excludes.concat();
+  "set": function Script_setExcludes(aExcludes) {
+    this._excludes = aExcludes.concat();
   },
   "configurable": true,
   "enumerable": true,
@@ -238,8 +238,8 @@ Object.defineProperty(Script.prototype, "grants", {
   "get": function Script_getGrants() {
     return this._grants.concat();
   },
-  "set": function Script_setGrants(grants) {
-    this._grants = grants.concat();
+  "set": function Script_setGrants(aGrants) {
+    this._grants = aGrants.concat();
   },
   "configurable": true,
   "enumerable": true,
@@ -278,8 +278,8 @@ Object.defineProperty(Script.prototype, "includes", {
   "get": function Script_getIncludes() {
     return this._includes.concat();
   },
-  "set": function Script_setIncludes(includes) {
-    this._includes = includes.concat();
+  "set": function Script_setIncludes(aIncludes) {
+    this._includes = aIncludes.concat();
   },
   "configurable": true,
   "enumerable": true,
@@ -328,11 +328,11 @@ Object.defineProperty(Script.prototype, "matches", {
   "get": function Script_getMatches() {
     return this._matches.concat();
   },
-  "set": function Script_setMatches(matches) {
+  "set": function Script_setMatches(aMatches) {
     let matches_MatchPattern = [];
 
-    for (let i = 0, iLen = matches.length; i < iLen; i++) {
-      let match = matches[i];
+    for (let i = 0, iLen = aMatches.length; i < iLen; i++) {
+      let match = aMatches[i];
       // See property "userMatches".
       /*
       if (typeof match == "object") {
@@ -350,9 +350,9 @@ Object.defineProperty(Script.prototype, "matches", {
             e.fileName, e.lineNumber);
       }
     }
-    matches = matches_MatchPattern;
+    aMatches = matches_MatchPattern;
 
-    this._matches = matches.concat();
+    this._matches = aMatches.concat();
   },
   "configurable": true,
   "enumerable": true,
@@ -449,8 +449,8 @@ Object.defineProperty(Script.prototype, "updateURL", {
   "get": function Script_getUpdateURL() {
     return this._updateURL || this.downloadURL;
   },
-  "set": function Script_setUpdateURL(url) {
-    this._updateURL = "" + url;
+  "set": function Script_setUpdateURL(aUrl) {
+    this._updateURL = "" + aUrl;
   },
   "configurable": true,
   "enumerable": true,
@@ -460,8 +460,8 @@ Object.defineProperty(Script.prototype, "userExcludes", {
   "get": function Script_getUserExcludes() {
     return this._userExcludes.concat();
   },
-  "set": function Script_setUserExcludes(excludes) {
-    this._userExcludes = excludes.concat();
+  "set": function Script_setUserExcludes(aExcludes) {
+    this._userExcludes = aExcludes.concat();
   },
   "configurable": true,
   "enumerable": true,
@@ -471,8 +471,8 @@ Object.defineProperty(Script.prototype, "userIncludes", {
   "get": function Script_getUserIncludes() {
     return this._userIncludes.concat();
   },
-  "set": function Script_setUserIncludes(includes) {
-    this._userIncludes = includes.concat();
+  "set": function Script_setUserIncludes(aIncludes) {
+    this._userIncludes = aIncludes.concat();
   },
   "configurable": true,
   "enumerable": true,
@@ -482,11 +482,11 @@ Object.defineProperty(Script.prototype, "userMatches", {
   "get": function Script_getUserMatches() {
     return this._userMatches.concat();
   },
-  "set": function Script_setUserMatches(matches) {
+  "set": function Script_setUserMatches(aMatches) {
     let matches_MatchPattern = [];
 
-    for (let i = 0, iLen = matches.length; i < iLen; i++) {
-      let match = matches[i];
+    for (let i = 0, iLen = aMatches.length; i < iLen; i++) {
+      let match = aMatches[i];
       // A needed fix for script update (if contains userMatches).
       // See #2455.
       if (typeof match == "object") {
@@ -503,9 +503,9 @@ Object.defineProperty(Script.prototype, "userMatches", {
             e.fileName, e.lineNumber);
       }
     }
-    matches = matches_MatchPattern;
+    aMatches = matches_MatchPattern;
 
-    this._userMatches = matches.concat();
+    this._userMatches = aMatches.concat();
   },
   "configurable": true,
   "enumerable": true,

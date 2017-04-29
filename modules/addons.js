@@ -151,7 +151,7 @@ ScriptAddon.prototype.scope = AddonManager.SCOPE_PROFILE;
 ScriptAddon.prototype.type = GM_CONSTANTS.scriptAddonType;
 ScriptAddon.prototype.version = null;
 
-// Optional attributes
+// Optional attributes.
 ScriptAddon.prototype.description = null;
 
 // Private and custom attributes.
@@ -213,16 +213,16 @@ Object.defineProperty(ScriptAddon.prototype, "userDisabled", {
   "get": function ScriptAddon_getUserDisabled() {
     return !this._script.enabled;
   },
-  "set": function ScriptAddon_setUserDisabled(val) {
-    if (val == this.userDisabled) {
-      return val;
+  "set": function ScriptAddon_setUserDisabled(aVal) {
+    if (aVal == this.userDisabled) {
+      return aVal;
     }
 
     AddonManagerPrivate.callAddonListeners(
-        val ? "onEnabling" : "onDisabling", this, false);
-    this._script.enabled = !val;
+        aVal ? "onEnabling" : "onDisabling", this, false);
+    this._script.enabled = !aVal;
     AddonManagerPrivate.callAddonListeners(
-        val ? "onEnabled" : "onDisabled", this);
+        aVal ? "onEnabled" : "onDisabled", this);
   },
   "configurable": true,
   "enumerable": true,
