@@ -58,16 +58,16 @@ function GM_ScriptStorageFront(
   this._wrappedContentWin = aWrappedContentWin;
 }
 
-Object.defineProperty(GM_ScriptStorageFront.prototype, "dbFile", {
-  "get": function GM_ScriptStorageFront_getDbFile() {
-    throw new Error(MESSAGE_ERROR_PREFIX + "Has no DB file.");
+Object.defineProperty(GM_ScriptStorageFront.prototype, "db", {
+  "get": function GM_ScriptStorageFront_getDb() {
+    throw new Error(MESSAGE_ERROR_PREFIX + "Has no DB connection.");
   },
   "enumerable": true,
 });
 
-Object.defineProperty(GM_ScriptStorageFront.prototype, "db", {
-  "get": function GM_ScriptStorageFront_getDb() {
-    throw new Error(MESSAGE_ERROR_PREFIX + "Has no DB connection.");
+Object.defineProperty(GM_ScriptStorageFront.prototype, "dbFile", {
+  "get": function GM_ScriptStorageFront_getDbFile() {
+    throw new Error(MESSAGE_ERROR_PREFIX + "Has no DB file.");
   },
   "enumerable": true,
 });
@@ -79,7 +79,7 @@ GM_ScriptStorageFront.prototype.close = function () {
 };
 
 GM_ScriptStorageFront.prototype.setValue = function (aName, aVal) {
-  if (2 !== arguments.length) {
+  if (arguments.length !== 2) {
     throw new this._wrappedContentWin.Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)

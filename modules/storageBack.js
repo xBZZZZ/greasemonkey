@@ -31,16 +31,6 @@ function GM_ScriptStorageBack(aScript) {
   this._script = aScript;
 }
 
-Object.defineProperty(GM_ScriptStorageBack.prototype, "dbFile", {
-  "get": function GM_ScriptStorageBack_getDbFile() {
-    let file = GM_util.scriptDir();
-    file.append(this._script.baseDirName + GM_CONSTANTS.fileScriptDBExtension);
-
-    return file;
-  },
-  "enumerable": true,
-});
-
 Object.defineProperty(GM_ScriptStorageBack.prototype, "db", {
   "get": function GM_ScriptStorageBack_getDb() {
     if (null == this._db) {
@@ -70,12 +60,22 @@ Object.defineProperty(GM_ScriptStorageBack.prototype, "db", {
   "enumerable": true,
 });
 
+Object.defineProperty(GM_ScriptStorageBack.prototype, "dbFile", {
+  "get": function GM_ScriptStorageBack_getDbFile() {
+    let file = GM_util.scriptDir();
+    file.append(this._script.baseDirName + GM_CONSTANTS.fileScriptDBExtension);
+
+    return file;
+  },
+  "enumerable": true,
+});
+
 GM_ScriptStorageBack.prototype.close = function () {
   this._db.close();
 };
 
 GM_ScriptStorageBack.prototype.setValue = function (aName, aVal) {
-  if (2 !== arguments.length) {
+  if (arguments.length !== 2) {
     throw new Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)

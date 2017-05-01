@@ -218,24 +218,24 @@ service.prototype.getStoreByScriptId = function (aScriptId) {
   return this.scriptValStores[aScriptId];
 };
 
-var remoteCacheTracker = new Set();
+var gRemoteCacheTracker = new Set();
 
 service.prototype.remoteCached = function (aKey) {
-  if (remoteCacheTracker.size > CACHE_SIZE) {
+  if (gRemoteCacheTracker.size > CACHE_SIZE) {
     Services.ppmm.broadcastAsyncMessage("greasemonkey:value-invalidate", {
-      "keys": Array.from(remoteCacheTracker),
+      "keys": Array.from(gRemoteCacheTracker),
     });
-    remoteCacheTracker.clear();
+    gRemoteCacheTracker.clear();
   }
-  remoteCacheTracker.add(aKey);
+  gRemoteCacheTracker.add(aKey);
 };
 
 service.prototype.invalidateRemoteValueCaches = function (aKey) {
-  if (!remoteCacheTracker.has(aKey)) {
+  if (!gRemoteCacheTracker.has(aKey)) {
     return undefined;
   }
 
-  remoteCacheTracker["delete"](aKey);
+  gRemoteCacheTracker["delete"](aKey);
   Services.ppmm.broadcastAsyncMessage("greasemonkey:value-invalidate", {
     "keys": [aKey],
   });
