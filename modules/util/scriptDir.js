@@ -24,7 +24,7 @@ if (!gDirectoryScript.exists()) {
       DIRECTORY_TYPE,
       GM_CONSTANTS.directoryMask);
 }
-// In case of symlinks.
+// e.g. in case of symlinks.
 gDirectoryScript.normalize();
 
 function scriptDir() {

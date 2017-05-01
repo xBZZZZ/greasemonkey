@@ -45,8 +45,8 @@ const TLD_REGEXP = /^([^:]+:\/\/[^\/]+)\.tld(\/.*)?$/;
 // Exposed outer method takes regex as string, and handles the magic TLD.
 // (Can't memoize a URI object, yet we want to do URL->URI outside this method,
 // once for efficiency. Compromise: memoize just the internal string handling.)
-function GM_convert2RegExp(pattern, uri, forceGlob) {
-  let reStr = GM_convert2RegExpInner(pattern, forceGlob);
+function GM_convert2RegExp(aPattern, aUri, aForceGlob) {
+  let reStr = GM_convert2RegExpInner(aPattern, aForceGlob);
 
   // Inner returns a RegExp, not str, for input regex (not glob) patterns.
   // Use those directly without magic TLD modifications.
@@ -54,12 +54,12 @@ function GM_convert2RegExp(pattern, uri, forceGlob) {
     return reStr;
   }
 
-  if (uri && reStr.match(TLD_REGEXP)) {
+  if (aUri && reStr.match(TLD_REGEXP)) {
     let tld = null;
     try {
       tld = Cc["@mozilla.org/network/effective-tld-service;1"]
           .getService(Ci.nsIEffectiveTLDService)
-          .getPublicSuffix(uri);
+          .getPublicSuffix(aUri);
     } catch (e) {
       // There are expected failure modes, i.e. bare hostname
       // - like http://localhost/ - has no TLD.

@@ -67,11 +67,11 @@ const PARTS_REGEXP = new RegExp("^([a-z*]+)://([^/]+)(?:(/.*))$", "");
 
 // For the format of "pattern".
 // http://code.google.com/chrome/extensions/match_patterns.html
-function MatchPattern(pattern) {
-  this._pattern = pattern;
+function MatchPattern(aPattern) {
+  this._pattern = aPattern;
 
   // Special case "<all_urls>".
-  if (pattern == "<all_urls>") {
+  if (aPattern == "<all_urls>") {
     this._all = true;
     this._scheme = "all_urls";
     return undefined;
@@ -79,16 +79,16 @@ function MatchPattern(pattern) {
     this._all = false;
   }
 
-  let match = pattern.match(PARTS_REGEXP);
+  let match = aPattern.match(PARTS_REGEXP);
   // We allow the host to be empty for file URLs.
   // if (!match || ((match[1] != "file") && (match[2] == ""))) {
   if (!match) {
-    pattern = "[" + (typeof pattern) + "] " + pattern;
+    aPattern = "[" + (typeof aPattern) + "] " + aPattern;
     throw new Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
             .GetStringFromName("error.matchPattern.parse")
-            .replace("%1", pattern));
+            .replace("%1", aPattern));
   }
   let scheme = match[1];
   this._scheme = scheme;
@@ -147,8 +147,8 @@ Object.defineProperty(MatchPattern.prototype, "pattern", {
   "enumerable": true,
 });
 
-MatchPattern.prototype.doMatch = function (uriSpec) {
-  let matchURI = GM_util.getUriFromUrl(uriSpec);
+MatchPattern.prototype.doMatch = function (aUriSpec) {
+  let matchURI = GM_util.getUriFromUrl(aUriSpec);
 
   if (SCHEMES_VALID.indexOf(matchURI.scheme) == -1) {
     return false;

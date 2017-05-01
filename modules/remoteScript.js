@@ -295,8 +295,8 @@ DownloadListener.prototype = {
   "onStatus": function (aRequest, aContext, aStatus, aStatusArg) {},
 
   // nsIInterfaceRequestor.
-  "getInterface": function (aIID) {
-    return this.QueryInterface(aIID);
+  "getInterface": function (aIiD) {
+    return this.QueryInterface(aIiD);
   },
 
   // nsISupports.

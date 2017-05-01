@@ -38,13 +38,13 @@ Services.cpmm.addMessageListener("greasemonkey:value-invalidate",
       data.keys.forEach(invalidateCache);
     });
 
-function invalidateCache(key) {
-  cache["delete"](key);
-  cacheHitCounter["delete"](key);
+function invalidateCache(aKey) {
+  cache["delete"](aKey);
+  cacheHitCounter["delete"](aKey);
 }
 
-function cacheKey(script, name) {
-  return script.uuid + ":" + name;
+function cacheKey(aScript, aName) {
+  return aScript.uuid + ":" + aName;
 }
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
@@ -78,7 +78,7 @@ GM_ScriptStorageFront.prototype.close = function () {
       this._script.fileURL, null);
 };
 
-GM_ScriptStorageFront.prototype.setValue = function (name, val) {
+GM_ScriptStorageFront.prototype.setValue = function (aName, aVal) {
   if (2 !== arguments.length) {
     throw new this._wrappedContentWin.Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
@@ -87,25 +87,25 @@ GM_ScriptStorageFront.prototype.setValue = function (name, val) {
             this._script.fileURL, null);
   }
 
-  let key = cacheKey(this._script, name);
+  let key = cacheKey(this._script, aName);
 
   invalidateCache(key);
 
-  if (typeof val == "undefined") {
-    val = null;
+  if (typeof aVal == "undefined") {
+    aVal = null;
   }
   this._messageManager.sendSyncMessage(
       "greasemonkey:scriptVal-set", {
         "scriptId": this._script.id,
-        "name": name,
-        "val": val,
+        "name": aName,
+        "val": aVal,
       });
 };
 
-GM_ScriptStorageFront.prototype.getValue = function (name, defVal) {
-  var value;
+GM_ScriptStorageFront.prototype.getValue = function (aName, aDefVal) {
+  let value;
 
-  let key = cacheKey(this._script, name);
+  let key = cacheKey(this._script, aName);
 
   if (cache.has(key)) {
     value = cache.get(key);
@@ -116,7 +116,7 @@ GM_ScriptStorageFront.prototype.getValue = function (name, defVal) {
     value = this._messageManager.sendSyncMessage(
         "greasemonkey:scriptVal-get", {
           "cacheKey": key,
-          "name": name,
+          "name": aName,
           "scriptId": this._script.id,
           "willCache": intentToCache,
         });
@@ -134,7 +134,7 @@ GM_ScriptStorageFront.prototype.getValue = function (name, defVal) {
       GM_util.logError(
           MESSAGE_ERROR_PREFIX + "JSON parse error:" + "\n" + e, false,
           e.fileName, e.lineNumber);
-      return defVal;
+      return aDefVal;
     }
 
     if (intentToCache) {
@@ -149,11 +149,11 @@ GM_ScriptStorageFront.prototype.getValue = function (name, defVal) {
     cacheHitCounter.set(key, count);
   }
 
-  if (typeof defVal == "undefined") {
-    defVal = undefined;
+  if (typeof aDefVal == "undefined") {
+    aDefVal = undefined;
   }
   if ((value === undefined) || (value === null)) {
-    return defVal;
+    return aDefVal;
   }
 
   return Cu.cloneInto(value, this._sandbox, {
@@ -161,15 +161,15 @@ GM_ScriptStorageFront.prototype.getValue = function (name, defVal) {
   });
 };
 
-GM_ScriptStorageFront.prototype.deleteValue = function (name) {
-  let key = cacheKey(this._script, name);
+GM_ScriptStorageFront.prototype.deleteValue = function (aName) {
+  let key = cacheKey(this._script, aName);
 
   invalidateCache(key);
 
   this._messageManager.sendSyncMessage(
       "greasemonkey:scriptVal-delete", {
         "cacheKey": key,
-        "name": name,
+        "name": aName,
         "scriptId": this._script.id,
       });
 };

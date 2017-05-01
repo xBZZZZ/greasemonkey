@@ -135,8 +135,9 @@ function parse(aSource, aUri, aFailWhenMissing) {
         break;
 
       case "match":
+        let match;
         try {
-          let match = new MatchPattern(data.value);
+          match = new MatchPattern(data.value);
           script._matches.push(match);
         } catch (e) {
           script.parseErrors.push(
@@ -213,17 +214,17 @@ function parse(aSource, aUri, aFailWhenMissing) {
 }
 
 
-function setDefaults(script) {
-  if (!script.updateURL && script.downloadURL) {
-    script.updateURL = script.downloadURL;
+function setDefaults(aScript) {
+  if (!aScript.updateURL && aScript.downloadURL) {
+    aScript.updateURL = aScript.downloadURL;
   }
   // In case of a search and replace:
   // document-end, document-idle, document-start
-  if (!script._runAt || !script._runAt.match(
+  if (!aScript._runAt || !aScript._runAt.match(
       new RegExp("^document-(end|idle|start)$", ""))) {
-    script._runAt = "document-end";
+    aScript._runAt = "document-end";
   }
-  if ((script._includes.length == 0) && (script._matches.length == 0)) {
-    script._includes.push("*");
+  if ((aScript._includes.length == 0) && (aScript._matches.length == 0)) {
+    aScript._includes.push("*");
   }
 }

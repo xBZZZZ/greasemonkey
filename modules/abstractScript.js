@@ -30,28 +30,28 @@ Object.defineProperty(AbstractScript.prototype, "globalExcludes", {
   "configurable": true,
 });
 
-AbstractScript.prototype.matchesURL = function (url) {
-  var uri = GM_util.getUriFromUrl(url);
+AbstractScript.prototype.matchesURL = function (aUrl) {
+  var uri = GM_util.getUriFromUrl(aUrl);
 
-  function testClude(glob) {
+  function testClude(aGlob) {
     // See #1298.
     // Do not run in about:blank unless _specifically_ requested.
-    if (ABOUT_BLANK_REGEXP.test(url) && !ABOUT_BLANK_REGEXP.test(glob)) {
+    if (ABOUT_BLANK_REGEXP.test(aUrl) && !ABOUT_BLANK_REGEXP.test(aGlob)) {
       return false;
     }
 
-    return GM_convert2RegExp(glob, uri).test(url);
+    return GM_convert2RegExp(aGlob, uri).test(aUrl);
   }
   function testMatch(matchPattern) {
     if (typeof matchPattern == "string") {
       matchPattern = new MatchPattern(matchPattern);
     }
 
-    return matchPattern.doMatch(url);
+    return matchPattern.doMatch(aUrl);
   }
 
   // Flat deny if URL is not greaseable, or matches global excludes.
-  if (!GM_util.isGreasemonkeyable(url)) {
+  if (!GM_util.isGreasemonkeyable(aUrl)) {
     return false;
   }
 

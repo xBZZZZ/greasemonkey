@@ -134,18 +134,18 @@ function pauseTimer() {
   updateLabel();
 }
 
-function setUpIncludes(box, label, desc, includes) {
-  if (includes.length > 0) {
-    document.getElementById(box).style.display = "block";
-    document.getElementById(label).style.display = "block";
-    desc = document.getElementById(desc);
+function setUpIncludes(aBox, aLabel, aDesc, aIncludes) {
+  if (aIncludes.length > 0) {
+    document.getElementById(aBox).style.display = "block";
+    document.getElementById(aLabel).style.display = "block";
+    aDesc = document.getElementById(aDesc);
 
-    for (let i = 0, iLen = includes.length; i < iLen; i++) {
-      desc.appendChild(document.createTextNode(includes[i]));
-      desc.appendChild(document.createElementNS(HTML_NS, "br"));
+    for (let i = 0, iLen = aIncludes.length; i < iLen; i++) {
+      aDesc.appendChild(document.createTextNode(aIncludes[i]));
+      aDesc.appendChild(document.createElementNS(HTML_NS, "br"));
     }
 
-    desc.removeChild(desc.lastChild);
+    aDesc.removeChild(aDesc.lastChild);
   }
 }
 

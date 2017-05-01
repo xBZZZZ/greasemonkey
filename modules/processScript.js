@@ -25,22 +25,22 @@ Cu.import("chrome://greasemonkey-modules/content/installPolicy.js");
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
-function addFrame(frameMM) {
-  frameMM.addMessageListener("greasemonkey:frame-urls", urlTree);
+function addFrame(aFrameMM) {
+  aFrameMM.addMessageListener("greasemonkey:frame-urls", urlTree);
 }
 
-function urlsOfAllFrames(contentWindow) {
-  var urls = [contentWindow.location.href];
-  function collect(contentWindow) {
-    urls = urls.concat(urlsOfAllFrames(contentWindow));
+function urlsOfAllFrames(aContentWindow) {
+  var urls = [aContentWindow.location.href];
+  function collect(aContentWindow) {
+    urls = urls.concat(urlsOfAllFrames(aContentWindow));
   }
-  Array.from(contentWindow.frames).forEach(collect);
+  Array.from(aContentWindow.frames).forEach(collect);
 
   return urls;
 }
 
-function urlTree(message) {
-  let frameMM = message.target;
+function urlTree(aMessage) {
+  let frameMM = aMessage.target;
   let urls = urlsOfAllFrames(frameMM.content);
   let response = {
     "urls": urls,

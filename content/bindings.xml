@@ -39,15 +39,15 @@
       </property>
 
       <method name="_fillListbox">
-        <parameter name="pages" />
+        <parameter name="aPages" />
         <body>
-          pages = pages || this._pages;
+          aPages = aPages || this._pages;
 
           while (this._box.getRowCount()) {
             this._box.removeItemAt(0);
           }
 
-          for (let i = 0, page = null; page = pages[i]; i++) {
+          for (let i = 0, page = null; page = aPages[i]; i++) {
             this._box.insertItemAt(this._box.getRowCount(), page);
           }
 
@@ -74,44 +74,45 @@
       </method>
 
       <method name="_consolidatePage">
-        <parameter name="page" />
-        <parameter name="what" />
+        <parameter name="aPage" />
+        <parameter name="aWhat" />
         <body>
           let _result = true;
           if ((this == document.getElementById("user-matches"))
            || (this == document.getElementById("script-matches"))) {
+            let match;
             try {
-              var match = new MatchPattern(page);
-              _result = this._consolidatePageCommand(page, what);
+              match = new MatchPattern(aPage);
+              _result = this._consolidatePageCommand(aPage, aWhat);
             } catch (e) {
               alert(GM_CONSTANTS.localeStringBundle.createBundle(
                   GM_CONSTANTS.localeGreasemonkeyProperties)
                   .GetStringFromName("parse.ignoringMatch")
-                  .replace("%1", page).replace("%2", e));
+                  .replace("%1", aPage).replace("%2", e));
               _result = false;
             }
           } else {
-            _result = this._consolidatePageCommand(page, what);
+            _result = this._consolidatePageCommand(aPage, aWhat);
           }
           return _result;
         </body>
       </method>
 
       <method name="_consolidatePageCommand">
-        <parameter name="page" />
-        <parameter name="what" />
+        <parameter name="aPage" />
+        <parameter name="aWhat" />
         <body>
           let _result = true;
-          switch (what) {
+          switch (aWhat) {
             case "add":
-              this._pages.push(page);                    
+              this._pages.push(aPage);                    
               break;
             case "edit":
-              this._pages[this._box.currentIndex] = page;                    
+              this._pages[this._box.currentIndex] = aPage;                    
               break;
             default:
               Components.utils.reportError(
-                  'Bindings: Unknown command "' + what + '".');
+                  'Bindings: Unknown command "' + aWhat + '".');
               _result = false;
               break;
           }
@@ -130,10 +131,10 @@
       </method>
 
       <method name="addPage">
-        <parameter name="page" />
+        <parameter name="aPage" />
         <body>
-          if (page) {
-            let _result = this._consolidatePage(page, "add");
+          if (aPage) {
+            let _result = this._consolidatePage(aPage, "add");
             if (_result) {
               this._fillListbox();
               let _count = this._box.getRowCount();
@@ -264,9 +265,9 @@
       </method>
 
       <method name="_addUserClude">
-        <parameter name="section" />
+        <parameter name="aSection" />
         <body>
-          var methodName = "onAddUser" + section;
+          var methodName = "onAddUser" + aSection;
           this[methodName] &amp;&amp; this[methodName](
             this._pages[this._box.currentIndex]);
         </body>

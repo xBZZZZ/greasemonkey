@@ -22,7 +22,7 @@ Cu.importGlobalProperties(["XMLHttpRequest"]);
 function fileXhr(aUrl, aMimetype, aResponseType) {
   if (!aUrl.match(
       new RegExp("^file:\/\/", ""))) {
-    throw new Error("fileXhr - used for non-file URL:" + "\n"  + aUrl);
+    throw new Error("fileXhr - used for non-file URL:" + "\n" + aUrl);
   }
   let xhr = new XMLHttpRequest();
   xhr.open("open", aUrl, false);

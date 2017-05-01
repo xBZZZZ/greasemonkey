@@ -33,22 +33,22 @@ var gScope = this;
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
-function contentObserver(win) {
+function contentObserver(aWin) {
   if (!GM_util.getEnabled()) {
     return undefined;
   }
 
-  let doc = win.document;
+  let doc = aWin.document;
   let url = doc.documentURI;
   if (!GM_util.isGreasemonkeyable(url)) {
     return undefined;
   }
 
   // Listen for whichever kind of load event arrives first.
-  win.addEventListener("DOMContentLoaded", contentLoad, true);
-  win.addEventListener("load", contentLoad, true);
+  aWin.addEventListener("DOMContentLoaded", contentLoad, true);
+  aWin.addEventListener("load", contentLoad, true);
 
-  runScripts("document-start", win);
+  runScripts("document-start", aWin);
 };
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //

@@ -1,15 +1,15 @@
 const EXPORTED_SYMBOLS = ["hitch"];
 
 
-function hitch(obj, method) {
-  if (obj && method && (typeof method == "string")) {
-    if (!obj[method]) {
-      throw 'GM_util.hitch: Method "' + method
-          + '" does not exist on object:' + "\n" + obj;
+function hitch(aObj, aMethod) {
+  if (aObj && aMethod && (typeof aMethod == "string")) {
+    if (!aObj[aMethod]) {
+      throw 'GM_util.hitch: Method "' + aMethod
+          + '" does not exist on object:' + "\n" + aObj;
     }
-    method = obj[method];
-  } else if (typeof method == "function") {
-    obj = obj || {};
+    aMethod = aObj[aMethod];
+  } else if (typeof aMethod == "function") {
+    aObj = aObj || {};
   } else {
     throw "GM_util.hitch: Invalid arguments.";
   }
@@ -26,6 +26,6 @@ function hitch(obj, method) {
 
     // Invoke the original function with the correct this obj
     // and the combined list of static and dynamic arguments.
-    return method.apply(obj, args);
+    return aMethod.apply(aObj, args);
   };
 }

@@ -110,11 +110,11 @@ var InstallPolicy = {
 
 ////////////////////////////////// nsIFactory //////////////////////////////////
 
-  "createInstance": function (outer, iid) {
-    if (outer) {
+  "createInstance": function (aOuter, aIid) {
+    if (aOuter) {
       throw Cr.NS_ERROR_NO_AGGREGATION;
     }
-    return this.QueryInterface(iid);
+    return this.QueryInterface(aIid);
   },
 };
 

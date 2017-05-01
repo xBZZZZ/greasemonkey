@@ -24,8 +24,8 @@ const OBSERVER_TOPIC = OBSERVER_TOPIC_2;
 
 var callbacks = new WeakMap();
 
-function onNewDocument(topWindow, callback) {
-  callbacks.set(topWindow, callback);
+function onNewDocument(aTopWindow, aCallback) {
+  callbacks.set(aTopWindow, aCallback);
 }
 
 let contentObserver = {

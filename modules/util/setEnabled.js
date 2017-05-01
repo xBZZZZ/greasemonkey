@@ -13,6 +13,6 @@ if (typeof Cu === "undefined") {
 Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
 
 
-function setEnabled(enabled) {
-  GM_prefRoot.setValue("enabled", enabled);
+function setEnabled(aEnabled) {
+  GM_prefRoot.setValue("enabled", aEnabled);
 }

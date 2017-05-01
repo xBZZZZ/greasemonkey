@@ -17,18 +17,10 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
 function GM_loadOptions() {
-  document.getElementById("check-sync")
-      .setAttribute("label", document.getElementById("check-sync")
-      .getAttribute("label")
-      .replace(/Pale\s*Moon/i, (
-      (Services.appinfo.ID == GM_CONSTANTS.browserIDFirefox)
-          ? "Firefox"
-          : "$&")
-      ));
-  document.getElementById("disable-update")
-      .checked = GM_prefRoot.getValue("requireDisabledScriptsUpdates");
   document.getElementById("secure-update")
       .checked = GM_prefRoot.getValue("requireSecureUpdates");
+  document.getElementById("disable-update")
+      .checked = GM_prefRoot.getValue("requireDisabledScriptsUpdates");
   document.getElementById("timeout-update")
       .checked = GM_prefRoot.getValue("requireTimeoutUpdates");
   let timeoutUpdatesInSeconds = GM_prefRoot.getValue("timeoutUpdatesInSeconds");
@@ -41,6 +33,16 @@ function GM_loadOptions() {
       .value = timeoutUpdatesInSeconds;
   document.getElementById("submit-stats")
       .checked = GM_prefRoot.getValue("stats.optedIn");
+  document.getElementById("check-sync")
+      .setAttribute("label", document.getElementById("check-sync")
+      .getAttribute("label")
+      .replace(/Pale\s*Moon/i, (
+      (Services.appinfo.ID == GM_CONSTANTS.browserIDFirefox)
+          ? "Firefox"
+          : "$&")
+      ));
+  document.getElementById("check-sync")
+      .checked = GM_prefRoot.getValue("sync.enabled");
   document.getElementById("global-excludes")
       .pages = GM_util.getService().config.globalExcludes;
   document.getElementById("newScript-removeUnused")
@@ -50,18 +52,18 @@ function GM_loadOptions() {
 }
 
 function GM_saveOptions(checkbox) {
-  GM_prefRoot.setValue("sync.enabled",
-      !!document.getElementById("check-sync").checked);
-  GM_prefRoot.setValue("requireDisabledScriptsUpdates",
-      !!document.getElementById("disable-update").checked);
   GM_prefRoot.setValue("requireSecureUpdates",
       !!document.getElementById("secure-update").checked);
+  GM_prefRoot.setValue("requireDisabledScriptsUpdates",
+      !!document.getElementById("disable-update").checked);
   GM_prefRoot.setValue("requireTimeoutUpdates",
       !!document.getElementById("timeout-update").checked);
   GM_prefRoot.setValue("timeoutUpdatesInSeconds",
       parseInt(document.getElementById("timeout-update-value").value, 10));
   GM_prefRoot.setValue("stats.optedIn",
       !!document.getElementById("submit-stats").checked);
+  GM_prefRoot.setValue("sync.enabled",
+      !!document.getElementById("check-sync").checked);
   GM_util.getService().config.globalExcludes =
       document.getElementById("global-excludes").pages;
   GM_prefRoot.setValue("newScript.removeUnused",

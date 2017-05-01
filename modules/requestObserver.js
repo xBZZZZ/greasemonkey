@@ -29,21 +29,21 @@ Object.freeze(SCHEMES_DISALLOWED);
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
-function checkScriptRefresh(channel) {
+function checkScriptRefresh(aChannel) {
   // .loadInfo is part of nsiChannel -> implicit QI needed.
-  if (!(channel instanceof Ci.nsIChannel)) {
+  if (!(aChannel instanceof Ci.nsIChannel)) {
     return undefined;
   }
-  if (!channel.loadInfo) {
+  if (!aChannel.loadInfo) {
     return undefined;
   }
 
   // Firefox 44+
   // External types only.
   // http://bugzil.la/1182571
-  let type = channel.loadInfo.externalContentPolicyType
-      ? channel.loadInfo.externalContentPolicyType
-      : channel.loadInfo.contentPolicyType;
+  let type = aChannel.loadInfo.externalContentPolicyType
+      ? aChannel.loadInfo.externalContentPolicyType
+      : aChannel.loadInfo.contentPolicyType;
 
   // Only check for updated scripts when tabs/frames/iframes are loaded.
   if ((type != Ci.nsIContentPolicy.TYPE_DOCUMENT)
@@ -52,18 +52,18 @@ function checkScriptRefresh(channel) {
   }
 
   // Forward compatibility: http://bugzil.la/1124477
-  let browser = channel.loadInfo.topFrameElement;
+  let browser = aChannel.loadInfo.topFrameElement;
 
-  if (!browser && channel.notificationCallbacks) {
+  if (!browser && aChannel.notificationCallbacks) {
     // Current API: http://bugzil.la/1123008#c7
-    let loadCtx = channel.notificationCallbacks.QueryInterface(
+    let loadCtx = aChannel.notificationCallbacks.QueryInterface(
         Ci.nsIInterfaceRequestor).getInterface(Ci.nsILoadContext);
     browser = loadCtx.topFrameElement;
   }
 
-  let windowId = channel.loadInfo.innerWindowID;
+  let windowId = aChannel.loadInfo.innerWindowID;
 
-  GM_util.getService().scriptRefresh(channel.URI.spec, windowId, browser);
+  GM_util.getService().scriptRefresh(aChannel.URI.spec, windowId, browser);
 }
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //

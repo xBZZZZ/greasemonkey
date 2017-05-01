@@ -51,17 +51,17 @@ Object.defineProperty(ScriptIcon.prototype, "fileURL", {
 });
 
 
-ScriptIcon.prototype.setMetaVal = function (value) {
+ScriptIcon.prototype.setMetaVal = function (aValue) {
   // Accept data uri schemes for image mime types.
-  if (MIME_TYPE_DATA_IMAGE.test(value)) {
-    this._dataURI = value;
-  } else if (MIME_TYPE_DATA.test(value)) {
+  if (MIME_TYPE_DATA_IMAGE.test(aValue)) {
+    this._dataURI = aValue;
+  } else if (MIME_TYPE_DATA.test(aValue)) {
     throw new Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
             .GetStringFromName("error.icon.uriImageType"));
   } else {
     let resUri = GM_util.getUriFromUrl(this._script._downloadURL);
-    this._downloadURL = GM_util.getUriFromUrl(value, resUri).spec;
+    this._downloadURL = GM_util.getUriFromUrl(aValue, resUri).spec;
   }
 };

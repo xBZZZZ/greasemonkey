@@ -49,16 +49,17 @@ GM_notificationer.prototype.contentStart = function (
 
   if (aDetailsOrText) {
     if (typeof aDetailsOrText == "object") {
-      // Part 1: Waive Xrays so that we can read callback function properties...
-      aDetailsOrText = Cu.waiveXrays(aDetailsOrText);
+      // Part 1a:
+      // Waive Xrays so that we can read callback function properties...
+      // aDetailsOrText = Cu.waiveXrays(aDetailsOrText);
       _details.highlight = aDetailsOrText.highlight;
       _details.image = aDetailsOrText.image;
       _details.message = aDetailsOrText.text;
-      _details.onclick = aDetailsOrText.onclick;
-      _details.ondone = aDetailsOrText.ondone;
+      _details.onclick = Cu.waiveXrays(aDetailsOrText).onclick;
+      _details.ondone = Cu.waiveXrays(aDetailsOrText).ondone;
       _details.timeout = aDetailsOrText.timeout;
       _details.title = aDetailsOrText.title;
-    } else if ("string" == typeof aDetailsOrText) {
+    } else if (typeof aDetailsOrText == "string") {
       details.message = aDetailsOrText;
     }
   }
@@ -88,7 +89,9 @@ GM_notificationer.prototype.contentStart = function (
 
   if (aOnDoneOrTitle) {
     if (typeof aDetailsOrText == "object") {
-      details.ondone = aOnDoneOrTitle;
+      // Part 1b:
+      // Waive Xrays so that we can read callback function properties...
+      details.ondone = Cu.waiveXrays(aOnDoneOrTitle);
     } else if (typeof aOnDoneOrTitle == "string") {
       details.title = aOnDoneOrTitle;
     }

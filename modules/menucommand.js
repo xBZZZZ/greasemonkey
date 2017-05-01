@@ -116,17 +116,17 @@ function MenuCommandSandbox(
       }, true);
   // 4) Export the "register a command" API function to the sandbox scope.
   this.GM_registerMenuCommand = function (
-      commandName, commandFunc, accesskey, unused, accesskey2) {
+      aCommandName, aCommandFunc, aAccesskey, aUnused, aAccesskey2) {
     // Legacy support: if all five parameters were specified,
     // (from when two were for accelerators) use the last one as the access key.
-    if (typeof accesskey2 != "undefined") {
-      accesskey = accesskey2;
+    if (typeof aAccesskey2 != "undefined") {
+      aAccesskey = aAccesskey2;
     }
 
-    if (accesskey
-        && ((typeof accesskey != "string") || (accesskey.length != 1))) {
+    if (aAccesskey
+        && ((typeof aAccesskey != "string") || (aAccesskey.length != 1))) {
       throw new Error(
-          aMenuCommandInvalidAccesskeyErrorStr.replace("%1", commandName),
+          aMenuCommandInvalidAccesskeyErrorStr.replace("%1", aCommandName),
           aScriptFileURL, null);
     }
 
@@ -134,13 +134,13 @@ function MenuCommandSandbox(
     // Firefox 43-
     // http://bugzil.la/932517
     var command = {
-      "accesskey": accesskey,
+      "accesskey": aAccesskey,
       "cookie": ++commandCookie,
-      "name": commandName,
+      "name": aCommandName,
       "scriptName": aScriptName,
       "scriptUuid": aScriptUuid,
     };
     commands[command.cookie] = command;
-    commandFuncs[command.cookie] = commandFunc;
+    commandFuncs[command.cookie] = aCommandFunc;
   };
 };

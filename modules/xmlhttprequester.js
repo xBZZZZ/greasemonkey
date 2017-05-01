@@ -28,8 +28,8 @@ function GM_xmlhttpRequester(aWrappedContentWin, aSandbox, aFileURL, aOriginUrl)
 
 // This function gets called by user scripts in content security scope
 // to start a cross-domain xmlhttp request.
-GM_xmlhttpRequester.prototype.contentStartRequest = function (details) {
-  if (!details) {
+GM_xmlhttpRequester.prototype.contentStartRequest = function (aDetails) {
+  if (!aDetails) {
     throw new this.wrappedContentWin.Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
@@ -37,12 +37,12 @@ GM_xmlhttpRequester.prototype.contentStartRequest = function (details) {
         this.fileURL, null);
   }
 
-  var uri = null;
-  var url = null;
+  let uri = null;
+  let url = null;
 
   try {
     // Validate and parse the (possibly relative) given URL.
-    uri = GM_util.getUriFromUrl(details.url, this.originUrl);
+    uri = GM_util.getUriFromUrl(aDetails.url, this.originUrl);
     url = uri.spec;
   } catch (e) {
     // A malformed URL won't be parsed properly.
@@ -50,12 +50,13 @@ GM_xmlhttpRequester.prototype.contentStartRequest = function (details) {
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
             .GetStringFromName("error.invalidUrl")
-            .replace("%1", details.url),
+            .replace("%1", aDetails.url),
         this.fileURL, null);
   }
 
-  // This is important - without it, GM_xmlhttpRequest can be used to get
-  // access to things like files and chrome. Careful.
+  // This is important - without it, GM_xmlhttpRequest can be used
+  // to get access to things like files and chrome.
+  // Careful.
   switch (uri.scheme) {
     case "ftp":
     case "http":
@@ -63,19 +64,19 @@ GM_xmlhttpRequester.prototype.contentStartRequest = function (details) {
       var req = new XMLHttpRequest(
           // Firefox 41+
           // http://bugzil.la/1163898
-          (details.mozAnon || details.anonymous)
+          (aDetails.mozAnon || aDetails.anonymous)
           ? {
             "mozAnon": true,
           }
           : {});
-      GM_util.hitch(this, "chromeStartRequest", url, details, req)();
+      GM_util.hitch(this, "chromeStartRequest", url, aDetails, req)();
       break;
     default:
       throw new this.wrappedContentWin.Error(
           GM_CONSTANTS.localeStringBundle.createBundle(
               GM_CONSTANTS.localeGreasemonkeyProperties)
               .GetStringFromName("error.disallowedScheme")
-              .replace("%1", details.url),
+              .replace("%1", aDetails.url),
           this.fileURL, null);
   }
 
@@ -91,7 +92,7 @@ GM_xmlhttpRequester.prototype.contentStartRequest = function (details) {
     "statusText": null,
   };
 
-  if (!!details.synchronous) {
+  if (!!aDetails.synchronous) {
     rv.finalUrl = req.finalUrl;
     rv.readyState = req.readyState;
     rv.responseHeaders = req.getAllResponseHeaders();
@@ -237,7 +238,9 @@ function (safeUrl, details, req) {
         !details.synchronous, details.user || "", details.password || "");
   } catch (e) {
     throw new this.wrappedContentWin.Error(
-        "GM_xmlhttpRequest(): " + details.url + "\n" + e, this.fileURL, null);
+        "GM_xmlhttpRequest():"
+        + "\n" + details.url + "\n" + e,
+        this.fileURL, null);
   }
 
   // Pale Moon 27.2.x-
@@ -322,7 +325,9 @@ function (safeUrl, details, req) {
     }
   } catch (e) {
     throw new this.wrappedContentWin.Error(
-        "GM_xmlhttpRequest(): " + details.url + "\n" + e, this.fileURL, null);
+        "GM_xmlhttpRequest():"
+        + "\n" + details.url + "\n" + e,
+        this.fileURL, null);
   }
 };
 

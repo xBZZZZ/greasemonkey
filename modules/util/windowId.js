@@ -13,10 +13,10 @@ if (typeof Cu === "undefined") {
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
-function windowId(win, which) {
+function windowId(aWin, aWhich) {
   try {
     // Do not operate on chrome windows.
-    win.QueryInterface(Ci.nsIDOMChromeWindow);
+    aWin.QueryInterface(Ci.nsIDOMChromeWindow);
     return null;
   } catch (e) {
     // We want this to fail.
@@ -27,7 +27,7 @@ function windowId(win, which) {
   try {
     // Dunno why this is necessary, but sometimes we get non-chrome windows
     // whose locations we cannot access.
-    href = win.location.href;
+    href = aWin.location.href;
     if (!GM_util.isGreasemonkeyable(href)) {
       return null;
     }
@@ -35,14 +35,14 @@ function windowId(win, which) {
     return null;
   }
 
-  let domWindowUtils = win
+  let domWindowUtils = aWin
       .QueryInterface(Ci.nsIInterfaceRequestor)
       .getInterface(Ci.nsIDOMWindowUtils);
   let windowId;
   try {
-    if (which == "outer") {
+    if (aWhich == "outer") {
       windowId = domWindowUtils.outerWindowID;
-    } else if (!which || (which == "inner")) {
+    } else if (!aWhich || (aWhich == "inner")) {
       windowId = domWindowUtils.currentInnerWindowID;
     }
   } catch (e) {
@@ -55,8 +55,8 @@ function windowId(win, which) {
     // (Document is a property of the window, and should let us dig
     // into the "inner window" rather than always getting
     // the same "outer window", due to bfcache.)
-    GM_util.logError("Greasemonkey - windowId (" + which + ") = undefined");
-    return win.document;
+    GM_util.logError("Greasemonkey - windowId (" + aWhich + ") = undefined");
+    return aWin.document;
   }
 
   return windowId;

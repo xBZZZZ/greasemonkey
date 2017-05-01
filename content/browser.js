@@ -17,8 +17,8 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 var gGreasemonkeyVersion = "unknown";
 Cu.import("resource://gre/modules/AddonManager.jsm");
-AddonManager.getAddonByID(GM_CONSTANTS.addonGUID, function (addon) {
-  gGreasemonkeyVersion = "" + addon.version;
+AddonManager.getAddonByID(GM_CONSTANTS.addonGUID, function (aAddon) {
+  gGreasemonkeyVersion = "" + aAddon.version;
 });
 
 
@@ -93,8 +93,8 @@ GM_BrowserUI.chromeLoad = function (aEvent) {
 /**
  * Opens the specified URL in a new tab.
  */
-GM_BrowserUI.openTab = function (url) {
-  gBrowser.selectedTab = gBrowser.addTab(url);
+GM_BrowserUI.openTab = function (aUrl) {
+  gBrowser.selectedTab = gBrowser.addTab(aUrl);
 };
 
 /**
@@ -174,10 +174,10 @@ GM_BrowserUI.contextMenuShowing = function () {
   });
 };
 
-GM_BrowserUI.getUserScriptUrlUnderPointer = function (callback) {
+GM_BrowserUI.getUserScriptUrlUnderPointer = function (aCallback) {
   let culprit = gContextMenu.target || document.popupNode;
   if (!culprit) {
-    callback(null);
+    aCallback(null);
     return undefined;
   }
 
@@ -189,9 +189,9 @@ GM_BrowserUI.getUserScriptUrlUnderPointer = function (callback) {
     let href = aMessage.data.href;
     if (href && href.match(
         new RegExp(GM_CONSTANTS.fileScriptExtensionRegexp + "(\\?|$)", "i"))) {
-      callback(href);
+      aCallback(href);
     } else {
-      callback(null);
+      aCallback(null);
     }
   };
   mm.addMessageListener("greasemonkey:context-menu-end", messageHandler);
@@ -360,10 +360,10 @@ function GM_showPopup(aEvent) {
   var aEventTarget = aEvent.target;
 
   var callback = null;
-  callback = function (message) {
+  callback = function (aMessage) {
     mm.removeMessageListener("greasemonkey:frame-urls", callback);
 
-    let urls = message.data.urls;
+    let urls = aMessage.data.urls;
     asyncShowPopup(aEventTarget, urls);
   };
 
@@ -384,42 +384,42 @@ function getScripts() {
   }
   getScripts.uniq = uniq;
 
-  function scriptsMatching(urls) {
-    function testMatchURLs(script) {
-      function testMatchURL(url) {
-        return script.matchesURL(url);
+  function scriptsMatching(aUrls) {
+    function testMatchURLs(aScript) {
+      function testMatchURL(aUrl) {
+        return aScript.matchesURL(aUrl);
       }
-      return urls.some(testMatchURL);
+      return aUrls.some(testMatchURL);
     }
     return GM_util.getService().config.getMatchingScripts(testMatchURLs);
   }
   getScripts.scriptsMatching = scriptsMatching;
 
-  function appendScriptAfter(script, point, noInsert) {
-    if (script.needsUninstall) {
+  function appendScriptAfter(aScript, aPoint, aNoInsert) {
+    if (aScript.needsUninstall) {
       return undefined;
     }
     let mi = document.createElement("menuitem");
-    mi.setAttribute("label", script.localized.name);
-    if (script.noframes) {
+    mi.setAttribute("label", aScript.localized.name);
+    if (aScript.noframes) {
       mi.setAttribute("tooltiptext", "noframes");
     }
-    mi.script = script;
+    mi.script = aScript;
     mi.setAttribute("type", "checkbox");
-    mi.setAttribute("checked", script.enabled.toString());
-    if (!noInsert) {
-      point.parentNode.insertBefore(mi, point.nextSibling);
+    mi.setAttribute("checked", aScript.enabled.toString());
+    if (!aNoInsert) {
+      aPoint.parentNode.insertBefore(mi, aPoint.nextSibling);
     }
     return {
       "menuItem": mi,
-      "noframes": script.noframes,
+      "noframes": aScript.noframes,
     };
   }
   getScripts.appendScriptAfter = appendScriptAfter;
 }
 getScripts();
 
-function asyncShowPopup(aEventTarget, urls) {
+function asyncShowPopup(aEventTarget, aUrls) {
   let popup = aEventTarget;
   let scriptsFramedElm = popup
       .getElementsByClassName("scripts-framed-point")[0];
@@ -428,9 +428,9 @@ function asyncShowPopup(aEventTarget, urls) {
   let noScriptsElm = popup.getElementsByClassName("no-scripts")[0];
 
   // Remove existing menu items, between separators.
-  function removeMenuitemsAfter(el) {
+  function removeMenuitemsAfter(aEl) {
     while (true) {
-      let sibling = el.nextSibling;
+      let sibling = aEl.nextSibling;
       if (!sibling || (sibling.tagName == "menuseparator")) {
         break;
       }
@@ -440,11 +440,11 @@ function asyncShowPopup(aEventTarget, urls) {
   removeMenuitemsAfter(scriptsFramedElm);
   removeMenuitemsAfter(scriptsTopElm);
 
-  urls = getScripts.uniq(urls);
+  aUrls = getScripts.uniq(aUrls);
   // First url = top window.
-  var runsOnTop = getScripts.scriptsMatching([urls.shift()]);
+  var runsOnTop = getScripts.scriptsMatching([aUrls.shift()]);
   // Remainder are all its subframes.
-  var runsFramed = getScripts.scriptsMatching(urls);
+  var runsFramed = getScripts.scriptsMatching(aUrls);
 
   // Drop all runsFramed scripts already present in runsOnTop.
   for (let i = 0, iLen = runsOnTop.length; i < iLen; i++) {

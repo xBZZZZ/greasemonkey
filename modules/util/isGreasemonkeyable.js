@@ -15,13 +15,13 @@ Cu.import("chrome://greasemonkey-modules/content/constants.js");
 Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
 
 
-function isGreasemonkeyable(url) {
-  let scheme = GM_CONSTANTS.ioService.extractScheme(url);
+function isGreasemonkeyable(aUrl) {
+  let scheme = GM_CONSTANTS.ioService.extractScheme(aUrl);
 
   switch (scheme) {
     case "about":
       // Always allow "about:blank" and "about:reader".
-      if (new RegExp(GM_CONSTANTS.urlAboutAllRegexp, "").test(url)) {
+      if (new RegExp(GM_CONSTANTS.urlAboutAllRegexp, "").test(aUrl)) {
         return true;
       }
       // See #1375.

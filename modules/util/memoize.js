@@ -25,8 +25,8 @@ if (typeof Cu === "undefined") {
 
 const LIMIT_DEF = 3000;
 
-function memoize(func, limit) {
-  limit = limit || LIMIT_DEF;
+function memoize(aFunc, aLimit) {
+  aLimit = aLimit || LIMIT_DEF;
   var cache = Object.create(null);
   var keylist = [];
 
@@ -45,11 +45,11 @@ function memoize(func, limit) {
       return cache[key];
     }
 
-    let result = func.apply(null, arguments);
+    let result = aFunc.apply(null, arguments);
 
     cache[key] = result;
 
-    if (keylist.push(key) > limit) {
+    if (keylist.push(key) > aLimit) {
       delete cache[keylist.shift()];
     }
 

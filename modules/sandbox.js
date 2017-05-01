@@ -60,8 +60,10 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
       });
 
   // http://bugzil.la/1043958
-  // Note that because waivers aren't propagated between origins, we need the
-  // unsafeWindow getter to live in the sandbox.
+  // Note that because waivers aren't propagated between origins,
+  // we need the unsafeWindow getter to live in the sandbox.
+  // See also:
+  // toolkit/commonjs/sdk/content/sandbox.js
   var unsafeWindowGetter = new sandbox.Function (
       "return window.wrappedJSObject || window;");
   Object.defineProperty(sandbox, "unsafeWindow", {
@@ -166,7 +168,7 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
   return sandbox;
 }
 
-function injectGMInfo(aScript, sandbox, aContentWin) {
+function injectGMInfo(aScript, aSandbox, aContentWin) {
   var rawInfo = aScript.info();
   var scriptURL = aScript.fileURL;
 
@@ -175,9 +177,9 @@ function injectGMInfo(aScript, sandbox, aContentWin) {
   
   // TODO:
   // Also delay top level clone via lazy getter? XPCOMUtils.defineLazyGetter
-  sandbox.GM_info = Cu.cloneInto(rawInfo, sandbox);
+  aSandbox.GM_info = Cu.cloneInto(rawInfo, aSandbox);
 
-  var waivedInfo = Cu.waiveXrays(sandbox.GM_info);
+  var waivedInfo = Cu.waiveXrays(aSandbox.GM_info);
   var fileCache = new Map();
 
   function getScriptSource() {
@@ -202,21 +204,21 @@ function injectGMInfo(aScript, sandbox, aContentWin) {
 
   // lazy getters for heavyweight strings that aren't sent down through IPC
   Object.defineProperty(waivedInfo, "scriptSource", {
-    "get": Cu.exportFunction(getScriptSource, sandbox),
+    "get": Cu.exportFunction(getScriptSource, aSandbox),
   });
 
   // meta depends on content, so we need a lazy one here too
   Object.defineProperty(waivedInfo, "scriptMetaStr", {
-    "get": Cu.exportFunction(getMeta, sandbox),
+    "get": Cu.exportFunction(getMeta, aSandbox),
   });
 }
 
-function runScriptInSandbox(script, sandbox) {
+function runScriptInSandbox(aScript, aSandbox) {
   // Eval the code, with anonymous wrappers when/if appropriate.
-  function evalWithWrapper(url) {
+  function evalWithWrapper(aUrl) {
     try {
       GM_CONSTANTS.jsSubScriptLoader.loadSubScript(
-          url, sandbox, GM_CONSTANTS.fileScriptCharset);
+          aUrl, aSandbox, GM_CONSTANTS.fileScriptCharset);
     } catch (e) {
       // js/src/js.msg: JSMSG_BAD_RETURN_OR_YIELD
       if (e.message == "return not in function") {
@@ -231,10 +233,10 @@ function runScriptInSandbox(script, sandbox) {
             e.fileName,
             e.lineNumber);
 
-        let code = GM_util.fileXhr(url, "application/javascript");
+        let code = GM_util.fileXhr(aUrl, "application/javascript");
         Cu.evalInSandbox(
             "(function () { " + code + "\n})()",
-            sandbox, JAVASCRIPT_VERSION_MAX, url, 1);
+            aSandbox, JAVASCRIPT_VERSION_MAX, aUrl, 1);
       } else {
         // Otherwise raise.
         throw e;
@@ -243,9 +245,9 @@ function runScriptInSandbox(script, sandbox) {
   }
 
   // Eval the code, with a try/catch to report errors cleanly.
-  function evalWithCatch(url) {
+  function evalWithCatch(aUrl) {
     try {
-      evalWithWrapper(url);
+      evalWithWrapper(aUrl);
     } catch (e) {
       // Log it properly.
       GM_util.logError(e, false, e.fileName, e.lineNumber);
@@ -255,11 +257,11 @@ function runScriptInSandbox(script, sandbox) {
     return true;
   }
 
-  for (let i = 0, iLen = script.requires.length; i < iLen; i++) {
-    let require = script.requires[i];
+  for (let i = 0, iLen = aScript.requires.length; i < iLen; i++) {
+    let require = aScript.requires[i];
     if (!evalWithCatch(require.fileURL)) {
       return undefined;
     }
   }
-  evalWithCatch(script.fileURL);
+  evalWithCatch(aScript.fileURL);
 }

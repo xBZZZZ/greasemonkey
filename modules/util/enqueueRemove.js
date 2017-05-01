@@ -82,6 +82,10 @@ function removePath(aPath, aRecursive, aDoEnqueueFailure) {
 
   if (dirOrFile.exists()) {
     if (dirOrFile.isDirectory() && aRecursive) {
+      // Does not support symlinks.
+      // See also:
+      // nsIFile.normalize()
+      // #2502
       /*
       if (!DIRECTORY_TEMP.contains(dirOrFile)
           && !gDirectoryScript.contains(dirOrFile)) {

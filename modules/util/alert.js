@@ -14,8 +14,8 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
 // Because alert is not defined in component/module scope.
-function alert(msg) {
+function alert(aMsg) {
   Cc["@mozilla.org/embedcomp/prompt-service;1"]
       .getService(Ci.nsIPromptService)
-      .alert(null, "Greasemonkey alert", msg);
+      .alert(null, "Greasemonkey alert", aMsg);
 }

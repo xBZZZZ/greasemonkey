@@ -49,8 +49,8 @@ GM_util.timeout(
 
 var gGreasemonkeyVersion = "unknown";
 Cu.import("resource://gre/modules/AddonManager.jsm");
-AddonManager.getAddonByID(GM_CONSTANTS.addonGUID, function (addon) {
-  gGreasemonkeyVersion = "" + addon.version;
+AddonManager.getAddonByID(GM_CONSTANTS.addonGUID, function (aAddon) {
+  gGreasemonkeyVersion = "" + aAddon.version;
 });
 
 function check() {
@@ -121,13 +121,13 @@ function submit() {
   req.send(stats);
 }
 
-function submitOnload(req) {
-  if (!req.responseText) {
+function submitOnload(aReq) {
+  if (!aReq.responseText) {
     return undefined;
   }
   let response;
   try {
-    response = JSON.parse(req.responseText);
+    response = JSON.parse(aReq.responseText);
     if (response.interval) {
       gPrefMan.setValue("stats.interval", response.interval);
     }

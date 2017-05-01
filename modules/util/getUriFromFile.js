@@ -13,6 +13,6 @@ if (typeof Cu === "undefined") {
 Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
 
-function getUriFromFile(file) {
-  return GM_CONSTANTS.ioService.newFileURI(file);
+function getUriFromFile(aFile) {
+  return GM_CONSTANTS.ioService.newFileURI(aFile);
 }

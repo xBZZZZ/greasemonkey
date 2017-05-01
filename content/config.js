@@ -35,38 +35,38 @@ Config.prototype.initialize = function () {
   this._load();
 };
 
-Config.prototype.addObserver = function (observer, script) {
-  let observers = script ? script._observers : this._observers;
-  observers.push(observer);
+Config.prototype.addObserver = function (aObserver, aScript) {
+  let observers = aScript ? aScript._observers : this._observers;
+  observers.push(aObserver);
 };
 
-Config.prototype.removeObserver = function (observer, script) {
-  let observers = script ? script._observers : this._observers;
-  let index = observers.indexOf(observer);
+Config.prototype.removeObserver = function (aObserver, aScript) {
+  let observers = aScript ? aScript._observers : this._observers;
+  let index = observers.indexOf(aObserver);
   if (index == -1) {
     throw new Error("Config: Observer not found.");
   }
   observers.splice(index, 1);
 },
 
-Config.prototype._notifyObservers = function (script, event, data) {
-  let observers = this._observers.concat(script._observers);
+Config.prototype._notifyObservers = function (aScript, aEvent, aData) {
+  let observers = this._observers.concat(aScript._observers);
   for (let i = 0, iLen = observers.length; i < iLen; i++) {
     let observer = observers[i];
-    observer.notifyEvent(script, event, data);
+    observer.notifyEvent(aScript, aEvent, aData);
   }
 };
 
-Config.prototype._changed = function (script, event, data, dontSave) {
-  if (!dontSave) {
+Config.prototype._changed = function (aScript, aEvent, aData, aDontSave) {
+  if (!aDontSave) {
     this._save();
   }
 
-  this._notifyObservers(script, event, data);
+  this._notifyObservers(aScript, aEvent, aData);
 };
 
-Config.prototype.installIsUpdate = function (script) {
-  return this._find(script) > -1;
+Config.prototype.installIsUpdate = function (aScript) {
+  return this._find(aScript) > -1;
 };
 
 Config.prototype._find = function (aScript) {
@@ -95,8 +95,9 @@ Config.prototype._load = function () {
 
   this._scripts = [];
   for (let i = 0, node = null; node = nodes.snapshotItem(i); i++) {
+    let script;
     try {
-      var script = new Script(node);
+      script = new Script(node);
     } catch (e) {
       // If parsing the script node failed, fail gracefully by skipping it.
       GM_util.logError(e, false, e.fileName, e.lineNumber);
@@ -115,10 +116,10 @@ Config.prototype._load = function () {
   }
 };
 
-Config.prototype._save = function (saveNow) {
+Config.prototype._save = function (aSaveNow) {
   // If we have not explicitly been told to save now, then defer execution
   // via a timer, to avoid locking up the UI.
-  if (!saveNow) {
+  if (!aSaveNow) {
     // Reduce work in the case of many changes near to each other in time.
     if (this._saveTimer) {
       this._saveTimer.cancel(this._saveTimer);
@@ -156,49 +157,50 @@ Config.prototype._save = function (saveNow) {
   GM_util.writeToFile(domSerializer.serializeToString(doc), this._configFile);
 };
 
-Config.prototype.install = function (script, oldScript, tempDir) {
-  let existingIndex = this._find(oldScript || script);
-  if (!oldScript && (existingIndex > -1)) {
-    oldScript = this.scripts[existingIndex];
+Config.prototype.install = function (
+    aScript, aOldScript, aTempDir /* ignore */) {
+  let existingIndex = this._find(aOldScript || aScript);
+  if (!aOldScript && (existingIndex > -1)) {
+    aOldScript = this.scripts[existingIndex];
   }
 
-  if (oldScript) {
+  if (aOldScript) {
     // Save the old script's state.
-    script._enabled = oldScript.enabled;
-    script.checkRemoteUpdates = oldScript.checkRemoteUpdates;
-    script.userExcludes = oldScript.userExcludes;
-    script.userMatches = oldScript.userMatches;
-    script.userIncludes = oldScript.userIncludes;
+    aScript._enabled = aOldScript.enabled;
+    aScript.checkRemoteUpdates = aOldScript.checkRemoteUpdates;
+    aScript.userExcludes = aOldScript.userExcludes;
+    aScript.userMatches = aOldScript.userMatches;
+    aScript.userIncludes = aOldScript.userIncludes;
 
     // Uninstall the old script.
-    this.uninstall(oldScript, true);
+    this.uninstall(aOldScript, true);
   }
 
-  script._dependhash = GM_util.hash(script._rawMeta);
-  script._installTime = new Date().getTime();
+  aScript._dependhash = GM_util.hash(aScript._rawMeta);
+  aScript._installTime = new Date().getTime();
 
-  this._scripts.push(script);
+  this._scripts.push(aScript);
 
   if (existingIndex > -1) {
-    this.move(script, existingIndex - this._scripts.length + 1);
+    this.move(aScript, existingIndex - this._scripts.length + 1);
   }
 
-  if (oldScript) {
-    this._changed(script, "modified", oldScript.id);
+  if (aOldScript) {
+    this._changed(aScript, "modified", aOldScript.id);
   } else {
-    this._changed(script, "install", existingIndex);
+    this._changed(aScript, "install", existingIndex);
   }
 };
 
-Config.prototype.uninstall = function (script, forUpdate) {
-  if (typeof forUpdate == "undefined") {
-    forUpdate = false;
+Config.prototype.uninstall = function (aScript, aForUpdate) {
+  if (typeof aForUpdate == "undefined") {
+    aForUpdate = false;
   }
 
-  let idx = this._find(script);
+  let idx = this._find(aScript);
   if (idx > -1) {
     this._scripts.splice(idx, 1);
-    script.uninstall(forUpdate);
+    aScript.uninstall(aForUpdate);
   }
 };
 
@@ -211,8 +213,8 @@ Config.prototype.uninstall = function (script, forUpdate) {
  *                    moved by, or (b) another installed script to which
  *                    position the script will be moved.
  */
-Config.prototype.move = function (script, destination) {
-  let from = this._scripts.indexOf(script);
+Config.prototype.move = function (aScript, aDestination) {
+  let from = this._scripts.indexOf(aScript);
   let to = -1;
 
   // Make sure the user script is installed.
@@ -220,14 +222,14 @@ Config.prototype.move = function (script, destination) {
     return undefined;
   }
 
-  if (typeof destination == "number") {
+  if (typeof aDestination == "number") {
     // If destination is an offset.
-    to = from + destination;
+    to = from + aDestination;
     to = Math.max(0, to);
     to = Math.min(this._scripts.length - 1, to);
   } else {
     // If destination is a script object.
-    to = this._scripts.indexOf(destination);
+    to = this._scripts.indexOf(aDestination);
   }
 
   if (to == -1) {
@@ -236,7 +238,7 @@ Config.prototype.move = function (script, destination) {
 
   let tmp = this._scripts.splice(from, 1)[0];
   this._scripts.splice(to, 0, tmp);
-  this._changed(script, "move", to);
+  this._changed(aScript, "move", to);
 },
 
 Object.defineProperty(Config.prototype, "globalExcludes", {
@@ -258,8 +260,8 @@ Object.defineProperty(Config.prototype, "scripts", {
   "enumerable": true,
 });
 
-Config.prototype.getMatchingScripts = function (testFunc) {
-  return this._scripts.filter(testFunc);
+Config.prototype.getMatchingScripts = function (aTestFunc) {
+  return this._scripts.filter(aTestFunc);
 };
 
 Config.prototype.updateModifiedScripts = function (
@@ -331,10 +333,10 @@ Config.prototype.updateModifiedScripts = function (
   this._save();
 };
 
-Config.prototype.getScriptById = function (scriptId) {
+Config.prototype.getScriptById = function (aScriptId) {
   for (let i = 0, iLen = this.scripts.length; i < iLen ; i++) {
     let script = this.scripts[i];
-    if (scriptId == script.id) {
+    if (aScriptId == script.id) {
       return script;
     }
   }

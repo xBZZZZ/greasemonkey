@@ -11,7 +11,7 @@ if (typeof Cu === "undefined") {
 }
 
 
-function logError(e, warning, fileName, lineNumber) {
+function logError(e, aWarning, aFileName, aLineNumber) {
   if (typeof e == "string") {
     e = new Error(e);
   }
@@ -22,8 +22,8 @@ function logError(e, warning, fileName, lineNumber) {
   // on which the error happened.
   // We don't know it. (Directly...)
   consoleError.init(
-      e.message, fileName, null, lineNumber, e.columnNumber,
-      (warning ? 1 : 0), null);
+      e.message, aFileName, null, aLineNumber, e.columnNumber,
+      (aWarning ? 1 : 0), null);
 
   Cc["@mozilla.org/consoleservice;1"].getService(Ci.nsIConsoleService)
       .logMessage(consoleError);

@@ -21,12 +21,12 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
-function GM_addStyle(doc, css) {
-  let head = doc.getElementsByTagName("head")[0];
+function GM_addStyle(aDoc, aCss) {
+  let head = aDoc.getElementsByTagName("head")[0];
   if (head) {
-    let style = doc.createElement("style");
+    let style = aDoc.createElement("style");
 
-    style.textContent = css;
+    style.textContent = aCss;
     style.type = "text/css";
     head.appendChild(style);
 
@@ -38,7 +38,7 @@ function GM_addStyle(doc, css) {
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
-function GM_console(script) {
+function GM_console(aScript) {
   // based on http://www.getfirebug.com/firebug/firebugx.js
   let names = [
     "debug", "warn", "error", "info", "assert", "dir", "dirxml",
@@ -53,7 +53,7 @@ function GM_console(script) {
 
   // Important to use this private variable so that user scripts
   // can't make this call something else by redefining <this> or <logger>.
-  var logger = new GM_ScriptLogger(script);
+  var logger = new GM_ScriptLogger(aScript);
   this.log = function () {
     logger.log(
       Array.prototype.slice.apply(arguments).join("\n")
@@ -65,8 +65,8 @@ GM_console.prototype.log = function () {};
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
-function GM_Resources(script) {
-  this.script = script;
+function GM_Resources(aScript) {
+  this.script = aScript;
 }
 
 GM_Resources.prototype.getResourceText = function (
@@ -111,22 +111,22 @@ GM_Resources.prototype._getDep = function (wrappedContentWin, fileURL, name) {
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
-function GM_ScriptLogger(script) {
-  let namespace = script.namespace;
+function GM_ScriptLogger(aScript) {
+  let namespace = aScript.namespace;
 
   if (namespace.substring(namespace.length - 1) != "/") {
     namespace += "/";
   }
 
-  this.prefix = [namespace, script.name, ": "].join("");
+  this.prefix = [namespace, aScript.name, ": "].join("");
 }
 
 GM_ScriptLogger.prototype.consoleService = Cc["@mozilla.org/consoleservice;1"]
     .getService(Ci.nsIConsoleService);
 
-GM_ScriptLogger.prototype.log = function (message) {
+GM_ScriptLogger.prototype.log = function (aMessage) {
   // https://developer.mozilla.org/en-US/docs/XPCOM_Interface_Reference/nsIConsoleService#logStringMessage()
   // - wstring / wide string
-  this.consoleService.logStringMessage((this.prefix + "\n" + message)
+  this.consoleService.logStringMessage((this.prefix + "\n" + aMessage)
       .replace(new RegExp("\\0", "g"), ""));
 };

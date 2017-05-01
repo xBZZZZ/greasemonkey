@@ -38,30 +38,30 @@ Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
-function openInEditor(script) {
+function openInEditor(aScript) {
   let editor = GM_util.getEditor();
   if (!editor) {
     // Without DevTools.
     try {
       ScratchpadManager.openScratchpad({
-        "filename": script.file.path,
-        "text": script.textContent,
+        "filename": aScript.file.path,
+        "text": aScript.textContent,
         "saved": true,
       });
     } catch (e) {
       if (GM_util.setEditor(0)) {
-        openInEditor(script);
+        openInEditor(aScript);
       }
     }
     return undefined;
   }
 
   try {
-    let args = [script.file.path];
+    let args = [aScript.file.path];
 
     // For the Mac, wrap with a call to "open".
     if (GM_CONSTANTS.xulRuntime.OS == "Darwin") {
-      args = ["-a", editor.path, script.file.path];
+      args = ["-a", editor.path, aScript.file.path];
       editor = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsIFile);
       editor.followLinks = true;
       editor.initWithPath("/usr/bin/open");

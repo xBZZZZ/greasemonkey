@@ -18,8 +18,8 @@ Cu.import("chrome://greasemonkey-modules/content/abstractScript.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
-function IPCScript(aScript, addonVersion) {
-  this.addonVersion = addonVersion;
+function IPCScript(aScript, aAddonVersion) {
+  this.addonVersion = aAddonVersion;
   this.author = aScript.author || "";
   this.copyright = aScript.copyright || null;
   this.description = aScript.description;
@@ -80,10 +80,10 @@ IPCScript.prototype = Object.create(AbstractScript.prototype, {
   },
 });
 
-IPCScript.scriptsForUrl = function (url, when, windowId) {
-  let result = scripts.filter(function (script) {
+IPCScript.scriptsForUrl = function (aUrl, aWhen, aWindowId /* ignore */) {
+  let result = gScripts.filter(function (script) {
     try {
-      return GM_util.scriptMatchesUrlAndRuns(script, url, when);
+      return GM_util.scriptMatchesUrlAndRuns(script, aUrl, aWhen);
     } catch (e) {
       // See #1692.
       // Prevent failures like that from being so severe.
@@ -132,13 +132,13 @@ IPCScript.prototype.info = function () {
   };
 };
 
-var scripts = [];
+var gScripts = [];
 
-function objectToScript(obj) {
+function objectToScript(aObj) {
   var script = Object.create(IPCScript.prototype);
 
-  Object.keys(obj).forEach(function (k) {
-    script[k] = obj[k];
+  Object.keys(aObj).forEach(function (k) {
+    script[k] = aObj[k];
   });
 
   Object.freeze(script);
@@ -146,22 +146,22 @@ function objectToScript(obj) {
   return script;
 }
 
-IPCScript.getByUuid = function (id) {
-  return scripts.find(function (e) {
-    return e.uuid == id;
+IPCScript.getByUuid = function (aId) {
+  return gScripts.find(function (e) {
+    return e.uuid == aId;
   });
 }
 
-function updateData(data) {
-  if (!data) {
+function updateData(aData) {
+  if (!aData) {
     return undefined;
   }
-  var newScripts = data.scripts.map(objectToScript);
+  let newScripts = aData.scripts.map(objectToScript);
   Object.freeze(newScripts);
-  scripts = newScripts;
+  gScripts = newScripts;
   Object.defineProperty(IPCScript.prototype, "globalExcludes", {
     "get": function IPCScript_getGlobalExcludes() {
-      return data.globalExcludes;
+      return aData.globalExcludes;
     },
     "configurable": true,
     "enumerable": true,

@@ -26,9 +26,9 @@ const MESSAGE_ERROR_PREFIX = "Script storage back end: ";
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
-function GM_ScriptStorageBack(script) {
+function GM_ScriptStorageBack(aScript) {
   this._db = null;
-  this._script = script;
+  this._script = aScript;
 }
 
 Object.defineProperty(GM_ScriptStorageBack.prototype, "dbFile", {
@@ -74,7 +74,7 @@ GM_ScriptStorageBack.prototype.close = function () {
   this._db.close();
 };
 
-GM_ScriptStorageBack.prototype.setValue = function (name, val) {
+GM_ScriptStorageBack.prototype.setValue = function (aName, aVal) {
   if (2 !== arguments.length) {
     throw new Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
@@ -82,25 +82,25 @@ GM_ScriptStorageBack.prototype.setValue = function (name, val) {
             .GetStringFromName("error.args.setValue"));
   }
 
-  var stmt = this.db.createStatement(
+  let stmt = this.db.createStatement(
       "INSERT OR REPLACE INTO scriptvals (name, value) VALUES (:name, :value)");
   try {
-    stmt.params.name = name;
-    stmt.params.value = JSON.stringify(val);
+    stmt.params.name = aName;
+    stmt.params.value = JSON.stringify(aVal);
     stmt.execute();
   } finally {
     stmt.reset();
   }
 
-  this._script.changed("val-set", name);
+  this._script.changed("val-set", aName);
 };
 
-GM_ScriptStorageBack.prototype.getValue = function (name) {
-  var value = null;
-  var stmt = this.db.createStatement(
+GM_ScriptStorageBack.prototype.getValue = function (aName) {
+  let value = null;
+  let stmt = this.db.createStatement(
       "SELECT value FROM scriptvals WHERE name = :name");
   try {
-    stmt.params.name = name;
+    stmt.params.name = aName;
     while (stmt.step()) {
       value = stmt.row.value;
     }
@@ -115,23 +115,23 @@ GM_ScriptStorageBack.prototype.getValue = function (name) {
   return value;
 };
 
-GM_ScriptStorageBack.prototype.deleteValue = function (name) {
-  var stmt = this.db.createStatement(
+GM_ScriptStorageBack.prototype.deleteValue = function (aName) {
+  let stmt = this.db.createStatement(
       "DELETE FROM scriptvals WHERE name = :name");
   try {
-    stmt.params.name = name;
+    stmt.params.name = aName;
     stmt.execute();
   } finally {
     stmt.reset();
   }
 
-  this._script.changed("val-del", name);
+  this._script.changed("val-del", aName);
 };
 
 GM_ScriptStorageBack.prototype.listValues = function () {
-  var valueNames = [];
+  let valueNames = [];
 
-  var stmt = this.db.createStatement("SELECT name FROM scriptvals");
+  let stmt = this.db.createStatement("SELECT name FROM scriptvals");
   try {
     while (stmt.executeStep()) {
       valueNames.push(stmt.row.name);
@@ -144,11 +144,11 @@ GM_ScriptStorageBack.prototype.listValues = function () {
 };
 
 GM_ScriptStorageBack.prototype.getStats = function () {
-  var stats = {
+  let stats = {
     "count": undefined,
     "size": undefined,
   };
-  var stmt = this.db.createStatement(
+  let stmt = this.db.createStatement(
       "SELECT COUNT(0) AS count, SUM(LENGTH(value)) AS size FROM scriptvals");
   try {
     while (stmt.step()) {

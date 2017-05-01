@@ -268,21 +268,21 @@ function init() {
   applySort();
 };
 
-function getSortBy(buttons) {
+function getSortBy(aButtons) {
   let sortBy = GM_prefRoot.getValue("sortBy", SORT_BY.valueDef);
   let sortByValue = sortBy.replace(SORT_BY.checkStateReverse, "");
   let sortByCheckStateAscending =
       !(sortBy.substring(0, 1) == SORT_BY.checkStateReverse);
 
   // Remove checkState from all buttons.
-  for (let i = 0, iLen = buttons.length; i < iLen; i++) {
-    let el = buttons[i];
+  for (let i = 0, iLen = aButtons.length; i < iLen; i++) {
+    let el = aButtons[i];
     el.removeAttribute("checkState");
   }
 
   let button = null;
-  for (let i = 0, iLen = buttons.length; i < iLen; i++) {
-    button = buttons[i];
+  for (let i = 0, iLen = aButtons.length; i < iLen; i++) {
+    button = aButtons[i];
     if (button.getAttribute("sortBy") == sortByValue) {
       button.setAttribute("checkState",
       (sortByCheckStateAscending
@@ -393,9 +393,9 @@ function selectScriptExecOrder() {
   });
 };
 
-function reorderScriptExecution(aAddon, moveBy) {
+function reorderScriptExecution(aAddon, aMoveBy) {
   selectScriptExecOrder();
-  GM_util.getService().config.move(aAddon._script, moveBy);
+  GM_util.getService().config.move(aAddon._script, aMoveBy);
   AddonManager.getAddonsByTypes(
       [GM_CONSTANTS.scriptAddonType], function (aAddons) {
     // Fix all the "executionOrder" attributes.

@@ -86,7 +86,7 @@ function doInstall() {
 }
 
 function getClipText() {
-  var clipText = "";
+  let clipText = "";
   try {
     let transferable = Cc["@mozilla.org/widget/transferable;1"]
         .createInstance(Ci.nsITransferable);
@@ -103,10 +103,10 @@ function getClipText() {
       clipText = str.data.substring(0, strLen.value / 2);
     }
   } catch (e) {
-    GM_util.logError(
-        "getClipText - Error reading clipboard:" + "\n" + e, false,
-        e.fileName, e.lineNumber);
+    dump("getClipText - Error reading clipboard (e.g. the image):"
+        + "\n" + e + "\n");
   }
+
   return clipText;
 }
 

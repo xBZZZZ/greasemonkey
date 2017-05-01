@@ -37,16 +37,16 @@ GM_MenuCommander.commandClicked = function (aCommand) {
       });
 };
 
-GM_MenuCommander.createMenuItem = function (command) {
+GM_MenuCommander.createMenuItem = function (aCommand) {
   let menuItem = document.createElement("menuitem");
-  menuItem.setAttribute("label", command.name);
-  menuItem.setAttribute("tooltiptext", command.scriptName);
+  menuItem.setAttribute("label", aCommand.name);
+  menuItem.setAttribute("tooltiptext", aCommand.scriptName);
   menuItem.addEventListener("command", function () {
-    GM_MenuCommander.commandClicked(command);
+    GM_MenuCommander.commandClicked(aCommand);
   }, false);
 
-  if (command.accesskey) {
-    menuItem.setAttribute("accesskey", command.accesskey);
+  if (aCommand.accesskey) {
+    menuItem.setAttribute("accesskey", aCommand.accesskey);
   }
 
   return menuItem;

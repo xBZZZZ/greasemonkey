@@ -31,13 +31,13 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 var gGreasemonkeyVersion = "unknown";
 Cu.import("resource://gre/modules/AddonManager.jsm");
-AddonManager.getAddonByID(GM_CONSTANTS.addonGUID, function (addon) {
-  gGreasemonkeyVersion = "" + addon.version;
+AddonManager.getAddonByID(GM_CONSTANTS.addonGUID, function (aAddon) {
+  gGreasemonkeyVersion = "" + aAddon.version;
 });
 
 // The <Script> element - attribute names (uppercase and lowercase letters):
 // Backward compatibility.
-function Script(configNode) {
+function Script(aConfigNode) {
   this._observers = [];
 
   this._author = null;
@@ -84,8 +84,8 @@ function Script(configNode) {
   this.parseErrors = [];
   this.pendingExec = [];
 
-  if (configNode) {
-    this._fromConfigNode(configNode);
+  if (aConfigNode) {
+    this._fromConfigNode(aConfigNode);
   }
 }
 
@@ -95,9 +95,9 @@ Script.prototype = Object.create(AbstractScript.prototype, {
   },
 });
 
-Script.prototype._changed = function (event, data) {
-  let dontSave = ((event == "val-del") || (event == "val-set"));
-  GM_util.getService().config._changed(this, event, data, dontSave);
+Script.prototype._changed = function (aEvent, aData) {
+  let dontSave = ((aEvent == "val-del") || (aEvent == "val-set"));
+  GM_util.getService().config._changed(this, aEvent, aData, dontSave);
 };
 
 // TODO:
@@ -121,6 +121,7 @@ Object.defineProperty(Script.prototype, "baseDirFile", {
     file.append(this._basedir);
     try {
       // Can fail if this path does not exist.
+      // i.e. in case of symlinks.
       file.normalize();
     } catch (e) {
       // No-op.
@@ -339,8 +340,9 @@ Object.defineProperty(Script.prototype, "matches", {
         match = match.pattern;
       }
       */
+      let match_MatchPattern;
       try {
-        let match_MatchPattern = new MatchPattern(match);
+        match_MatchPattern = new MatchPattern(match);
         matches_MatchPattern.push(match_MatchPattern);
       } catch (e) {
         GM_util.logError(GM_CONSTANTS.localeStringBundle.createBundle(
@@ -492,8 +494,9 @@ Object.defineProperty(Script.prototype, "userMatches", {
       if (typeof match == "object") {
         match = match.pattern;
       }
+      let match_MatchPattern;
       try {
-        let match_MatchPattern = new MatchPattern(match);
+        match_MatchPattern = new MatchPattern(match);
         matches_MatchPattern.push(match_MatchPattern);
       } catch (e) {
         GM_util.logError(GM_CONSTANTS.localeStringBundle.createBundle(
@@ -542,14 +545,14 @@ Script.prototype.fixTimestampsOnInstall = function () {
   this._installTime = this.file.lastModifiedTime;
 };
 
-Script.prototype._fromConfigNode = function (node) {
-  this._basedir = node.getAttribute("basedir") || ".";
-  this._filename = node.getAttribute("filename");
-  this.author = node.getAttribute("author") || null;
-  this.copyright = node.getAttribute("copyright") || null;
-  this.downloadURL = node.getAttribute("installurl") || null;
-  this.homepageURL = node.getAttribute("homepageurl") || null;
-  this.updateURL = node.getAttribute("updateurl") || null;
+Script.prototype._fromConfigNode = function (aNode) {
+  this._basedir = aNode.getAttribute("basedir") || ".";
+  this._filename = aNode.getAttribute("filename");
+  this.author = aNode.getAttribute("author") || null;
+  this.copyright = aNode.getAttribute("copyright") || null;
+  this.downloadURL = aNode.getAttribute("installurl") || null;
+  this.homepageURL = aNode.getAttribute("homepageurl") || null;
+  this.updateURL = aNode.getAttribute("updateurl") || null;
 
   if (!this.fileExists(this.baseDirFile)) {
     return undefined;
@@ -558,9 +561,9 @@ Script.prototype._fromConfigNode = function (node) {
     return undefined;
   }
 
-  if (!node.hasAttribute("dependhash")
-      || !node.hasAttribute("modified")
-      || !node.hasAttribute("version")) {
+  if (!aNode.hasAttribute("dependhash")
+      || !aNode.hasAttribute("modified")
+      || !aNode.hasAttribute("version")) {
     let scope = {};
     Cu.import("chrome://greasemonkey-modules/content/parseScript.js", scope);
     let parsedScript = scope.parse(
@@ -572,9 +575,9 @@ Script.prototype._fromConfigNode = function (node) {
 
     this._changed("modified", null);
   } else {
-    this._dependhash = node.getAttribute("dependhash");
-    this._modifiedTime = parseInt(node.getAttribute("modified"), 10);
-    this._version = node.getAttribute("version");
+    this._dependhash = aNode.getAttribute("dependhash");
+    this._modifiedTime = parseInt(aNode.getAttribute("modified"), 10);
+    this._version = aNode.getAttribute("version");
     if (this._version === "null") {
       this._version = null;
     }
@@ -583,25 +586,25 @@ Script.prototype._fromConfigNode = function (node) {
   // Note that "checkRemoteUpdates" used to be a boolean.
   // As of #1647, it now holds one of the AddonManager.AUTOUPDATE_* values;
   // so it's name is suboptimal.
-  if (node.getAttribute("checkRemoteUpdates") === "true") {
+  if (aNode.getAttribute("checkRemoteUpdates") === "true") {
     // Legacy support, cast "true" to default.
     this.checkRemoteUpdates = AddonManager.AUTOUPDATE_DEFAULT;
-  } else if (node.hasAttribute("checkRemoteUpdates")) {
+  } else if (aNode.hasAttribute("checkRemoteUpdates")) {
     this.checkRemoteUpdates = parseInt(
-        node.getAttribute("checkRemoteUpdates"), 10);
+        aNode.getAttribute("checkRemoteUpdates"), 10);
   }
 
-  if (!node.hasAttribute("installTime")) {
+  if (!aNode.hasAttribute("installTime")) {
     this._installTime = new Date().getTime();
     this._changed("modified", null);
   } else {
-    this._installTime = parseInt(node.getAttribute("installTime"), 10);
+    this._installTime = parseInt(aNode.getAttribute("installTime"), 10);
   }
 
-  this._uuid = node.getAttribute("uuid");
+  this._uuid = aNode.getAttribute("uuid");
 
-  for (let i = 0, iLen = node.childNodes.length; i < iLen; i++) {
-    let childNode = node.childNodes[i];
+  for (let i = 0, iLen = aNode.childNodes.length; i < iLen; i++) {
+    let childNode = aNode.childNodes[i];
     switch (childNode.nodeName) {
       case "Description":
       case "Name":
@@ -650,26 +653,26 @@ Script.prototype._fromConfigNode = function (node) {
   }
 
   this.checkConfig();
-  this._description = node.getAttribute("description");
-  this._enabled = node.getAttribute("enabled") == "true";
-  this._name = node.getAttribute("name");
-  this._namespace = node.getAttribute("namespace");
-  this._noframes = node.getAttribute("noframes") == "true";
+  this._description = aNode.getAttribute("description");
+  this._enabled = aNode.getAttribute("enabled") == "true";
+  this._name = aNode.getAttribute("name");
+  this._namespace = aNode.getAttribute("namespace");
+  this._noframes = aNode.getAttribute("noframes") == "true";
   // Legacy default.
-  this._runAt = node.getAttribute("runAt") || "document-end";
-  this._updateMetaStatus = node.getAttribute("updateMetaStatus") || "unknown";
-  this.author = node.getAttribute("author") || "";
-  this.copyright = node.getAttribute("copyright") || null;
-  this.icon.fileURL = node.getAttribute("icon");
+  this._runAt = aNode.getAttribute("runAt") || "document-end";
+  this._updateMetaStatus = aNode.getAttribute("updateMetaStatus") || "unknown";
+  this.author = aNode.getAttribute("author") || "";
+  this.copyright = aNode.getAttribute("copyright") || null;
+  this.icon.fileURL = aNode.getAttribute("icon");
 };
 
-Script.prototype.toConfigNode = function (doc) {
-  var scriptNode = doc.createElement("Script");
+Script.prototype.toConfigNode = function (aDoc) {
+  var scriptNode = aDoc.createElement("Script");
 
-  function addNode(name, content) {
-    let node = doc.createElement(name);
-    node.appendChild(doc.createTextNode(content));
-    scriptNode.appendChild(doc.createTextNode("\n\t\t"));
+  function addNode(aName, aContent) {
+    let node = aDoc.createElement(aName);
+    node.appendChild(aDoc.createTextNode(aContent));
+    scriptNode.appendChild(aDoc.createTextNode("\n\t\t"));
     scriptNode.appendChild(node);
 
     return node;
@@ -701,17 +704,17 @@ Script.prototype.toConfigNode = function (doc) {
 
   for (let j = 0, jLen = this._requires.length; j < jLen; j++) {
     let require = this._requires[j];
-    let requireNode = doc.createElement("Require");
+    let requireNode = aDoc.createElement("Require");
 
     requireNode.setAttribute("filename", require._filename);
 
-    scriptNode.appendChild(doc.createTextNode("\n\t\t"));
+    scriptNode.appendChild(aDoc.createTextNode("\n\t\t"));
     scriptNode.appendChild(requireNode);
   }
 
   for (let j = 0, jLen = this._resources.length; j < jLen; j++) {
     let resource = this._resources[j];
-    let resourceNode = doc.createElement("Resource");
+    let resourceNode = aDoc.createElement("Resource");
 
     if (resource._charset) {
       resourceNode.setAttribute("charset", resource._charset);
@@ -720,7 +723,7 @@ Script.prototype.toConfigNode = function (doc) {
     resourceNode.setAttribute("mimetype", resource._mimetype);
     resourceNode.setAttribute("name", resource._name);
 
-    scriptNode.appendChild(doc.createTextNode("\n\t\t"));
+    scriptNode.appendChild(aDoc.createTextNode("\n\t\t"));
     scriptNode.appendChild(resourceNode);
   }
 
@@ -734,7 +737,7 @@ Script.prototype.toConfigNode = function (doc) {
     }
   }
 
-  scriptNode.appendChild(doc.createTextNode("\n\t"));
+  scriptNode.appendChild(aDoc.createTextNode("\n\t"));
 
   this._author && scriptNode.setAttribute("author", this._author);
   scriptNode.setAttribute("basedir", this._basedir);
@@ -774,8 +777,8 @@ Script.prototype.toString = function () {
   return "[Greasemonkey Script " + this.id + "; " + this.version + "]";
 };
 
-Script.prototype.setDownloadedFile = function (file) {
-  this._tempFile = file;
+Script.prototype.setDownloadedFile = function (aFile) {
+  this._tempFile = aFile;
 };
 
 Script.prototype.info = function () {
@@ -1232,7 +1235,8 @@ Script.prototype.checkForRemoteUpdate = function (aCallback, aForced) {
   }
 };
 
-Script.prototype.checkRemoteVersion = function (req, aCallback, aForced, aMeta) {
+Script.prototype.checkRemoteVersion = function (
+    aReq, aCallback, aForced, aMeta) {
   let metaFail = GM_util.hitch(this, function () {
     this._updateMetaStatus = "fail";
     this._changed("modified", null);
@@ -1240,19 +1244,19 @@ Script.prototype.checkRemoteVersion = function (req, aCallback, aForced, aMeta) 
     return this.checkForRemoteUpdate(aCallback, aForced);
   });
 
-  if ((req.status != 200) && (req.status != 0)) {
+  if ((aReq.status != 200) && (aReq.status != 0)) {
     return (aMeta ? metaFail() : aCallback("noUpdateAvailable", {
       "name": this.localized.name,
       "fileURL": this.fileURL,
-      "url": req.responseURL,
-      "info": " = status: " + req.status + " (" + req.statusText + ")",
+      "url": aReq.responseURL,
+      "info": " = status: " + aReq.status + " (" + aReq.statusText + ")",
       "updateStatus": "UPDATE_STATUS_DOWNLOAD_ERROR",
       "log": true,
       "notification": true,
     }));
   }
 
-  let source = req.responseText;
+  let source = aReq.responseText;
   let scope = {};
   Cu.import("chrome://greasemonkey-modules/content/parseScript.js", scope);
   let newScript = scope.parse(source, this.downloadURL);
@@ -1309,9 +1313,9 @@ Script.prototype.allFiles = function () {
   return files;
 };
 
-Script.prototype.fileExists = function (file) {
+Script.prototype.fileExists = function (aFile) {
   try {
-    return file.exists();
+    return aFile.exists();
   } catch (e) {
     return false;
   }
@@ -1323,9 +1327,9 @@ Script.prototype.allFilesExist = function () {
 
 // Don't call this.
 // Call Config.uninstall(), which calls this.
-Script.prototype.uninstall = function (forUpdate) {
-  if (typeof forUpdate == "undefined") {
-    forUpdate = false;
+Script.prototype.uninstall = function (aForUpdate) {
+  if (typeof aForUpdate == "undefined") {
+    aForUpdate = false;
   }
 
   if (this.baseDirFile.equals(GM_util.scriptDir())) {
@@ -1356,7 +1360,7 @@ Script.prototype.uninstall = function (forUpdate) {
     }
   }
 
-  if (!forUpdate) {
+  if (!aForUpdate) {
     let storage = new GM_ScriptStorageBack(this);
     let file = storage.dbFile;
     GM_util.enqueueRemove(file);
@@ -1364,5 +1368,5 @@ Script.prototype.uninstall = function (forUpdate) {
     GM_util.enqueueRemove(file);
   }
 
-  this._changed("uninstall", forUpdate);
+  this._changed("uninstall", aForUpdate);
 };

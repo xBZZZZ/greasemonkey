@@ -84,8 +84,8 @@ function startup(aService) {
   aService.broadcastScriptUpdates();
 
   // Notification is async; send the scripts again once we have our version.
-  AddonManager.getAddonByID(GM_CONSTANTS.addonGUID, function (addon) {
-    gGreasemonkeyVersion = "" + addon.version;
+  AddonManager.getAddonByID(GM_CONSTANTS.addonGUID, function (aAddon) {
+    gGreasemonkeyVersion = "" + aAddon.version;
     aService.broadcastScriptUpdates();
   });
 
@@ -192,21 +192,21 @@ service.prototype.closeAllScriptValStores = function () {
   }
 };
 
-service.prototype.scriptRefresh = function (url, windowId, browser) {
+service.prototype.scriptRefresh = function (aUrl, aWindowId, aBrowser) {
   if (!GM_util.getEnabled()) {
     return [];
   }
-  if (!url) {
+  if (!aUrl) {
     return [];
   }
-  if (!GM_util.isGreasemonkeyable(url)) {
+  if (!GM_util.isGreasemonkeyable(aUrl)) {
     return [];
   }
 
   if (GM_prefRoot.getValue("enableScriptRefreshing")) {
-    this.config.updateModifiedScripts("document-start", url, windowId, browser);
-    this.config.updateModifiedScripts("document-end", url, windowId, browser);
-    this.config.updateModifiedScripts("document-idle", url, windowId, browser);
+    this.config.updateModifiedScripts("document-start", aUrl, aWindowId, aBrowser);
+    this.config.updateModifiedScripts("document-end", aUrl, aWindowId, aBrowser);
+    this.config.updateModifiedScripts("document-idle", aUrl, aWindowId, aBrowser);
   }
 };
 
@@ -220,24 +220,24 @@ service.prototype.getStoreByScriptId = function (aScriptId) {
 
 var remoteCacheTracker = new Set();
 
-service.prototype.remoteCached = function (key) {
+service.prototype.remoteCached = function (aKey) {
   if (remoteCacheTracker.size > CACHE_SIZE) {
     Services.ppmm.broadcastAsyncMessage("greasemonkey:value-invalidate", {
       "keys": Array.from(remoteCacheTracker),
     });
     remoteCacheTracker.clear();
   }
-  remoteCacheTracker.add(key);
+  remoteCacheTracker.add(aKey);
 };
 
-service.prototype.invalidateRemoteValueCaches = function (key) {
-  if (!remoteCacheTracker.has(key)) {
+service.prototype.invalidateRemoteValueCaches = function (aKey) {
+  if (!remoteCacheTracker.has(aKey)) {
     return undefined;
   }
 
-  remoteCacheTracker["delete"](key);
+  remoteCacheTracker["delete"](aKey);
   Services.ppmm.broadcastAsyncMessage("greasemonkey:value-invalidate", {
-    "keys": [key],
+    "keys": [aKey],
   });
 };
 

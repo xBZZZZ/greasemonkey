@@ -15,16 +15,16 @@ Cu.import("chrome://greasemonkey-modules/content/constants.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
-function getUriFromUrl(url, base) {
+function getUriFromUrl(aUrl, aBase) {
   let baseUri = null;
-  if (typeof base === "string") {
-    baseUri = GM_util.getUriFromUrl(base);
-  } else if (base) {
-    baseUri = base;
+  if (typeof aBase === "string") {
+    baseUri = GM_util.getUriFromUrl(aBase);
+  } else if (aBase) {
+    baseUri = aBase;
   }
 
   try {
-    return GM_CONSTANTS.ioService.newURI(url, null, baseUri);
+    return GM_CONSTANTS.ioService.newURI(aUrl, null, baseUri);
   } catch (e) {
     return null;
   }

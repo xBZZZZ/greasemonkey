@@ -15,16 +15,16 @@ Cu.import("chrome://greasemonkey-modules/content/constants.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
-function hash(unicode) {
+function hash(aUnicode) {
   let unicodeConverter = Components
       .classes["@mozilla.org/intl/scriptableunicodeconverter"]
       .createInstance(Components.interfaces.nsIScriptableUnicodeConverter);
   unicodeConverter.charset = GM_CONSTANTS.fileScriptCharset;
 
-  let data = unicodeConverter.convertToByteArray(unicode, {});
+  let data = unicodeConverter.convertToByteArray(aUnicode, {});
   let ch = Components.classes["@mozilla.org/security/hash;1"]
       .createInstance(Components.interfaces.nsICryptoHash);
-  // SHA1: Backward compatibility for Sync
+  // SHA1: Backward compatibility for Sync.
   ch.init(ch.SHA1);
   ch.update(data, data.length);
   // Hash as raw octets.
