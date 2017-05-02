@@ -190,12 +190,13 @@ ScriptStore.prototype = {
   "getAllIDs": function () {
     let syncIds = {};
     let scripts = GM_util.getService().config.scripts;
+    let _re = new RegExp("^file:", "");
     for (let i = 0, iLen = scripts.length; i < iLen; i++) {
       let script = scripts[i];
       if (!script.downloadURL) {
         continue;
       }
-      if (script.downloadURL.match(new RegExp("^file:", ""))) {
+      if (script.downloadURL.match(_re)) {
         continue;
       }
       syncIds[syncId(script)] = 1;

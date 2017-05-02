@@ -55,9 +55,9 @@ gDragDrop.onDrop = function GM_onDrop(aEvent) {
   let urls = droppedUrls(aEvent);
 
   let droppedNonUserScript = false;
+  let _re = new RegExp(GM_CONSTANTS.fileScriptExtensionRegexp + "$", "");
   for (let i = urls.length - 1, url = null; url = urls[i]; i--) {
-    if (url.match(
-        new RegExp(GM_CONSTANTS.fileScriptExtensionRegexp + "$", ""))) {
+    if (url.match(_re)) {
       GM_util.showInstallDialog(url);
     } else {
       droppedNonUserScript = true;

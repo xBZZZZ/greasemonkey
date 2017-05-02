@@ -51,11 +51,11 @@ function parse(aSource, aUri, aFailWhenMissing) {
   }
 
   var resourceNames = {};
+  let _re = new RegExp("\\s+$", "");
   for (let i = 0, metaLine = ""; metaLine = meta[i]; i++) {
     var data;
     try {
-      data = GM_util.parseMetaLine(
-          metaLine.replace(new RegExp("\\s+$", ""), ""));
+      data = GM_util.parseMetaLine(metaLine.replace(_re, ""));
     } catch (e) {
       // Ignore invalid/unsupported meta lines.
       continue;

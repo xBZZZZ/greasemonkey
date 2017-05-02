@@ -29,6 +29,11 @@ Cu.import("chrome://greasemonkey-modules/content/processScript.js", {})
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
+const URL_ABOUT_PART2_REGEXP = new RegExp(
+    GM_CONSTANTS.urlAboutPart2Regexp, "");
+const URL_USER_PASS_STRIP_REGEXP = new RegExp(
+    GM_CONSTANTS.urlUserPassStripRegexp, "");
+
 var gScope = this;
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
@@ -82,7 +87,7 @@ function browserLoadEnd(aEvent) {
   if (GM_util.getEnabled()) {
     // See #1820, #2371, #2195.
     if ((href == GM_CONSTANTS.urlAboutPart1)
-        || (href.match(new RegExp(GM_CONSTANTS.urlAboutPart2Regexp, "")))) {
+        || (href.match(URL_ABOUT_PART2_REGEXP))) {
       runScripts("document-end", contentWin);
       runScripts("document-idle", contentWin);
     }
@@ -204,7 +209,7 @@ function urlForWin(aContentWin) {
   // so always use it when deciding whether to run scripts.
   let url = aContentWin.document.documentURI;
   // But (see #1631) ignore user/pass in the URL.
-  return url.replace(new RegExp(GM_CONSTANTS.urlStripUserPassRegexp, ""), "$1");
+  return url.replace(URL_USER_PASS_STRIP_REGEXP, "$1");
 }
 
 function windowIsTop(aContentWin) {
@@ -232,7 +237,7 @@ function windowCreated(aEvent) {
     let href = contentWin.location.href;
     // See #1820, #2371, #2195.
     if ((href == GM_CONSTANTS.urlAboutPart1)
-        || (href.match(new RegExp(GM_CONSTANTS.urlAboutPart2Regexp, "")))) {
+        || (href.match(URL_ABOUT_PART2_REGEXP))) {
       runScripts("document-start", contentWin);
     }
   }

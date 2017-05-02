@@ -32,6 +32,8 @@ const CALLBACK_IS_NOT_FUNCTION = "callback is not a function.";
 
 const TIMEOUT = 500;
 
+const FILENAME_DISALLOWED_CHARACTERS = new RegExp("[\\\\/:*?'\"<>|]", "g");
+
 // https://msdn.microsoft.com/en-us/library/aa365247.aspx#maxpath
 // Actual limit is 260; 240 ensures e.g. ".user.js" and slashes still fit.
 // The "/ 2" thing is so that we can have a directory, and a file in it.
@@ -45,11 +47,10 @@ function assertIsFunction(aFunc, aMessage) {
   }
 }
 
-var disallowedFilenameCharacters = new RegExp("[\\\\/:*?'\"<>|]", "g");
 function cleanFilename(aFilename, aDefault) {
   // Blacklist problem characters (slashes, colons, etc.).
   let filename = (aFilename || aDefault)
-      .replace(disallowedFilenameCharacters, "");
+      .replace(FILENAME_DISALLOWED_CHARACTERS, "");
 
   // Make whitespace readable.
   filename = filename.replace(new RegExp("(\\s|%20)+", "g"), "_");

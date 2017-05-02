@@ -147,18 +147,18 @@ function createScriptSource() {
     return true;
   }
 
+  var re1 = new RegExp("[^\\s]+", "g");
   function replaceMultiVal(aMetaName) {
     let replaceKey = "%" + aMetaName + "%";
     if (source.indexOf(replaceKey) == -1) {
       return undefined;
     };
-    let replaceVal = document.getElementById(aMetaName).value.match(
-        new RegExp("[^\\s]+", "g"));
+    let replaceVal = document.getElementById(aMetaName).value.match(re1);
     if (!replaceVal || (replaceVal.length == 0)) {
       removeMetaLine(aMetaName);
     } else {
-      let re = new RegExp("(.+)" + replaceKey);
-      let match = source.match(re);
+      let re2 = new RegExp("(.+)" + replaceKey);
+      let match = source.match(re2);
       source = source.replace(replaceKey, replaceVal.join("\n" + match[1]));
     }
   }

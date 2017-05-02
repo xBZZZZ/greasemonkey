@@ -97,7 +97,7 @@ const GM_CONSTANTS = {
   "urlAboutPart1": "about:blank",
   "urlAboutPart1Regexp": "^about:blank",
   "urlAboutPart2Regexp": "^about:reader",
-  "urlStripUserPassRegexp": "(://)([^:/]+)(:[^@/]+)?@",
+  "urlUserPassStripRegexp": "(://)([^:/]+)(:[^@/]+)?@",
   "versionChecker": Cc["@mozilla.org/xpcom/version-comparator;1"]
       .getService(Ci.nsIVersionComparator),
   "xulAppInfo": Cc["@mozilla.org/xre/app-info;1"]
