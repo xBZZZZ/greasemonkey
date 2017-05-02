@@ -174,7 +174,7 @@ GM_notificationer.prototype.contentStart = function (
     } else {
       throw new this.wrappedContentWin.Error(
           'GM_notification() - "' + notification.details.title
-          + '": On e10s enabled does not work.',
+          + '": e10s is not supported.',
           this.fileURL, null);
     }
   // }

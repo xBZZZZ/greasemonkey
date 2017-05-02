@@ -60,7 +60,7 @@ function openInEditor(aScript) {
     let args = [aScript.file.path];
 
     // For the Mac, wrap with a call to "open".
-    if (GM_CONSTANTS.xulRuntime.OS == "Darwin") {
+    if (GM_util.getEnvironment().osMac) {
       args = ["-a", editor.path, aScript.file.path];
       editor = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsIFile);
       editor.followLinks = true;

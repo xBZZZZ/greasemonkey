@@ -46,6 +46,7 @@ XPCOMUtils.defineLazyModuleGetter(GM_util, "getChannelFromUri", "chrome://grease
 XPCOMUtils.defineLazyModuleGetter(GM_util, "getContents", "chrome://greasemonkey-modules/content/util/getContents.js");
 XPCOMUtils.defineLazyModuleGetter(GM_util, "getEditor", "chrome://greasemonkey-modules/content/util/getEditor.js");
 XPCOMUtils.defineLazyModuleGetter(GM_util, "getEnabled", "chrome://greasemonkey-modules/content/util/getEnabled.js");
+XPCOMUtils.defineLazyModuleGetter(GM_util, "getEnvironment", "chrome://greasemonkey-modules/content/util/getEnvironment.js");
 XPCOMUtils.defineLazyModuleGetter(GM_util, "getPreferredLocale", "chrome://greasemonkey-modules/content/util/getPreferredLocale.js");
 XPCOMUtils.defineLazyModuleGetter(GM_util, "getScriptSource", "chrome://greasemonkey-modules/content/util/getScriptSource.js");
 XPCOMUtils.defineLazyModuleGetter(GM_util, "getService", "chrome://greasemonkey-modules/content/util/getService.js");

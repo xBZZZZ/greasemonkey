@@ -177,8 +177,8 @@ function createScriptSource() {
     }
   }
 
-  if (navigator.platform.indexOf("Win") != -1) {
-    source = source.replace("\n", "\r\n");
+  if (GM_util.getEnvironment().osWindows) {
+    source = source.replace(/\n/g, "\r\n");
   }
 
   return source;

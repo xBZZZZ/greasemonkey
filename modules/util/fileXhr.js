@@ -20,8 +20,7 @@ Cu.importGlobalProperties(["XMLHttpRequest"]);
 // that aren't otherwise accessible in content.
 // Don't use it in the parent process or for web URLs.
 function fileXhr(aUrl, aMimetype, aResponseType) {
-  if (!aUrl.match(
-      new RegExp("^file:\/\/", ""))) {
+  if (!aUrl.match(new RegExp("^file:\/\/", ""))) {
     throw new Error("fileXhr - used for non-file URL:" + "\n" + aUrl);
   }
   let xhr = new XMLHttpRequest();

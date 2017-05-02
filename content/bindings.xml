@@ -19,6 +19,10 @@
 
         Components.utils.import(
             "chrome://greasemonkey-modules/content/third-party/MatchPattern.js");
+        Components.utils.import(
+            "chrome://greasemonkey-modules/content/util.js");
+
+        this._environment = GM_util.getEnvironment();
 
         this._box = document.getAnonymousElementByAttribute(
             this, "id", "listbox");
@@ -234,7 +238,7 @@
         if (this == document.getElementById("global-excludes")) {
           document.getElementById("global-excludes-count")
               .style.display = "block";
-          if (navigator.platform.indexOf("Win") != -1) {
+          if (this._environment.osWindows) {
             document.getElementById("resizer").style.display = "block";
           }
         }

@@ -65,7 +65,7 @@ window.addEventListener("load", function () {
   };
   gElm.userExcludes.pages = gScript.userExcludes;
 
-  if (navigator.platform.indexOf("Win") != -1) {
+  if (GM_util.getEnvironment().osWindows) {
     document.getElementById("resizer").style.display = "block";
   }
 }, false);

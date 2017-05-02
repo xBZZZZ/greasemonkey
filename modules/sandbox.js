@@ -169,6 +169,14 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
 }
 
 function injectGMInfo(aScript, aSandbox, aContentWin) {
+  let _gEnvironment = GM_util.getEnvironment();
+  if (_gEnvironment.e10s
+      && _gEnvironment.osMac
+      && ((_gEnvironment.sandboxContentLevel != null)
+          && (_gEnvironment.sandboxContentLevel > 1))) {
+    return undefined;
+  }
+
   var rawInfo = aScript.info();
   var scriptURL = aScript.fileURL;
 
@@ -214,6 +222,20 @@ function injectGMInfo(aScript, aSandbox, aContentWin) {
 }
 
 function runScriptInSandbox(aScript, aSandbox) {
+  let _gEnvironment = GM_util.getEnvironment();
+  if (_gEnvironment.e10s
+      && _gEnvironment.osMac
+      && ((_gEnvironment.sandboxContentLevel != null)
+          && (_gEnvironment.sandboxContentLevel > 1))) {
+    GM_util.logError(
+        GM_CONSTANTS.info.scriptHandler
+        + " - this configuration:"
+        + "\n" + JSON.stringify(_gEnvironment)
+        + "\n" + "is not supported.",
+        false, aScript.fileURL, null);
+    return undefined;
+  }
+
   // Eval the code, with anonymous wrappers when/if appropriate.
   function evalWithWrapper(aUrl) {
     try {

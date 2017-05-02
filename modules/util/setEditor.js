@@ -39,8 +39,7 @@ function setEditor(aScratchpad) {
             .GetStringFromName("editor.prompt"),
         Ci.nsIFilePicker.modeOpen);
     filePicker.appendFilters(Ci.nsIFilePicker.filterApps);
-    if (Services.appShell.hiddenDOMWindow.navigator.platform
-        .indexOf("Win") != -1) {
+    if (GM_util.getEnvironment().osWindows) {
       filePicker.appendFilter("*.cmd", "*.cmd");
     }
     
