@@ -24,7 +24,7 @@ const SCRIPT_PARSE_META_ALL_REGEXP = new RegExp(
 function extractMeta(aSource) {
   let meta = aSource.match(SCRIPT_PARSE_META_ALL_REGEXP);
   if (meta) {
-    return meta[2].replace(/^\s+/, "");
+    return meta[2].replace(new RegExp("^\\s+", ""), "");
   }
 
   return "";

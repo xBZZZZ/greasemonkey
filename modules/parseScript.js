@@ -25,7 +25,7 @@ const META_SEPARATOR = "\0";
 
 // Parse the source of a script; produce Script object.
 function parse(aSource, aUri, aFailWhenMissing) {
-  var meta = extractMeta(aSource).match(/.+/g);
+  var meta = extractMeta(aSource).match(new RegExp(".+", "g"));
   if (aFailWhenMissing && !meta) {
     return null;
   }
@@ -54,7 +54,8 @@ function parse(aSource, aUri, aFailWhenMissing) {
   for (let i = 0, metaLine = ""; metaLine = meta[i]; i++) {
     var data;
     try {
-      data = GM_util.parseMetaLine(metaLine.replace(/\s+$/, ""));
+      data = GM_util.parseMetaLine(
+          metaLine.replace(new RegExp("\\s+$", ""), ""));
     } catch (e) {
       // Ignore invalid/unsupported meta lines.
       continue;

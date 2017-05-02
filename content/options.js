@@ -36,7 +36,7 @@ function GM_loadOptions() {
   document.getElementById("check-sync")
       .setAttribute("label", document.getElementById("check-sync")
       .getAttribute("label")
-      .replace(/Pale\s*Moon/i, (
+      .replace(new RegExp("Pale\\s*Moon", "i"), (
       (Services.appinfo.ID == GM_CONSTANTS.browserIDFirefox)
           ? "Firefox"
           : "$&")

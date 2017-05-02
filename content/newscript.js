@@ -152,7 +152,8 @@ function createScriptSource() {
     if (source.indexOf(replaceKey) == -1) {
       return undefined;
     };
-    let replaceVal = document.getElementById(aMetaName).value.match(/[^\s]+/g);
+    let replaceVal = document.getElementById(aMetaName).value.match(
+        new RegExp("[^\\s]+", "g"));
     if (!replaceVal || (replaceVal.length == 0)) {
       removeMetaLine(aMetaName);
     } else {
@@ -178,7 +179,7 @@ function createScriptSource() {
   }
 
   if (GM_util.getEnvironment().osWindows) {
-    source = source.replace(/\n/g, "\r\n");
+    source = source.replace(new RegExp("\\n", "g"), "\r\n");
   }
 
   return source;
