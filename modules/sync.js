@@ -10,6 +10,8 @@ if (typeof Cu === "undefined") {
   var Cu = Components.utils;
 }
 
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
 (function initSync() {
 
 var gWeave = {};
@@ -275,7 +277,7 @@ ScriptTracker.prototype = {
 };
 
 function ScriptEngine() {
-  gWeave.SyncEngine.call(this, "Greasemonkey", gWeave.Service);
+  gWeave.SyncEngine.call(this, GM_CONSTANTS.info.scriptHandler, gWeave.Service);
 
   this.enabled = GM_prefRoot.getValue("sync.enabled");
   GM_prefRoot.watch("sync.enabled", GM_util.hitch(this, function () {
