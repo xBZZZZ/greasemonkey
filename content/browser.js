@@ -321,6 +321,12 @@ GM_BrowserUI.checkDisabledScriptNavigation = function (aContentType, aHref) {
   notification.persistence = -1;
 };
 
+GM_BrowserUI.scriptPrefs = function (aScript) {
+  window.openDialog(
+      GM_CONSTANTS.scriptPrefsUrl + "#" + encodeURIComponent(aScript.id),
+      null, "modal,resizable");
+};
+
 GM_BrowserUI.init();
 
 /**
@@ -334,11 +340,35 @@ function GM_popupClicked(aEvent) {
   }
 
   if (aEvent.type == "command") {
-    // Left-click: toggle enabled state.
+    // Left-click
+    // Toggle enabled state.
     script.enabled =! script.enabled;
-  } else if ((aEvent.type == "click") && (aEvent.button == 2)) {
-    // Right-click: open in editor.
-    GM_util.openInEditor(script);
+  } else if (aEvent.type == "click") {
+    let _buttons = {
+      "middle": 1,
+      "left": 0,
+      "right": 2,
+    };
+    let button = aEvent.button;
+    let modifier = aEvent.ctrlKey || aEvent.metaKey;
+    let shift = aEvent.shiftKey;
+    if ((button == _buttons.right) && !modifier && !shift) {
+      // Open in editor.
+      GM_util.openInEditor(script);
+    } else {
+      if ((button == _buttons.middle)
+          || ((button == _buttons.right) && modifier)) {
+        // Open folder.
+        Services.cpmm.sendAsyncMessage("greasemonkey:script-open-folder", {
+          "scriptId": script.id,
+        });
+      } else {
+        if ((button == _buttons.right) && shift) {
+          // Open preferences.
+          GM_BrowserUI.scriptPrefs(script);
+        }
+      }
+    }
   }
 
   closeMenus(aEvent.target);

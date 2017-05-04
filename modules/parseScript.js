@@ -214,7 +214,6 @@ function parse(aSource, aUri, aFailWhenMissing) {
   return script;
 }
 
-
 function setDefaults(aScript) {
   if (!aScript.updateURL && aScript.downloadURL) {
     aScript.updateURL = aScript.downloadURL;

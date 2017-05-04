@@ -65,15 +65,18 @@ function startup(aService) {
 
   // Others go to the "parent" message manager.
   Services.ppmm.addMessageListener(
-      "greasemonkey:scripts-update", function (message) {
+      "greasemonkey:scripts-update", function (aMessage) {
         return aService.scriptUpdateData();
       });
   Services.ppmm.addMessageListener(
-      "greasemonkey:broadcast-script-updates", function (message) {
+      "greasemonkey:broadcast-script-updates", function (aMessage) {
         return aService.broadcastScriptUpdates();
       });
   Services.ppmm.addMessageListener(
       "greasemonkey:script-install", aService.scriptInstall.bind(aService));
+  Services.ppmm.addMessageListener(
+      "greasemonkey:script-open-folder",
+      aService.scriptOpenFolder.bind(aService)); 
   Services.ppmm.addMessageListener(
       "greasemonkey:url-is-temp-file", aService.urlIsTempFile.bind(aService));
 
@@ -271,6 +274,10 @@ service.prototype.handleScriptValMsg = function (aMessage) {
 
 service.prototype.scriptInstall = function (aMessage) {
   GM_util.showInstallDialog(aMessage.data.url);
+};
+
+service.prototype.scriptOpenFolder = function (aMessage) {      
+  GM_openFolder(this.config.getScriptById(aMessage.data.scriptId).file);
 };
 
 service.prototype.urlIsTempFile = function (aMessage) {

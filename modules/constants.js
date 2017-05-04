@@ -91,6 +91,7 @@ const GM_CONSTANTS = {
   "scriptParseBOM": "\u00EF\u00BB\u00BF",
   "scriptParseBOMArray": [0xEF, 0xBB, 0xBF],
   "scriptParseMetaRegexp": "// ==UserScript==([\\s\\S]*?)^// ==/UserScript==",
+  "scriptPrefsUrl": "chrome://greasemonkey/content/scriptprefs.xul",
   "scriptType": "user-script",
   "scriptViewID": "addons://list/greasemonkey-user-script",
   "urlAboutAllRegexp": "^about:(blank|reader)",

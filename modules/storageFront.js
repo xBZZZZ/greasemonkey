@@ -33,8 +33,8 @@ var cache = new Map();
 var cacheHitCounter = new Map();
 
 Services.cpmm.addMessageListener("greasemonkey:value-invalidate",
-    function (message) {
-      let data = message.data;
+    function (aMessage) {
+      let data = aMessage.data;
       data.keys.forEach(invalidateCache);
     });
 

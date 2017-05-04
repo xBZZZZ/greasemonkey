@@ -188,7 +188,7 @@ Object.defineProperty(ScriptAddon.prototype, "isActive", {
 
 Object.defineProperty(ScriptAddon.prototype, "optionsURL", {
   "get": function ScriptAddon_getOptionsURL() {
-    return "chrome://greasemonkey/content/scriptprefs.xul#"
+    return GM_CONSTANTS.scriptPrefsUrl + "#"
         + encodeURIComponent(this._script.id);
   },
   "enumerable": true,
