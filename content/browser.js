@@ -331,7 +331,6 @@ GM_BrowserUI.init();
 
 /**
  * Handle clicking one of the items in the popup.
- * Left-click toggles the enabled state, right-click opens in an editor.
  */
 function GM_popupClicked(aEvent) {
   let script = aEvent.target.script;
@@ -340,10 +339,11 @@ function GM_popupClicked(aEvent) {
   }
 
   if (aEvent.type == "command") {
-    // Left-click
+    // Left-click.
     // Toggle enabled state.
     script.enabled =! script.enabled;
   } else if (aEvent.type == "click") {
+    // Middle-click, Right-click.
     let _buttons = {
       "middle": 1,
       "left": 0,
