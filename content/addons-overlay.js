@@ -33,7 +33,7 @@ const SORT_BY = {
 const EXECUTION_INDEX_MAX = 9999;
 
 const SCRIPT_DETAIL_VIEW_REGEXP = new RegExp(
-    GM_CONSTANTS.scriptViewDetailIDPrefix
+    GM_CONSTANTS.scriptViewIDDetailPrefix
     + ".+"
     + encodeURIComponent(GM_CONSTANTS.scriptIDSuffix),
     "");

@@ -94,7 +94,7 @@ const GM_CONSTANTS = {
   "scriptPrefsUrl": "chrome://greasemonkey/content/scriptprefs.xul",
   "scriptType": "user-script",
   "scriptViewID": "addons://list/greasemonkey-user-script",
-  "scriptViewDetailIDPrefix": "addons://detail/",
+  "scriptViewIDDetailPrefix": "addons://detail/",
   "urlAboutAllRegexp": "^about:(blank|reader)",
   "urlAboutPart1": "about:blank",
   "urlAboutPart1Regexp": "^about:blank",
