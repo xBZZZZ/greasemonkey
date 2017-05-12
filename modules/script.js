@@ -826,7 +826,7 @@ Script.prototype.info = function () {
     "scriptHandler": GM_CONSTANTS.info.scriptHandler,
     "scriptMetaStr": extractMeta(this.textContent),
     "scriptSource": this.textContent,
-    "scriptWillUpdate": this.isRemoteUpdateAllowed(),
+    "scriptWillUpdate": this.isRemoteUpdateAllowed(false),
     "uuid": this.uuid,
     "version": gGreasemonkeyVersion,
   };
@@ -1117,12 +1117,12 @@ Script.prototype.checkConfig = function () {
     } else {
       this.grants = ["none"];
     }
-    this._changed("modified");
+    this._changed("modified", null);
   }
 
   if (!this._uuid || !this._uuid.length) {
     this._uuid = GM_util.uuid();
-    this._changed("modified");
+    this._changed("modified", null);
   }
 };
 
