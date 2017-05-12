@@ -45,7 +45,7 @@ function IPCScript(aScript, aAddonVersion) {
   this.userIncludes = aScript.userIncludes;
   this.uuid = aScript.uuid;
   this.version = aScript.version;
-  this.willUpdate = aScript.isRemoteUpdateAllowed();
+  this.willUpdate = aScript.isRemoteUpdateAllowed(false);
 
   this.matches = aScript.matches.map(function (match) {
     return match.pattern;

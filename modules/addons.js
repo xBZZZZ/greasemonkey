@@ -93,6 +93,7 @@ function ScriptAddonFactoryByScript(aScript, aReplace) {
       ScriptAddonCache[id].isCompatible = aScript.isRemoteUpdateAllowed(false);
     }
   }
+
   return ScriptAddonCache[id];
 }
 function ScriptAddonFactoryById(aId) {
@@ -200,7 +201,8 @@ Object.defineProperty(ScriptAddon.prototype, "permissions", {
     perms |= this.userDisabled
         ? AddonManager.PERM_CAN_ENABLE
         : AddonManager.PERM_CAN_DISABLE;
-    if (this.forceUpdate || this._script.isRemoteUpdateAllowed()) {
+    this.isCompatible = this._script.isRemoteUpdateAllowed(false);
+    if (this.forceUpdate || this.isCompatible) {
       perms |= AddonManager.PERM_CAN_UPGRADE;
     }
 

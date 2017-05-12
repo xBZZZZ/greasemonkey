@@ -30,6 +30,14 @@ const SORT_BY = {
   "checkStateValueDescending": "1",
 };
 
+const EXECUTION_INDEX_MAX = 9999;
+
+const SCRIPT_DETAIL_VIEW_REGEXP = new RegExp(
+    GM_CONSTANTS.scriptViewDetailIDPrefix
+    + ".+"
+    + encodeURIComponent(GM_CONSTANTS.scriptIDSuffix),
+    "");
+
 window.addEventListener("focus", focus, false);
 window.addEventListener("load", init, false);
 window.addEventListener("unload", unload, false);
@@ -77,42 +85,80 @@ gDragDrop.onDrop = function GM_onDrop(aEvent) {
 // Set up an "observer" on the config, to keep the displayed items up to date
 // with their actual state.
 var observer = {
-  "notifyEvent": function observer_notifyEvent(script, event, data) {
-    if (!isScriptView()) {
+  "notifyEvent": function observer_notifyEvent(aScript, aEvent, aData) {
+    let events = {
+      "edit-enabled": "edit-enabled",
+      "install": "install",
+      "modified": "modified",
+      "uninstall": "uninstall",
+    };
+    let _eventsAlsoDetail = [
+      events["edit-enabled"],
+    ];
+    let type = 0;
+    if (isScriptView()) {
+      type = 1;
+    }
+    if (isScriptDetailView() && GM_util.inArray(_eventsAlsoDetail, aEvent)) {
+      type = 2;
+    }
+    if (type == 0) {
       return undefined;
     }
 
-    var addon = ScriptAddonFactoryByScript(script);
+    var addon = ScriptAddonFactoryByScript(aScript);
+
     let item;
-    switch (event) {
-      case "edit-enabled":
-        item = gListView.getListItemForID(addon.id);
-        let callback = data ? item.onEnabled : item.onDisabled;
+    switch (aEvent) {
+      case events["edit-enabled"]:
+        let callback;
+
+        switch (type) {
+          case 1:
+            item = gListView.getListItemForID(addon.id);
+
+            break;
+          case 2:
+            item = gDetailView;
+
+            break;
+        }
+        if (!item) {
+          GM_util.logError(
+              GM_CONSTANTS.info.scriptHandler + " - " + '"' + aScript.id + '":'
+              + "\n" + '"notifyEvent" - "' + aEvent + '" - item: ' + item,
+              true, aScript.fileURL, null);
+        }
+        callback = aData ? item.onEnabled : item.onDisabled;
         if (!callback) {
           // This observer triggers in the case of an uninstall undo.
           // But does not need to - and can not - run.
           // Ignore this case.
           break;
         }
-        item.userDisabled = !data;
+        item.userDisabled = !aData;
+
+        if (type == 2) {
+          item._updateView(addon, !addon.isCompatible);
+        }
         callback.call(item);
 
         break;
-      case "install":
+      case events["install"]:
         gListView.addItem(addon);
 
         break;
-      case "modified":
-        if (!data) {
+      case events["modified"]:
+        if (!aData) {
           break;
         }
         var oldAddon = ScriptAddonFactoryByScript({
-          "id": data,
+          "id": aData,
         });
         if (!oldAddon) {
           break;
         }
-        addon = ScriptAddonFactoryByScript(script, true);
+        addon = ScriptAddonFactoryByScript(aScript, true);
 
         // Use old and new the addon references to update the view.
         item = createItem(addon);
@@ -120,9 +166,9 @@ var observer = {
         oldItem.parentNode.replaceChild(item, oldItem);
 
         break;
-      case "uninstall":
-        if (!data) {
-          // In this observer context, "data" is a boolean,
+      case events["uninstall"]:
+        if (!aData) {
+          // In this observer context, "aData" is a boolean,
           // true means the uninstall happened "for update".
           // If it was _not_ for update, remove this item from the UI.
           gListView.removeItem(addon);
@@ -147,11 +193,21 @@ function addonIsInstalledScript(aAddon) {
   if (aAddon._script.needsUninstall) {
     return false;
   }
+
   return true;
 };
 
 function isScriptView() {
   return gViewController.currentViewId == GM_CONSTANTS.scriptViewID;
+}
+
+function isScriptDetailView() {
+  // return SCRIPT_DETAIL_VIEW_REGEXP.test(gViewController.currentViewId);
+  return gDetailView._addon !== null;
+}
+
+function addonExecutesRichlistitem(aAddon) {
+  return !(typeof aAddon.richlistitem === "undefined");
 }
 
 function addonExecutesNonFirst(aAddon) {
@@ -161,7 +217,8 @@ function addonExecutesNonFirst(aAddon) {
   if (aAddon.type != GM_CONSTANTS.scriptAddonType) {
     return false;
   }
-  return 0 != aAddon.executionIndex;
+
+  return (aAddon.executionIndex != 0) && addonExecutesRichlistitem(aAddon);
 }
 
 function addonExecutesNonLast(aAddon) {
@@ -171,8 +228,9 @@ function addonExecutesNonLast(aAddon) {
   if (aAddon.type != GM_CONSTANTS.scriptAddonType) {
     return false;
   }
-  return (GM_util.getService().config.scripts.length - 1)
-      != aAddon.executionIndex;
+
+  return ((GM_util.getService().config.scripts.length - 1)
+      != aAddon.executionIndex) && addonExecutesRichlistitem(aAddon);
 }
 
 function addonUpdateCanBeForced(aAddon) {
@@ -183,6 +241,7 @@ function addonUpdateCanBeForced(aAddon) {
     return false;
   }
   let script = aAddon._script;
+
   // Can be forced if non-forced isn't allowed, but forced is.
   return !script.isRemoteUpdateAllowed(false)
       && script.isRemoteUpdateAllowed(true);
@@ -222,7 +281,7 @@ function init() {
   gViewController.commands.cmd_userscript_execute_first = {
       "isEnabled": addonExecutesNonFirst,
       "doCommand": function (aAddon) {
-        reorderScriptExecution(aAddon, -9999);
+        reorderScriptExecution(aAddon, -(EXECUTION_INDEX_MAX));
       }
     };
   gViewController.commands.cmd_userscript_execute_sooner = {
@@ -240,7 +299,7 @@ function init() {
   gViewController.commands.cmd_userscript_execute_last = {
       "isEnabled": addonExecutesNonLast,
       "doCommand": function (aAddon) {
-        reorderScriptExecution(aAddon, 9999);
+        reorderScriptExecution(aAddon, EXECUTION_INDEX_MAX);
       }
     };
 
@@ -262,6 +321,9 @@ function init() {
   window.addEventListener("ViewChanged", onViewChanged, false);
   // Initialize on load as well as when it changes later.
   onViewChanged();
+
+  document.getElementById("addonitem-popup").addEventListener(
+      "popupshowing", onPopupShowing, false);
 
   document.getElementById("greasemonkey-sort-bar").addEventListener(
       "command", onSortersClicked, false);
@@ -375,6 +437,11 @@ function onViewChanged(aEvent) {
   }
 };
 
+function onPopupShowing(aEvent) {
+  // e.g. the restart to gDetailView - aAddon.richlistitem is undefined
+  gViewController.updateCommands();
+};
+
 function setEmptyWarningVisible() {
   let emptyWarning = document.getElementById("user-script-list-empty");
   emptyWarning.collapsed = !!GM_util.getService().config.scripts.length;
@@ -412,9 +479,12 @@ function reorderScriptExecution(aAddon, aMoveBy) {
 };
 
 function setRichlistitemExecutionIndex(aAddon) {
-  aAddon.richlistitem.setAttribute("executionIndex",
-      // String format with leading zeros, so it will sort properly.
-      ("0000" + aAddon.executionIndex).substr(-5));
+  // String format with leading zeros, so it will sort properly.
+  let str = aAddon.executionIndex.toString();
+  while (str.length < (EXECUTION_INDEX_MAX.toString().length + 1)) {
+    str = "0" + str;
+  }
+  aAddon.richlistitem.setAttribute("executionIndex", str);
 };
 
 function setRichlistitemNamespace(aAddon) {
