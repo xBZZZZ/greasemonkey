@@ -128,6 +128,7 @@ var observer = {
               GM_CONSTANTS.info.scriptHandler + " - " + '"' + aScript.id + '":'
               + "\n" + '"notifyEvent" - "' + aEvent + '" - item: ' + item,
               true, aScript.fileURL, null);
+          break;
         }
         callback = aData ? item.onEnabled : item.onDisabled;
         if (!callback) {
