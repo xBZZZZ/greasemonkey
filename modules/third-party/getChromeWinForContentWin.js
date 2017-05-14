@@ -56,7 +56,7 @@ if (typeof Cu === "undefined") {
 
 
 function getChromeWinForContentWin(aContentWin) {
-  // Only with e10s disabled.
+  // Only with Electrolysis (e10s) disabled.
   try {
     return aContentWin
         .QueryInterface(Ci.nsIInterfaceRequestor)

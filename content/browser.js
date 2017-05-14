@@ -105,7 +105,8 @@ GM_BrowserUI.openInTab = function (aMessage) {
   var tabBrowser = browser.getTabBrowser();
   var scriptTab = tabBrowser.getTabForBrowser(browser);
   var scriptTabIsCurrentTab = scriptTab == tabBrowser.mCurrentTab;
-  // Work around a race condition in Firefox code with E10S disabled.
+  // Work around a race condition in Firefox code
+  // with Electrolysis (e10s) disabled.
   // See #2107 and #2234.
   // TODO:
   // Remove timeout when http://bugzil.la/1200334 is resolved.

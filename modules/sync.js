@@ -47,7 +47,7 @@ var SyncServiceObserver = {
     } else {
       // See #2335.
       // The "weave:service:ready" observer has been identified
-      // as unreliable (e10s?).
+      // as unreliable - Electrolysis (e10s)?
       // Manually poll instead.
       GM_util.timeout(GM_util.hitch(SyncServiceObserver, "init"), 1000);
     }
