@@ -524,4 +524,8 @@ function GM_openUserscriptsOrg() {
   let chromeWin = GM_util.getBrowserWindow();
   chromeWin.gBrowser.selectedTab = chromeWin.gBrowser.addTab(
       "http://wiki.greasespot.net/User_Script_Hosting");
+  /*
+  chromeWin.gBrowser.selectedTab = chromeWin.gBrowser.addTab(
+      GM_CONSTANTS.dataUserScriptHosting);
+  */
 }

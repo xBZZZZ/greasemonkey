@@ -93,6 +93,11 @@
           <menuitem
             label="&menu.webSites.getUserScripts;"
             oncommand="GM_BrowserUI.openTab('http://wiki.greasespot.net/User_Script_Hosting');" />
+          <!--
+          <menuitem
+            label="&menu.webSites.getUserScripts;"
+            oncommand="GM_BrowserUI.openTab(GM_CONSTANTS.dataUserScriptHosting);" />
+          -->
         </menupopup>
       </menu>
       <menuseparator />
