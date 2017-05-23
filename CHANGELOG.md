@@ -99,7 +99,7 @@ __(very many changes - this is why it is beta at this point)__
 
 #### 3.9.3.1 (2017-02-22)
 
-[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.9.3Fork...3.9.3.1ForkExperimental)
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.9.2Fork...3.9.3.1ForkExperimental)
 
 * Added support for Add-ons Button
 
