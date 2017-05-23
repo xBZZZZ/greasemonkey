@@ -99,11 +99,13 @@ __(very many changes - this is why it is beta at this point)__
 
 #### 3.9.3.1 (2017-02-22)
 
-[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.9.2Fork...3.9.3.1ForkExperimental)
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.9.3ForkExperimental...3.9.3.1ForkExperimental)
 
 * Added support for Add-ons Button
 
 #### 3.9.3 (2017-02-18)
+
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.9.2Fork...3.9.3ForkExperimental)
 
 * API: Added support for GM_notification ([#1194](https://github.com/greasemonkey/greasemonkey/issues/1194))
 * Loading: HTTP Auth - can't install userscript ([#1717](https://github.com/greasemonkey/greasemonkey/issues/1717), [#2430](https://github.com/greasemonkey/greasemonkey/pull/2430))
