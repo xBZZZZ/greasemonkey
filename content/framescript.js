@@ -157,8 +157,8 @@ function injectScripts(aScripts, aContentWin) {
     if (script.noframes && !winIsTop) {
       continue;
     }
-    let sandbox = createSandbox(script, aContentWin, url, gScope);
-    runScriptInSandbox(script, sandbox);
+    let sandbox = createSandbox(gScope, aContentWin, url, script);
+    runScriptInSandbox(sandbox, script);
   }
 }
 

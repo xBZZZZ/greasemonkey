@@ -12,9 +12,9 @@ Cu.import("resource://gre/modules/Services.jsm");
 
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
+
 var GM_MenuCommander = {
   "cookieShowing": null,
-  "menuCommands": {},
   "messageCookie": 1,
   "popup": null,
 };
@@ -49,6 +49,8 @@ GM_MenuCommander.createMenuItem = function (aCommand) {
     menuItem.setAttribute("accesskey", aCommand.accesskey);
   }
 
+  menuItem.setAttribute("_object", JSON.stringify(aCommand));
+
   return menuItem;
 };
 
@@ -60,7 +62,17 @@ GM_MenuCommander.messageMenuCommandResponse = function (aMessage) {
   for (let i in aMessage.data.commands) {
     let command = aMessage.data.commands[i];
     let menuItem = GM_MenuCommander.createMenuItem(command);
-    GM_MenuCommander.popup.appendChild(menuItem);
+    let menuItems = GM_MenuCommander.popup.childNodes;
+    let menuItemExists = false;
+    for (let i = 0, iLen = menuItems.length; i < iLen; i++) {
+      if (JSON.stringify(command) == menuItems[i].getAttribute("_object")) {
+        menuItemExists = true;
+        break;
+      }
+    }
+    if (!menuItemExists) {
+      GM_MenuCommander.popup.appendChild(menuItem);
+    }
   }
   if (GM_MenuCommander.popup.firstChild) {
     GM_MenuCommander.popup.parentNode.disabled = false;

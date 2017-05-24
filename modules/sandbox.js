@@ -28,7 +28,7 @@ Cu.import("chrome://greasemonkey-modules/content/xmlhttprequester.js");
 // Only a particular set of strings are allowed.
 const JAVASCRIPT_VERSION_MAX = "ECMAv5";
 
-function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
+function createSandbox(aFrameScope, aContentWin, aUrl, aScript) {
   if (GM_util.inArray(aScript.grants, "none")) {
     // If there is an explicit none grant, use a plain unwrapped sandbox
     // with no other content.
@@ -41,7 +41,7 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
         });
 
     // GM_info is always provided.
-    injectGMInfo(aScript, contentSandbox, aContentWin);
+    injectGMInfo(contentSandbox, aContentWin, aScript);
 
     // Alias unsafeWindow for compatibility.
     Cu.evalInSandbox(
@@ -124,6 +124,7 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
     Cu.evalInSandbox(
         "this._MenuCommandSandbox = " + MenuCommandSandbox.toSource(), sandbox);
     sandbox._MenuCommandSandbox(
+        aFrameScope.content,
         aScript.uuid, aScript.localized.name, aScript.fileURL,
         MenuCommandRespond,
         GM_CONSTANTS.localeStringBundle.createBundle(
@@ -163,12 +164,12 @@ function createSandbox(aScript, aContentWin, aUrl, aFrameScope) {
   });
 
   // GM_info is always provided.
-  injectGMInfo(aScript, sandbox, aContentWin);
+  injectGMInfo(sandbox, aContentWin, aScript);
 
   return sandbox;
 }
 
-function injectGMInfo(aScript, aSandbox, aContentWin) {
+function injectGMInfo(aSandbox, aContentWin, aScript) {
   let _gEnvironment = GM_util.getEnvironment();
   if (_gEnvironment.e10s
       && _gEnvironment.osMac
@@ -221,7 +222,7 @@ function injectGMInfo(aScript, aSandbox, aContentWin) {
   });
 }
 
-function runScriptInSandbox(aScript, aSandbox) {
+function runScriptInSandbox(aSandbox, aScript) {
   let _gEnvironment = GM_util.getEnvironment();
   if (_gEnvironment.e10s
       && _gEnvironment.osMac

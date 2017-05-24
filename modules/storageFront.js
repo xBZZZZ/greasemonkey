@@ -94,7 +94,7 @@ GM_ScriptStorageFront.prototype.setValue = function (aName, aVal) {
   if (typeof aVal == "undefined") {
     aVal = null;
   }
-  this._messageManager.sendSyncMessage(
+  this._messageManager.sendRpcMessage(
       "greasemonkey:scriptVal-set", {
         "scriptId": this._script.id,
         "name": aName,
@@ -113,7 +113,7 @@ GM_ScriptStorageFront.prototype.getValue = function (aName, aDefVal) {
     let count = (cacheHitCounter.get(key) || 0) + 1;
     let intentToCache = count > CACHE_AFTER_N_GETS;
 
-    value = this._messageManager.sendSyncMessage(
+    value = this._messageManager.sendRpcMessage(
         "greasemonkey:scriptVal-get", {
           "cacheKey": key,
           "name": aName,
@@ -166,7 +166,7 @@ GM_ScriptStorageFront.prototype.deleteValue = function (aName) {
 
   invalidateCache(key);
 
-  this._messageManager.sendSyncMessage(
+  this._messageManager.sendRpcMessage(
       "greasemonkey:scriptVal-delete", {
         "cacheKey": key,
         "name": aName,
@@ -175,7 +175,7 @@ GM_ScriptStorageFront.prototype.deleteValue = function (aName) {
 };
 
 GM_ScriptStorageFront.prototype.listValues = function () {
-  var value = this._messageManager.sendSyncMessage(
+  var value = this._messageManager.sendRpcMessage(
       "greasemonkey:scriptVal-list", {
         "scriptId": this._script.id,
       });

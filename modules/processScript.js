@@ -29,12 +29,12 @@ function addFrame(aFrameMM) {
   aFrameMM.addMessageListener("greasemonkey:frame-urls", urlTree);
 }
 
-function urlsOfAllFrames(aContentWindow) {
-  var urls = [aContentWindow.location.href];
-  function collect(aContentWindow) {
-    urls = urls.concat(urlsOfAllFrames(aContentWindow));
+function urlsOfAllFrames(aContentWin) {
+  var urls = [aContentWin.location.href];
+  function collect(aContentWin) {
+    urls = urls.concat(urlsOfAllFrames(aContentWin));
   }
-  Array.from(aContentWindow.frames).forEach(collect);
+  Array.from(aContentWin.frames).forEach(collect);
 
   return urls;
 }

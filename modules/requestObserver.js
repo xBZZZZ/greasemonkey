@@ -109,7 +109,7 @@ function installObserver(aSubject, aTopic, aData) {
 
   // We've done an early return above for all non-user-script navigations.
   // If execution has proceeded to this point, we want to cancel
-  // the existing request (i.e. navigation) and instead start
+  // the existing request (i.e. navigation) and instead of start
   // a script installation for this same URI.
   let request;
   try {
