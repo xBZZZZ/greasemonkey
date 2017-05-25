@@ -82,6 +82,9 @@ function MenuCommandSandbox(
   var commands = {};
   var commandFuncs = {};
   var commandCookie = 0;
+  // "var" instead of "let"
+  // Firefox 43-
+  // http://bugzil.la/932517
   var _addEventListener = true;
   try {
     aContent.addEventListener;
@@ -142,9 +145,6 @@ function MenuCommandSandbox(
           aScriptFileURL, null);
     }
 
-    // "var" instead of "let"
-    // Firefox 43-
-    // http://bugzil.la/932517
     var command = {
       "accesskey": aAccesskey,
       "cookie": ++commandCookie,
