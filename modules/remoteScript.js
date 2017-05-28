@@ -32,7 +32,13 @@ const CALLBACK_IS_NOT_FUNCTION = "callback is not a function.";
 
 const TIMEOUT = 500;
 
-const FILENAME_DISALLOWED_CHARACTERS = new RegExp("[\\\\/:*?'\"<>|]", "g");
+const FILENAME_DISALLOWED_CHARACTERS_REGEXP = new RegExp(
+    "[\\\\/:*?'\"<>|]", "g");
+
+const FILENAME_REGEXP = new RegExp(
+    "^(.+?)("
+    + GM_CONSTANTS.fileScriptExtensionRegexp
+    + "|[^.{,8}])$", "");
 
 // https://msdn.microsoft.com/en-us/library/aa365247.aspx#maxpath
 // Actual limit is 260; 240 ensures e.g. ".user.js" and slashes still fit.
@@ -50,7 +56,7 @@ function assertIsFunction(aFunc, aMessage) {
 function cleanFilename(aFilename, aDefault) {
   // Blacklist problem characters (slashes, colons, etc.).
   let filename = (aFilename || aDefault)
-      .replace(FILENAME_DISALLOWED_CHARACTERS, "");
+      .replace(FILENAME_DISALLOWED_CHARACTERS_REGEXP, "");
 
   // Make whitespace readable.
   filename = filename.replace(new RegExp("(\\s|%20)+", "g"), "_");
@@ -64,13 +70,8 @@ function cleanFilename(aFilename, aDefault) {
           "remoteScript - cleanFilename:"
           + "Could not make a valid file name to save.");
     }
-
     
-    let match = filename.match(
-        new RegExp(
-            "^(.+?)("
-            + GM_CONSTANTS.fileScriptExtensionRegexp
-            + "|[^.{,8}])$", ""));
+    let match = filename.match(FILENAME_REGEXP);
     if (match) {
       filename = match[1].substr(0, gWindowsNameMaxLen) + match[2];
     } else {

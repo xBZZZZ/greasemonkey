@@ -11,6 +11,10 @@ window.addEventListener("load", function () {
 
   Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
+
+  const FILE_SCRIPT_EXTENSION_REGEXP = new RegExp(
+      GM_CONSTANTS.fileScriptExtensionRegexp + "$", ""); 
+
   let args = window.arguments;
   if (!args) {
     return undefined;
@@ -26,8 +30,7 @@ window.addEventListener("load", function () {
   if (!args.filename) {
     return undefined;
   }
-  if (!args.filename.match(
-      new RegExp(GM_CONSTANTS.fileScriptExtensionRegexp + "$", ""))) {
+  if (!FILE_SCRIPT_EXTENSION_REGEXP.test(args.filename)) {
     return undefined;
   }
 

@@ -22,6 +22,13 @@ AddonManager.getAddonByID(GM_CONSTANTS.addonGUID, function (aAddon) {
 });
 
 
+const FILE_SCRIPT_EXTENSION_1_REGEXP = new RegExp(
+    GM_CONSTANTS.fileScriptExtensionRegexp + "$", ""); 
+const FILE_SCRIPT_EXTENSION_2_REGEXP = new RegExp(
+    GM_CONSTANTS.fileScriptExtensionRegexp + "(\\?|$)", "");
+const FILE_SCRIPT_CONTENT_TYPE_NO_REGEXP = new RegExp(
+    GM_CONSTANTS.fileScriptContentTypeNoRegexp, "i");
+
 // This file is the JavaScript backing for the UI wrangling which happens
 // in browser.xul.
 // It also initializes the Greasemonkey singleton which contains
@@ -188,8 +195,7 @@ GM_BrowserUI.getUserScriptUrlUnderPointer = function (aCallback) {
     mm.removeMessageListener("greasemonkey:context-menu-end", messageHandler);
 
     let href = aMessage.data.href;
-    if (href && href.match(
-        new RegExp(GM_CONSTANTS.fileScriptExtensionRegexp + "(\\?|$)", "i"))) {
+    if (href && FILE_SCRIPT_EXTENSION_2_REGEXP.test(href)) {
       aCallback(href);
     } else {
       aCallback(null);
@@ -274,12 +280,10 @@ GM_BrowserUI.checkDisabledScriptNavigation = function (aContentType, aHref) {
   if (GM_util.getEnabled()) {
     return undefined;
   }
-  if (!aHref.match(
-      new RegExp(GM_CONSTANTS.fileScriptExtensionRegexp + "$", ""))) {
+  if (!FILE_SCRIPT_EXTENSION_1_REGEXP.test(aHref)) {
     return undefined;
   }
-  if (new RegExp(GM_CONSTANTS.fileScriptContentTypeNoRegexp, "i")
-      .test(aContentType)) {
+  if (FILE_SCRIPT_CONTENT_TYPE_NO_REGEXP.test(aContentType)) {
     return undefined;
   }
 

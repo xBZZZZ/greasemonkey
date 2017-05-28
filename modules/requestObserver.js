@@ -20,6 +20,9 @@ Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
+const FILE_SCRIPT_EXTENSION_REGEXP = new RegExp(
+    GM_CONSTANTS.fileScriptExtensionRegexp + "$", ""); 
+
 var SCHEMES_DISALLOWED = {
   "chrome": 1,
   "view-source": 1,
@@ -102,8 +105,7 @@ function installObserver(aSubject, aTopic, aData) {
     // Ignore completely, e.g. file:// URIs.
   }
 
-  if (!channel.URI.spec.match(
-      new RegExp(GM_CONSTANTS.fileScriptExtensionRegexp + "$", ""))) {
+  if (!FILE_SCRIPT_EXTENSION_REGEXP.test(channel.URI.spec)) {
     return undefined;
   }
 

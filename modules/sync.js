@@ -38,6 +38,8 @@ Cu.import("chrome://greasemonkey-modules/content/storageBack.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
+const FILE_PROTOCOL_SCHEME_REGEXP = new RegExp(GM_CONSTANTS.fileProtocolSchemeRegExp, "");
+
 var gSyncInitialized = false;
 
 var SyncServiceObserver = {
@@ -192,13 +194,12 @@ ScriptStore.prototype = {
   "getAllIDs": function () {
     let syncIds = {};
     let scripts = GM_util.getService().config.scripts;
-    let _re = new RegExp("^file:", "");
     for (let i = 0, iLen = scripts.length; i < iLen; i++) {
       let script = scripts[i];
       if (!script.downloadURL) {
         continue;
       }
-      if (script.downloadURL.match(_re)) {
+      if (FILE_PROTOCOL_SCHEME_REGEXP.test(script.downloadURL)) {
         continue;
       }
       syncIds[syncId(script)] = 1;

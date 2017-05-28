@@ -12,15 +12,20 @@ if (typeof Cu === "undefined") {
   var Cu = Components.utils;
 }
 
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
 Cu.importGlobalProperties(["XMLHttpRequest"]);
 
+
+const FILE_PROTOCOL_SCHEME_REGEXP = new RegExp(
+    GM_CONSTANTS.fileProtocolSchemeRegExp, "");
 
 // Sync XHR.
 // It's just meant to fetch file:// URLs
 // that aren't otherwise accessible in content.
 // Don't use it in the parent process or for web URLs.
 function fileXhr(aUrl, aMimetype, aResponseType) {
-  if (!aUrl.match(new RegExp("^file:\/\/", ""))) {
+  if (!FILE_PROTOCOL_SCHEME_REGEXP.test(aUrl)) {
     throw new Error("fileXhr - used for non-file URL:" + "\n" + aUrl);
   }
   let xhr = new XMLHttpRequest();

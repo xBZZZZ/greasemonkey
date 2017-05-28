@@ -23,9 +23,11 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 const META_SEPARATOR = "\0";
 
+const SOMETHING_REGEXP = new RegExp(".+", "g");
+
 // Parse the source of a script; produce Script object.
 function parse(aSource, aUri, aFailWhenMissing) {
-  var meta = extractMeta(aSource).match(new RegExp(".+", "g"));
+  var meta = extractMeta(aSource).match(SOMETHING_REGEXP);
   if (aFailWhenMissing && !meta) {
     return null;
   }

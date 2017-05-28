@@ -38,6 +38,9 @@ const SCRIPT_DETAIL_VIEW_REGEXP = new RegExp(
     + encodeURIComponent(GM_CONSTANTS.scriptIDSuffix),
     "");
 
+const FILE_SCRIPT_EXTENSION_REGEXP = new RegExp(
+    GM_CONSTANTS.fileScriptExtensionRegexp + "$", ""); 
+
 window.addEventListener("focus", focus, false);
 window.addEventListener("load", init, false);
 window.addEventListener("unload", unload, false);
@@ -63,9 +66,8 @@ gDragDrop.onDrop = function GM_onDrop(aEvent) {
   let urls = droppedUrls(aEvent);
 
   let droppedNonUserScript = false;
-  let _re = new RegExp(GM_CONSTANTS.fileScriptExtensionRegexp + "$", "");
   for (let i = urls.length - 1, url = null; url = urls[i]; i--) {
-    if (url.match(_re)) {
+    if (FILE_SCRIPT_EXTENSION_REGEXP.test(url)) {
       GM_util.showInstallDialog(url);
     } else {
       droppedNonUserScript = true;

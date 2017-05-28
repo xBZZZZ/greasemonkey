@@ -22,6 +22,9 @@ Cu.import("chrome://greasemonkey-modules/content/ipcscript.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
+const ADDON_SCRIPT_PROTOCOL_REGEXP = new RegExp(
+    GM_CONSTANTS.addonScriptProtocolScheme + ":" + "([-0-9a-f]+)\/(.*)", "");
+
 var gHaveDoneInit = false;
 var gScope = this;
 
@@ -116,9 +119,7 @@ var ScriptProtocol = {
   },
 
   "newChannel": function (aUri) {
-    let m = aUri.spec.match(
-        new RegExp(GM_CONSTANTS.addonScriptProtocolScheme
-            + ":" + "([-0-9a-f]+)\/(.*)", ""));
+    let m = aUri.spec.match(ADDON_SCRIPT_PROTOCOL_REGEXP);
     let dummy = new DummyChannel(aUri);
 
     // Incomplete URI, send a 404.

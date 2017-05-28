@@ -27,6 +27,9 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 const ACCEPT = Ci.nsIContentPolicy.ACCEPT;
 const REJECT = Ci.nsIContentPolicy.REJECT_REQUEST;
 
+const FILE_SCRIPT_EXTENSION_REGEXP = new RegExp(
+    GM_CONSTANTS.fileScriptExtensionRegexp + "$", ""); 
+
 var gHaveDoneInit = false;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -83,8 +86,7 @@ var InstallPolicy = {
       return ACCEPT;
     }
     // Ignore everything that isn't a user script.
-    if (!aContentURI.spec.match(
-        new RegExp(GM_CONSTANTS.fileScriptExtensionRegexp + "$", ""))) {
+    if (!FILE_SCRIPT_EXTENSION_REGEXP.test(aContentURI.spec)) {
       return ACCEPT;
     }
     // Ignore temporary files, e.g. "Show script source".
