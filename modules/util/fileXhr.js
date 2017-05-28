@@ -18,7 +18,7 @@ Cu.importGlobalProperties(["XMLHttpRequest"]);
 
 
 const FILE_PROTOCOL_SCHEME_REGEXP = new RegExp(
-    GM_CONSTANTS.fileProtocolSchemeRegExp, "");
+    GM_CONSTANTS.fileProtocolSchemeRegexp, "");
 
 // Sync XHR.
 // It's just meant to fetch file:// URLs

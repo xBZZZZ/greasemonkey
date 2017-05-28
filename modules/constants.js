@@ -48,7 +48,7 @@ const GM_CONSTANTS = {
   "fileProtocolHandler": Cc["@mozilla.org/network/protocol;1?name=file"]
       .getService(Ci.nsIFileProtocolHandler),
   "fileMetaExtension": ".meta.js",
-  "fileProtocolSchemeRegExp": "^file:\/\/",
+  "fileProtocolSchemeRegexp": "^file:\/\/",
   "fileScriptCharset": "UTF-8",
   "fileScriptContentTypeNoRegexp": "^text/(x|ht)ml",
   "fileScriptDBExtension": ".db",
