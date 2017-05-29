@@ -1,5 +1,16 @@
 ## Changelog
 
+#### 3.12.1beta10 (2017-05-29)
+
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.12.1beta9ForkExperimental...3.12.1beta10ForkExperimental)
+
+* API: GM_...value - "sendRpcMessage" instead of "sendSyncMessage" ([#2506](https://github.com/greasemonkey/greasemonkey/issues/2506))
+* API: GM_registerMenuCommand - Frames (it won't add any menu commands) ([#2509](https://github.com/greasemonkey/greasemonkey/issues/2509))
+* General: The RegExp object - small performance improvements
+* General: Changes name - From: `Greasemonkey` To: `Greasemonkey for Pale Moon`
+* General - a note: ID and branding (icons) - I don't know, if and when it will happen
+* Fix typo, style clean up
+
 #### 3.12.1beta9 (2017-05-22)
 
 [All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.12.1beta8ForkExperimental...3.12.1beta9ForkExperimental)
@@ -14,7 +25,7 @@
 
 * GUI: Updating a script resets its automatic update configuration ([#2499](https://github.com/greasemonkey/greasemonkey/issues/2499), [#2501](https://github.com/greasemonkey/greasemonkey/pull/2501))
 * GUI: Options - Fix enable / disable Sync
-* General: Disabled this configuration: MacOS, e10s, "security.sandbox.content.level" > 1 ([#2485](https://github.com/greasemonkey/greasemonkey/issues/2485))
+* General: Disabled this configuration - MacOS, e10s, "security.sandbox.content.level" > 1 ([#2485](https://github.com/greasemonkey/greasemonkey/issues/2485))
 * GUI: Use middle-click, ctrl+right-click or shift+right-click in GM menu ([#1706](https://github.com/greasemonkey/greasemonkey/pull/1706), [#2504](https://github.com/greasemonkey/greasemonkey/issues/2504))
 * Style clean up (many changes)
 
@@ -46,7 +57,7 @@
 
 [All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.12.1beta4ForkExperimental...3.12.1beta5ForkExperimental)
 
-* API: GM_util.compareVersion - added support also the build ID
+* API: GM_util.compareVersion - Added support also the build ID
 * General: Installing scripts - Pale Moon 27.3.0a1+ - cache turned off ([#2407](https://github.com/greasemonkey/greasemonkey/pull/2407), [PaleMoon#1002](https://github.com/MoonchildProductions/Pale-Moon/pull/1002))
 * Fix typo
 
@@ -78,8 +89,8 @@
 
 [All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.9.3.1ForkExperimental...3.12.1beta1ForkExperimental)
 
-* API: Added support for frequent calls to GM_getValue() ([#2333](https://github.com/greasemonkey/greasemonkey/pull/2333))
-* API: Do not use "GM_util.uriFromUrl()" to parse @match data ([#2480](https://github.com/greasemonkey/greasemonkey/issues/2480))
+* API: Added support for frequent calls to GM_getValue ([#2333](https://github.com/greasemonkey/greasemonkey/pull/2333))
+* API: Do not use GM_util.uriFromUrl to parse @match data ([#2480](https://github.com/greasemonkey/greasemonkey/issues/2480))
 * GUI: Added support the dialog resizing (for Windows OS) ([#2194](https://github.com/greasemonkey/greasemonkey/pull/2194))
 * GUI: Added configurable limit the time for AOM's "[Forced] Find updates" ([#2180](https://github.com/greasemonkey/greasemonkey/pull/2180))
 * API: GM_registerMenuCommand (the suffix) - added support for SHA256 ([PaleMoon#914](https://github.com/MoonchildProductions/Pale-Moon/pull/914))
@@ -130,4 +141,4 @@ __(very many changes - this is why it is beta at this point)__
 * Style clean up:
 * Loading: MatchPattern - better display errors ([#2480](https://github.com/greasemonkey/greasemonkey/issues/2480))
 * From: `Cc["@mozilla.org/..mm` To: `Services.mm/ppmm/cpmm`
-* From: `"__defineGetter__"/"__defineSetter__"` To: `Object.defineProperty()`
+* From: `"__defineGetter__"/"__defineSetter__"` To: `Object.defineProperty`
