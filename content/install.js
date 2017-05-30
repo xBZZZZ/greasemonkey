@@ -50,7 +50,7 @@ function init() {
   document.getElementById("heading").appendChild(
       document.createTextNode(bundle.getString("greeting.msg")));
 
-  let desc = document.getElementById("scriptDescription");
+  let desc = document.getElementById("script-description");
   desc.appendChild(document.createElementNS(HTML_NS, "strong"));
   desc.firstChild.appendChild(document.createTextNode(gScript.localized.name));
   if (gScript.version) {
@@ -109,9 +109,9 @@ function onProgress(aRemoteScript, aEventType, aData) {
     document.getElementById("loading").style.display = "none";
     if (gRemoteScript.errorMessage) {
       gShowScriptButton.disabled = true;
-      document.getElementById("dialogContentBox").style.display = "none";
-      document.getElementById("errorContentBox").style.display = "-moz-box";
-      document.getElementById("errorMessage")
+      document.getElementById("dialog-content-box").style.display = "none";
+      document.getElementById("error-content-box").style.display = "-moz-box";
+      document.getElementById("error-message")
           .textContent = gRemoteScript.errorMessage;
       stopTimer();
       updateLabel(false);

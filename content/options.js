@@ -45,9 +45,9 @@ function GM_loadOptions() {
       .checked = GM_prefRoot.getValue("sync.enabled");
   document.getElementById("global-excludes")
       .pages = GM_util.getService().config.globalExcludes;
-  document.getElementById("newScript-removeUnused")
+  document.getElementById("new-script-remove-unused")
       .checked = GM_prefRoot.getValue("newScript.removeUnused");
-  document.getElementById("newScript-template")
+  document.getElementById("new-script-template")
       .value = GM_prefRoot.getValue("newScript.template");
 }
 
@@ -67,9 +67,9 @@ function GM_saveOptions(checkbox) {
   GM_util.getService().config.globalExcludes =
       document.getElementById("global-excludes").pages;
   GM_prefRoot.setValue("newScript.removeUnused",
-      !!document.getElementById("newScript-removeUnused").checked);
+      !!document.getElementById("new-script-remove-unused").checked);
   GM_prefRoot.setValue("newScript.template",
-      document.getElementById("newScript-template").value);
+      document.getElementById("new-script-template").value);
   // Changes to global excludes should be active after tab reload.
   Services.cpmm.sendAsyncMessage("greasemonkey:broadcast-script-updates");
 }

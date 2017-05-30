@@ -7,14 +7,14 @@
   margin-bottom: 1em;
 }
 
-#itemBox {
+#item-box {
   overflow: auto;
   -moz-appearance: textfield;
   padding: 0;
   margin: 2px 4px;
 }
 
-#itemDescription {
+#item-description {
   color: #222;
   border-bottom: 1px black dotted;
   padding: 0.5em;
@@ -22,7 +22,7 @@
   margin-right: 4px;
 }
 
-#scriptDescription {
+#script-description {
   margin: 0;
 }
 
@@ -47,7 +47,7 @@
   margin-bottom: 1em;
 }
 
-#errorContentBox {
+#error-content-box {
   display: none;
 }
 
@@ -56,6 +56,6 @@
   font-weight: bold;
 }
 
-#errorMessage {
+#error-message {
   white-space: pre-line;
 }

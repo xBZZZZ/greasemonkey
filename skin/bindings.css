@@ -18,7 +18,7 @@ cludes {
   -moz-binding: url("chrome://greasemonkey/content/bindings.xml#clude-editor-readonly-exclude");
 }
 
-.btnUserCludeVirtual, #userCludeMatch #btnUserClude {
+.btn-user-clude-virtual, #user-clude-match #btn-user-clude {
   visibility: hidden;
 }
 

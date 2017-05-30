@@ -31,11 +31,11 @@
   <script type="application/x-javascript"
     src="chrome://greasemonkey/content/install.js" />
 
-  <vbox id="dialogContentBox" flex="1">
+  <vbox id="dialog-content-box" flex="1">
     <description id="heading" />
-    <vbox id="itemBox" flex="1">
-      <vbox id="itemDescription">
-        <description id="scriptDescription" />
+    <vbox id="item-box" flex="1">
+      <vbox id="item-description">
+        <description id="script-description" />
       </vbox>
       <vbox id="includes">
         <label id="includes-label" value="&install.runsOn;" />
@@ -65,10 +65,10 @@
     </vbox>
   </vbox>
 
-  <vbox id="errorContentBox" flex="1">
+  <vbox id="error-content-box" flex="1">
     <description id="description-error">
       &install.downloadError;
     </description>
-    <description id="errorMessage" />
+    <description id="error-message" />
   </vbox>
 </dialog>
