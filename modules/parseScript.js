@@ -12,7 +12,10 @@ if (typeof Cu === "undefined") {
 
 Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
+Cu.import("resource://gre/modules/osfile.jsm");
+
 Cu.import("chrome://greasemonkey-modules/content/extractMeta.js");
+Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
 Cu.import("chrome://greasemonkey-modules/content/script.js");
 Cu.import("chrome://greasemonkey-modules/content/scriptIcon.js");
 Cu.import("chrome://greasemonkey-modules/content/scriptRequire.js");
@@ -35,15 +38,13 @@ function parse(aSource, aUri, aFailWhenMissing) {
   var script = new Script();
 
   var scriptName = null;
-  if (aUri && aUri.spec) {
+  if (aUri && aUri.host && aUri.spec) {
     scriptName = aUri.spec;
     scriptName = scriptName.substring(
         0, scriptName.indexOf(GM_CONSTANTS.fileScriptExtension));
     scriptName = scriptName.substring(scriptName.lastIndexOf("/") + 1);
-    script["_name"] = scriptName;
-  }
-  if (aUri) {
-    script["_namespace"] = aUri.host;
+    script["_" + "name"] = scriptName;
+    script["_" + "namespace"] = aUri.host;
     script["downloadURL"] = aUri.spec;
   }
 
@@ -131,9 +132,14 @@ function parse(aSource, aUri, aFailWhenMissing) {
           let uri = GM_util.getUriFromUrl(data.value, aUri);
           script[data.keyword] = uri.spec;
         } catch (e) {
-          GM_util.logError("ParseScript - failed to parse "
-              + data.keyword + ' = "' + data.value + '":' + "\n" + e, false,
-              e.fileName, e.lineNumber);
+          // Otherwise this call would be twice.
+          if (!aFailWhenMissing) {
+            GM_util.logError("ParseScript - failed to parse:"
+                + "\n" + data.keyword + ' = "' + data.value + '"'
+                + "\n" + e, false,
+                (aUri && aUri.spec) ? aUri.spec : e.fileName,
+                (aUri && aUri.spec) ? null : e.lineNumber);
+          }
         }
         break;
 
@@ -155,14 +161,30 @@ function parse(aSource, aUri, aFailWhenMissing) {
       case "require":
         try {
           let reqUri = GM_util.getUriFromUrl(data.value, aUri);
+          if (aUri && aUri.spec && reqUri && reqUri.spec
+              && !checkUrls(aUri, reqUri)) {
+            throw "This path:"
+                + "\n" + reqUri.spec
+                + "\n" + "is not a descendant of:"
+                + "\n" + aUri.spec;
+          }
           let scriptRequire = new ScriptRequire(script);
+          if (!reqUri || !reqUri.spec) {
+            throw "";
+          }
           scriptRequire._downloadURL = reqUri.spec;
           script["_requires"].push(scriptRequire);
           script["_rawMeta"] += data.keyword + META_SEPARATOR
               + data.value + META_SEPARATOR;
         } catch (e) {
-          dump("ParseScript - failed to parse "
-              + data.keyword + ' = "' + data.value + '":' + "\n" + e);
+          // Otherwise this call would be twice.
+          if (!aFailWhenMissing) {
+            GM_util.logError("ParseScript - failed to parse:"
+                + "\n" + data.keyword + ' = "' + data.value + '"'
+                + "\n" + e, false,
+                (aUri && aUri.spec) ? aUri.spec : e.fileName,
+                (aUri && aUri.spec) ? null : e.lineNumber);
+          }
           script.parseErrors.push(
               GM_CONSTANTS.localeStringBundle.createBundle(
                   GM_CONSTANTS.localeGreasemonkeyProperties)
@@ -188,13 +210,31 @@ function parse(aSource, aUri, aFailWhenMissing) {
 
         try {
           let resUri = GM_util.getUriFromUrl(url, aUri);
+          if (aUri && aUri.spec && resUri && resUri.spec
+              && !checkUrls(aUri, resUri)) {
+            throw "This path:"
+                + "\n" + resUri.spec
+                + "\n" + "is not a descendant of:"
+                + "\n" + aUri.spec;
+          }
           let scriptResource = new ScriptResource(script);
           scriptResource._name = name;
+          if (!resUri || !resUri.spec) {
+            throw "";
+          }
           scriptResource._downloadURL = resUri.spec;
           script["_resources"].push(scriptResource);
           script["_rawMeta"] += data.keyword + META_SEPARATOR
               + name + META_SEPARATOR + resUri.spec + META_SEPARATOR;
         } catch (e) {
+          // Otherwise this call would be twice.
+          if (!aFailWhenMissing) {
+            GM_util.logError("ParseScript - failed to parse:"
+                + "\n" + data.keyword + ' = "' + name + " " + url + '"'
+                + "\n" + e, false,
+                (aUri && aUri.spec) ? aUri.spec : e.fileName,
+                (aUri && aUri.spec) ? null : e.lineNumber);
+          }
           script.parseErrors.push(
               GM_CONSTANTS.localeStringBundle.createBundle(
                   GM_CONSTANTS.localeGreasemonkeyProperties)
@@ -229,4 +269,26 @@ function setDefaults(aScript) {
   if ((aScript._includes.length == 0) && (aScript._matches.length == 0)) {
     aScript._includes.push("*");
   }
+}
+
+function checkUrls(aUri, aDepUri) {
+  let check = GM_prefRoot.getValue(
+      "fileDependencyUrlIsDescendantOfDownloadUrl");
+  if (check) {
+    let scheme1 = GM_CONSTANTS.ioService.extractScheme(aUri.spec);
+    let scheme2 = GM_CONSTANTS.ioService.extractScheme(aDepUri.spec);
+    if ((scheme1 == "file") && (scheme2 == "file")) {
+      let file1 = Cc["@mozilla.org/file/local;1"]
+          .createInstance(Ci.nsILocalFile);
+      let file2 = Cc["@mozilla.org/file/local;1"]
+          .createInstance(Ci.nsILocalFile);
+
+      file1.initWithPath(OS.Path.dirname(OS.Path.fromFileURI(aUri.spec)));
+      file2.initWithPath(OS.Path.fromFileURI(aDepUri.spec));
+
+      return file1.contains(file2);
+    }
+  }
+
+  return true;
 }

@@ -89,7 +89,7 @@ function removePath(aPath, aRecursive, aDoEnqueueFailure) {
       /*
       if (!DIRECTORY_TEMP.contains(dirOrFile)
           && !gDirectoryScript.contains(dirOrFile)) {
-        GM_util.logError("enqueueRemove - removePath - the path:"
+        GM_util.logError("enqueueRemove - removePath - this path:"
             + "\n" + dirOrFile.path
             + "\n" + "is not a descendant of:"
             + "\n" + DIRECTORY_TEMP.path
@@ -99,7 +99,7 @@ function removePath(aPath, aRecursive, aDoEnqueueFailure) {
       }
       */
       if (!DIRECTORY_TEMP.contains(dirOrFile)) {
-        GM_util.logError("enqueueRemove - removePath - the path:"
+        GM_util.logError("enqueueRemove - removePath - this path:"
             + "\n" + dirOrFile.path
             + "\n" + "is not a descendant of:"
             + "\n" + DIRECTORY_TEMP.path);
