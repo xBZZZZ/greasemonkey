@@ -1131,6 +1131,17 @@ Script.prototype.checkForRemoteUpdate = function (aCallback, aForced) {
     return aCallback("updateAvailable");
   }
 
+  if (!this.updateURL || (this.updateURL == "null")) {
+    return aCallback("noUpdateAvailable", {
+      "name": this.localized.name,
+      "fileURL": this.fileURL,
+      "url": this.updateURL,
+      "info": " = (this.updateURL == " + this.updateURL + ")",
+      "updateStatus": "UPDATE_STATUS_NO_ERROR",
+      "log": false,
+    });
+  }
+
   let uri = GM_util.getUriFromUrl(this.updateURL).clone();
 
   let usedMeta = false;
