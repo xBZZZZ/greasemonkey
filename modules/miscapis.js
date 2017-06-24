@@ -21,7 +21,7 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
-function GM_addStyle(aWrappedContentWin, aFileURL, aCss) {
+function GM_addStyle(aWrappedContentWin, aFileURL, aRunAt, aCss) {
   var elementName = "head";
 
   function addStyle(aDoc, aHead, aCss) {
@@ -41,7 +41,7 @@ function GM_addStyle(aWrappedContentWin, aFileURL, aCss) {
   let head = doc.getElementsByTagName(elementName)[0];
   if (head) {
     return addStyle(doc, head, aCss);
-  } else {
+  } else if (aRunAt == "document-start") {
     try {
       let MutationObserver = aWrappedContentWin.MutationObserver;
       var observer = new MutationObserver(function (mutations) {

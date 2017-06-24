@@ -123,6 +123,7 @@ function createScriptFromObject(aObject) {
 };
 
 function injectDelayedScript(aMessage) {
+  let runAt = aMessage.data.runAt;
   let windowId = aMessage.data.windowId;
   let windowMediator = Cc["@mozilla.org/appshell/window-mediator;1"]
       .getService(Ci.nsIWindowMediator);
@@ -133,11 +134,11 @@ function injectDelayedScript(aMessage) {
         + windowId + "\n");
   } else {
     let script = createScriptFromObject(aMessage.data.script);
-    injectScripts([script], win);
+    injectScripts([script], runAt, win);
   }
 };
 
-function injectScripts(aScripts, aContentWin) {
+function injectScripts(aScripts, aRunAt, aContentWin) {
   try {
     aContentWin.QueryInterface(Ci.nsIDOMChromeWindow);
     // Never ever inject scripts into a chrome context window.
@@ -157,7 +158,7 @@ function injectScripts(aScripts, aContentWin) {
     if (script.noframes && !winIsTop) {
       continue;
     }
-    let sandbox = createSandbox(gScope, aContentWin, url, script);
+    let sandbox = createSandbox(gScope, aContentWin, url, script, aRunAt);
     runScriptInSandbox(sandbox, script);
   }
 }
@@ -182,7 +183,7 @@ function newScriptLoadStart(aMessage) {
       });
 }
 
-function runScripts(aRunWhen, aContentWin) {
+function runScripts(aRunAt, aContentWin) {
   let url = urlForWin(aContentWin);
   if (!url) {
     return undefined;
@@ -192,8 +193,8 @@ function runScripts(aRunWhen, aContentWin) {
   }
 
   let scripts = IPCScript.scriptsForUrl(
-      url, aRunWhen, GM_util.windowId(aContentWin, "outer"));
-  injectScripts(scripts, aContentWin);
+      url, aRunAt, GM_util.windowId(aContentWin, "outer"));
+  injectScripts(scripts, aRunAt, aContentWin);
 }
 
 function urlForWin(aContentWin) {

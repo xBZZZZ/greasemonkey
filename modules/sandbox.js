@@ -28,7 +28,7 @@ Cu.import("chrome://greasemonkey-modules/content/xmlhttprequester.js");
 // Only a particular set of strings are allowed.
 const JAVASCRIPT_VERSION_MAX = "ECMAv5";
 
-function createSandbox(aFrameScope, aContentWin, aUrl, aScript) {
+function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
   if (GM_util.inArray(aScript.grants, "none")) {
     // If there is an explicit none grant, use a plain unwrapped sandbox
     // with no other content.
@@ -73,7 +73,7 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript) {
 
   if (GM_util.inArray(aScript.grants, "GM_addStyle")) {
     sandbox.GM_addStyle = GM_util.hitch(
-        null, GM_addStyle, aContentWin, aScript.fileURL);
+        null, GM_addStyle, aContentWin, aScript.fileURL, aRunAt);
   }
 
   let scriptStorage = new GM_ScriptStorageFront(

@@ -1038,6 +1038,7 @@ Script.prototype.updateFromNewScript = function (
         if (shouldRun) {
           pendingExec.browser.messageManager.sendAsyncMessage(
               "greasemonkey:inject-delayed-script", {
+                "runAt": this.runAt,
                 "script": new IPCScript(this, gGreasemonkeyVersion),
                 "windowId": pendingExec.windowId,
               });
