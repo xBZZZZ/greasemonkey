@@ -161,7 +161,7 @@ ScriptStore.prototype = {
       if (GM_prefRoot.getValue("sync.values")) {
         let storage = new GM_ScriptStorageBack(script);
         let totalSize = 0;
-        let maxSize = GM_prefRoot.getValue("sync.values_maxSizePerScript");
+        let maxSize = GM_prefRoot.getValue("sync.values.maxSizePerScript");
         record.cleartext.values = {};
         record.cleartext.valuesTooBig = false;
         let names = storage.listValues();
@@ -311,11 +311,20 @@ function syncId(aScript) {
 function setScriptValuesFromSyncRecord(aScript, aRecord) {
   if (GM_prefRoot.getValue("sync.values")
       && !aRecord.cleartext.valuesTooBig) {
-    // TODO:
-    // Clear any locally set values not in the sync record?
     let storage = new GM_ScriptStorageBack(aScript);
+    let valuesOld = storage.listValues();
+    let valuesNew = [];
     for (let name in aRecord.cleartext.values) {
       storage.setValue(name, aRecord.cleartext.values[name]);
+      valuesNew.push(name);
+    }
+    if (GM_prefRoot.getValue("sync.values.deleteNonExistentValues")) {
+      for (let i = 0, iLen = valuesOld.length; i < iLen; i++) {
+        let valueOld = valuesOld[i];
+        if (!GM_util.inArray(valuesNew, valueOld)) {
+          storage.deleteValue(valueOld);
+        }
+      }
     }
   }
 }

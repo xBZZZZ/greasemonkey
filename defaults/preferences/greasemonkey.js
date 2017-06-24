@@ -135,7 +135,8 @@ pref("extensions.greasemonkey.stats.prompted", false);
 pref("extensions.greasemonkey.stats.url", "https://stats.greasespot.net/submit/");
 pref("extensions.greasemonkey.sync.enabled", true);
 pref("extensions.greasemonkey.sync.values", false);
-pref("extensions.greasemonkey.sync.values_maxSizePerScript", 65536);
+pref("extensions.greasemonkey.sync.values.deleteNonExistentValues", false);
+pref("extensions.greasemonkey.sync.values.maxSizePerScript", 65536);
 pref("extensions.greasemonkey.timeoutUpdatesInSeconds", 45);
 pref("extensions.greasemonkey.unmhtIsGreaseable", false);
 pref("extensions.greasemonkey.version", "0.0");
@@ -150,4 +151,5 @@ pref("services.sync.prefs.sync.extensions.greasemonkey.stats.lastSubmitTime", tr
 pref("services.sync.prefs.sync.extensions.greasemonkey.stats.optedIn", true);
 pref("services.sync.prefs.sync.extensions.greasemonkey.sync.enabled", true);
 pref("services.sync.prefs.sync.extensions.greasemonkey.sync.values", true);
+pref("services.sync.prefs.sync.extensions.greasemonkey.sync.values.deleteNonExistentValues", true);
 pref("services.sync.prefs.sync.extensions.greasemonkey.timeoutUpdatesInSeconds", true);
