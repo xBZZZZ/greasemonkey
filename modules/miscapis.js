@@ -21,16 +21,51 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
-function GM_addStyle(aDoc, aCss) {
-  let head = aDoc.getElementsByTagName("head")[0];
-  if (head) {
+function GM_addStyle(aWrappedContentWin, aFileURL, aCss) {
+  var elementName = "head";
+
+  function addStyle(aDoc, aHead, aCss) {
     let style = aDoc.createElement("style");
 
     style.textContent = aCss;
     style.type = "text/css";
-    head.appendChild(style);
+    aHead.appendChild(style);
 
     return style;
+  }
+
+  var doc = aWrappedContentWin.document;
+  if (!doc) {
+    return null;
+  }
+  let head = doc.getElementsByTagName(elementName)[0];
+  if (head) {
+    return addStyle(doc, head, aCss);
+  } else {
+    try {
+      let MutationObserver = aWrappedContentWin.MutationObserver;
+      var observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          let addedNodes = mutation.addedNodes;
+          for (let i = 0, iLen = addedNodes.length; i < iLen; i++) {
+            let node = addedNodes[i];
+            if ((node.nodeType == 1)
+                && (node.nodeName.toLowerCase() == elementName)) {
+              observer.disconnect();
+              addStyle(doc, node, aCss);
+              break;
+            }
+          }
+        });
+      });
+      observer.observe(doc, {
+        "attributes": true,
+        "childList": true,
+        "subtree": true,
+      });
+    } catch (e) {
+      throw new aWrappedContentWin.Error(e, aFileURL, null);
+    }
   }
 
   return null;
@@ -91,21 +126,22 @@ GM_Resources.prototype.getResourceURL = function (
   ].join("");
 };
 
-GM_Resources.prototype._getDep = function (wrappedContentWin, fileURL, name) {
+GM_Resources.prototype._getDep = function (
+    aWrappedContentWin, aFileURL, aName) {
   let resources = this.script.resources;
   for (var i = 0, iLen = resources.length; i < iLen; i++) {
     let resource = resources[i];
-    if (resource.name == name) {
+    if (resource.name == aName) {
       return resource;
     }
   }
 
-  throw new wrappedContentWin.Error(
+  throw new aWrappedContentWin.Error(
       GM_CONSTANTS.localeStringBundle.createBundle(
           GM_CONSTANTS.localeGreasemonkeyProperties)
           .GetStringFromName("error.missingResource")
-          .replace("%1", name),
-          fileURL, null
+          .replace("%1", aName),
+          aFileURL, null
       );
 };
 

@@ -73,7 +73,7 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript) {
 
   if (GM_util.inArray(aScript.grants, "GM_addStyle")) {
     sandbox.GM_addStyle = GM_util.hitch(
-        null, GM_addStyle, aContentWin.document);
+        null, GM_addStyle, aContentWin, aScript.fileURL);
   }
 
   let scriptStorage = new GM_ScriptStorageFront(
