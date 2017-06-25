@@ -1096,9 +1096,15 @@ Script.prototype.showGrantWarning = function () {
 };
 
 Script.prototype.checkConfig = function () {
+  // Ensures that grants have been sniffed, whether loading a legacy script
+  // from config.xml or installing a new one.
+  // One day we hope to remove sniffing as the default.
+  // For some time however, we need to sniff
+  // to preserve backwards compatibility.
+  // This happens here because it has to be after the whole script
+  // is installed and available so we can read its contents.
   // TODO:
-  // Some day, make "none" the default.
-  // Until then: sniff.
+  // Make "none" the default.
   if (this._grants.length == 0) {
     if (GM_prefRoot.getValue("sniffGrants")) {
       this.grants = GM_util.sniffGrants(this);
