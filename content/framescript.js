@@ -114,11 +114,13 @@ function contentLoad(aEvent) {
 
 function createScriptFromObject(aObject) {
   let script = Object.create(IPCScript.prototype);
-  // TODO:
-  // Better way for this? Object.create needs property descriptors.
+
   for (let key in aObject) {
-    script[key] = aObject[key];
+    // if (aObject.hasOwnProperty(key)) {
+      script[key] = aObject[key];
+    // }
   }
+
   return script;
 };
 
