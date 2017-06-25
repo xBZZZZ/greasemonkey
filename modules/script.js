@@ -388,19 +388,6 @@ Object.defineProperty(Script.prototype, "noframes", {
   "enumerable": true,
 });
 
-// TODO:
-// Remove this with pref -> db migration code.
-Object.defineProperty(Script.prototype, "prefroot", {
-  "get": function Script_getPrefroot() {
-    if (!this._prefroot) {
-      this._prefroot = ["scriptvals.", this.id, "."].join("");
-    }
-
-    return this._prefroot;
-  },
-  "enumerable": true,
-});
-
 Object.defineProperty(Script.prototype, "previewURL", {
   "get": function Script_getPreviewURL() {
     return GM_CONSTANTS.ioService.newFileURI(this._tempFile).spec;

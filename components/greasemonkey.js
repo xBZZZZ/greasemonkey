@@ -94,16 +94,17 @@ function startup(aService) {
 
   // Beam down on updates.
   aService.config.addObserver({
-    "notifyEvent": function (script, event, data) {
+    "notifyEvent": function (aScript, aEvent, aData) {
       if ([
         "cludes",
         "edit-enabled",
         "install",
+        // "missing-removed",
         "modified",
         "move",
         "uninstall",
       ].some(function (e) {
-        return e == event;
+        return e == aEvent;
       })) {
         aService.broadcastScriptUpdates();
       }

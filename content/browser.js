@@ -115,8 +115,7 @@ GM_BrowserUI.openInTab = function (aMessage) {
   // Work around a race condition in Firefox code
   // with Electrolysis (e10s) disabled.
   // See #2107 and #2234.
-  // TODO:
-  // Remove timeout when http://bugzil.la/1200334 is resolved.
+  // http://bugzil.la/1200334
   GM_util.timeout(function () {
     let getBool = Services.prefs.getBoolPref;
 

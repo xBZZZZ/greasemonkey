@@ -136,12 +136,15 @@ Config.prototype._save = function (aSaveNow) {
         _save(true);
       },
     }, 250, Ci.nsITimer.TYPE_ONE_SHOT);
+
     return undefined;
   }
 
   let doc = Components.classes["@mozilla.org/xmlextras/domparser;1"]
       .createInstance(Components.interfaces.nsIDOMParser)
-      .parseFromString("<" + TAG_USER_SCRIPT_CONFIG + "></" + TAG_USER_SCRIPT_CONFIG + ">", "text/xml");
+      .parseFromString(
+          "<" + TAG_USER_SCRIPT_CONFIG + "></" + TAG_USER_SCRIPT_CONFIG + ">",
+          "text/xml");
 
   for (let i = 0, iLen = this._scripts.length; i < iLen; i++) {
     let scriptObj = this._scripts[i];
@@ -355,7 +358,7 @@ Config.prototype._updateVersion = function () {
     // Update the stored current version so we don't do this work again.
     GM_prefRoot.setValue("version", newVersion);
 
-    if ("0.0" == oldVersion) {
+    if (oldVersion == "0.0") {
       // This is the first launch.  Show the welcome screen.
       let chromeWin = GM_util.getBrowserWindow();
       if (chromeWin && chromeWin.gBrowser) chromeWin.setTimeout(function () {

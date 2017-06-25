@@ -97,17 +97,19 @@ function ScriptAddonFactoryByScript(aScript, aReplace) {
   return ScriptAddonCache[id];
 }
 function ScriptAddonFactoryById(aId) {
+  let _count = 1;
   let scripts = GM_util.getService().config.getMatchingScripts(
       function (script) {
         return aId == (script.id + GM_CONSTANTS.scriptIDSuffix);
       });
-  if (scripts.length == 1) {
+  if (scripts.length == _count) {
     return ScriptAddonFactoryByScript(scripts[0]);
   }
 
-  // TODO:
-  // Throw an error instead?
-  return null;
+  throw new Error(
+      GM_CONSTANTS.info.scriptHandler
+      + " - ScriptAddonFactoryById - the count of files != " + _count + ": "
+      + scripts.length);
 }
 
 // https://developer.mozilla.org/en/Addons/Add-on_Manager/Addon

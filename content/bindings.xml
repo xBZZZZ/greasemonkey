@@ -6,10 +6,6 @@
     <content>
       <xul:hbox flex="1">
         <xul:listbox flex="1" id="listbox" />
-        <!--
-          TODO:
-          Be more DRY about these bindings' content.
-        -->
       </xul:hbox>
     </content>
     <implementation>

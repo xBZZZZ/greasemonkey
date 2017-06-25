@@ -410,13 +410,6 @@ RemoteScript.prototype.download = function (aCompletionCallback) {
   }
 };
 
-// Download just enough of the script to find the metadata.
-RemoteScript.prototype.downloadMetadata = function (aCallback) {
-  // TODO:
-  // Is this good/useful?
-  // For update checking?
-};
-
 // Download just the .user.js itself. Callback upon completion.
 RemoteScript.prototype.downloadScript = function (aCompletionCallback) {
   assertIsFunction(
