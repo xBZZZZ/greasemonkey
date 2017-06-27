@@ -106,10 +106,16 @@ function ScriptAddonFactoryById(aId) {
     return ScriptAddonFactoryByScript(scripts[0]);
   }
 
-  throw new Error(
+  // Firefox 50+
+  // Startup() with reason ADDON_INSTALL should be fired.
+  // http://bugzil.la/1304392
+  /*
+  GM_util.logError(
       GM_CONSTANTS.info.scriptHandler
       + " - ScriptAddonFactoryById - the count of files != " + _count + ": "
-      + scripts.length);
+      + scripts.length, true);
+  */
+  return null;
 }
 
 // https://developer.mozilla.org/en/Addons/Add-on_Manager/Addon
