@@ -33,7 +33,7 @@ GM_xmlhttpRequester.prototype.contentStartRequest = function (aDetails) {
     throw new this.wrappedContentWin.Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
-            .GetStringFromName("error.xhrNoDetails"),
+            .GetStringFromName("error.xmlhttpRequest.noDetails"),
         this.fileURL, null);
   }
 

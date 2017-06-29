@@ -64,7 +64,7 @@ function GM_addStyle(aWrappedContentWin, aFileURL, aRunAt, aCss) {
         "subtree": true,
       });
     } catch (e) {
-      throw new aWrappedContentWin.Error(e, aFileURL, null);
+      throw new aWrappedContentWin.Error(e.message, aFileURL, null);
     }
   }
 

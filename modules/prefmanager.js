@@ -100,7 +100,7 @@ GM_PrefManager.prototype.setValue = function (aPrefName, aValue) {
     throw new Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
-            .GetStringFromName("error.args.getValue"));
+            .GetStringFromName("error.setValue.unsupportedType"));
   }
 
   // Underlying preferences object throws an exception if new pref has

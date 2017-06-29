@@ -79,7 +79,7 @@ GM_ScriptStorageBack.prototype.setValue = function (aName, aVal) {
     throw new Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
-            .GetStringFromName("error.args.setValue"));
+            .GetStringFromName("error.setValue.arguments"));
   }
 
   let stmt = this.db.createStatement(

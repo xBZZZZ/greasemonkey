@@ -171,7 +171,7 @@ ScriptStore.prototype = {
           try {
             val = JSON.parse(val);
           } catch (e) {
-            dump("Sync - JSON parse error?" + "\n" + uneval(e) + "\n");
+            dump("Sync" + "\n" + uneval(e) + "\n");
             continue;
           }
           record.cleartext.values[name] = val;

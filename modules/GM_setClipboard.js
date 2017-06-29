@@ -109,7 +109,7 @@ function GM_setClipboard(aWrappedContentWin, aFileURL, aData, aOptions) {
       throw new aWrappedContentWin.Error(
           GM_CONSTANTS.localeStringBundle.createBundle(
               GM_CONSTANTS.localeGreasemonkeyProperties)
-              .GetStringFromName("setClipboard.unsupportedType")
+              .GetStringFromName("error.setClipboard.unsupportedType")
               .replace("%1",
               ((typeof aOptions != "object")
                   ? aOptions

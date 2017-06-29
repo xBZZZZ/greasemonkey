@@ -83,7 +83,7 @@ GM_ScriptStorageFront.prototype.setValue = function (aName, aVal) {
     throw new this._wrappedContentWin.Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
-            .GetStringFromName("error.args.setValue"),
+            .GetStringFromName("error.setValue.arguments"),
             this._script.fileURL, null);
   }
 
@@ -132,7 +132,7 @@ GM_ScriptStorageFront.prototype.getValue = function (aName, aDefVal) {
       value = JSON.parse(value);
     } catch (e) {
       GM_util.logError(
-          MESSAGE_ERROR_PREFIX + "JSON parse error:" + "\n" + e, false,
+          MESSAGE_ERROR_PREFIX + "\n" + e, false,
           e.fileName, e.lineNumber);
       return aDefVal;
     }
@@ -188,7 +188,7 @@ GM_ScriptStorageFront.prototype.listValues = function () {
     });
   } catch (e) {
     GM_util.logError(
-        MESSAGE_ERROR_PREFIX + "JSON parse error?" + "\n" + e, false,
+        MESSAGE_ERROR_PREFIX + "\n" + e, false,
         e.fileName, e.lineNumber);
     return Cu.cloneInto([], this._sandbox);
   }
