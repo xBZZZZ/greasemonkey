@@ -59,13 +59,15 @@ function isCookieAtHost(aCookie, aHost) {
 
 function GM_cookie(
     aWrappedContentWin, aSandbox, aFileURL, aUrl, aWhat, aDetails) {
+  let what = aWhat.toLowerCase();
+
   var cookiesService = null;
   try {
     // http://bugzil.la/1221488
     cookiesService = Services.cookies;
   } catch (e) {
     throw new aWrappedContentWin.Error(
-        'GM_cookie("' + aWhat + '"): '
+        'GM_cookie("' + what + '"): '
         + "Electrolysis (e10s) is not supported.",
         aFileURL, null);
   }
@@ -73,7 +75,6 @@ function GM_cookie(
   let host = getHostFromUrl(aUrl);
   // let sandboxPrincipal = Cu.getObjectPrincipal(aSandbox);
   let sanitizeHost = getSanitizeHost(host);
-  let what = aWhat.toLowerCase();
 
   function _delete(aWhat, aWrappedContentWin, aFileURL, aHost, aDetails) {
     let details = {
@@ -196,6 +197,8 @@ function GM_cookie(
   function _set(aWhat, aWrappedContentWin, aFileURL, aHost, aDetails) {
     let details = {
       "domain": aHost,
+      "name": undefined,
+      "value": undefined,
     };
 
     if (typeof aDetails == "object") {
@@ -205,8 +208,8 @@ function GM_cookie(
             : details.domain;
       }
       details.path = aDetails.path ? String(aDetails.path) : "/";
-      details.name = aDetails.name ? String(aDetails.name) : undefined;
-      details.value = aDetails.value ? String(aDetails.value) : undefined;
+      details.name = aDetails.name ? String(aDetails.name) : details.name;
+      details.value = aDetails.value ? String(aDetails.value) : details.value;
       details.secure = !!aDetails.secure;
       details.httpOnly = !!aDetails.httpOnly;
       details.session = !!aDetails.session;

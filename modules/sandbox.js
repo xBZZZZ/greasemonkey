@@ -21,7 +21,6 @@ Cu.import("chrome://greasemonkey-modules/content/notificationer.js");
 Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
 Cu.import("chrome://greasemonkey-modules/content/storageFront.js");
 Cu.import("chrome://greasemonkey-modules/content/third-party/getChromeWinForContentWin.js");
-// GM_cookie
 // Cu.import("chrome://greasemonkey-modules/content/third-party/GM_cookie.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 Cu.import("chrome://greasemonkey-modules/content/xmlhttprequester.js");
@@ -79,7 +78,6 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
         null, GM_addStyle, aContentWin, aScript.fileURL, aRunAt);
   }
 
-  // GM_cookie
   /*
   if (GM_prefRoot.getValue("api.GM_cookie")) {
     if (GM_util.inArray(aScript.grants, "GM_cookie")) {
