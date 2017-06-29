@@ -18,8 +18,11 @@ Cu.import("chrome://greasemonkey-modules/content/GM_setClipboard.js");
 Cu.import("chrome://greasemonkey-modules/content/menucommand.js");
 Cu.import("chrome://greasemonkey-modules/content/miscapis.js");
 Cu.import("chrome://greasemonkey-modules/content/notificationer.js");
+Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
 Cu.import("chrome://greasemonkey-modules/content/storageFront.js");
 Cu.import("chrome://greasemonkey-modules/content/third-party/getChromeWinForContentWin.js");
+// GM_cookie
+// Cu.import("chrome://greasemonkey-modules/content/third-party/GM_cookie.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 Cu.import("chrome://greasemonkey-modules/content/xmlhttprequester.js");
 
@@ -75,6 +78,17 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
     sandbox.GM_addStyle = GM_util.hitch(
         null, GM_addStyle, aContentWin, aScript.fileURL, aRunAt);
   }
+
+  // GM_cookie
+  /*
+  if (GM_prefRoot.getValue("api.GM_cookie")) {
+    if (GM_util.inArray(aScript.grants, "GM_cookie")) {
+      sandbox.GM_cookie = GM_util.hitch(
+          null, GM_cookie, aContentWin, sandbox,
+          aScript.fileURL, aUrl);
+    }
+  }
+  */
 
   let scriptStorage = new GM_ScriptStorageFront(
       aFrameScope, aContentWin, sandbox, aScript);

@@ -15,6 +15,7 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 const APIS = [
   "GM_addStyle",
+  // "GM_cookie",
   "GM_deleteValue",
   "GM_getResourceText",
   "GM_getResourceURL",
