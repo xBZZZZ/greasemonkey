@@ -132,7 +132,7 @@ GM_ScriptStorageFront.prototype.getValue = function (aName, aDefVal) {
       value = JSON.parse(value);
     } catch (e) {
       GM_util.logError(
-          MESSAGE_ERROR_PREFIX + "\n" + e, false,
+          MESSAGE_ERROR_PREFIX.trim() + "\n" + e, false,
           e.fileName, e.lineNumber);
       return aDefVal;
     }
@@ -188,7 +188,7 @@ GM_ScriptStorageFront.prototype.listValues = function () {
     });
   } catch (e) {
     GM_util.logError(
-        MESSAGE_ERROR_PREFIX + "\n" + e, false,
+        MESSAGE_ERROR_PREFIX.trim() + "\n" + e, false,
         e.fileName, e.lineNumber);
     return Cu.cloneInto([], this._sandbox);
   }
