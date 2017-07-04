@@ -90,6 +90,11 @@
 </tabbox>
 
 <spacer height="5" />
-<button label="&Edit.tooltip;" oncommand="GM_util.openInEditor(gScript);" />
+<!--
+  Translations used (partially) from Scriptish.
+  https://github.com/scriptish/scriptish/
+-->
+<checkbox id="user-override" label="&checkbox.grpOverride;" />
+<button label="&edit.tooltip;" oncommand="GM_util.openInEditor(gScript);" />
 
 </dialog>

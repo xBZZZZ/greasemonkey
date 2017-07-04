@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "匿名統計">
-<!ENTITY EnableSync "使用 Pale Moon Sync 來同步使用者腳本">
+<!ENTITY enableSync "使用 Pale Moon Sync 來同步使用者腳本">
 <!ENTITY greasemonkey.getUserScripts "取得使用者腳本">
 <!ENTITY greasemonkey.noScriptShere "沒有任何在此頁面執行的腳本。">
 <!ENTITY greasemonkey.youHaveNoScripts "您尚未安裝任何腳本">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "全域排除">
 <!ENTITY options.newScript.removeUnused "移除未使用的行">
 <!ENTITY options.newScript.template "新腳本範本">
-<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
-<!ENTITY RequireSecureUpdates "要求透過安全通道更新">
-<!ENTITY RequireTimeoutUpdates "Require timeout updates">
+<!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
+<!ENTITY requireSecureUpdates "要求透過安全通道更新">
+<!ENTITY requireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "腳本設定值">
 <!ENTITY scriptprefs.title "Greasemonkey 使用者腳本偏好設定 - !!">
 <!ENTITY scriptprefs.userSettings "使用者設定值">
 <!ENTITY statusbar.enabled "已啟用">
 <!ENTITY statusbar.enabled.accesskey "E">
-<!ENTITY SubmitStats "收集並送出匿名統計資訊以幫助改進 Greasemonkey">
-<!ENTITY TimeoutUpdatesUnits "Seconds">
-<!ENTITY Uninstall "腳本移除設定">
-<!ENTITY UpdateChecking "檢查更新">
+<!ENTITY submitStats "收集並送出匿名統計資訊以幫助改進 Greasemonkey">
+<!ENTITY timeoutUpdatesUnits "Seconds">
+<!ENTITY uninstall "腳本移除設定">
+<!ENTITY updateChecking "檢查更新">

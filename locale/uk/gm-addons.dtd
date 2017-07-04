@@ -1,30 +1,30 @@
-<!ENTITY Edit "Редагувати">
-<!ENTITY Edit.accesskey "Р">
-<!ENTITY Edit.tooltip "Редагувати цей скрипт">
-<!ENTITY ExecuteFirst "Виконувати першим">
-<!ENTITY ExecuteLast "Виконувати останнім">
-<!ENTITY ExecuteLater "Виконувати пізніше">
-<!ENTITY ExecuteSooner "Виконувати раніше">
-<!ENTITY FindUpdate "Пошук оновлення">
-<!ENTITY ForcedFindUpdate "Forced Find Updates">
-<!ENTITY InstallUpdate "Встановити оновлення">
-<!ENTITY MoveDown "Нижче">
-<!ENTITY MoveDown.accesskey "Н">
-<!ENTITY MoveToBottom "Донизу">
-<!ENTITY MoveToBottom.accesskey "Д">
-<!ENTITY MoveToTop "Догори">
-<!ENTITY MoveToTop.accesskey "о">
-<!ENTITY MoveUp "Вище">
-<!ENTITY MoveUp.accesskey "щ">
-<!ENTITY NewScript "Створити новий скрипт">
-<!ENTITY NewScript.accesskey "т">
-<!ENTITY Show "Показати теку, що містить скрипт">
-<!ENTITY Show.accesskey "к">
-<!ENTITY Sort.byExecution "Сортувати за порядком виконання">
-<!ENTITY Sort.byName "Сортувати за назвою">
-<!ENTITY Sort.byNamespace "Sort by namespace">
-<!ENTITY Sort.byStatus "Сортувати за станом">
-<!ENTITY Sort.execution "Порядок виконання">
-<!ENTITY Sort.name "Назва">
-<!ENTITY Sort.namespace "Namespace">
-<!ENTITY Sort.status "Стан">
+<!ENTITY edit "Редагувати">
+<!ENTITY edit.accesskey "Р">
+<!ENTITY edit.tooltip "Редагувати цей скрипт">
+<!ENTITY executeFirst "Виконувати першим">
+<!ENTITY executeLast "Виконувати останнім">
+<!ENTITY executeLater "Виконувати пізніше">
+<!ENTITY executeSooner "Виконувати раніше">
+<!ENTITY findUpdate "Пошук оновлення">
+<!ENTITY forcedFindUpdate "Forced Find Updates">
+<!ENTITY installUpdate "Встановити оновлення">
+<!ENTITY moveDown "Нижче">
+<!ENTITY moveDown.accesskey "Н">
+<!ENTITY moveToBottom "Донизу">
+<!ENTITY moveToBottom.accesskey "Д">
+<!ENTITY moveToTop "Догори">
+<!ENTITY moveToTop.accesskey "о">
+<!ENTITY moveUp "Вище">
+<!ENTITY moveUp.accesskey "щ">
+<!ENTITY newScript "Створити новий скрипт">
+<!ENTITY newScript.accesskey "т">
+<!ENTITY show "Показати теку, що містить скрипт">
+<!ENTITY show.accesskey "к">
+<!ENTITY sort.byExecution "Сортувати за порядком виконання">
+<!ENTITY sort.byName "Сортувати за назвою">
+<!ENTITY sort.byNamespace "Sort by namespace">
+<!ENTITY sort.byStatus "Сортувати за станом">
+<!ENTITY sort.execution "Порядок виконання">
+<!ENTITY sort.name "Назва">
+<!ENTITY sort.namespace "Namespace">
+<!ENTITY sort.status "Стан">

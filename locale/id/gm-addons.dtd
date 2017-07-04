@@ -1,30 +1,30 @@
-<!ENTITY Edit "Sunting">
-<!ENTITY Edit.accesskey "E">
-<!ENTITY Edit.tooltip "Sunting Skrip ini">
-<!ENTITY ExecuteFirst "Eksekusi pertama">
-<!ENTITY ExecuteLast "Eksekusi terakhir">
-<!ENTITY ExecuteLater "Eksekusi nanti">
-<!ENTITY ExecuteSooner "Eksekusi secepatnya">
-<!ENTITY FindUpdate "Periksa Pembaruan">
-<!ENTITY ForcedFindUpdate "Paksa Periksa Pembaruan">
-<!ENTITY InstallUpdate "Pasang Pembaruan">
-<!ENTITY MoveDown "Pindah ke Bawah">
-<!ENTITY MoveDown.accesskey "D">
-<!ENTITY MoveToBottom "Pindah ke Paling Bawah">
-<!ENTITY MoveToBottom.accesskey "B">
-<!ENTITY MoveToTop "Pindah ke Paling Atas">
-<!ENTITY MoveToTop.accesskey "T">
-<!ENTITY MoveUp "Pindah ke Atas">
-<!ENTITY MoveUp.accesskey "U">
-<!ENTITY NewScript "Buat Skrip Baru">
-<!ENTITY NewScript.accesskey "C">
-<!ENTITY Show "Tampilkan Folder">
-<!ENTITY Show.accesskey "S">
-<!ENTITY Sort.byExecution "Urutkan berdasarkan urutan eksekusi">
-<!ENTITY Sort.byName "Urutkan berdasarkan nama">
-<!ENTITY Sort.byNamespace "Sort by namespace">
-<!ENTITY Sort.byStatus "Urutkan berdasarkan status">
-<!ENTITY Sort.execution "Urutan Eksekusi">
-<!ENTITY Sort.name "Nama">
-<!ENTITY Sort.namespace "Namespace">
-<!ENTITY Sort.status "Status">
+<!ENTITY edit "Sunting">
+<!ENTITY edit.accesskey "E">
+<!ENTITY edit.tooltip "Sunting Skrip ini">
+<!ENTITY executeFirst "Eksekusi pertama">
+<!ENTITY executeLast "Eksekusi terakhir">
+<!ENTITY executeLater "Eksekusi nanti">
+<!ENTITY executeSooner "Eksekusi secepatnya">
+<!ENTITY findUpdate "Periksa Pembaruan">
+<!ENTITY forcedFindUpdate "Paksa Periksa Pembaruan">
+<!ENTITY installUpdate "Pasang Pembaruan">
+<!ENTITY moveDown "Pindah ke Bawah">
+<!ENTITY moveDown.accesskey "D">
+<!ENTITY moveToBottom "Pindah ke Paling Bawah">
+<!ENTITY moveToBottom.accesskey "B">
+<!ENTITY moveToTop "Pindah ke Paling Atas">
+<!ENTITY moveToTop.accesskey "T">
+<!ENTITY moveUp "Pindah ke Atas">
+<!ENTITY moveUp.accesskey "U">
+<!ENTITY newScript "Buat Skrip Baru">
+<!ENTITY newScript.accesskey "C">
+<!ENTITY show "Tampilkan Folder">
+<!ENTITY show.accesskey "S">
+<!ENTITY sort.byExecution "Urutkan berdasarkan urutan eksekusi">
+<!ENTITY sort.byName "Urutkan berdasarkan nama">
+<!ENTITY sort.byNamespace "Sort by namespace">
+<!ENTITY sort.byStatus "Urutkan berdasarkan status">
+<!ENTITY sort.execution "Urutan Eksekusi">
+<!ENTITY sort.name "Nama">
+<!ENTITY sort.namespace "Namespace">
+<!ENTITY sort.status "Status">

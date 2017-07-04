@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "Anonimna statistika">
-<!ENTITY EnableSync "Omogoči Pale Moon Sync za uporabniške skripte">
+<!ENTITY enableSync "Omogoči Pale Moon Sync za uporabniške skripte">
 <!ENTITY greasemonkey.getUserScripts "Dobi uporabniške skripte">
 <!ENTITY greasemonkey.noScriptShere "Na tej strani se ne izvaja noben nameščen skript.">
 <!ENTITY greasemonkey.youHaveNoScripts "Nimate nameščenega nobenega uporabniškega skripta.">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "Splošne izključitve">
 <!ENTITY options.newScript.removeUnused "Odstrani neuporabljene vrstice">
 <!ENTITY options.newScript.template "Nova predloga skripta">
-<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
-<!ENTITY RequireSecureUpdates "Zahtevaj varne posodobitve">
-<!ENTITY RequireTimeoutUpdates "Require timeout updates">
+<!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
+<!ENTITY requireSecureUpdates "Zahtevaj varne posodobitve">
+<!ENTITY requireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Nastavitve skripta">
 <!ENTITY scriptprefs.title "Nastavitve uporabniških skriptov Greasemonkey - !!">
 <!ENTITY scriptprefs.userSettings "Uporabniške nastavitve">
 <!ENTITY statusbar.enabled "Omogočeno">
 <!ENTITY statusbar.enabled.accesskey "O">
-<!ENTITY SubmitStats "Zbiraj in pošlji anonimno statistiko o uporabi za izboljšanje dodatka Greasemonkey">
-<!ENTITY TimeoutUpdatesUnits "Seconds">
-<!ENTITY Uninstall "Odstrani">
-<!ENTITY UpdateChecking "Preverjanje za posodobitve">
+<!ENTITY submitStats "Zbiraj in pošlji anonimno statistiko o uporabi za izboljšanje dodatka Greasemonkey">
+<!ENTITY timeoutUpdatesUnits "Seconds">
+<!ENTITY uninstall "Odstrani">
+<!ENTITY updateChecking "Preverjanje za posodobitve">

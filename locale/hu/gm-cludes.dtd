@@ -4,6 +4,7 @@
 <!ENTITY button.addUserMatch "Add as user match">
 <!ENTITY button.edit "Szerkesztés…">
 <!ENTITY button.remove "Eltávolítás">
+<!ENTITY checkbox.grpOverride "Parancsfájl tartalmazási mintáinak letiltása és csak a felhasználó által megadottakat használja">
 <!ENTITY label.grpExcluded "Kizárt oldalak">
 <!ENTITY label.grpIncluded "Tartalmazott oldalak">
 <!ENTITY label.grpMatched "Matched Pages">

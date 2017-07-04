@@ -4,6 +4,7 @@
 <!ENTITY button.addUserMatch "Adicionar como correspondência do utilizador">
 <!ENTITY button.edit "Editar...">
 <!ENTITY button.remove "Remover">
+<!ENTITY checkbox.grpOverride "Disable this script's rules and only use the user defined ones">
 <!ENTITY label.grpExcluded "Páginas excluídas">
 <!ENTITY label.grpIncluded "Páginas incluídas">
 <!ENTITY label.grpMatched "Páginas correspondidas">

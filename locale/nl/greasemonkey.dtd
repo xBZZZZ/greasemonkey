@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "Anonieme statistieken">
-<!ENTITY EnableSync "Pale Moon Sync voor gebruikersscript activeren">
+<!ENTITY enableSync "Pale Moon Sync voor gebruikersscript activeren">
 <!ENTITY greasemonkey.getUserScripts "Gebruikersscripts verkrijgen">
 <!ENTITY greasemonkey.noScriptShere "Op deze pagina draaien geen geïnstalleerde scripts.">
 <!ENTITY greasemonkey.youHaveNoScripts "Er zijn geen gebruikersscripts geïnstalleerd">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "Sluit globaal uit">
 <!ENTITY options.newScript.removeUnused "Ongebruikte regels verwijderen">
 <!ENTITY options.newScript.template "Nieuw scriptsjabloon">
-<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
-<!ENTITY RequireSecureUpdates "Beveiligde updates vereisen">
-<!ENTITY RequireTimeoutUpdates "Require timeout updates">
+<!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
+<!ENTITY requireSecureUpdates "Beveiligde updates vereisen">
+<!ENTITY requireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Scriptinstellingen">
 <!ENTITY scriptprefs.title "Greasemonkey-gebruikersscriptvoorkeuren - !!">
 <!ENTITY scriptprefs.userSettings "Gebruikersinstellingen">
 <!ENTITY statusbar.enabled "Ingeschakeld">
 <!ENTITY statusbar.enabled.accesskey "I">
-<!ENTITY SubmitStats "Verzamel en verstuur anonieme gebruiksstatistieken om Greasemonkey te verbeteren">
-<!ENTITY TimeoutUpdatesUnits "Seconds">
-<!ENTITY Uninstall "Deïnstalleren">
-<!ENTITY UpdateChecking "Updatecontrole">
+<!ENTITY submitStats "Verzamel en verstuur anonieme gebruiksstatistieken om Greasemonkey te verbeteren">
+<!ENTITY timeoutUpdatesUnits "Seconds">
+<!ENTITY uninstall "Deïnstalleren">
+<!ENTITY updateChecking "Updatecontrole">

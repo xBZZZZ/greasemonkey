@@ -4,6 +4,7 @@
 <!ENTITY button.addUserMatch "Добавяне на потребителски шаблон">
 <!ENTITY button.edit "Редактиране...">
 <!ENTITY button.remove "Премахване">
+<!ENTITY checkbox.grpOverride "Disable this script's rules and only use the user defined ones">
 <!ENTITY label.grpExcluded "Изключени страници">
 <!ENTITY label.grpIncluded "Включени страници">
 <!ENTITY label.grpMatched "Съответстващи страници">

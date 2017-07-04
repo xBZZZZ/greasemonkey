@@ -43,6 +43,7 @@ function IPCScript(aScript, aAddonVersion) {
   this.runAt = aScript.runAt;
   this.userExcludes = aScript.userExcludes;
   this.userIncludes = aScript.userIncludes;
+  this.userOverride = aScript.userOverride;
   this.uuid = aScript.uuid;
   this.version = aScript.version;
   this.willUpdate = aScript.isRemoteUpdateAllowed(false);

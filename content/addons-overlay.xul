@@ -38,18 +38,18 @@
 
 <menupopup id="addonitem-popup">
   <menuitem command="cmd_userscript_edit"
-    label="&Edit;" accesskey="&Edit.accesskey;" class="greasemonkey" />
+    label="&edit;" accesskey="&edit.accesskey;" class="greasemonkey" />
   <menuitem command="cmd_userscript_show"
-    label="&Show;" accesskey="&Show.accesskey;" class="greasemonkey" />
+    label="&show;" accesskey="&show.accesskey;" class="greasemonkey" />
   <menuseparator class="greasemonkey" />
   <menuitem command="cmd_userscript_execute_first"
-    label="&ExecuteFirst;" class="greasemonkey" />
+    label="&executeFirst;" class="greasemonkey" />
   <menuitem command="cmd_userscript_execute_sooner"
-    label="&ExecuteSooner;" class="greasemonkey" />
+    label="&executeSooner;" class="greasemonkey" />
   <menuitem command="cmd_userscript_execute_later"
-    label="&ExecuteLater;" class="greasemonkey" />
+    label="&executeLater;" class="greasemonkey" />
   <menuitem command="cmd_userscript_execute_last"
-    label="&ExecuteLast;" class="greasemonkey" />
+    label="&executeLast;" class="greasemonkey" />
 
   <menuseparator class="greasemonkey" />
 
@@ -58,7 +58,7 @@
     label="&cmd.findUpdates.label;" accesskey="&cmd.findUpdates.accesskey;" />
   <!-- Custom forced find updates item. -->
   <menuitem command="cmd_userscript_forcedFindItemUpdates" class="greasemonkey"
-    label="&ForcedFindUpdate;" />
+    label="&forcedFindUpdate;" />
 </menupopup>
 
 <vbox id="list-view">
@@ -70,13 +70,13 @@
     <label value="&menu.new;" class="text-link"
       onclick="GM_util.newUserScript(window);" />
     <spacer flex="1"/>
-    <button label="&Sort.status;" tooltiptext="&Sort.byStatus;"
+    <button label="&sort.status;" tooltiptext="&sort.byStatus;"
       class="sorter" sortBy="uiState,name" checkState="2" />
-    <button label="&Sort.name;" tooltiptext="&Sort.byName;"
+    <button label="&sort.name;" tooltiptext="&sort.byName;"
       class="sorter" sortBy="name" />
-    <button label="&Sort.namespace;" tooltiptext="&Sort.byNamespace;"
+    <button label="&sort.namespace;" tooltiptext="&sort.byNamespace;"
       class="sorter" sortBy="namespace" />
-    <button label="&Sort.execution;" tooltiptext="&Sort.byExecution;"
+    <button label="&sort.execution;" tooltiptext="&sort.byExecution;"
       class="sorter" sortBy="executionIndex" />
   </hbox>
 

@@ -4,6 +4,7 @@
 <!ENTITY button.addUserMatch "Add as user match">
 <!ENTITY button.edit "Редагувати...">
 <!ENTITY button.remove "Вилучити">
+<!ENTITY checkbox.grpOverride "Disable this script's rules and only use the user defined ones">
 <!ENTITY label.grpExcluded "Сторінки-винятки">
 <!ENTITY label.grpIncluded "Охоплені сторінки">
 <!ENTITY label.grpMatched "Matched Pages">

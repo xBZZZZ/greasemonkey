@@ -4,6 +4,7 @@
 <!ENTITY button.addUserMatch "Poner como @match del usuario">
 <!ENTITY button.edit "Editar...">
 <!ENTITY button.remove "Eliminar">
+<!ENTITY checkbox.grpOverride "Desactivar los filtros de inclusión de este script y utilizar sólo los definidos por el usuario">
 <!ENTITY label.grpExcluded "Páginas web excluidas (reglas @exclude)">
 <!ENTITY label.grpIncluded "Páginas web incluidas (reglas @include)">
 <!ENTITY label.grpMatched "Páginas web incluidas estrictamente (reglas @match)">

@@ -4,6 +4,7 @@
 <!ENTITY button.addUserMatch "Add as user match">
 <!ENTITY button.edit "Redigera…">
 <!ENTITY button.remove "Ta bort">
+<!ENTITY checkbox.grpOverride "Inaktivera detta skripts inkluderade mönster och använd endast de användardefinierade mönstren">
 <!ENTITY label.grpExcluded "Undantagna sidor">
 <!ENTITY label.grpIncluded "Inkluderade sidor">
 <!ENTITY label.grpMatched "Matched Pages">

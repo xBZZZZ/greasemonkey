@@ -27,6 +27,7 @@ var gElm = {
   "userIncludes": "user-includes",
   "userMatches": "user-matches",
   "userExcludes": "user-excludes",
+  "userOverride": "user-override",
 };
 
 window.addEventListener("load", function () {
@@ -65,6 +66,8 @@ window.addEventListener("load", function () {
   };
   gElm.userExcludes.pages = gScript.userExcludes;
 
+  gElm.userOverride.checked = gScript.userOverride;
+
   if (GM_util.getEnvironment().osWindows) {
     document.getElementById("resizer").style.display = "block";
   }
@@ -74,5 +77,6 @@ function onDialogAccept() {
   gScript.userIncludes = gElm.userIncludes.pages;
   gScript.userMatches = gElm.userMatches.pages;
   gScript.userExcludes = gElm.userExcludes.pages;
+  gScript.userOverride = !!gElm.userOverride.checked;
   GM_util.getService().config._changed(gScript, "cludes");
 }

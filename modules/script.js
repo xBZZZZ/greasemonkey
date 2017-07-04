@@ -75,6 +75,7 @@ function Script(aConfigNode) {
   this._userExcludes = [];
   this._userIncludes = [];
   this._userMatches = [];
+  this._userOverride = false;
   this._uuid = [];
   this._version = null;
 
@@ -478,9 +479,12 @@ Object.defineProperty(Script.prototype, "userMatches", {
       let match = aMatches[i];
       // A needed fix for script update (if contains userMatches).
       // See #2455.
+      // Fixed in file config.js
+      /*
       if (typeof match == "object") {
         match = match.pattern;
       }
+      */
       let match_MatchPattern;
       try {
         match_MatchPattern = new MatchPattern(match);
@@ -496,6 +500,17 @@ Object.defineProperty(Script.prototype, "userMatches", {
     aMatches = matches_MatchPattern;
 
     this._userMatches = aMatches.concat();
+  },
+  "configurable": true,
+  "enumerable": true,
+});
+
+Object.defineProperty(Script.prototype, "userOverride", {
+  "get": function Script_getUserOverride() {
+    return this._userOverride;
+  },
+  "set": function Script_setUserOverride(aOverride) {
+    this._userOverride = aOverride;
   },
   "configurable": true,
   "enumerable": true,
@@ -648,6 +663,7 @@ Script.prototype._fromConfigNode = function (aNode) {
   // Legacy default.
   this._runAt = aNode.getAttribute("runAt") || "document-end";
   this._updateMetaStatus = aNode.getAttribute("updateMetaStatus") || "unknown";
+  this._userOverride = aNode.getAttribute("userOverride") == "true";
   this.author = aNode.getAttribute("author") || "";
   this.copyright = aNode.getAttribute("copyright") || null;
   this.icon.fileURL = aNode.getAttribute("icon");
@@ -741,6 +757,7 @@ Script.prototype.toConfigNode = function (aDoc) {
   scriptNode.setAttribute("noframes", this._noframes);
   scriptNode.setAttribute("runAt", this._runAt);
   scriptNode.setAttribute("updateMetaStatus", this._updateMetaStatus);
+  scriptNode.setAttribute("userOverride", this._userOverride);
   scriptNode.setAttribute("uuid", this._uuid);
   scriptNode.setAttribute("version", this._version);
 

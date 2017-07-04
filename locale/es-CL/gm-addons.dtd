@@ -1,30 +1,30 @@
-<!ENTITY Edit "Editar">
-<!ENTITY Edit.accesskey "E">
-<!ENTITY Edit.tooltip "Editar este script">
-<!ENTITY ExecuteFirst "Ejecutar primero">
-<!ENTITY ExecuteLast "Ejecutar al final">
-<!ENTITY ExecuteLater "Ejecutar luego">
-<!ENTITY ExecuteSooner "Ejecutar antes">
-<!ENTITY FindUpdate "Verificar para actualizar">
-<!ENTITY ForcedFindUpdate "Forced Find Updates">
-<!ENTITY InstallUpdate "Actualizar">
-<!ENTITY MoveDown "Bajar">
-<!ENTITY MoveDown.accesskey "B">
-<!ENTITY MoveToBottom "Bajar al final">
-<!ENTITY MoveToBottom.accesskey "F">
-<!ENTITY MoveToTop "Subir al primero">
-<!ENTITY MoveToTop.accesskey "P">
-<!ENTITY MoveUp "Subir">
-<!ENTITY MoveUp.accesskey "S">
-<!ENTITY NewScript "Crear script">
-<!ENTITY NewScript.accesskey "C">
-<!ENTITY Show "Mostrar carpeta contenedora">
-<!ENTITY Show.accesskey "M">
-<!ENTITY Sort.byExecution "Ordenar por orden de funcionamiento">
-<!ENTITY Sort.byName "Ordenar por nombre">
-<!ENTITY Sort.byNamespace "Sort by namespace">
-<!ENTITY Sort.byStatus "Ordenar por estado">
-<!ENTITY Sort.execution "Orden de funcionamiento">
-<!ENTITY Sort.name "Nombre">
-<!ENTITY Sort.namespace "Namespace">
-<!ENTITY Sort.status "Estado">
+<!ENTITY edit "Editar">
+<!ENTITY edit.accesskey "E">
+<!ENTITY edit.tooltip "Editar este script">
+<!ENTITY executeFirst "Ejecutar primero">
+<!ENTITY executeLast "Ejecutar al final">
+<!ENTITY executeLater "Ejecutar luego">
+<!ENTITY executeSooner "Ejecutar antes">
+<!ENTITY findUpdate "Verificar para actualizar">
+<!ENTITY forcedFindUpdate "Forced Find Updates">
+<!ENTITY installUpdate "Actualizar">
+<!ENTITY moveDown "Bajar">
+<!ENTITY moveDown.accesskey "B">
+<!ENTITY moveToBottom "Bajar al final">
+<!ENTITY moveToBottom.accesskey "F">
+<!ENTITY moveToTop "Subir al primero">
+<!ENTITY moveToTop.accesskey "P">
+<!ENTITY moveUp "Subir">
+<!ENTITY moveUp.accesskey "S">
+<!ENTITY newScript "Crear script">
+<!ENTITY newScript.accesskey "C">
+<!ENTITY show "Mostrar carpeta contenedora">
+<!ENTITY show.accesskey "M">
+<!ENTITY sort.byExecution "Ordenar por orden de funcionamiento">
+<!ENTITY sort.byName "Ordenar por nombre">
+<!ENTITY sort.byNamespace "Sort by namespace">
+<!ENTITY sort.byStatus "Ordenar por estado">
+<!ENTITY sort.execution "Orden de funcionamiento">
+<!ENTITY sort.name "Nombre">
+<!ENTITY sort.namespace "Namespace">
+<!ENTITY sort.status "Estado">

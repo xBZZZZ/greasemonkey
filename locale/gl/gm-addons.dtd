@@ -1,30 +1,30 @@
-<!ENTITY Edit "Editar">
-<!ENTITY Edit.accesskey "E">
-<!ENTITY Edit.tooltip "Editar este script">
-<!ENTITY ExecuteFirst "Executar primeiro">
-<!ENTITY ExecuteLast "Executar último">
-<!ENTITY ExecuteLater "Executar máis tarde">
-<!ENTITY ExecuteSooner "Executar antes">
-<!ENTITY FindUpdate "Buscar actualizacións">
-<!ENTITY ForcedFindUpdate "Forzouse a busca de actualizacións">
-<!ENTITY InstallUpdate "Instalar actualizacións">
-<!ENTITY MoveDown "Mover abaixo">
-<!ENTITY MoveDown.accesskey "B">
-<!ENTITY MoveToBottom "Mover ao fondo">
-<!ENTITY MoveToBottom.accesskey "F">
-<!ENTITY MoveToTop "Mover á cima">
-<!ENTITY MoveToTop.accesskey "T">
-<!ENTITY MoveUp "Mover arriba">
-<!ENTITY MoveUp.accesskey "A">
-<!ENTITY NewScript "Crear un novo script">
-<!ENTITY NewScript.accesskey "C">
-<!ENTITY Show "Mostrar o cartafol">
-<!ENTITY Show.accesskey "M">
-<!ENTITY Sort.byExecution "Ordenar pola orde de execución">
-<!ENTITY Sort.byName "Ordenar polo nome">
-<!ENTITY Sort.byNamespace "Sort by namespace">
-<!ENTITY Sort.byStatus "Ordenar polo estado">
-<!ENTITY Sort.execution "Orde de execución">
-<!ENTITY Sort.name "Nome">
-<!ENTITY Sort.namespace "Namespace">
-<!ENTITY Sort.status "Estado">
+<!ENTITY edit "Editar">
+<!ENTITY edit.accesskey "E">
+<!ENTITY edit.tooltip "Editar este script">
+<!ENTITY executeFirst "Executar primeiro">
+<!ENTITY executeLast "Executar último">
+<!ENTITY executeLater "Executar máis tarde">
+<!ENTITY executeSooner "Executar antes">
+<!ENTITY findUpdate "Buscar actualizacións">
+<!ENTITY forcedFindUpdate "Forzouse a busca de actualizacións">
+<!ENTITY installUpdate "Instalar actualizacións">
+<!ENTITY moveDown "Mover abaixo">
+<!ENTITY moveDown.accesskey "B">
+<!ENTITY moveToBottom "Mover ao fondo">
+<!ENTITY moveToBottom.accesskey "F">
+<!ENTITY moveToTop "Mover á cima">
+<!ENTITY moveToTop.accesskey "T">
+<!ENTITY moveUp "Mover arriba">
+<!ENTITY moveUp.accesskey "A">
+<!ENTITY newScript "Crear un novo script">
+<!ENTITY newScript.accesskey "C">
+<!ENTITY show "Mostrar o cartafol">
+<!ENTITY show.accesskey "M">
+<!ENTITY sort.byExecution "Ordenar pola orde de execución">
+<!ENTITY sort.byName "Ordenar polo nome">
+<!ENTITY sort.byNamespace "Sort by namespace">
+<!ENTITY sort.byStatus "Ordenar polo estado">
+<!ENTITY sort.execution "Orde de execución">
+<!ENTITY sort.name "Nome">
+<!ENTITY sort.namespace "Namespace">
+<!ENTITY sort.status "Estado">

@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "Anonym statistik">
-<!ENTITY EnableSync "Aktivera Pale Moon Sync för användarskript">
+<!ENTITY enableSync "Aktivera Pale Moon Sync för användarskript">
 <!ENTITY greasemonkey.getUserScripts "Hämta användarskript">
 <!ENTITY greasemonkey.noScriptShere "Inga installerade skript körs på denna sida.">
 <!ENTITY greasemonkey.youHaveNoScripts "Du har inga installerade användarskript">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "Globala undantag">
 <!ENTITY options.newScript.removeUnused "Ta bort oanvända rader">
 <!ENTITY options.newScript.template "Ny skriptmall">
-<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
-<!ENTITY RequireSecureUpdates "Kräv säkra uppdateringar">
-<!ENTITY RequireTimeoutUpdates "Require timeout updates">
+<!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
+<!ENTITY requireSecureUpdates "Kräv säkra uppdateringar">
+<!ENTITY requireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Skriptinställningar">
 <!ENTITY scriptprefs.title "Inställningar för användarskript i Greasemonkey - !!">
 <!ENTITY scriptprefs.userSettings "Användarinställningar">
 <!ENTITY statusbar.enabled "Aktiverat">
 <!ENTITY statusbar.enabled.accesskey "A">
-<!ENTITY SubmitStats "Samla in och skicka in anonym användningsstatistik för att förbättra Greasemonkey">
-<!ENTITY TimeoutUpdatesUnits "Seconds">
-<!ENTITY Uninstall "Avinstallera">
-<!ENTITY UpdateChecking "Uppdateringskontroll">
+<!ENTITY submitStats "Samla in och skicka in anonym användningsstatistik för att förbättra Greasemonkey">
+<!ENTITY timeoutUpdatesUnits "Seconds">
+<!ENTITY uninstall "Avinstallera">
+<!ENTITY updateChecking "Uppdateringskontroll">

@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "Anoniminė statistika">
-<!ENTITY EnableSync "Enable Pale Moon Sync for User Scripts">
+<!ENTITY enableSync "Enable Pale Moon Sync for User Scripts">
 <!ENTITY greasemonkey.getUserScripts "Gauti naudotojo scenarijų">
 <!ENTITY greasemonkey.noScriptShere "Nėra įdiegtų scenarijų kurie veiktų šiame puslapyje.">
 <!ENTITY greasemonkey.youHaveNoScripts "Jūs neturite įdiegtų scenarijų">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "Nevykdomi visur">
 <!ENTITY options.newScript.removeUnused "Remove unused lines">
 <!ENTITY options.newScript.template "New script template">
-<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
-<!ENTITY RequireSecureUpdates "Reikalauti saugumo atnaujinimų">
-<!ENTITY RequireTimeoutUpdates "Require timeout updates">
+<!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
+<!ENTITY requireSecureUpdates "Reikalauti saugumo atnaujinimų">
+<!ENTITY requireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Scenarijaus nustatymai">
 <!ENTITY scriptprefs.title "Greasemonkey naudotojo scenarijų nustatymai - !!">
 <!ENTITY scriptprefs.userSettings "Naudotojo nustatymai">
 <!ENTITY statusbar.enabled "Įjungta">
 <!ENTITY statusbar.enabled.accesskey "I">
-<!ENTITY SubmitStats "Rinkti ir siųsti anoniminę naudojimo statistiką">
-<!ENTITY TimeoutUpdatesUnits "Seconds">
-<!ENTITY Uninstall "Pašalinti">
-<!ENTITY UpdateChecking "Atnaujinimų tikrinimas">
+<!ENTITY submitStats "Rinkti ir siųsti anoniminę naudojimo statistiką">
+<!ENTITY timeoutUpdatesUnits "Seconds">
+<!ENTITY uninstall "Pašalinti">
+<!ENTITY updateChecking "Atnaujinimų tikrinimas">

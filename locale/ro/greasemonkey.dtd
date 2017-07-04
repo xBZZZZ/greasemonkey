@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "Statistici anonime">
-<!ENTITY EnableSync "Enable Pale Moon Sync for User Scripts">
+<!ENTITY enableSync "Enable Pale Moon Sync for User Scripts">
 <!ENTITY greasemonkey.getUserScripts "Obține scripturi utilizator">
 <!ENTITY greasemonkey.noScriptShere "Nu sunt rulate pe această pagină scripturile instalate.">
 <!ENTITY greasemonkey.youHaveNoScripts "Nu aveți scripturi utilizator instalate">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "Excluderi globale">
 <!ENTITY options.newScript.removeUnused "Remove unused lines">
 <!ENTITY options.newScript.template "New script template">
-<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
-<!ENTITY RequireSecureUpdates "Sunt necesare actualizări de securitate">
-<!ENTITY RequireTimeoutUpdates "Require timeout updates">
+<!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
+<!ENTITY requireSecureUpdates "Sunt necesare actualizări de securitate">
+<!ENTITY requireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Setări script">
 <!ENTITY scriptprefs.title "Preferințe script utilizator Greasemonkey - !!">
 <!ENTITY scriptprefs.userSettings "Setări utilizator">
 <!ENTITY statusbar.enabled "Activat">
 <!ENTITY statusbar.enabled.accesskey "A">
-<!ENTITY SubmitStats "Adună și trimite statistici anonime de utilizare pentru a îmbunătății Greasemonkey">
-<!ENTITY TimeoutUpdatesUnits "Seconds">
-<!ENTITY Uninstall "Dezinstalare">
-<!ENTITY UpdateChecking "Verificare actualizări">
+<!ENTITY submitStats "Adună și trimite statistici anonime de utilizare pentru a îmbunătății Greasemonkey">
+<!ENTITY timeoutUpdatesUnits "Seconds">
+<!ENTITY uninstall "Dezinstalare">
+<!ENTITY updateChecking "Verificare actualizări">

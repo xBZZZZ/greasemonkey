@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "Statistik Anonim">
-<!ENTITY EnableFirefoxSync "Aktifkan Pale Moon Sync untuk Skrip">
+<!ENTITY enableSync "Aktifkan Pale Moon Sync untuk Skrip">
 <!ENTITY greasemonkey.getUserScripts "Dapatkan skrip">
 <!ENTITY greasemonkey.noScriptShere "Tidak ada skrip terpasang yang berjalan di halaman ini.">
 <!ENTITY greasemonkey.youHaveNoScripts "Belum ada satupun skrip yang terpasang.">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "Pengecualian Global">
 <!ENTITY options.newScript.removeUnused "Buang baris yang tidak digunakan">
 <!ENTITY options.newScript.template "Templat skrip baru">
-<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
-<!ENTITY RequireSecureUpdates "Membutuhkan pembaruan aman">
-<!ENTITY RequireTimeoutUpdates "Require timeout updates">
+<!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
+<!ENTITY requireSecureUpdates "Membutuhkan pembaruan aman">
+<!ENTITY requireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Pengaturan Skrip">
 <!ENTITY scriptprefs.title "Preferensi Skrip Greasemonkey - !!">
 <!ENTITY scriptprefs.userSettings "Pengaturan Pengguna">
 <!ENTITY statusbar.enabled "Diaktifkan">
 <!ENTITY statusbar.enabled.accesskey "E">
-<!ENTITY SubmitStats "Mengumpulkan dan mengirim statistik penggunaan secara anonim untuk perbaikan dan peningkatan Greasemonkey">
-<!ENTITY TimeoutUpdatesUnits "Seconds">
-<!ENTITY Uninstall "Copot">
-<!ENTITY UpdateChecking "Pemeriksaan Pembaruan">
+<!ENTITY submitStats "Mengumpulkan dan mengirim statistik penggunaan secara anonim untuk perbaikan dan peningkatan Greasemonkey">
+<!ENTITY timeoutUpdatesUnits "Seconds">
+<!ENTITY uninstall "Copot">
+<!ENTITY updateChecking "Pemeriksaan Pembaruan">

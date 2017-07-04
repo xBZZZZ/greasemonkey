@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "Anonymous Statistics">
-<!ENTITY EnableSync "Enable Pale Moon Sync for User Scripts">
+<!ENTITY enableSync "Enable Pale Moon Sync for User Scripts">
 <!ENTITY greasemonkey.getUserScripts "Get user scripts">
 <!ENTITY greasemonkey.noScriptShere "No installed scripts run on this page.">
 <!ENTITY greasemonkey.youHaveNoScripts "You don't have any user scripts installed">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "Global Excludes">
 <!ENTITY options.newScript.removeUnused "Remove unused lines">
 <!ENTITY options.newScript.template "New script template">
-<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
-<!ENTITY RequireSecureUpdates "Require secure updates">
-<!ENTITY RequireTimeoutUpdates "Require timeout updates">
+<!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
+<!ENTITY requireSecureUpdates "Require secure updates">
+<!ENTITY requireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Script Settings">
 <!ENTITY scriptprefs.title "Greasemonkey User Script Preferences - !!">
 <!ENTITY scriptprefs.userSettings "User Settings">
 <!ENTITY statusbar.enabled "Enabled">
 <!ENTITY statusbar.enabled.accesskey "E">
-<!ENTITY SubmitStats "Gather and submit anonymous usage statistics to improve Greasemonkey">
-<!ENTITY TimeoutUpdatesUnits "Seconds">
-<!ENTITY Uninstall "Uninstall">
-<!ENTITY UpdateChecking "Update Checking">
+<!ENTITY submitStats "Gather and submit anonymous usage statistics to improve Greasemonkey">
+<!ENTITY timeoutUpdatesUnits "Seconds">
+<!ENTITY uninstall "Uninstall">
+<!ENTITY updateChecking "Update Checking">

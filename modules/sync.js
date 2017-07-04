@@ -91,6 +91,7 @@ gWeave.Utils.deferGetSet(
       "userExcludes",
       "userIncludes",
       "userMatches",
+      "userOverride",
       "values",
       "valuesTooBig",
     ]);
@@ -130,6 +131,7 @@ ScriptStore.prototype = {
           rs.script.userExcludes = aRecord.cleartext.userExcludes;
           rs.script.userMatches = aRecord.cleartext.userMatches;
           rs.script.userIncludes = aRecord.cleartext.userIncludes;
+          rs.script.userOverride = aRecord.cleartext.userOverride;
           setScriptValuesFromSyncRecord(rs.script, aRecord);
         }
       }));
@@ -157,6 +159,7 @@ ScriptStore.prototype = {
       record.cleartext.userExcludes = script.userExcludes;
       record.cleartext.userMatches = script.userMatches;
       record.cleartext.userIncludes = script.userIncludes;
+      record.cleartext.userOverride = script.userOverride;
 
       if (GM_prefRoot.getValue("sync.values")) {
         let storage = new GM_ScriptStorageBack(script);
@@ -171,7 +174,7 @@ ScriptStore.prototype = {
           try {
             val = JSON.parse(val);
           } catch (e) {
-            dump("Sync" + "\n" + uneval(e) + "\n");
+            dump("Sync:" + "\n" + uneval(e) + "\n");
             continue;
           }
           record.cleartext.values[name] = val;
@@ -238,6 +241,7 @@ ScriptStore.prototype = {
       script.userExcludes = aRecord.cleartext.userExcludes || [];
       script.userMatches = aRecord.cleartext.userMatches || [];
       script.userIncludes = aRecord.cleartext.userIncludes || [];
+      script.userOverride = !!aRecord.cleartext.userOverride;
       setScriptValuesFromSyncRecord(script, aRecord);
     }
   },

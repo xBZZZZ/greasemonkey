@@ -1,30 +1,30 @@
-<!ENTITY Edit "Edytuj">
-<!ENTITY Edit.accesskey "E">
-<!ENTITY Edit.tooltip "Edytuj ten skrypt">
-<!ENTITY ExecuteFirst "Wykonaj jako pierwszy">
-<!ENTITY ExecuteLast "Wykonaj jako ostatni">
-<!ENTITY ExecuteLater "Wykonaj później">
-<!ENTITY ExecuteSooner "Wykonaj wcześniej">
-<!ENTITY FindUpdate "Znajdź aktualizację">
-<!ENTITY ForcedFindUpdate "Wymuś znalezienie aktualizacji">
-<!ENTITY InstallUpdate "Zainstaluj aktualizację">
-<!ENTITY MoveDown "Przenieś w dół">
-<!ENTITY MoveDown.accesskey "P">
-<!ENTITY MoveToBottom "Przenieś na dół">
-<!ENTITY MoveToBottom.accesskey "D">
-<!ENTITY MoveToTop "Przenieś na górę">
-<!ENTITY MoveToTop.accesskey "G">
-<!ENTITY MoveUp "Przenieś w górę">
-<!ENTITY MoveUp.accesskey "R">
-<!ENTITY NewScript "Utwórz nowy skrypt">
-<!ENTITY NewScript.accesskey "U">
-<!ENTITY Show "Wyświetl folder skryptów">
-<!ENTITY Show.accesskey "W">
-<!ENTITY Sort.byExecution "Porządkuj wg kolejności wykonania">
-<!ENTITY Sort.byName "Porządkuj wg nazwy">
-<!ENTITY Sort.byNamespace "Sort by namespace">
-<!ENTITY Sort.byStatus "Porządkuj wg statusu">
-<!ENTITY Sort.execution "Kolejność wykonania">
-<!ENTITY Sort.name "Nazwa">
-<!ENTITY Sort.namespace "Namespace">
-<!ENTITY Sort.status "Status">
+<!ENTITY edit "Edytuj">
+<!ENTITY edit.accesskey "E">
+<!ENTITY edit.tooltip "Edytuj ten skrypt">
+<!ENTITY executeFirst "Wykonaj jako pierwszy">
+<!ENTITY executeLast "Wykonaj jako ostatni">
+<!ENTITY executeLater "Wykonaj później">
+<!ENTITY executeSooner "Wykonaj wcześniej">
+<!ENTITY findUpdate "Znajdź aktualizację">
+<!ENTITY forcedFindUpdate "Wymuś znalezienie aktualizacji">
+<!ENTITY installUpdate "Zainstaluj aktualizację">
+<!ENTITY moveDown "Przenieś w dół">
+<!ENTITY moveDown.accesskey "P">
+<!ENTITY moveToBottom "Przenieś na dół">
+<!ENTITY moveToBottom.accesskey "D">
+<!ENTITY moveToTop "Przenieś na górę">
+<!ENTITY moveToTop.accesskey "G">
+<!ENTITY moveUp "Przenieś w górę">
+<!ENTITY moveUp.accesskey "R">
+<!ENTITY newScript "Utwórz nowy skrypt">
+<!ENTITY newScript.accesskey "U">
+<!ENTITY show "Wyświetl folder skryptów">
+<!ENTITY show.accesskey "W">
+<!ENTITY sort.byExecution "Porządkuj wg kolejności wykonania">
+<!ENTITY sort.byName "Porządkuj wg nazwy">
+<!ENTITY sort.byNamespace "Sort by namespace">
+<!ENTITY sort.byStatus "Porządkuj wg statusu">
+<!ENTITY sort.execution "Kolejność wykonania">
+<!ENTITY sort.name "Nazwa">
+<!ENTITY sort.namespace "Namespace">
+<!ENTITY sort.status "Status">

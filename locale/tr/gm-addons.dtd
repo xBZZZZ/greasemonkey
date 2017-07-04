@@ -1,30 +1,30 @@
-<!ENTITY Edit "Düzenle">
-<!ENTITY Edit.accesskey "E">
-<!ENTITY Edit.tooltip "Bu Kullanıcı Betiğini Düzenle">
-<!ENTITY ExecuteFirst "İlk yürüt">
-<!ENTITY ExecuteLast "Son Yürüt">
-<!ENTITY ExecuteLater "Sonra yürüt">
-<!ENTITY ExecuteSooner "Er geç yürüt">
-<!ENTITY FindUpdate "Güncelleme Bul">
-<!ENTITY ForcedFindUpdate "Zorunlu bulunan güncellemeler">
-<!ENTITY InstallUpdate "Güncelleştirme Yükle">
-<!ENTITY MoveDown "Aşağı Taşı">
-<!ENTITY MoveDown.accesskey "D">
-<!ENTITY MoveToBottom "En alta Taşı">
-<!ENTITY MoveToBottom.accesskey "B">
-<!ENTITY MoveToTop "En üste Taşı">
-<!ENTITY MoveToTop.accesskey "T">
-<!ENTITY MoveUp "Yukarı Taşı">
-<!ENTITY MoveUp.accesskey "U">
-<!ENTITY NewScript "Yeni Betik Oluştur">
-<!ENTITY NewScript.accesskey "C">
-<!ENTITY Show "İçeren Klasörü Göster">
-<!ENTITY Show.accesskey "S">
-<!ENTITY Sort.byExecution "Yürütme sırasına göre sırala">
-<!ENTITY Sort.byName "İsme göre sırala">
-<!ENTITY Sort.byNamespace "Sort by namespace">
-<!ENTITY Sort.byStatus "Duruma göre sırala">
-<!ENTITY Sort.execution "Yürütme Sırası">
-<!ENTITY Sort.name "Isim">
-<!ENTITY Sort.namespace "Namespace">
-<!ENTITY Sort.status "Durum">
+<!ENTITY edit "Düzenle">
+<!ENTITY edit.accesskey "E">
+<!ENTITY edit.tooltip "Bu Kullanıcı Betiğini Düzenle">
+<!ENTITY executeFirst "İlk yürüt">
+<!ENTITY executeLast "Son Yürüt">
+<!ENTITY executeLater "Sonra yürüt">
+<!ENTITY executeSooner "Er geç yürüt">
+<!ENTITY findUpdate "Güncelleme Bul">
+<!ENTITY forcedFindUpdate "Zorunlu bulunan güncellemeler">
+<!ENTITY installUpdate "Güncelleştirme Yükle">
+<!ENTITY moveDown "Aşağı Taşı">
+<!ENTITY moveDown.accesskey "D">
+<!ENTITY moveToBottom "En alta Taşı">
+<!ENTITY moveToBottom.accesskey "B">
+<!ENTITY moveToTop "En üste Taşı">
+<!ENTITY moveToTop.accesskey "T">
+<!ENTITY moveUp "Yukarı Taşı">
+<!ENTITY moveUp.accesskey "U">
+<!ENTITY newScript "Yeni Betik Oluştur">
+<!ENTITY newScript.accesskey "C">
+<!ENTITY show "İçeren Klasörü Göster">
+<!ENTITY show.accesskey "S">
+<!ENTITY sort.byExecution "Yürütme sırasına göre sırala">
+<!ENTITY sort.byName "İsme göre sırala">
+<!ENTITY sort.byNamespace "Sort by namespace">
+<!ENTITY sort.byStatus "Duruma göre sırala">
+<!ENTITY sort.execution "Yürütme Sırası">
+<!ENTITY sort.name "Isim">
+<!ENTITY sort.namespace "Namespace">
+<!ENTITY sort.status "Durum">

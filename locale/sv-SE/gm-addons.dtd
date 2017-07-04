@@ -1,30 +1,30 @@
-<!ENTITY Edit "Redigera">
-<!ENTITY Edit.accesskey "R">
-<!ENTITY Edit.tooltip "Redigera detta användarskript">
-<!ENTITY ExecuteFirst "Kör först">
-<!ENTITY ExecuteLast "Kör sist">
-<!ENTITY ExecuteLater "Kör senare">
-<!ENTITY ExecuteSooner "Kör tidigare">
-<!ENTITY FindUpdate "Sök efter uppdatering">
-<!ENTITY ForcedFindUpdate "Tvingad sökning efter uppdateringar">
-<!ENTITY InstallUpdate "Installera uppdatering">
-<!ENTITY MoveDown "Flytta nedåt">
-<!ENTITY MoveDown.accesskey "n">
-<!ENTITY MoveToBottom "Flytta nederst">
-<!ENTITY MoveToBottom.accesskey "e">
-<!ENTITY MoveToTop "Flytta överst">
-<!ENTITY MoveToTop.accesskey "ö">
-<!ENTITY MoveUp "Flytta uppåt">
-<!ENTITY MoveUp.accesskey "u">
-<!ENTITY NewScript "Skapa nytt skript">
-<!ENTITY NewScript.accesskey "S">
-<!ENTITY Show "Öppna objektets mapp">
-<!ENTITY Show.accesskey "p">
-<!ENTITY Sort.byExecution "Sortera efter körningsordning">
-<!ENTITY Sort.byName "Sortera efter namn">
-<!ENTITY Sort.byNamespace "Sort by namespace">
-<!ENTITY Sort.byStatus "Sortera efter status">
-<!ENTITY Sort.execution "Körningsordning">
-<!ENTITY Sort.name "Namn">
-<!ENTITY Sort.namespace "Namespace">
-<!ENTITY Sort.status "Status">
+<!ENTITY edit "Redigera">
+<!ENTITY edit.accesskey "R">
+<!ENTITY edit.tooltip "Redigera detta användarskript">
+<!ENTITY executeFirst "Kör först">
+<!ENTITY executeLast "Kör sist">
+<!ENTITY executeLater "Kör senare">
+<!ENTITY executeSooner "Kör tidigare">
+<!ENTITY findUpdate "Sök efter uppdatering">
+<!ENTITY forcedFindUpdate "Tvingad sökning efter uppdateringar">
+<!ENTITY installUpdate "Installera uppdatering">
+<!ENTITY moveDown "Flytta nedåt">
+<!ENTITY moveDown.accesskey "n">
+<!ENTITY moveToBottom "Flytta nederst">
+<!ENTITY moveToBottom.accesskey "e">
+<!ENTITY moveToTop "Flytta överst">
+<!ENTITY moveToTop.accesskey "ö">
+<!ENTITY moveUp "Flytta uppåt">
+<!ENTITY moveUp.accesskey "u">
+<!ENTITY newScript "Skapa nytt skript">
+<!ENTITY newScript.accesskey "S">
+<!ENTITY show "Öppna objektets mapp">
+<!ENTITY show.accesskey "p">
+<!ENTITY sort.byExecution "Sortera efter körningsordning">
+<!ENTITY sort.byName "Sortera efter namn">
+<!ENTITY sort.byNamespace "Sort by namespace">
+<!ENTITY sort.byStatus "Sortera efter status">
+<!ENTITY sort.execution "Körningsordning">
+<!ENTITY sort.name "Namn">
+<!ENTITY sort.namespace "Namespace">
+<!ENTITY sort.status "Status">

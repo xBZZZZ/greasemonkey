@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "Anonim İstatistikler">
-<!ENTITY EnableSync "Kullanıcı Betikleri için Pale Moon Eşitlemeyi Etkinleştir">
+<!ENTITY enableSync "Kullanıcı Betikleri için Pale Moon Eşitlemeyi Etkinleştir">
 <!ENTITY greasemonkey.getUserScripts "Kullanıcı betikleri al">
 <!ENTITY greasemonkey.noScriptShere "Bu sayfada çalışan yüklenmiş betikler yok.">
 <!ENTITY greasemonkey.youHaveNoScripts "Yüklü bir kullanıcı betiğiniz yok">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "Global Çıkarılanlar">
 <!ENTITY options.newScript.removeUnused "Kullanılmayan satırları sil">
 <!ENTITY options.newScript.template "Yeni betik şablonu">
-<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
-<!ENTITY RequireSecureUpdates "Gerekli güvenlik güncellemeleri">
-<!ENTITY RequireTimeoutUpdates "Require timeout updates">
+<!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
+<!ENTITY requireSecureUpdates "Gerekli güvenlik güncellemeleri">
+<!ENTITY requireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Betik Ayarları">
 <!ENTITY scriptprefs.title "Greasemonkey Kullanıcı Betik Tercihleri -!!">
 <!ENTITY scriptprefs.userSettings "Kullanıcı Ayarları">
 <!ENTITY statusbar.enabled "Etkin">
 <!ENTITY statusbar.enabled.accesskey "E">
-<!ENTITY SubmitStats "Greasemonkey geliştirmeleri için anonim kullanım istatistiklerini topla ve gönder">
-<!ENTITY TimeoutUpdatesUnits "Seconds">
-<!ENTITY Uninstall "Kaldır">
-<!ENTITY UpdateChecking "Güncelleştirme Kontrol Ediliyor">
+<!ENTITY submitStats "Greasemonkey geliştirmeleri için anonim kullanım istatistiklerini topla ve gönder">
+<!ENTITY timeoutUpdatesUnits "Seconds">
+<!ENTITY uninstall "Kaldır">
+<!ENTITY updateChecking "Güncelleştirme Kontrol Ediliyor">

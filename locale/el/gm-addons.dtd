@@ -1,30 +1,30 @@
-<!ENTITY Edit "Επεξεργασία">
-<!ENTITY Edit.accesskey "Ε">
-<!ENTITY Edit.tooltip "Επεξεργασία αυτού του Κώδικα Χρήστη">
-<!ENTITY ExecuteFirst "Εκτέλεση στην αρχή">
-<!ENTITY ExecuteLast "Εκτέλεση στο τέλος">
-<!ENTITY ExecuteLater "Εκτέλεση αργότερα">
-<!ENTITY ExecuteSooner "Εκτέλεση νωρίτερα">
-<!ENTITY FindUpdate "Εύρεση Ενημέρωσης">
-<!ENTITY ForcedFindUpdate "Forced Find Updates">
-<!ENTITY InstallUpdate "Εγκατάσταση Ενημέρωσης">
-<!ENTITY MoveDown "Μετακίνηση Κάτω">
-<!ENTITY MoveDown.accesskey "Κ">
-<!ENTITY MoveToBottom "Μετακίνηση στο Τέλος">
-<!ENTITY MoveToBottom.accesskey "Τ">
-<!ENTITY MoveToTop "Μετακίνηση στην Αρχή">
-<!ENTITY MoveToTop.accesskey "Ρ">
-<!ENTITY MoveUp "Μετακίνηση Πάνω">
-<!ENTITY MoveUp.accesskey "Π">
-<!ENTITY NewScript "Δημιουργία Νέου Κώδικα">
-<!ENTITY NewScript.accesskey "Δ">
-<!ENTITY Show "Προβολή Περιέχοντος Φακέλου">
-<!ENTITY Show.accesskey "Φ">
-<!ENTITY Sort.byExecution "Ταξινόμηση κατά σειρά εκτέλεσης">
-<!ENTITY Sort.byName "Ταξινόμηση κατά όνομα">
-<!ENTITY Sort.byNamespace "Sort by namespace">
-<!ENTITY Sort.byStatus "Ταξινόμησαη κατά κατάσταση">
-<!ENTITY Sort.execution "Σειρά Εκτέλεσης">
-<!ENTITY Sort.name "Όνομα">
-<!ENTITY Sort.namespace "Namespace">
-<!ENTITY Sort.status "Κατάσταση">
+<!ENTITY edit "Επεξεργασία">
+<!ENTITY edit.accesskey "Ε">
+<!ENTITY edit.tooltip "Επεξεργασία αυτού του Κώδικα Χρήστη">
+<!ENTITY executeFirst "Εκτέλεση στην αρχή">
+<!ENTITY executeLast "Εκτέλεση στο τέλος">
+<!ENTITY executeLater "Εκτέλεση αργότερα">
+<!ENTITY executeSooner "Εκτέλεση νωρίτερα">
+<!ENTITY findUpdate "Εύρεση Ενημέρωσης">
+<!ENTITY forcedFindUpdate "Forced Find Updates">
+<!ENTITY installUpdate "Εγκατάσταση Ενημέρωσης">
+<!ENTITY moveDown "Μετακίνηση Κάτω">
+<!ENTITY moveDown.accesskey "Κ">
+<!ENTITY moveToBottom "Μετακίνηση στο Τέλος">
+<!ENTITY moveToBottom.accesskey "Τ">
+<!ENTITY moveToTop "Μετακίνηση στην Αρχή">
+<!ENTITY moveToTop.accesskey "Ρ">
+<!ENTITY moveUp "Μετακίνηση Πάνω">
+<!ENTITY moveUp.accesskey "Π">
+<!ENTITY newScript "Δημιουργία Νέου Κώδικα">
+<!ENTITY newScript.accesskey "Δ">
+<!ENTITY show "Προβολή Περιέχοντος Φακέλου">
+<!ENTITY show.accesskey "Φ">
+<!ENTITY sort.byExecution "Ταξινόμηση κατά σειρά εκτέλεσης">
+<!ENTITY sort.byName "Ταξινόμηση κατά όνομα">
+<!ENTITY sort.byNamespace "Sort by namespace">
+<!ENTITY sort.byStatus "Ταξινόμησαη κατά κατάσταση">
+<!ENTITY sort.execution "Σειρά Εκτέλεσης">
+<!ENTITY sort.name "Όνομα">
+<!ENTITY sort.namespace "Namespace">
+<!ENTITY sort.status "Κατάσταση">

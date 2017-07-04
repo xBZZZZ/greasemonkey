@@ -4,6 +4,7 @@
 <!ENTITY button.addUserMatch "添加为用户匹配">
 <!ENTITY button.edit "编辑...">
 <!ENTITY button.remove "删除">
+<!ENTITY checkbox.grpOverride "禁用该脚本的包括模式，仅使用用户定义的">
 <!ENTITY label.grpExcluded "排除如下页面（@exclude）">
 <!ENTITY label.grpIncluded "包括如下页面（@include）">
 <!ENTITY label.grpMatched "匹配如下页面（@match）">

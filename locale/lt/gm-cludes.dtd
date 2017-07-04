@@ -4,6 +4,7 @@
 <!ENTITY button.addUserMatch "Add as user match">
 <!ENTITY button.edit "Keisti...">
 <!ENTITY button.remove "Pašalinti">
+<!ENTITY checkbox.grpOverride "Disable this script's rules and only use the user defined ones">
 <!ENTITY label.grpExcluded "Puslapiai kuriuose nevykdoma">
 <!ENTITY label.grpIncluded "Puslapiai kuriuose vykdoma">
 <!ENTITY label.grpMatched "Matched Pages">

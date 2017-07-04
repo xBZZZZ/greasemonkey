@@ -1,30 +1,30 @@
-<!ENTITY Edit "Редактиране">
-<!ENTITY Edit.accesskey "Р">
-<!ENTITY Edit.tooltip "Редактиране на този потребителски скрипт">
-<!ENTITY ExecuteFirst "Изпълни първо">
-<!ENTITY ExecuteLast "Изпълни последно">
-<!ENTITY ExecuteLater "Изпълни по-късно">
-<!ENTITY ExecuteSooner "Изпълни по-скоро">
-<!ENTITY FindUpdate "Търсене на актуализация">
-<!ENTITY ForcedFindUpdate "Принудително търсене на актуализации">
-<!ENTITY InstallUpdate "Инсталиране на актуализацията">
-<!ENTITY MoveDown "Преместване надолу">
-<!ENTITY MoveDown.accesskey "Д">
-<!ENTITY MoveToBottom "Преместване накрая">
-<!ENTITY MoveToBottom.accesskey "К">
-<!ENTITY MoveToTop "Преместване в началото">
-<!ENTITY MoveToTop.accesskey "Н">
-<!ENTITY MoveUp "Преместване нагоре">
-<!ENTITY MoveUp.accesskey "Г">
-<!ENTITY NewScript "Създаване на нов скрипт">
-<!ENTITY NewScript.accesskey "С">
-<!ENTITY Show "Показване на съдържащата папка">
-<!ENTITY Show.accesskey "П">
-<!ENTITY Sort.byExecution "Подреждане по ред на изпълнение">
-<!ENTITY Sort.byName "Подреждане по име">
-<!ENTITY Sort.byNamespace "Sort by namespace">
-<!ENTITY Sort.byStatus "Подреждане по състояние">
-<!ENTITY Sort.execution "Ред на изпълнение">
-<!ENTITY Sort.name "Име">
-<!ENTITY Sort.namespace "Namespace">
-<!ENTITY Sort.status "Състояние">
+<!ENTITY edit "Редактиране">
+<!ENTITY edit.accesskey "Р">
+<!ENTITY edit.tooltip "Редактиране на този потребителски скрипт">
+<!ENTITY executeFirst "Изпълни първо">
+<!ENTITY executeLast "Изпълни последно">
+<!ENTITY executeLater "Изпълни по-късно">
+<!ENTITY executeSooner "Изпълни по-скоро">
+<!ENTITY findUpdate "Търсене на актуализация">
+<!ENTITY forcedFindUpdate "Принудително търсене на актуализации">
+<!ENTITY installUpdate "Инсталиране на актуализацията">
+<!ENTITY moveDown "Преместване надолу">
+<!ENTITY moveDown.accesskey "Д">
+<!ENTITY moveToBottom "Преместване накрая">
+<!ENTITY moveToBottom.accesskey "К">
+<!ENTITY moveToTop "Преместване в началото">
+<!ENTITY moveToTop.accesskey "Н">
+<!ENTITY moveUp "Преместване нагоре">
+<!ENTITY moveUp.accesskey "Г">
+<!ENTITY newScript "Създаване на нов скрипт">
+<!ENTITY newScript.accesskey "С">
+<!ENTITY show "Показване на съдържащата папка">
+<!ENTITY show.accesskey "П">
+<!ENTITY sort.byExecution "Подреждане по ред на изпълнение">
+<!ENTITY sort.byName "Подреждане по име">
+<!ENTITY sort.byNamespace "Sort by namespace">
+<!ENTITY sort.byStatus "Подреждане по състояние">
+<!ENTITY sort.execution "Ред на изпълнение">
+<!ENTITY sort.name "Име">
+<!ENTITY sort.namespace "Namespace">
+<!ENTITY sort.status "Състояние">

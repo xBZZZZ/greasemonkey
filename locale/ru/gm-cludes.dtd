@@ -4,6 +4,7 @@
 <!ENTITY button.addUserMatch "Добавить соответствующего пользователя">
 <!ENTITY button.edit "Правка">
 <!ENTITY button.remove "Удалить">
+<!ENTITY checkbox.grpOverride "Отключить заданные в скрипте включения и использовать только эти">
 <!ENTITY label.grpExcluded "Исключенные страницы">
 <!ENTITY label.grpIncluded "Включенные страницы">
 <!ENTITY label.grpMatched "Похожие страницы">

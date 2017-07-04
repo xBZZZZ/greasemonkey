@@ -88,6 +88,9 @@ const GM_CONSTANTS = {
       "chrome://greasemonkey/locale/greasemonkey.properties",
   "localeStringBundle": Cc["@mozilla.org/intl/stringbundle;1"]
       .getService(Ci.nsIStringBundleService),
+  "script": {
+   "includeAll": "*",
+  },
   "scriptAddonType": "greasemonkey-user-script",
   "scriptIDSuffix": "@greasespot.net",
   "scriptParseBOM": "\u00EF\u00BB\u00BF",

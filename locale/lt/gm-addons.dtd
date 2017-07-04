@@ -1,30 +1,30 @@
-<!ENTITY Edit "Keisti">
-<!ENTITY Edit.accesskey "K">
-<!ENTITY Edit.tooltip "Keisti šį naudotojo scenarijų">
-<!ENTITY ExecuteFirst "Vykdyti pirmą">
-<!ENTITY ExecuteLast "Vykdyti paskutinį">
-<!ENTITY ExecuteLater "Vykdyti vėliau">
-<!ENTITY ExecuteSooner "Vykdyti anksčiau">
-<!ENTITY FindUpdate "Rasti naujinimą">
-<!ENTITY ForcedFindUpdate "Forced Find Updates">
-<!ENTITY InstallUpdate "Įdiegti atnaujinimą">
-<!ENTITY MoveDown "Perkelti žemyn">
-<!ENTITY MoveDown.accesskey "Z">
-<!ENTITY MoveToBottom "Perkelti į apačią">
-<!ENTITY MoveToBottom.accesskey "A">
-<!ENTITY MoveToTop "Perkelti į viršų">
-<!ENTITY MoveToTop.accesskey "V">
-<!ENTITY MoveUp "Perkelti aukštyn">
-<!ENTITY MoveUp.accesskey "U">
-<!ENTITY NewScript "Kurti naują scenarijų">
-<!ENTITY NewScript.accesskey "N">
-<!ENTITY Show "Atverti aplanką">
-<!ENTITY Show.accesskey "a">
-<!ENTITY Sort.byExecution "Rikiuoti pagal vykdymo eilę">
-<!ENTITY Sort.byName "Rikiuoti pagal pavadinimą">
-<!ENTITY Sort.byNamespace "Sort by namespace">
-<!ENTITY Sort.byStatus "Rikiuoti pagal būseną">
-<!ENTITY Sort.execution "Vykdymo eilė">
-<!ENTITY Sort.name "Pavadinimas">
-<!ENTITY Sort.namespace "Namespace">
-<!ENTITY Sort.status "Būsena">
+<!ENTITY edit "Keisti">
+<!ENTITY edit.accesskey "K">
+<!ENTITY edit.tooltip "Keisti šį naudotojo scenarijų">
+<!ENTITY executeFirst "Vykdyti pirmą">
+<!ENTITY executeLast "Vykdyti paskutinį">
+<!ENTITY executeLater "Vykdyti vėliau">
+<!ENTITY executeSooner "Vykdyti anksčiau">
+<!ENTITY findUpdate "Rasti naujinimą">
+<!ENTITY forcedFindUpdate "Forced Find Updates">
+<!ENTITY installUpdate "Įdiegti atnaujinimą">
+<!ENTITY moveDown "Perkelti žemyn">
+<!ENTITY moveDown.accesskey "Z">
+<!ENTITY moveToBottom "Perkelti į apačią">
+<!ENTITY moveToBottom.accesskey "A">
+<!ENTITY moveToTop "Perkelti į viršų">
+<!ENTITY moveToTop.accesskey "V">
+<!ENTITY moveUp "Perkelti aukštyn">
+<!ENTITY moveUp.accesskey "U">
+<!ENTITY newScript "Kurti naują scenarijų">
+<!ENTITY newScript.accesskey "N">
+<!ENTITY show "Atverti aplanką">
+<!ENTITY show.accesskey "a">
+<!ENTITY sort.byExecution "Rikiuoti pagal vykdymo eilę">
+<!ENTITY sort.byName "Rikiuoti pagal pavadinimą">
+<!ENTITY sort.byNamespace "Sort by namespace">
+<!ENTITY sort.byStatus "Rikiuoti pagal būseną">
+<!ENTITY sort.execution "Vykdymo eilė">
+<!ENTITY sort.name "Pavadinimas">
+<!ENTITY sort.namespace "Namespace">
+<!ENTITY sort.status "Būsena">

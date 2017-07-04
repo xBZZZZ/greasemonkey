@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "Anonymné štatistiky">
-<!ENTITY EnableSync "Zapnúť Pale Moon synchronizáciu pre užívateľské skripty">
+<!ENTITY enableSync "Zapnúť Pale Moon synchronizáciu pre užívateľské skripty">
 <!ENTITY greasemonkey.getUserScripts "Získať užívateľské skripty">
 <!ENTITY greasemonkey.noScriptShere "Na tejto stránke nie sú spustené nainštalované skripty.">
 <!ENTITY greasemonkey.youHaveNoScripts "Nemáte nainštalované žiadne užívateľské skripty">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "Zahrnúť globálne">
 <!ENTITY options.newScript.removeUnused "Odstrániť nepoužívané riadky">
 <!ENTITY options.newScript.template "Nová šablóna skriptu">
-<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
-<!ENTITY RequireSecureUpdates "Požaduje bezpečnostné aktualizácie">
-<!ENTITY RequireTimeoutUpdates "Použiť pre aktualizácie timeout">
+<!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
+<!ENTITY requireSecureUpdates "Požaduje bezpečnostné aktualizácie">
+<!ENTITY requireTimeoutUpdates "Použiť pre aktualizácie timeout">
 <!ENTITY scriptprefs.scriptSettings "Nastavenie skriptov">
 <!ENTITY scriptprefs.title "Greasemonkey uživatelský skript Nastavenia -!!">
 <!ENTITY scriptprefs.userSettings "Užívateľské nastavenia">
 <!ENTITY statusbar.enabled "Povolený">
 <!ENTITY statusbar.enabled.accesskey "P">
-<!ENTITY SubmitStats "Zbierať a posielať anonymné štatistiky používania pre zlepšenie Greasemonkey">
-<!ENTITY TimeoutUpdatesUnits "Sekundy">
-<!ENTITY Uninstall "Odinštalovať">
-<!ENTITY UpdateChecking "Kontrolovanie aktualizácií">
+<!ENTITY submitStats "Zbierať a posielať anonymné štatistiky používania pre zlepšenie Greasemonkey">
+<!ENTITY timeoutUpdatesUnits "Sekundy">
+<!ENTITY uninstall "Odinštalovať">
+<!ENTITY updateChecking "Kontrolovanie aktualizácií">

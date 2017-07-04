@@ -183,6 +183,7 @@ function getStatsObj() {
       "userExcludeCount": script.userExcludes.length,
       "userIncludeCount": script.userIncludes.length,
       "userMatchCount": script.userMatches.length,
+      // "userOverride": script.userOverride,
       "valueCount": valueStats.count,
       "valueSize": valueStats.size,
     };

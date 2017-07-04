@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "Анонимная статистика">
-<!ENTITY EnableSync "Включить Pale Moon Sync для пользовательских скриптов">
+<!ENTITY enableSync "Включить Pale Moon Sync для пользовательских скриптов">
 <!ENTITY greasemonkey.getUserScripts "Скачать скрипты">
 <!ENTITY greasemonkey.noScriptShere "Для этой страницы нет скриптов">
 <!ENTITY greasemonkey.youHaveNoScripts "У вас не установлено ни одного скрипта">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "Глобальные исключения">
 <!ENTITY options.newScript.removeUnused "Удаление неиспользуемых линий">
 <!ENTITY options.newScript.template "Новый шаблон скрипта">
-<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
-<!ENTITY RequireSecureUpdates "Использовать безопасное обновление">
-<!ENTITY RequireTimeoutUpdates "Require timeout updates">
+<!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
+<!ENTITY requireSecureUpdates "Использовать безопасное обновление">
+<!ENTITY requireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Настройки скрипта">
 <!ENTITY scriptprefs.title "Настройки пользовательских скриптов Greasemonkey - !!">
 <!ENTITY scriptprefs.userSettings "Пользовательские настройки">
 <!ENTITY statusbar.enabled "Включить Greasemonkey">
 <!ENTITY statusbar.enabled.accesskey "к">
-<!ENTITY SubmitStats "Собирать и передавать анонимную статистику использования для улучшения Greasemonkey">
-<!ENTITY TimeoutUpdatesUnits "Seconds">
-<!ENTITY Uninstall "Удаление">
-<!ENTITY UpdateChecking "Проверка обновлений">
+<!ENTITY submitStats "Собирать и передавать анонимную статистику использования для улучшения Greasemonkey">
+<!ENTITY timeoutUpdatesUnits "Seconds">
+<!ENTITY uninstall "Удаление">
+<!ENTITY updateChecking "Проверка обновлений">

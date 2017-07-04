@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "Anonymous Statistics">
-<!ENTITY EnableSync "Enable Pale Moon Sync for User Scripts">
+<!ENTITY enableSync "Enable Pale Moon Sync for User Scripts">
 <!ENTITY greasemonkey.getUserScripts "دریافت دستنویس های کاربری">
 <!ENTITY greasemonkey.noScriptShere "دستنویس ای که در این صفحه اجرا شود موجود نیست.">
 <!ENTITY greasemonkey.youHaveNoScripts "شما هیچ دستنویس نسب شده ای ندارید">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "مستثنا های کلی">
 <!ENTITY options.newScript.removeUnused "Remove unused lines">
 <!ENTITY options.newScript.template "New script template">
-<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
-<!ENTITY RequireSecureUpdates "Require secure updates">
-<!ENTITY RequireTimeoutUpdates "Require timeout updates">
+<!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
+<!ENTITY requireSecureUpdates "Require secure updates">
+<!ENTITY requireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "تنظیمات گریزمانکی">
 <!ENTITY scriptprefs.title "ترجیهات دستنویس کاربریگریزمانکی  - !!">
 <!ENTITY scriptprefs.userSettings "تنظیمات کاربر">
 <!ENTITY statusbar.enabled "فعال">
 <!ENTITY statusbar.enabled.accesskey "ع">
-<!ENTITY SubmitStats "Gather and submit anonymous usage statistics to improve Greasemonkey">
-<!ENTITY TimeoutUpdatesUnits "Seconds">
-<!ENTITY Uninstall "عزل">
-<!ENTITY UpdateChecking "Update Checking">
+<!ENTITY submitStats "Gather and submit anonymous usage statistics to improve Greasemonkey">
+<!ENTITY timeoutUpdatesUnits "Seconds">
+<!ENTITY uninstall "عزل">
+<!ENTITY updateChecking "Update Checking">

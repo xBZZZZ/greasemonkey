@@ -4,6 +4,7 @@
 <!ENTITY button.addUserMatch "Adicionar como corrrespondente ao usuário">
 <!ENTITY button.edit "Editar...">
 <!ENTITY button.remove "Remover">
+<!ENTITY checkbox.grpOverride "Desativar as inclusões originais deste script e usar somente as inclusões personalizadas">
 <!ENTITY label.grpExcluded "Páginas Excluídas">
 <!ENTITY label.grpIncluded "Páginas Incluídas">
 <!ENTITY label.grpMatched "Páginas Correspondentes">

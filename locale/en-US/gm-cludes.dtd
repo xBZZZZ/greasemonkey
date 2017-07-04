@@ -4,6 +4,7 @@
 <!ENTITY button.addUserMatch "Add as user match">
 <!ENTITY button.edit "Edit...">
 <!ENTITY button.remove "Remove">
+<!ENTITY checkbox.grpOverride "Disable this script's rules and only use the user defined ones">
 <!ENTITY label.grpExcluded "Excluded Pages">
 <!ENTITY label.grpIncluded "Included Pages">
 <!ENTITY label.grpMatched "Matched Pages">

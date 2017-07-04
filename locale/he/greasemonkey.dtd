@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "עיבוד נתונים ללא זיהוי המשתמש">
-<!ENTITY EnableSync "Enable Pale Moon Sync for User Scripts">
+<!ENTITY enableSync "Enable Pale Moon Sync for User Scripts">
 <!ENTITY greasemonkey.getUserScripts "השג קבצי Script של משתמש">
 <!ENTITY greasemonkey.noScriptShere "לא מותקנים קבצי Script פעילים בדף זה.">
 <!ENTITY greasemonkey.youHaveNoScripts "לא מותקנים אצלך קבצי Script של משתמש כלשהם">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "אי הכללה כללית">
 <!ENTITY options.newScript.removeUnused "Remove unused lines">
 <!ENTITY options.newScript.template "New script template">
-<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
-<!ENTITY RequireSecureUpdates "דורשת עדכונים מאובטחים">
-<!ENTITY RequireTimeoutUpdates "Require timeout updates">
+<!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
+<!ENTITY requireSecureUpdates "דורשת עדכונים מאובטחים">
+<!ENTITY requireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "הגדרות קבצי Script">
 <!ENTITY scriptprefs.title "מאפייני קבצי Script של Greasemonkey - !!">
 <!ENTITY scriptprefs.userSettings "הגדרות משתמש">
 <!ENTITY statusbar.enabled "הפוך לזמין">
 <!ENTITY statusbar.enabled.accesskey "מ">
-<!ENTITY SubmitStats "אסיפה ומשלוח עיבוד נתונים ללא זיהוי המשתמש לצורך שיפור Greasemonkey">
-<!ENTITY TimeoutUpdatesUnits "Seconds">
-<!ENTITY Uninstall "הסר">
-<!ENTITY UpdateChecking "בדיקת עדכון">
+<!ENTITY submitStats "אסיפה ומשלוח עיבוד נתונים ללא זיהוי המשתמש לצורך שיפור Greasemonkey">
+<!ENTITY timeoutUpdatesUnits "Seconds">
+<!ENTITY uninstall "הסר">
+<!ENTITY updateChecking "בדיקת עדכון">

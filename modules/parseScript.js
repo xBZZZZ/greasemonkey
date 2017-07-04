@@ -267,7 +267,7 @@ function setDefaults(aScript) {
     aScript._runAt = "document-end";
   }
   if ((aScript._includes.length == 0) && (aScript._matches.length == 0)) {
-    aScript._includes.push("*");
+    aScript._includes.push(GM_CONSTANTS.script.includeAll);
   }
 }
 

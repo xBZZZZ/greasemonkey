@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "Анонимна статистика">
-<!ENTITY EnableSync "Enable Pale Moon Sync for User Scripts">
+<!ENTITY enableSync "Enable Pale Moon Sync for User Scripts">
 <!ENTITY greasemonkey.getUserScripts "Отримати користувацькі скрипти">
 <!ENTITY greasemonkey.noScriptShere "Жоден зі встановлених скриптів не працює на цій сторінці.">
 <!ENTITY greasemonkey.youHaveNoScripts "Жодних скриптів не встановлено">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "Глобальні винятки">
 <!ENTITY options.newScript.removeUnused "Remove unused lines">
 <!ENTITY options.newScript.template "New script template">
-<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
-<!ENTITY RequireSecureUpdates "Вимагати безпечних оновлень">
-<!ENTITY RequireTimeoutUpdates "Require timeout updates">
+<!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
+<!ENTITY requireSecureUpdates "Вимагати безпечних оновлень">
+<!ENTITY requireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Налаштування скрипту">
 <!ENTITY scriptprefs.title "Налаштування користувацьких скриптів Greasemonkey - !!">
 <!ENTITY scriptprefs.userSettings "Налаштування">
 <!ENTITY statusbar.enabled "Увімкнено">
 <!ENTITY statusbar.enabled.accesskey "У">
-<!ENTITY SubmitStats "Збирати та надсилати анонимну статистику про використання для покращення Greasemonkey">
-<!ENTITY TimeoutUpdatesUnits "Seconds">
-<!ENTITY Uninstall "Вилучити">
-<!ENTITY UpdateChecking "Перевірка оновлень">
+<!ENTITY submitStats "Збирати та надсилати анонимну статистику про використання для покращення Greasemonkey">
+<!ENTITY timeoutUpdatesUnits "Seconds">
+<!ENTITY uninstall "Вилучити">
+<!ENTITY updateChecking "Перевірка оновлень">

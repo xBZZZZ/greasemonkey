@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "匿名の統計">
-<!ENTITY EnableSync "Pale Moon Sync でユーザスクリプトを同期する">
+<!ENTITY enableSync "Pale Moon Sync でユーザスクリプトを同期する">
 <!ENTITY greasemonkey.getUserScripts "ユーザースクリプトを入手">
 <!ENTITY greasemonkey.noScriptShere "このページで実行するスクリプトはインストールされていません。">
 <!ENTITY greasemonkey.youHaveNoScripts "スクリプトがインストールされていません">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "実行しないページ">
 <!ENTITY options.newScript.removeUnused "未使用の行を削除">
 <!ENTITY options.newScript.template "新規スクリプトのテンプレート">
-<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
-<!ENTITY RequireSecureUpdates "安全に更新">
-<!ENTITY RequireTimeoutUpdates "Require timeout updates">
+<!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
+<!ENTITY requireSecureUpdates "安全に更新">
+<!ENTITY requireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "スクリプト設定">
 <!ENTITY scriptprefs.title "Greasemonkey ユーザースクリプト設定 - !!">
 <!ENTITY scriptprefs.userSettings "ユーザー設定">
 <!ENTITY statusbar.enabled "有効">
 <!ENTITY statusbar.enabled.accesskey "E">
-<!ENTITY SubmitStats "Greasemonkey を改善するために匿名の利用統計を収集し送信する">
-<!ENTITY TimeoutUpdatesUnits "Seconds">
-<!ENTITY Uninstall "削除">
-<!ENTITY UpdateChecking "更新の確認">
+<!ENTITY submitStats "Greasemonkey を改善するために匿名の利用統計を収集し送信する">
+<!ENTITY timeoutUpdatesUnits "Seconds">
+<!ENTITY uninstall "削除">
+<!ENTITY updateChecking "更新の確認">

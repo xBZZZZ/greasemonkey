@@ -1,30 +1,30 @@
-<!ENTITY Edit "עריכה">
-<!ENTITY Edit.accesskey "ע">
-<!ENTITY Edit.tooltip "ערוך סקריפט זה">
-<!ENTITY ExecuteFirst "בצע תחילה">
-<!ENTITY ExecuteLast "בצע בסוף">
-<!ENTITY ExecuteLater "בצע מאוחר יותר">
-<!ENTITY ExecuteSooner "בצע מוקדם יותר">
-<!ENTITY FindUpdate "חפש עידכונים">
-<!ENTITY ForcedFindUpdate "Forced Find Updates">
-<!ENTITY InstallUpdate "התקן את העדכון">
-<!ENTITY MoveDown "הזז למטה">
-<!ENTITY MoveDown.accesskey "ט">
-<!ENTITY MoveToBottom "הזז לסוף הרשימה">
-<!ENTITY MoveToBottom.accesskey "ת">
-<!ENTITY MoveToTop "הזז לראש הרשימה">
-<!ENTITY MoveToTop.accesskey "ר">
-<!ENTITY MoveUp "הזז למעלה">
-<!ENTITY MoveUp.accesskey "ע">
-<!ENTITY NewScript "צור סקריפט חדש">
-<!ENTITY NewScript.accesskey "צ">
-<!ENTITY Show "הצג תיקייה מכילה">
-<!ENTITY Show.accesskey "ג">
-<!ENTITY Sort.byExecution "מיין לפי סדר ביצוע">
-<!ENTITY Sort.byName "מיין לפי שם">
-<!ENTITY Sort.byNamespace "Sort by namespace">
-<!ENTITY Sort.byStatus "מיין לפי מצב">
-<!ENTITY Sort.execution "סדר ביצוע">
-<!ENTITY Sort.name "שם">
-<!ENTITY Sort.namespace "Namespace">
-<!ENTITY Sort.status "מצב">
+<!ENTITY edit "עריכה">
+<!ENTITY edit.accesskey "ע">
+<!ENTITY edit.tooltip "ערוך סקריפט זה">
+<!ENTITY executeFirst "בצע תחילה">
+<!ENTITY executeLast "בצע בסוף">
+<!ENTITY executeLater "בצע מאוחר יותר">
+<!ENTITY executeSooner "בצע מוקדם יותר">
+<!ENTITY findUpdate "חפש עידכונים">
+<!ENTITY forcedFindUpdate "Forced Find Updates">
+<!ENTITY installUpdate "התקן את העדכון">
+<!ENTITY moveDown "הזז למטה">
+<!ENTITY moveDown.accesskey "ט">
+<!ENTITY moveToBottom "הזז לסוף הרשימה">
+<!ENTITY moveToBottom.accesskey "ת">
+<!ENTITY moveToTop "הזז לראש הרשימה">
+<!ENTITY moveToTop.accesskey "ר">
+<!ENTITY moveUp "הזז למעלה">
+<!ENTITY moveUp.accesskey "ע">
+<!ENTITY newScript "צור סקריפט חדש">
+<!ENTITY newScript.accesskey "צ">
+<!ENTITY show "הצג תיקייה מכילה">
+<!ENTITY show.accesskey "ג">
+<!ENTITY sort.byExecution "מיין לפי סדר ביצוע">
+<!ENTITY sort.byName "מיין לפי שם">
+<!ENTITY sort.byNamespace "Sort by namespace">
+<!ENTITY sort.byStatus "מיין לפי מצב">
+<!ENTITY sort.execution "סדר ביצוע">
+<!ENTITY sort.name "שם">
+<!ENTITY sort.namespace "Namespace">
+<!ENTITY sort.status "מצב">

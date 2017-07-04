@@ -172,8 +172,14 @@ Config.prototype.install = function (
     aScript._enabled = aOldScript.enabled;
     aScript.checkRemoteUpdates = aOldScript.checkRemoteUpdates;
     aScript.userExcludes = aOldScript.userExcludes;
-    aScript.userMatches = aOldScript.userMatches;
+    // A needed fix for script update (if contains userMatches).
+    // See #2455.
+    // aScript.userMatches = aOldScript.userMatches;
+    aScript.userMatches = aOldScript.userMatches.map(function (match) {
+      return match.pattern;
+    });
     aScript.userIncludes = aOldScript.userIncludes;
+    aScript.userOverride = aOldScript.userOverride;
 
     // Uninstall the old script.
     this.uninstall(aOldScript, true);

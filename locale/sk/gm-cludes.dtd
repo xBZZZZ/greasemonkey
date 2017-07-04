@@ -4,6 +4,7 @@
 <!ENTITY button.addUserMatch "Pridať ako užívateľskú zhodu">
 <!ENTITY button.edit "Upraviť...">
 <!ENTITY button.remove "Odstrániť">
+<!ENTITY checkbox.grpOverride "Disable this script's rules and only use the user defined ones">
 <!ENTITY label.grpExcluded "Vylúčené stránky">
 <!ENTITY label.grpIncluded "Zahrnuté stránky">
 <!ENTITY label.grpMatched "Zhodné stránky">

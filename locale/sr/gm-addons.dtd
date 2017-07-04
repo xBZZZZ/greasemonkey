@@ -1,30 +1,30 @@
-<!ENTITY Edit "Уреди">
-<!ENTITY Edit.accesskey "У">
-<!ENTITY Edit.tooltip "Уреди ову корисничку скрипту">
-<!ENTITY ExecuteFirst "Изврши прву">
-<!ENTITY ExecuteLast "Изврши последњу">
-<!ENTITY ExecuteLater "Изврши касније">
-<!ENTITY ExecuteSooner "Изврши раније">
-<!ENTITY FindUpdate "Пронађи исправке">
-<!ENTITY ForcedFindUpdate "Forced Find Updates">
-<!ENTITY InstallUpdate "Инсталирај исправку">
-<!ENTITY MoveDown "Помери надоле">
-<!ENTITY MoveDown.accesskey "л">
-<!ENTITY MoveToBottom "Помери на дно">
-<!ENTITY MoveToBottom.accesskey "Д">
-<!ENTITY MoveToTop "Помери на врх">
-<!ENTITY MoveToTop.accesskey "В">
-<!ENTITY MoveUp "Помери нагоре">
-<!ENTITY MoveUp.accesskey "Г">
-<!ENTITY NewScript "Направи нову скрипту">
-<!ENTITY NewScript.accesskey "Н">
-<!ENTITY Show "Прикажи фасциклу у којој се налази">
-<!ENTITY Show.accesskey "Ф">
-<!ENTITY Sort.byExecution "Поређај по редоследу извршавања">
-<!ENTITY Sort.byName "Поређај по називу">
-<!ENTITY Sort.byNamespace "Sort by namespace">
-<!ENTITY Sort.byStatus "Поређај по стању">
-<!ENTITY Sort.execution "Ред. извршавања">
-<!ENTITY Sort.name "Назив">
-<!ENTITY Sort.namespace "Namespace">
-<!ENTITY Sort.status "Стање">
+<!ENTITY edit "Уреди">
+<!ENTITY edit.accesskey "У">
+<!ENTITY edit.tooltip "Уреди ову корисничку скрипту">
+<!ENTITY executeFirst "Изврши прву">
+<!ENTITY executeLast "Изврши последњу">
+<!ENTITY executeLater "Изврши касније">
+<!ENTITY executeSooner "Изврши раније">
+<!ENTITY findUpdate "Пронађи исправке">
+<!ENTITY forcedFindUpdate "Forced Find Updates">
+<!ENTITY installUpdate "Инсталирај исправку">
+<!ENTITY moveDown "Помери надоле">
+<!ENTITY moveDown.accesskey "л">
+<!ENTITY moveToBottom "Помери на дно">
+<!ENTITY moveToBottom.accesskey "Д">
+<!ENTITY moveToTop "Помери на врх">
+<!ENTITY moveToTop.accesskey "В">
+<!ENTITY moveUp "Помери нагоре">
+<!ENTITY moveUp.accesskey "Г">
+<!ENTITY newScript "Направи нову скрипту">
+<!ENTITY newScript.accesskey "Н">
+<!ENTITY show "Прикажи фасциклу у којој се налази">
+<!ENTITY show.accesskey "Ф">
+<!ENTITY sort.byExecution "Поређај по редоследу извршавања">
+<!ENTITY sort.byName "Поређај по називу">
+<!ENTITY sort.byNamespace "Sort by namespace">
+<!ENTITY sort.byStatus "Поређај по стању">
+<!ENTITY sort.execution "Ред. извршавања">
+<!ENTITY sort.name "Назив">
+<!ENTITY sort.namespace "Namespace">
+<!ENTITY sort.status "Стање">

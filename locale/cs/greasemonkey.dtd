@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "Anonymní statistiky">
-<!ENTITY EnableSync "Povolit Pale Moon Sync pro uživatelské skripty">
+<!ENTITY enableSync "Povolit Pale Moon Sync pro uživatelské skripty">
 <!ENTITY greasemonkey.getUserScripts "Získat uživatelské skripty">
 <!ENTITY greasemonkey.noScriptShere "Pro tuto stránku nejsou nainstalovány žádné skripty.">
 <!ENTITY greasemonkey.youHaveNoScripts "Nemáte nainstalovány žádné uživatelské skripty">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "Vyloučené stránky globálně">
 <!ENTITY options.newScript.removeUnused "Odebrat nepoužité řádky">
 <!ENTITY options.newScript.template "Nový skript - šablona">
-<!ENTITY RequireDisabledScriptsUpdates "Použít automatické aktualizace i pro zakázané skripty">
-<!ENTITY RequireSecureUpdates "Použít pouze zabezpečené aktualizace">
-<!ENTITY RequireTimeoutUpdates "Použít pro aktualizace timeout">
+<!ENTITY requireDisabledScriptsUpdates "Použít automatické aktualizace i pro zakázané skripty">
+<!ENTITY requireSecureUpdates "Použít pouze zabezpečené aktualizace">
+<!ENTITY requireTimeoutUpdates "Použít pro aktualizace timeout">
 <!ENTITY scriptprefs.scriptSettings "Nastavení skriptu">
 <!ENTITY scriptprefs.title "Greasemonkey nastavení - Uživatelský skript - !!">
 <!ENTITY scriptprefs.userSettings "Uživatelské nastavení">
 <!ENTITY statusbar.enabled "Povoleno">
 <!ENTITY statusbar.enabled.accesskey "P">
-<!ENTITY SubmitStats "Shromažďovat a odesílat anonymní statistiky o používání pro zlepšení Greasemonkey">
-<!ENTITY TimeoutUpdatesUnits "Sekundy">
-<!ENTITY Uninstall "Odinstalace">
-<!ENTITY UpdateChecking "Kontrola aktualizací">
+<!ENTITY submitStats "Shromažďovat a odesílat anonymní statistiky o používání pro zlepšení Greasemonkey">
+<!ENTITY timeoutUpdatesUnits "Sekundy">
+<!ENTITY uninstall "Odinstalace">
+<!ENTITY updateChecking "Kontrola aktualizací">

@@ -1,30 +1,30 @@
-<!ENTITY Edit "Muokkaa">
-<!ENTITY Edit.accesskey "M">
-<!ENTITY Edit.tooltip "Muokkaa tätä skriptiä">
-<!ENTITY ExecuteFirst "Suorita ensimmäisenä">
-<!ENTITY ExecuteLast "Suorita viimeisenä">
-<!ENTITY ExecuteLater "Suorita myöhemmin">
-<!ENTITY ExecuteSooner "Suorita aiemmin">
-<!ENTITY FindUpdate "Find Update">
-<!ENTITY ForcedFindUpdate "Forced Find Updates">
-<!ENTITY InstallUpdate "Install Update">
-<!ENTITY MoveDown "Siirrä alaspäin">
-<!ENTITY MoveDown.accesskey "A">
-<!ENTITY MoveToBottom "Siirrä loppuun">
-<!ENTITY MoveToBottom.accesskey "L">
-<!ENTITY MoveToTop "Siirrä alkuun">
-<!ENTITY MoveToTop.accesskey "N">
-<!ENTITY MoveUp "Siirrä ylöspäin">
-<!ENTITY MoveUp.accesskey "Y">
-<!ENTITY NewScript "Tee uusi skripti">
-<!ENTITY NewScript.accesskey "U">
-<!ENTITY Show "Näytä tallennuskansio">
-<!ENTITY Show.accesskey "T">
-<!ENTITY Sort.byExecution "Järjestä suoritusjärjestyksen mukaan">
-<!ENTITY Sort.byName "Järjestä nimen mukaan">
-<!ENTITY Sort.byNamespace "Sort by namespace">
-<!ENTITY Sort.byStatus "Järjestä tilan mukaan">
-<!ENTITY Sort.execution "Suoritusjärjestys">
-<!ENTITY Sort.name "Nimi">
-<!ENTITY Sort.namespace "Namespace">
-<!ENTITY Sort.status "Tila">
+<!ENTITY edit "Muokkaa">
+<!ENTITY edit.accesskey "M">
+<!ENTITY edit.tooltip "Muokkaa tätä skriptiä">
+<!ENTITY executeFirst "Suorita ensimmäisenä">
+<!ENTITY executeLast "Suorita viimeisenä">
+<!ENTITY executeLater "Suorita myöhemmin">
+<!ENTITY executeSooner "Suorita aiemmin">
+<!ENTITY findUpdate "Find Update">
+<!ENTITY forcedFindUpdate "Forced Find Updates">
+<!ENTITY installUpdate "Install Update">
+<!ENTITY moveDown "Siirrä alaspäin">
+<!ENTITY moveDown.accesskey "A">
+<!ENTITY moveToBottom "Siirrä loppuun">
+<!ENTITY moveToBottom.accesskey "L">
+<!ENTITY moveToTop "Siirrä alkuun">
+<!ENTITY moveToTop.accesskey "N">
+<!ENTITY moveUp "Siirrä ylöspäin">
+<!ENTITY moveUp.accesskey "Y">
+<!ENTITY newScript "Tee uusi skripti">
+<!ENTITY newScript.accesskey "U">
+<!ENTITY show "Näytä tallennuskansio">
+<!ENTITY show.accesskey "T">
+<!ENTITY sort.byExecution "Järjestä suoritusjärjestyksen mukaan">
+<!ENTITY sort.byName "Järjestä nimen mukaan">
+<!ENTITY sort.byNamespace "Sort by namespace">
+<!ENTITY sort.byStatus "Järjestä tilan mukaan">
+<!ENTITY sort.execution "Suoritusjärjestys">
+<!ENTITY sort.name "Nimi">
+<!ENTITY sort.namespace "Namespace">
+<!ENTITY sort.status "Tila">

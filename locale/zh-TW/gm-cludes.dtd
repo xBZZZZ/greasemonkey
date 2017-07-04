@@ -4,6 +4,7 @@
 <!ENTITY button.addUserMatch "Add as user match">
 <!ENTITY button.edit "編輯...">
 <!ENTITY button.remove "移除">
+<!ENTITY checkbox.grpOverride "停用此腳本的包含樣式，僅套用使用者定義的樣式">
 <!ENTITY label.grpExcluded "例外網址">
 <!ENTITY label.grpIncluded "腳本將套用到的網址">
 <!ENTITY label.grpMatched "Matched Pages">

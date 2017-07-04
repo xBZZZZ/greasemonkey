@@ -55,6 +55,37 @@ AbstractScript.prototype.matchesURL = function (aUrl) {
     return false;
   }
 
+  /*
+  uE - the user excludes
+  uIM - the user includes/matches
+  sE - the script excludes
+  sIM - the script includes/matches
+
+  0  0   0  0
+
+  0  uIM 0  0
+  0  0   sE 0
+  0  0   0  sIM
+
+  0  uIM sE 0
+  0  uIM 0  sIM
+  0  0   sE sIM
+
+  0  uIM sE sIM
+
+  uE 0   0  0
+
+  uE uIM 0  0
+  uE 0   sE 0
+  uE 0   0  sIM
+
+  uE uIM sE 0
+  uE uIM 0  sIM
+  uE 0   sE sIM
+
+  uE uI  sE sIM
+  */
+
   if (this.globalExcludes.some(testClude)) {
     return false;
   }
@@ -65,6 +96,14 @@ AbstractScript.prototype.matchesURL = function (aUrl) {
   }
   if (this.userIncludes.some(testClude) || this.userMatches.some(testMatch)) {
     return true;
+  } else {
+    if (this.userOverride) {
+      if ((this.userIncludes.length == 0) && (this.userMatches.length == 0)) {
+        return [GM_CONSTANTS.script.includeAll].some(testClude);
+      } else {
+        return false;
+      }
+    }
   }
 
   // Finally allow based on script cludes and matches.

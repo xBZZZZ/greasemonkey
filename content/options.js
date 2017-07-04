@@ -16,6 +16,17 @@ Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
+const EDITOR_PATH_DEFAULT = "[Scratchpad]";
+
+function GM_getEditor() {
+  let editor = GM_util.getEditor();
+  let value = editor ? editor.path : EDITOR_PATH_DEFAULT;
+
+  let element = document.getElementById("editor-path");
+  element.value = value;
+  element.setAttribute("tooltiptext", value);
+}
+
 function GM_loadOptions() {
   document.getElementById("secure-update")
       .checked = GM_prefRoot.getValue("requireSecureUpdates");
@@ -43,6 +54,7 @@ function GM_loadOptions() {
       ));
   document.getElementById("check-sync")
       .checked = GM_prefRoot.getValue("sync.enabled");
+  GM_getEditor();
   document.getElementById("global-excludes")
       .pages = GM_util.getService().config.globalExcludes;
   document.getElementById("new-script-remove-unused")

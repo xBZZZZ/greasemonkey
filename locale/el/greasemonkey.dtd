@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "Ανώνυμα στατιστικά">
-<!ENTITY EnableSync "Enable Pale Moon Sync for User Scripts">
+<!ENTITY enableSync "Enable Pale Moon Sync for User Scripts">
 <!ENTITY greasemonkey.getUserScripts "Λήψη κώδικα χρηστών">
 <!ENTITY greasemonkey.noScriptShere "Κανένας εγκατεστημένος κώδικας δεν εκτελείτε σε αυτή τη σελίδα.">
 <!ENTITY greasemonkey.youHaveNoScripts "Δεν έχετε κανένα εγκατεστημένο κώδικα χρήστη">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "Καθολικές Εξαιρέσεις">
 <!ENTITY options.newScript.removeUnused "Remove unused lines">
 <!ENTITY options.newScript.template "New script template">
-<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
-<!ENTITY RequireSecureUpdates "Απαιτούνται ασφαλείς ενημερώσεις">
-<!ENTITY RequireTimeoutUpdates "Require timeout updates">
+<!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
+<!ENTITY requireSecureUpdates "Απαιτούνται ασφαλείς ενημερώσεις">
+<!ENTITY requireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "Επιλογές Κώδικα">
 <!ENTITY scriptprefs.title "Ρυθμίσεις Κώδικα Χρήστη του Greasemonkey - !!">
 <!ENTITY scriptprefs.userSettings "Επιλογές Χρήστη">
 <!ENTITY statusbar.enabled "Ενεργοποιημένo">
 <!ENTITY statusbar.enabled.accesskey "Ρ">
-<!ENTITY SubmitStats "Συγκέντρωση και υποβολή στατιστικών ανώνυμης χρήσης για βελτίωση του Greasemonkey">
-<!ENTITY TimeoutUpdatesUnits "Seconds">
-<!ENTITY Uninstall "Απεγκατάσταση">
-<!ENTITY UpdateChecking "Έλεγχος Ενημέρωσης">
+<!ENTITY submitStats "Συγκέντρωση και υποβολή στατιστικών ανώνυμης χρήσης για βελτίωση του Greasemonkey">
+<!ENTITY timeoutUpdatesUnits "Seconds">
+<!ENTITY uninstall "Απεγκατάσταση">
+<!ENTITY updateChecking "Έλεγχος Ενημέρωσης">

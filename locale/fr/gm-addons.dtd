@@ -1,30 +1,30 @@
-<!ENTITY Edit "Modifier">
-<!ENTITY Edit.accesskey "E">
-<!ENTITY Edit.tooltip "Modifier ce Script">
-<!ENTITY ExecuteFirst "Exécuter en premier">
-<!ENTITY ExecuteLast "Exécuter en dernier">
-<!ENTITY ExecuteLater "Exécuter plus tard">
-<!ENTITY ExecuteSooner "Exécuter plus tôt">
-<!ENTITY FindUpdate "Trouver mises à jour">
-<!ENTITY ForcedFindUpdate "Forcer les mises à jour">
-<!ENTITY InstallUpdate "Installer mises à jour">
-<!ENTITY MoveDown "Descendre">
-<!ENTITY MoveDown.accesskey "D">
-<!ENTITY MoveToBottom "Descendre tout en bas">
-<!ENTITY MoveToBottom.accesskey "B">
-<!ENTITY MoveToTop "Monter tout en haut">
-<!ENTITY MoveToTop.accesskey "T">
-<!ENTITY MoveUp "Monter">
-<!ENTITY MoveUp.accesskey "U">
-<!ENTITY NewScript "Créer un Nouveau Script">
-<!ENTITY NewScript.accesskey "C">
-<!ENTITY Show "Afficher le dossier contenant">
-<!ENTITY Show.accesskey "S">
-<!ENTITY Sort.byExecution "Trier par ordre d'exécution">
-<!ENTITY Sort.byName "Trier par nom">
-<!ENTITY Sort.byNamespace "Sort by namespace">
-<!ENTITY Sort.byStatus "Trier par statut">
-<!ENTITY Sort.execution "Ordre d'exécution">
-<!ENTITY Sort.name "Nom">
-<!ENTITY Sort.namespace "Namespace">
-<!ENTITY Sort.status "Statut">
+<!ENTITY edit "Modifier">
+<!ENTITY edit.accesskey "E">
+<!ENTITY edit.tooltip "Modifier ce Script">
+<!ENTITY executeFirst "Exécuter en premier">
+<!ENTITY executeLast "Exécuter en dernier">
+<!ENTITY executeLater "Exécuter plus tard">
+<!ENTITY executeSooner "Exécuter plus tôt">
+<!ENTITY findUpdate "Trouver mises à jour">
+<!ENTITY forcedFindUpdate "Forcer les mises à jour">
+<!ENTITY installUpdate "Installer mises à jour">
+<!ENTITY moveDown "Descendre">
+<!ENTITY moveDown.accesskey "D">
+<!ENTITY moveToBottom "Descendre tout en bas">
+<!ENTITY moveToBottom.accesskey "B">
+<!ENTITY moveToTop "Monter tout en haut">
+<!ENTITY moveToTop.accesskey "T">
+<!ENTITY moveUp "Monter">
+<!ENTITY moveUp.accesskey "U">
+<!ENTITY newScript "Créer un Nouveau Script">
+<!ENTITY newScript.accesskey "C">
+<!ENTITY show "Afficher le dossier contenant">
+<!ENTITY show.accesskey "S">
+<!ENTITY sort.byExecution "Trier par ordre d'exécution">
+<!ENTITY sort.byName "Trier par nom">
+<!ENTITY sort.byNamespace "Sort by namespace">
+<!ENTITY sort.byStatus "Trier par statut">
+<!ENTITY sort.execution "Ordre d'exécution">
+<!ENTITY sort.name "Nom">
+<!ENTITY sort.namespace "Namespace">
+<!ENTITY sort.status "Statut">

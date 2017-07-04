@@ -4,6 +4,7 @@
 <!ENTITY button.addUserMatch "Tambah Kecocokan">
 <!ENTITY button.edit "Sunting...">
 <!ENTITY button.remove "Buang">
+<!ENTITY checkbox.grpOverride "Disable this script's rules and only use the user defined ones">
 <!ENTITY label.grpExcluded "Halaman yang Dikecualikan">
 <!ENTITY label.grpIncluded "Halaman yang Disertakan">
 <!ENTITY label.grpMatched "Halaman yang Cocok">

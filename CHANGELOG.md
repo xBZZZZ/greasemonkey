@@ -1,15 +1,26 @@
 ## Changelog
 
+#### 3.12.1beta11 (2017-07-04)
+
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.12.1beta10ForkExperimental...3.12.1beta11ForkExperimental)
+
+* API - a experimental feature: @require / @resource - A "file" URI scheme - Parse the path to verify that it is not out of range (opt-in) ([#1961](https://github.com/greasemonkey/greasemonkey/issues/1961))
+* API: GM_addStyle - @run-at document-start (Firefox 55+) ([#2515](https://github.com/greasemonkey/greasemonkey/issues/2515))
+* General: Sync - Deleting non-existent values (opt-in)
+* Loading: Include, Match and Exclude rules override ([#1946](https://github.com/greasemonkey/greasemonkey/issues/1946), [#1992](https://github.com/greasemonkey/greasemonkey/issues/1992), [#2343](https://github.com/greasemonkey/greasemonkey/issues/2343))
+* GUI: Options - The view editor path
+* Fix typos, style clean up
+
 #### 3.12.1beta10 (2017-05-29)
 
 [All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.12.1beta9ForkExperimental...3.12.1beta10ForkExperimental)
 
-* API: GM_...value - "sendRpcMessage" instead of "sendSyncMessage" ([#2506](https://github.com/greasemonkey/greasemonkey/issues/2506))
+* API: GM_...value - "sendRpcMessage" instead of "sendSyncMessage" ([#2506](https://github.com/greasemonkey/greasemonkey/issues/2506), [#2507](https://github.com/greasemonkey/greasemonkey/pull/2507))
 * API: GM_registerMenuCommand - Frames (it won't add any menu commands) ([#2509](https://github.com/greasemonkey/greasemonkey/issues/2509))
 * General: The RegExp object - small performance improvements
 * General: Changes name - From: `Greasemonkey` To: `Greasemonkey for Pale Moon`
 * General - a note: ID and branding (icons) - I don't know, if and when it will happen
-* Fix typo, style clean up
+* Fix typos, style clean up
 
 #### 3.12.1beta9 (2017-05-22)
 

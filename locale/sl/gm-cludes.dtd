@@ -4,6 +4,7 @@
 <!ENTITY button.addUserMatch "Dodaj kot uporabniško ujemano">
 <!ENTITY button.edit "Uredi ...">
 <!ENTITY button.remove "Odstrani">
+<!ENTITY checkbox.grpOverride "Disable this script's rules and only use the user defined ones">
 <!ENTITY label.grpExcluded "Izključene strani">
 <!ENTITY label.grpIncluded "Vključene strani">
 <!ENTITY label.grpMatched "Ujemajoče se strani">

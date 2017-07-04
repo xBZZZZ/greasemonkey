@@ -1,5 +1,4 @@
-<!ENTITY AnonymousStatistics "Anonymous Statistics">
-<!ENTITY EnableSync "Enable Pale Moon Sync for User Scripts">
+<!ENTITY enableSync "Enable Pale Moon Sync for User Scripts">
 <!ENTITY greasemonkey.getUserScripts "أجلب السكربتات">
 <!ENTITY greasemonkey.noScriptShere "لايوجد سكربت مثبت يعمل على هذه الصفحة.">
 <!ENTITY greasemonkey.youHaveNoScripts "انت لم تثبت أي سكربت">
@@ -44,15 +43,15 @@
 <!ENTITY options.globalExcludes "باستثناء العالمية">
 <!ENTITY options.newScript.removeUnused "Remove unused lines">
 <!ENTITY options.newScript.template "New script template">
-<!ENTITY RequireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
-<!ENTITY RequireSecureUpdates "تتطلب تحديثات آمنة">
-<!ENTITY RequireTimeoutUpdates "Require timeout updates">
+<!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
+<!ENTITY requireSecureUpdates "تتطلب تحديثات آمنة">
+<!ENTITY requireTimeoutUpdates "Require timeout updates">
 <!ENTITY scriptprefs.scriptSettings "أعدادات السكربت">
 <!ENTITY scriptprefs.title "تفضيلات السكربت - !!">
 <!ENTITY scriptprefs.userSettings "أعدادات العضوية">
 <!ENTITY statusbar.enabled "تشغيل">
 <!ENTITY statusbar.enabled.accesskey "ت">
-<!ENTITY SubmitStats "Gather and submit anonymous usage statistics to improve Greasemonkey">
-<!ENTITY TimeoutUpdatesUnits "Seconds">
-<!ENTITY Uninstall "إلغاء التثبيت">
-<!ENTITY UpdateChecking "تحديث السكربت">
+<!ENTITY submitStats "Gather and submit anonymous usage statistics to improve Greasemonkey">
+<!ENTITY timeoutUpdatesUnits "Seconds">
+<!ENTITY uninstall "إلغاء التثبيت">
+<!ENTITY updateChecking "تحديث السكربت">
