@@ -4,7 +4,7 @@
 <!ENTITY button.addUserMatch "Přidat do uživatelsky zahrnutých stránek (match)">
 <!ENTITY button.edit "Upravit...">
 <!ENTITY button.remove "Odstranit">
-<!ENTITY checkbox.grpOverride "Zakázat stránky v nastavení skriptu a používat pouze uživatelské nastavení">
+<!ENTITY checkbox.grpOverride "Zakázat stránky v nastavení skriptu a použít pouze uživatelské nastavení">
 <!ENTITY label.grpExcluded "Vyloučené stránky">
 <!ENTITY label.grpIncluded "Zahrnuté stránky">
 <!ENTITY label.grpMatched "Zahrnuté stránky (match)">
