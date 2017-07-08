@@ -1,5 +1,6 @@
 pref("extensions.{e4a8a97b-f2ed-450b-b12d-ee082ba24781}.description", "chrome://greasemonkey/locale/greasemonkey.properties");
 // pref("extensions.greasemonkey.api.GM_cookie", false);
+pref("extensions.greasemonkey.api.unsafeWindow.grant", false);
 pref("extensions.greasemonkey.cors_csp_override.excludes", false);
 pref("extensions.greasemonkey.cors_csp_override.excludes.value", "[\"\"]");
 pref("extensions.greasemonkey.cors_csp_override.includes", false);

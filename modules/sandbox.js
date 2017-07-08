@@ -31,6 +31,8 @@ Cu.import("chrome://greasemonkey-modules/content/xmlhttprequester.js");
 const JAVASCRIPT_VERSION_MAX = "ECMAv5";
 
 function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
+  let unsafeWindowDefault = "const unsafeWindow = window;";
+
   if (GM_util.inArray(aScript.grants, "none")) {
     // If there is an explicit none grant, use a plain unwrapped sandbox
     // with no other content.
@@ -46,8 +48,7 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
     injectGMInfo(contentSandbox, aContentWin, aScript);
 
     // Alias unsafeWindow for compatibility.
-    Cu.evalInSandbox(
-        "const unsafeWindow = window;", contentSandbox);
+    Cu.evalInSandbox(unsafeWindowDefault, contentSandbox);
 
     return contentSandbox;
   }
@@ -66,12 +67,17 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
   // we need the unsafeWindow getter to live in the sandbox.
   // See also:
   // toolkit/commonjs/sdk/content/sandbox.js
-  var unsafeWindowGetter = new sandbox.Function (
-      "return window.wrappedJSObject || window;");
-  Object.defineProperty(sandbox, "unsafeWindow", {
-    "get": unsafeWindowGetter,
-  });
-
+  let _unsafeWindowGrant = GM_prefRoot.getValue("api.unsafeWindow.grant");
+  if (!_unsafeWindowGrant || (_unsafeWindowGrant
+      && GM_util.inArray(aScript.grants, "unsafeWindow"))) {
+    let unsafeWindowGetter = new sandbox.Function (
+        "return window.wrappedJSObject || window;");
+    Object.defineProperty(sandbox, "unsafeWindow", {
+      "get": unsafeWindowGetter,
+    });
+  } else {
+    Cu.evalInSandbox(unsafeWindowDefault, sandbox);
+  }
 
   if (GM_util.inArray(aScript.grants, "GM_addStyle")) {
     sandbox.GM_addStyle = GM_util.hitch(
