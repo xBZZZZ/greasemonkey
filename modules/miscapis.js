@@ -42,6 +42,8 @@ function GM_addStyle(aWrappedContentWin, aFileURL, aRunAt, aCss) {
   if (head) {
     return addStyle(doc, head, aCss);
   } else if (aRunAt == "document-start") {
+    // See #2515 and #1849.
+    // http://bugzil.la/1333990
     try {
       let MutationObserver = aWrappedContentWin.MutationObserver;
       var observer = new MutationObserver(function (mutations) {

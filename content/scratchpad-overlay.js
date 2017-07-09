@@ -38,14 +38,16 @@ window.addEventListener("load", function () {
 
   // If we're opening a user script:
   // Put the cursor at the top.
-  // See #1708.
-  // Remove when http://bugzil.la/843597 is fixed.
   var initializeCheckCount = 0;
+  var initializeMaxCount = 50;
   var initializeCheckTimer = null;
+  // ms
+  let initializeInterval = 20;
   function moveCursorToTop() {
-    if (initializeCheckCount > 50) {
+    if (initializeCheckCount > initializeMaxCount) {
       GM_util.logError(
-          "Greasemonkey - Gave up waiting for Scratchpad.initialized.");
+          GM_CONSTANTS.info.scriptHandler
+          + " - " + "Gave up waiting for Scratchpad.initialized.");
       clearInterval(initializeCheckTimer);
     }
     initializeCheckCount++;
@@ -61,56 +63,114 @@ window.addEventListener("load", function () {
 
     clearInterval(initializeCheckTimer);
   }
-  initializeCheckTimer = setInterval(moveCursorToTop, 20);
+  initializeCheckTimer = setInterval(moveCursorToTop, initializeInterval);
 
   // Hide all the elements which don't make sense when editing a script.
   // See #1771 and #1774.
-  function setNodeAttr(aId, aAttr, aVal) {
-    let el = document.getElementById(aId);
+
+  // The Main Menu and the keyboard shortcuts for them.
+  let mainMenuNodes = [
+    {
+      "id": "sp-execute-menu",
+      "attribute": "collapsed",
+      "value": true,
+    },
+    {
+      "id": "sp-environment-menu",
+      "attribute": "collapsed",
+      "value": true,
+    },
+    {
+      "id": "sp-toolbar-run",
+      "attribute": "collapsed",
+      "value": true,
+    },
+    {
+      "id": "sp-toolbar-inspect",
+      "attribute": "collapsed",
+      "value": true,
+    },
+    {
+      "id": "sp-toolbar-display",
+      "attribute": "collapsed",
+      "value": true,
+    },
+    {
+      "id": "sp-key-run",
+      "attribute": "disabled",
+      "value": true,
+    },
+    {
+      "id": "sp-key-inspect",
+      "attribute": "disabled",
+      "value": true,
+    },
+    {
+      "id": "sp-key-display",
+      "attribute": "disabled",
+      "value": true,
+    },
+    {
+      "id": "sp-key-evalFunction",
+      "attribute": "disabled",
+      "value": true,
+    },
+    {
+      "id": "sp-key-reloadAndRun",
+      "attribute": "disabled",
+      "value": true,
+    },
+  ];
+
+  for (let i = 0, iLen = mainMenuNodes.length; i < iLen; i++) {
+    let mainMenuNode = mainMenuNodes[i];
+    let el = document.getElementById(mainMenuNode.id);
     if (el) {
-      el.setAttribute(aAttr, aVal);
+      el.setAttribute(mainMenuNode.attribute, mainMenuNode.value);
     }
   }
 
-  setNodeAttr("sp-execute-menu", "collapsed", true);
-  setNodeAttr("sp-environment-menu", "collapsed", true);
-  setNodeAttr("sp-toolbar-run", "collapsed", true);
-  setNodeAttr("sp-toolbar-inspect", "collapsed", true);
-  setNodeAttr("sp-toolbar-display", "collapsed", true);
+  // The Context Menu.
+  let contextMenuNodes = [
+    {
+      "id": "sp-text-run",
+      "previous": true,
+    },
+    {
+      "id": "sp-text-inspect",
+      "previous": false,
+    },
+    {
+      "id": "sp-text-display",
+      "previous": false,
+    },
+    {
+      "id": "sp-text-evalFunction",
+      "previous": false,
+    },
+    {
+      "id": "sp-text-reloadAndRun",
+      "previous": true,
+    },
+  ];
 
-  // Plus the keyboard shortcuts for them.
-  setNodeAttr("sp-key-run", "disabled", true);
-  setNodeAttr("sp-key-inspect", "disabled", true);
-  setNodeAttr("sp-key-display", "disabled", true);
-  setNodeAttr("sp-key-evalFunction", "disabled", true);
-  setNodeAttr("sp-key-reloadAndRun", "disabled", true);
-
-  // But the context menu items can't be accessed by ID (?!) so iterate.
-  let textPopup = document.getElementById("scratchpad-text-popup");
-  if (textPopup) {
-    for (let i = 0, iLen = textPopup.childNodes.length; i < iLen; i++) {
-      let node = textPopup.childNodes[i];
-      if (node.id == "sp-text-run") {
-        node.collapsed = true;
-        if (node.previousSibling && (node.previousSibling.tagName.toLowerCase()
-            == "menuseparator")) {
-          node.previousSibling.collapsed = true;
-        }
-      }
-      if (node.id == "sp-text-inspect") {
-        node.collapsed = true;
-      }
-      if (node.id == "sp-text-display") {
-        node.collapsed = true;
-      }
-      if (node.id == "sp-text-evalFunction") {
-        node.collapsed = true;
-      }
-      if (node.id == "sp-text-reloadAndRun") {
-        node.collapsed = true;
-        if (node.previousSibling && (node.previousSibling.tagName.toLowerCase()
-            == "menuseparator")) {
-          node.previousSibling.collapsed = true;
+  let contextMenu = document.getElementById("scratchpad-text-popup");
+  if (contextMenu) {
+    for (let i = 0, iLen = contextMenu.childNodes.length; i < iLen; i++) {
+      let contextMenuChildNode = contextMenu.childNodes[i];
+      loop2:
+      for (let j = 0, jLen = contextMenuNodes.length; j < jLen; j++) {
+        let contextMenuNode = contextMenuNodes[j];
+        if (contextMenuChildNode.id == contextMenuNode.id) {
+          contextMenuChildNode.collapsed = true;
+          if (contextMenuNode.previous) {
+            if (contextMenuChildNode.previousSibling
+                && (contextMenuChildNode.previousSibling.tagName.toLowerCase()
+                == "menuseparator")) {
+              contextMenuChildNode.previousSibling.collapsed = true;
+            }
+          }
+          break loop2;
         }
       }
     }
