@@ -142,6 +142,7 @@ pref("extensions.greasemonkey.sync.values.maxSizePerScript", 65536);
 pref("extensions.greasemonkey.timeoutUpdatesInSeconds", 45);
 pref("extensions.greasemonkey.unmhtIsGreaseable", false);
 pref("extensions.greasemonkey.version", "0.0");
+pref("extensions.greasemonkey.view-sourceIsGreaseable", false);
 pref("services.sync.prefs.sync.extensions.greasemonkey.enableScriptRefreshing", true);
 pref("services.sync.prefs.sync.extensions.greasemonkey.globalExcludes", true);
 pref("services.sync.prefs.sync.extensions.greasemonkey.newScript.removeUnused", true);

@@ -39,6 +39,8 @@ function isGreasemonkeyable(aUrl) {
       return GM_prefRoot.getValue("jarIsGreaseable");
     case "unmht":
       return GM_prefRoot.getValue("unmhtIsGreaseable");
+    case "view-source":
+      return GM_prefRoot.getValue("view-sourceIsGreaseable");
   }
 
   return false;
