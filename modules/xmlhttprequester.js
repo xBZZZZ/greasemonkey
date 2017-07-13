@@ -152,7 +152,7 @@ function (safeUrl, details, req) {
   // See #1945, #2008 - part 1/2.
   /*
   let safeUrlTmp = new this.wrappedContentWin.URL(safeUrl);
-  var headersArr = new Array();
+  var headersArr = [];
   var authorization = {
     "contrains": false,
     "method": "Basic",
