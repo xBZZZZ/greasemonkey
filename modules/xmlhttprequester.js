@@ -18,6 +18,12 @@ Cu.importGlobalProperties(["XMLHttpRequest"]);
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
+// See #1945, #2008 - part 1/3.
+/*
+const AUTHORIZATION_USER_PASSWORD_REGEXP = new RegExp(
+    "^([^:]+):([^:]+)$", "");
+*/
+
 function GM_xmlhttpRequester(aWrappedContentWin, aSandbox, aFileURL, aOriginUrl) {
   this.fileURL = aFileURL;
   this.originUrl = aOriginUrl;
@@ -149,7 +155,7 @@ function (safeUrl, details, req) {
 
   req.mozBackgroundRequest = !!details.mozBackgroundRequest;
 
-  // See #1945, #2008 - part 1/2.
+  // See #1945, #2008 - part 2/3.
   /*
   let safeUrlTmp = new this.wrappedContentWin.URL(safeUrl);
   var headersArr = [];
@@ -162,9 +168,8 @@ function (safeUrl, details, req) {
   };
   let authenticationComponent = Cc["@mozilla.org/network/http-auth-manager;1"]
       .getService(Ci.nsIHttpAuthManager);
-  var authorizationRegexp =
-      new RegExp("^\\s*" + authorization.method + "\\s*([^\\s]+)\\s*$", "i");
-  var authorizationUserPasswordRegexp = new RegExp("^([^:]+):([^:]+)$", "");
+  var authorizationRegexp = new RegExp(
+      "^\\s*" + authorization.method + "\\s*([^\\s]+)\\s*$", "i");
 
   if (details.headers) {
     var headers = details.headers;
@@ -180,8 +185,8 @@ function (safeUrl, details, req) {
           let authorizationValue = headers[prop].match(authorizationRegexp);
           if (authorizationValue) {
             authorizationValue = atob(authorizationValue[1]);
-            let authorizationUserPassword =
-                authorizationValue.match(authorizationUserPasswordRegexp);
+            let authorizationUserPassword = authorizationValue.match(
+                AUTHORIZATION_USER_PASSWORD_REGEXP);
             if (authorizationUserPassword) {
               authorization.contrains = true;
               authorization.user = authorizationUserPassword[1];
@@ -293,7 +298,7 @@ function (safeUrl, details, req) {
     }
   }
 
-  // See #1945, #2008 - part 2/2.
+  // See #1945, #2008 - part 3/3.
   /*
   for (let i = 0, iLen = headersArr.length; i < iLen; i++) {
     req.setRequestHeader(headersArr[i].prop, headersArr[i].value);
