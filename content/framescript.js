@@ -59,8 +59,8 @@ function contentObserver(aWin) {
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
 // See #1696:
-// document-element-inserted doesn't see about:blank
-// content-document-global-created sees about:blank,
+// "document-element-inserted" doesn't see about:blank
+// "content-document-global-created" sees about:blank,
 // but:
 // aSubject.document.documentURI = "about:blank"
 // aData = null

@@ -10,7 +10,9 @@ if (typeof Cu === "undefined") {
 
 Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
-Cu.import("resource://gre/modules/Services.jsm");
+// Strict mode:
+// TypeError: setting a property that has only a getter
+// Cu.import("resource://gre/modules/Services.jsm");
 
 Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");

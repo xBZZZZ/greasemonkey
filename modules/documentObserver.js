@@ -14,13 +14,13 @@ if (typeof Cu === "undefined") {
 
 Cu.import("resource://gre/modules/Services.jsm");
 
+Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
 // See #1849.
 const OBSERVER_TOPIC_1 = "content-document-global-created";
 const OBSERVER_TOPIC_2 = "document-element-inserted";
-const OBSERVER_TOPIC = OBSERVER_TOPIC_2;
 
 var callbacks = new WeakMap();
 
@@ -34,8 +34,13 @@ let contentObserver = {
       return undefined;
     }
 
+    let observerTopic = OBSERVER_TOPIC_2;
+    if (GM_prefRoot.getValue("load.earlier")) {
+      observerTopic = OBSERVER_TOPIC_1;
+    }
+
     switch (aTopic) {
-      case OBSERVER_TOPIC:
+      case observerTopic:
         let doc;
         let win;
         switch (aTopic) {
@@ -67,11 +72,12 @@ let contentObserver = {
 
         break;
       default:
-        dump("Content frame observed unknown topic: " + aTopic + "\n");
+        // dump("Content frame observed unknown topic: " + aTopic + "\n");
 
         break;
     }
   },
 };
 
-Services.obs.addObserver(contentObserver, OBSERVER_TOPIC, false);
+Services.obs.addObserver(contentObserver, OBSERVER_TOPIC_1, false);
+Services.obs.addObserver(contentObserver, OBSERVER_TOPIC_2, false);

@@ -8,7 +8,9 @@ if (typeof Cu === "undefined") {
   var Cu = Components.utils;
 }
 
-Cu.import("resource://gre/modules/Services.jsm");
+// Strict mode:
+// TypeError: setting a property that has only a getter
+// Cu.import("resource://gre/modules/Services.jsm");
 
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 

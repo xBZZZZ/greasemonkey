@@ -113,7 +113,7 @@
 * General: Updating scripts / Stats - Detecting the private mode (pushed to upstream - not yet)
 * GUI: The install window - If the button "Install" is pressed too soon, throws an errors (pushed to upstream - not yet)
 * GUI: The fix update icon in the AOM (after a change in the editor) (pushed to upstream - not yet)
-* API / GUI: A needed fix for script update (if contains userMatches) ([#1849#issuecomment-289063866](https://github.com/greasemonkey/greasemonkey/pull/2455#issuecomment-289063866))
+* API / GUI: A needed fix for script update (if contains userMatches) ([#2455#issuecomment-289063866](https://github.com/greasemonkey/greasemonkey/pull/2455#issuecomment-289063866))
 * General: Added the @homepageURL
 * General: Added contributors and translators
 * Fix typos, style clean up + refactoring code
