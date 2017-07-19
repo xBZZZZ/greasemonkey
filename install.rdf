@@ -19,7 +19,7 @@
     <em:multiprocessCompatible>true</em:multiprocessCompatible>
 
     <em:name>Greasemonkey for Pale Moon</em:name>
-    <em:description>A User Script Manager for Pale Moon</em:description>
+    <em:description>A User Script Manager</em:description>
 
     <em:developer>janekptacijarabaci</em:developer>
 
