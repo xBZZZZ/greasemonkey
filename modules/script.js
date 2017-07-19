@@ -1347,6 +1347,21 @@ Script.prototype.allFilesExist = function () {
   return this.allFiles().every(this.fileExists);
 };
 
+Script.prototype.allFilesExistResult = function () {
+  var _script = this;
+
+  let noFiles = this.allFiles().filter(function (file) {
+    return !_script.fileExists(file);
+  });
+
+  let noFilesName = [];
+  noFiles.forEach(function (file) {
+    noFilesName.push(file.leafName);
+  });
+
+  return noFilesName;
+};
+
 // Don't call this.
 // Call Config.uninstall(), which calls this.
 Script.prototype.uninstall = function (aForUpdate) {

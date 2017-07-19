@@ -106,11 +106,17 @@ Config.prototype._load = function () {
     if (script.allFilesExist()) {
       this._scripts.push(script);
     } else {
-      // TODO:
       // Add a user prompt to restore the missing script here?
       // Perhaps sometime after update works,
       // and we know where to download the script from?
+      let _info = GM_CONSTANTS.localeStringBundle.createBundle(
+          GM_CONSTANTS.localeGreasemonkeyProperties)
+          .GetStringFromName("error.scriptIsNotComplete")
+          .replace("%1", script.name)
+          + "\n" + script.allFilesExistResult();
+      GM_util.logError(_info, false, script.fileURL, null);
       node.parentNode.removeChild(node);
+      // To save config file after change:
       this._changed(script, "missing-removed", null);
     }
   }
