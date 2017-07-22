@@ -135,7 +135,7 @@ function parse(aSource, aUri, aFailWhenMissing) {
           // Otherwise this call would be twice.
           if (!aFailWhenMissing) {
             GM_util.logError(
-                "ParseScript - "
+                "ParseScript" + " - "
                 + GM_CONSTANTS.localeStringBundle.createBundle(
                     GM_CONSTANTS.localeGreasemonkeyProperties)
                     .GetStringFromName("error.parse.failed") + ":"
@@ -186,7 +186,7 @@ function parse(aSource, aUri, aFailWhenMissing) {
           // Otherwise this call would be twice.
           if (!aFailWhenMissing) {
             GM_util.logError(
-                "ParseScript - "
+                "ParseScript" + " - "
                 + GM_CONSTANTS.localeStringBundle.createBundle(
                     GM_CONSTANTS.localeGreasemonkeyProperties)
                     .GetStringFromName("error.parse.failed") + ":"
@@ -242,7 +242,7 @@ function parse(aSource, aUri, aFailWhenMissing) {
           // Otherwise this call would be twice.
           if (!aFailWhenMissing) {
             GM_util.logError(
-                "ParseScript - "
+                "ParseScript" + " - "
                 + GM_CONSTANTS.localeStringBundle.createBundle(
                     GM_CONSTANTS.localeGreasemonkeyProperties)
                     .GetStringFromName("error.parse.failed") + ":"
