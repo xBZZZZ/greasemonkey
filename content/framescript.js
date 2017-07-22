@@ -132,7 +132,7 @@ function injectDelayedScript(aMessage) {
   let win = windowMediator.getOuterWindowWithId(windowId);
 
   if (!win) {
-    dump("Framescript: Couldn't find window with (outer?) ID: "
+    dump("Framescript: Couldn't find window with (outer?!) ID:" + " "
         + windowId + "\n");
   } else {
     let script = createScriptFromObject(aMessage.data.script);
@@ -227,8 +227,8 @@ function windowIsTop(aContentWin) {
       url = aContentWin.location.href;
     } catch (e) { }
     // Ignore non-DOM-windows.
-    dump("Framescript: Could not QI window to nsIDOMWindow (?!) at:"
-        + "\n" + url + "\n");
+    dump("Framescript: Could not QI window to nsIDOMWindow (?!) at:" + "\n"
+        + url + "\n");
   }
   return true;
 };

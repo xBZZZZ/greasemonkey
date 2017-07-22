@@ -87,7 +87,7 @@
             } catch (e) {
               alert(GM_CONSTANTS.localeStringBundle.createBundle(
                   GM_CONSTANTS.localeGreasemonkeyProperties)
-                  .GetStringFromName("parse.ignoringMatch")
+                  .GetStringFromName("error.parse.ignoringMatch")
                   .replace("%1", aPage).replace("%2", e));
               _result = false;
             }
@@ -326,9 +326,11 @@
         // Remove this stub popup...
         button.removeChild(this);
 
-        if (document.getElementById("gm_general_menu")) {
+        let generalMenu = document.getElementById("gm_general_menu");
+        // Test (e.g.): The icon is in Customize Toolbar.
+        if (generalMenu) {
           // ...and replace it with a duplicate of the general menu.
-          let menupopup = document.getElementById("gm_general_menu").firstChild;
+          let menupopup = generalMenu.firstChild;
           button.appendChild(menupopup.cloneNode(true));
         }
       ]]></constructor>

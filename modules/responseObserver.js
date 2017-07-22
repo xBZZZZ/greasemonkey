@@ -26,7 +26,7 @@ Cu.import("chrome://greasemonkey-modules/content/third-party/MatchPattern.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
-var gCorsCspName = "Greasemonkey CORS/CSP";
+var gCorsCspName = GM_CONSTANTS.info.scriptHandler + " CORS/CSP";
 
 var gCorsCspObservers = [
   {
@@ -138,7 +138,7 @@ function _corsCspTestUrl(aUrl) {
         dump(gCorsCspOverrideDumpPrefix + " - testUrl (" + aUrl + "): "
             + GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
-            .GetStringFromName("parse.ignoringMatch")
+            .GetStringFromName("error.parse.ignoringMatch")
             .replace("%1", matchPattern).replace("%2", e));
         return false;
       }

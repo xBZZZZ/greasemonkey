@@ -10,6 +10,8 @@ if (typeof Cu === "undefined") {
   var Cu = Components.utils;
 }
 
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
@@ -55,7 +57,9 @@ function windowId(aWin, aWhich) {
     // (Document is a property of the window, and should let us dig
     // into the "inner window" rather than always getting
     // the same "outer window", due to bfcache.)
-    GM_util.logError("Greasemonkey - windowId (" + aWhich + ") = undefined");
+    GM_util.logError(
+        GM_CONSTANTS.info.scriptHandler + " - "
+        + "windowId (" + aWhich + ") = undefined");
     return aWin.document;
   }
 

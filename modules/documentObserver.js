@@ -72,7 +72,10 @@ let contentObserver = {
 
         break;
       default:
-        // dump("Content frame observed unknown topic: " + aTopic + "\n");
+        /*
+        dump("contentObserver" + " - "
+            + "Content frame observed unknown topic: " + aTopic + "\n");
+        */
 
         break;
     }

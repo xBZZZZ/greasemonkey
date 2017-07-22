@@ -60,21 +60,32 @@ function GM_ScriptStorageFront(
 
 Object.defineProperty(GM_ScriptStorageFront.prototype, "db", {
   "get": function GM_ScriptStorageFront_getDb() {
-    throw new Error(MESSAGE_ERROR_PREFIX + "Has no DB connection.");
+    throw new Error(
+        MESSAGE_ERROR_PREFIX
+        + GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.storage.db.noConnection"));
   },
   "enumerable": true,
 });
 
 Object.defineProperty(GM_ScriptStorageFront.prototype, "dbFile", {
   "get": function GM_ScriptStorageFront_getDbFile() {
-    throw new Error(MESSAGE_ERROR_PREFIX + "Has no DB file.");
+    throw new Error(
+        MESSAGE_ERROR_PREFIX
+        + GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.storage.db.noFile"));
   },
   "enumerable": true,
 });
 
 GM_ScriptStorageFront.prototype.close = function () {
   throw new this._wrappedContentWin.Error(
-      MESSAGE_ERROR_PREFIX + "Has no DB connection.",
+      MESSAGE_ERROR_PREFIX
+      + GM_CONSTANTS.localeStringBundle.createBundle(
+          GM_CONSTANTS.localeGreasemonkeyProperties)
+          .GetStringFromName("error.storage.db.noConnection"),
       this._script.fileURL, null);
 };
 

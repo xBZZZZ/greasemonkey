@@ -134,7 +134,11 @@ function parse(aSource, aUri, aFailWhenMissing) {
         } catch (e) {
           // Otherwise this call would be twice.
           if (!aFailWhenMissing) {
-            GM_util.logError("ParseScript - failed to parse:"
+            GM_util.logError(
+                "ParseScript - "
+                + GM_CONSTANTS.localeStringBundle.createBundle(
+                    GM_CONSTANTS.localeGreasemonkeyProperties)
+                    .GetStringFromName("error.parse.failed") + ":"
                 + "\n" + data.keyword + ' = "' + data.value + '"'
                 + "\n" + e, false,
                 (aUri && aUri.spec) ? aUri.spec : e.fileName,
@@ -152,7 +156,7 @@ function parse(aSource, aUri, aFailWhenMissing) {
           script.parseErrors.push(
               GM_CONSTANTS.localeStringBundle.createBundle(
                   GM_CONSTANTS.localeGreasemonkeyProperties)
-                  .GetStringFromName("parse.ignoringMatch")
+                  .GetStringFromName("error.parse.ignoringMatch")
                   .replace("%1", data.value).replace("%2", e)
               );
         }
@@ -163,10 +167,12 @@ function parse(aSource, aUri, aFailWhenMissing) {
           let reqUri = GM_util.getUriFromUrl(data.value, aUri);
           if (aUri && aUri.spec && reqUri && reqUri.spec
               && !checkUrls(aUri, reqUri)) {
-            throw "This path:"
-                + "\n" + reqUri.spec
-                + "\n" + "is not a descendant of:"
-                + "\n" + aUri.spec;
+            throw GM_CONSTANTS.localeStringBundle.createBundle(
+                GM_CONSTANTS.localeGreasemonkeyProperties)
+                .GetStringFromName(
+                    "error.parse.fileDependencyUrlIsDescendantOfDownloadUrl")
+                .replace("%1", reqUri.spec)
+                .replace("%2", aUri.spec);
           }
           let scriptRequire = new ScriptRequire(script);
           if (!reqUri || !reqUri.spec) {
@@ -179,7 +185,11 @@ function parse(aSource, aUri, aFailWhenMissing) {
         } catch (e) {
           // Otherwise this call would be twice.
           if (!aFailWhenMissing) {
-            GM_util.logError("ParseScript - failed to parse:"
+            GM_util.logError(
+                "ParseScript - "
+                + GM_CONSTANTS.localeStringBundle.createBundle(
+                    GM_CONSTANTS.localeGreasemonkeyProperties)
+                    .GetStringFromName("error.parse.failed") + ":"
                 + "\n" + data.keyword + ' = "' + data.value + '"'
                 + "\n" + e, false,
                 (aUri && aUri.spec) ? aUri.spec : e.fileName,
@@ -188,7 +198,7 @@ function parse(aSource, aUri, aFailWhenMissing) {
           script.parseErrors.push(
               GM_CONSTANTS.localeStringBundle.createBundle(
                   GM_CONSTANTS.localeGreasemonkeyProperties)
-                  .GetStringFromName("parse.requireFailed")
+                  .GetStringFromName("error.parse.requireFailed")
                   .replace("%1", data.value)
               );
         }
@@ -202,7 +212,7 @@ function parse(aSource, aUri, aFailWhenMissing) {
           script.parseErrors.push(
               GM_CONSTANTS.localeStringBundle.createBundle(
                   GM_CONSTANTS.localeGreasemonkeyProperties)
-                  .GetStringFromName("parse.resourceDuplicate")
+                  .GetStringFromName("error.parse.resourceDuplicate")
                   .replace("%1", name));
           break;
         }
@@ -212,10 +222,12 @@ function parse(aSource, aUri, aFailWhenMissing) {
           let resUri = GM_util.getUriFromUrl(url, aUri);
           if (aUri && aUri.spec && resUri && resUri.spec
               && !checkUrls(aUri, resUri)) {
-            throw "This path:"
-                + "\n" + resUri.spec
-                + "\n" + "is not a descendant of:"
-                + "\n" + aUri.spec;
+            throw GM_CONSTANTS.localeStringBundle.createBundle(
+                GM_CONSTANTS.localeGreasemonkeyProperties)
+                .GetStringFromName(
+                    "error.parse.fileDependencyUrlIsDescendantOfDownloadUrl")
+                .replace("%1", resUri.spec)
+                .replace("%2", aUri.spec);
           }
           let scriptResource = new ScriptResource(script);
           scriptResource._name = name;
@@ -229,7 +241,11 @@ function parse(aSource, aUri, aFailWhenMissing) {
         } catch (e) {
           // Otherwise this call would be twice.
           if (!aFailWhenMissing) {
-            GM_util.logError("ParseScript - failed to parse:"
+            GM_util.logError(
+                "ParseScript - "
+                + GM_CONSTANTS.localeStringBundle.createBundle(
+                    GM_CONSTANTS.localeGreasemonkeyProperties)
+                    .GetStringFromName("error.parse.failed") + ":"
                 + "\n" + data.keyword + ' = "' + name + " " + url + '"'
                 + "\n" + e, false,
                 (aUri && aUri.spec) ? aUri.spec : e.fileName,
@@ -238,7 +254,7 @@ function parse(aSource, aUri, aFailWhenMissing) {
           script.parseErrors.push(
               GM_CONSTANTS.localeStringBundle.createBundle(
                   GM_CONSTANTS.localeGreasemonkeyProperties)
-                  .GetStringFromName("parse.resourceFailed")
+                  .GetStringFromName("error.parse.resourceFailed")
                   .replace("%1", name).replace("%2", url)
               );
         }

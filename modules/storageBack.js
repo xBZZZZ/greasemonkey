@@ -106,7 +106,7 @@ GM_ScriptStorageBack.prototype.getValue = function (aName) {
     }
   } catch (e) {
     GM_util.logError(
-        MESSAGE_ERROR_PREFIX + "getValue error:" + "\n" + e, false,
+        MESSAGE_ERROR_PREFIX + "getValue():" + "\n" + e, false,
         e.fileName, e.lineNumber);
   } finally {
     stmt.reset();
@@ -157,7 +157,7 @@ GM_ScriptStorageBack.prototype.getStats = function () {
     }
   } catch (e) {
     GM_util.logError(
-        MESSAGE_ERROR_PREFIX + "getStats error:" + "\n" + e, false,
+        MESSAGE_ERROR_PREFIX + "getStats():" + "\n" + e, false,
         e.fileName, e.lineNumber);
   } finally {
     stmt.reset();

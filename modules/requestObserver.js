@@ -129,7 +129,8 @@ function installObserver(aSubject, aTopic, aData) {
 
     GM_util.showInstallDialog(channel.URI.spec, browser, request);
   } catch (e) {
-    dump("Greasemonkey could not do script install:" + "\n" + e + "\n");
+    dump(GM_CONSTANTS.info.scriptHandler + " "
+        + "could not do script install:" + "\n" + e + "\n");
     // Ignore.
     return undefined;
   }
@@ -142,12 +143,14 @@ Services.obs.addObserver({
     try {
       installObserver(aSubject, aTopic, aData);
     } catch (e) {
-      dump("Greasemonkey install observer failed:" + "\n" + e + "\n");
+      dump(GM_CONSTANTS.info.scriptHandler + " "
+          + "install observer failed:" + "\n" + e + "\n");
     }
     try {
       checkScriptRefresh(aSubject);
     } catch (e) {
-      dump("Greasemonkey refresh observer failed:" + "\n" + e + "\n");
+      dump(GM_CONSTANTS.info.scriptHandler + " "
+          + "refresh observer failed:" + "\n" + e + "\n");
     }
   },
 }, "http-on-modify-request", false);

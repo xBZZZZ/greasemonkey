@@ -174,7 +174,9 @@ GM_notificationer.prototype.contentStart = function (
     } else {
       throw new this.wrappedContentWin.Error(
           'GM_notification() - "' + notification.details.title + '": '
-          + "Electrolysis (e10s) is not supported.",
+          + GM_CONSTANTS.localeStringBundle.createBundle(
+              GM_CONSTANTS.localeGreasemonkeyProperties)
+              .GetStringFromName("error.environment.unsupported.e10s"),
           this.fileURL, null);
     }
   // }

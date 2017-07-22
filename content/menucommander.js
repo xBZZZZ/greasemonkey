@@ -85,7 +85,7 @@ GM_MenuCommander.onPopupHiding = function () {
   // See #1632.
   // Asynchronously.
   GM_util.timeout(function () {
-    GM_util.emptyEl(GM_MenuCommander.popup);
+    GM_util.emptyElm(GM_MenuCommander.popup);
   }, 0);
 };
 
@@ -98,7 +98,7 @@ GM_MenuCommander.onPopupShowing = function (aEventTarget) {
 
   // Start disabled and empty...
   GM_MenuCommander.popup.parentNode.disabled = true;
-  GM_util.emptyEl(GM_MenuCommander.popup);
+  GM_util.emptyElm(GM_MenuCommander.popup);
   // ...ask the selected browser to fill up our menu.
   gBrowser.selectedBrowser.messageManager.sendAsyncMessage(
       "greasemonkey:menu-command-list", {

@@ -103,7 +103,7 @@ ScriptStore.prototype = {
   "__proto__": gWeave.Store.prototype,
 
   "changeItemID": function (aOldId, aNewId) {
-    dump(">>> Sync - ScriptStore.changeItemID... "
+    dump(">>> Sync - ScriptStore.changeItemID..." + " "
         + aOldId.substr(0, 8) + " " + aNewId.substr(0, 8) + "\n");
   },
 
@@ -117,8 +117,8 @@ ScriptStore.prototype = {
         return undefined;
       }
       if (!GM_util.getUriFromUrl(url)) {
-        dump("Sync - Ignoring incoming sync record with bad downloadURL:"
-            + "\n" + url + "\n");
+        dump("Sync - Ignoring incoming sync record with bad downloadURL:" + "\n"
+            + url + "\n");
         return undefined;
       }
 
@@ -230,8 +230,8 @@ ScriptStore.prototype = {
   "update": function (aRecord) {
     let script = scriptForSyncId(aRecord.cleartext.id);
     if (!script) {
-      dump("Sync - Could not find script for record:"
-          + "\n" + aRecord.cleartext + "\n");
+      dump("Sync - Could not find script for record:" + "\n"
+          + aRecord.cleartext + "\n");
       return undefined;
     }
     if (!aRecord.cleartext.installed) {

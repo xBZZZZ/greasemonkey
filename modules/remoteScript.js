@@ -67,8 +67,10 @@ function cleanFilename(aFilename, aDefault) {
   if (GM_CONSTANTS.xulRuntime.OS == "WINNT") {
     if (gWindowsNameMaxLen <= 0) {
       throw new Error(
-          "remoteScript - cleanFilename:"
-          + "Could not make a valid file name to save.");
+          "remoteScript - cleanFilename:" + "\n"
+          + GM_CONSTANTS.localeStringBundle.createBundle(
+              GM_CONSTANTS.localeGreasemonkeyProperties)
+              .GetStringFromName("error.remoteScript.notMakeValidFileName"));
     }
     
     let match = filename.match(FILENAME_REGEXP);
@@ -266,10 +268,9 @@ DownloadListener.prototype = {
         // No-op.
         // If it got this far, aStatus is accurate.
       } catch (e) {
-        dump(
-            "remoteScript - DownloadListener - onStopRequest"
-            + "\n" + "- aRequest is neither http nor file channel:"
-            + "\n" + aRequest + "\n");
+        dump("remoteScript - DownloadListener - onStopRequest" + "\n"
+            + "- aRequest is neither http nor file channel:" + "\n"
+            + aRequest + "\n");
         for (let i in Ci) {
           try {
             aRequest.QueryInterface(Ci[i]);
@@ -434,9 +435,9 @@ RemoteScript.prototype.install = function (aOldScript, aOnlyDependencies) {
     throw new Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
-            .GetStringFromName("remotescript.notDownloaded"));
+            .GetStringFromName("error.remoteScript.notDownloaded"));
   }
-  // Part 2/3 (install.js - Part 1/3, remoteScript - Part 3/3).
+  // Part 2/3 (install.js - Part 1/3, remoteScript.js - Part 3/3).
   if (!this._tempDir) {
     return undefined;
   }
@@ -482,7 +483,7 @@ RemoteScript.prototype.install = function (aOldScript, aOnlyDependencies) {
       throw new Error(
           GM_CONSTANTS.localeStringBundle.createBundle(
               GM_CONSTANTS.localeGreasemonkeyProperties)
-              .GetStringFromName("remotescript.nameUnknown"));
+              .GetStringFromName("error.remoteScript.nameUnknown"));
     }
 
     GM_util.getService().config.install(this.script, aOldScript, this._tempDir);
@@ -764,7 +765,7 @@ RemoteScript.prototype._downloadFile = function (
       this.cleanup(
           GM_CONSTANTS.localeStringBundle.createBundle(
               GM_CONSTANTS.localeGreasemonkeyProperties)
-              .GetStringFromName("remotescript.unsafeUrl")
+              .GetStringFromName("error.remoteScript.unsafeUrl")
               .replace("%1", aUri.spec));
       return undefined;
     }
@@ -867,8 +868,7 @@ RemoteScript.prototype._downloadScriptCb = function (
     }
 
     if (!this.script) {
-      dump(
-          "RemoteScript._downloadScriptCb: "
+      dump("RemoteScript._downloadScriptCb:" + " "
           + "Finishing with error because no script was found." + "\n");
       // If we STILL don't have a script, this is a fatal error.
       return aCompletionCallback(false, "script", aStatus, aHeaders);

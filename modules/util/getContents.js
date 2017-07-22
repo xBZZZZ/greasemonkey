@@ -26,7 +26,10 @@ const SCRIPTABLE_UNICODE_CONVERTER =
 function getContents(aFile, aCharset, aFatal) {
   if (!aFile.isFile()) {
     throw new Error(
-        "Greasemonkey tried to get contents of non-file:" + "\n" + aFile.path);
+        "getContents - "
+        + GM_CONSTANTS.info.scriptHandler + " "
+        + "tried to get contents of non-file:"
+        + "\n" + aFile.path);
   }
   SCRIPTABLE_UNICODE_CONVERTER.charset = aCharset
       || GM_CONSTANTS.fileScriptCharset;

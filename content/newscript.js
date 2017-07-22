@@ -8,6 +8,8 @@ if (typeof Cu === "undefined") {
   var Cu = Components.utils;
 }
 
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
 Cu.import("chrome://greasemonkey-modules/content/extractMeta.js");
 Cu.import("chrome://greasemonkey-modules/content/parseScript.js");
 Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
@@ -103,7 +105,10 @@ function getClipText() {
       clipText = str.data.substring(0, strLen.value / 2);
     }
   } catch (e) {
-    dump("getClipText - Error reading clipboard (e.g. the image):"
+    dump("getClipText" + " - "
+        + GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.clipboard.unsupportedContent") + ":"
         + "\n" + e + "\n");
   }
 

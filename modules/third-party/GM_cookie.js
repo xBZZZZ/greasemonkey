@@ -68,7 +68,9 @@ function GM_cookie(
   } catch (e) {
     throw new aWrappedContentWin.Error(
         'GM_cookie("' + what + '"): '
-        + "Electrolysis (e10s) is not supported.",
+        + GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.environment.unsupported.e10s"),
         aFileURL, null);
   }
 
@@ -91,16 +93,11 @@ function GM_cookie(
 
     if (typeof details.name === "undefined") {
       throw new aWrappedContentWin.Error(
-          // GM_cookie - TODO:
-          /*
           GM_CONSTANTS.localeStringBundle.createBundle(
               GM_CONSTANTS.localeGreasemonkeyProperties)
               .GetStringFromName("error.cookie.argument.name")
               .replace("%1", aWhat)
               .replace("%2", typeof details.name),
-          */
-          'GM_cookie("' + aWhat + '") - the argument.name is: '
-          + typeof details.name,
           aFileURL, null);
     }
 
@@ -219,45 +216,30 @@ function GM_cookie(
       details.sameSite = aDetails.sameSite ? String(aDetails.sameSite) : null;
     } else {
       throw new aWrappedContentWin.Error(
-          // GM_cookie - TODO:
-          /*
           GM_CONSTANTS.localeStringBundle.createBundle(
               GM_CONSTANTS.localeGreasemonkeyProperties)
               .GetStringFromName("error.cookie.argument")
               .replace("%1", aWhat)
               .replace("%2", typeof aDetails),
-          */
-          'GM_cookie("' + aWhat + '") - the argument '
-          + "is not Object: " + typeof aDetails,
           aFileURL, null);
     }
 
     if (typeof details.name === "undefined") {
       throw new aWrappedContentWin.Error(
-          // GM_cookie - TODO:
-          /*
           GM_CONSTANTS.localeStringBundle.createBundle(
               GM_CONSTANTS.localeGreasemonkeyProperties)
               .GetStringFromName("error.cookie.argument.name")
               .replace("%1", aWhat)
               .replace("%2", typeof details.name),
-          */
-          'GM_cookie("' + aWhat + '") - the argument.name is: '
-          + typeof details.name,
           aFileURL, null);
     }
     if (typeof details.value === "undefined") {
       throw new aWrappedContentWin.Error(
-          // GM_cookie - TODO:
-          /*
           GM_CONSTANTS.localeStringBundle.createBundle(
               GM_CONSTANTS.localeGreasemonkeyProperties)
               .GetStringFromName("error.cookie.argument.value")
               .replace("%1", aWhat)
               .replace("%2", typeof details.value),
-          */
-          'GM_cookie("' + aWhat + '") - the argument.value is: '
-          + typeof details.value,
           aFileURL, null);
     }
 
@@ -322,14 +304,10 @@ function GM_cookie(
       // break;
     default:
       throw new aWrappedContentWin.Error(
-          // GM_cookie - TODO:
-          /*
           GM_CONSTANTS.localeStringBundle.createBundle(
               GM_CONSTANTS.localeGreasemonkeyProperties)
               .GetStringFromName("error.cookie.unsupportedType")
               .replace("%1", aWhat),
-          */
-          "GM_cookie() - unsupported type: " + aWhat,
           aFileURL, null);
       break;
   }

@@ -267,7 +267,8 @@ service.prototype.handleScriptValMsg = function (aMessage) {
       return undefined;
     default:
       GM_util.logError(
-          "Greasemonkey - Service handleScriptValMsg: "
+          GM_CONSTANTS.info.scriptHandler + " - "
+          + "Service handleScriptValMsg: "
           + 'Unknown message name "' + aMessage.name + '"');
       break;
   }

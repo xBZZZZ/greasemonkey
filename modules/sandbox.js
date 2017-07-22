@@ -247,10 +247,11 @@ function runScriptInSandbox(aSandbox, aScript) {
       && ((_gEnvironment.sandboxContentLevel != null)
           && (_gEnvironment.sandboxContentLevel > 1))) {
     GM_util.logError(
-        GM_CONSTANTS.info.scriptHandler
-        + " - this configuration:"
-        + "\n" + JSON.stringify(_gEnvironment)
-        + "\n" + "is not supported.",
+        GM_CONSTANTS.info.scriptHandler + " - "
+        + GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.environment.unsupported")
+            .replace("%1", JSON.stringify(_gEnvironment)),
         false, aScript.fileURL, null);
     return undefined;
   }
@@ -269,7 +270,7 @@ function runScriptInSandbox(aSandbox, aScript) {
         GM_util.logError(
             GM_CONSTANTS.localeStringBundle.createBundle(
                   GM_CONSTANTS.localeGreasemonkeyProperties)
-                  .GetStringFromName("returnNotInFuncDeprecated"),
+                  .GetStringFromName("warning.returnNotInFuncDeprecated"),
             true, // Is a warning.
             e.fileName,
             e.lineNumber);

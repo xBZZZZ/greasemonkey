@@ -46,8 +46,10 @@ window.addEventListener("load", function () {
   function moveCursorToTop() {
     if (initializeCheckCount > initializeMaxCount) {
       GM_util.logError(
-          GM_CONSTANTS.info.scriptHandler
-          + " - " + "Gave up waiting for Scratchpad.initialized.");
+          GM_CONSTANTS.info.scriptHandler + " - "
+          + GM_CONSTANTS.localeStringBundle.createBundle(
+              GM_CONSTANTS.localeGreasemonkeyProperties)
+              .GetStringFromName("error.scratchpad.notInitialized"));
       clearInterval(initializeCheckTimer);
     }
     initializeCheckCount++;

@@ -51,7 +51,8 @@ var InstallPolicy = {
         // But why do they happen?!
       } else {
         GM_util.logError(
-            "Greasemonkey - Install Policy factory - Error registering:"
+            GM_CONSTANTS.info.scriptHandler + " - "
+            + "Install Policy factory - Error registering:"
             + "\n" + e, false,
             e.fileName, e.lineNumber);
       }

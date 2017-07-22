@@ -10,6 +10,8 @@ if (typeof Cu === "undefined") {
   var Cu = Components.utils;
 }
 
+Cu.import("chrome://greasemonkey-modules/content/constants.js");
+
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
@@ -37,8 +39,9 @@ function windowIsClosed(aWin) {
     }
   } catch (e) {
     GM_util.logError(
-        "Greasemonkey - windowIsClosed:" + "\n" + e, false,
-        e.fileName, e.lineNumber);
+        GM_CONSTANTS.info.scriptHandler + " - "
+        + "windowIsClosed:" + "\n" + e,
+        false, e.fileName, e.lineNumber);
     // Failsafe.
     // In case of any failure, destroy the command to avoid leaks.
     return true;

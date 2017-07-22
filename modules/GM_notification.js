@@ -49,7 +49,12 @@ function GM_notification(aMsg, aTopic) {
     },
   };
   let win = GM_util.getBrowserWindow();
-  win.PopupNotifications.show(
-      win.gBrowser.selectedBrowser, "greasemonkey-notification",
-      aMsg, null, action, [muteAction]);
+  if (win) {
+    win.PopupNotifications.show(
+        win.gBrowser.selectedBrowser, "greasemonkey-notification",
+        aMsg, null, action, [muteAction]);
+  } else {
+    GM_util.logError(
+        "(internal) GM_notification():" + "\n" + aMsg + "\n" + "win = " + win);
+  }
 };

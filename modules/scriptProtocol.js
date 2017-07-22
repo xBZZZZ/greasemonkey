@@ -81,7 +81,8 @@ var ScriptProtocol = {
         // But why do they happen?!
       } else {
         GM_util.logError(
-            "Greasemonkey - Script protocol - Error registering:" + "\n" + e);
+            GM_CONSTANTS.info.scriptHandler + " - "
+            + "Script protocol - Error registering:" + "\n" + e);
       }
       return undefined;
     };
