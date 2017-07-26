@@ -18,6 +18,12 @@ Cu.importGlobalProperties(["XMLHttpRequest"]);
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
+// Cookies - reserved for possible future use (see also #2236) - part 1/2.
+/*
+const COOKIES_SERVICE = Cc["@mozilla.org/cookieService;1"].getService()
+    .QueryInterface(Ci.nsICookieService);
+*/
+
 // See #1945, #2008 - part 1/3.
 /*
 const AUTHORIZATION_USER_PASSWORD_REGEXP = new RegExp(
@@ -272,7 +278,8 @@ function (safeUrl, details, req) {
     channel = req.channel.QueryInterface(Ci.nsIHttpChannelInternal);
     channel.forceAllowThirdPartyCookie = true;
   } catch (e) {
-    // Ignore.  e.g. ftp://
+    // Ignore.
+    // e.g. ftp://
   }
 
   if (details.overrideMimeType) {
@@ -297,6 +304,26 @@ function (safeUrl, details, req) {
       // Ignore.
     }
   }
+
+  // Cookies - reserved for possible future use (see also #2236) - part 2/2.
+  /*
+  if (details.cookies) {
+    try {
+      let _cookiesOrig = COOKIES_SERVICE.getCookieString(
+          GM_util.getUriFromUrl(this.originUrl), req.channel);
+
+      let _cookies = (_cookiesOrig === null) ? "" : _cookiesOrig;
+
+      COOKIES_SERVICE.setCookieString(
+          GM_util.getUriFromUrl(safeUrl), null, _cookies, req.channel);
+    } catch (e) {
+      throw new this.wrappedContentWin.Error(
+          "GM_xmlhttpRequest():"
+          + "\n" + e,
+          this.fileURL, null);
+    }
+  }
+  */
 
   // See #1945, #2008 - part 3/3.
   /*

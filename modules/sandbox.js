@@ -189,10 +189,11 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
 
 function injectGMInfo(aSandbox, aContentWin, aScript) {
   let _gEnvironment = GM_util.getEnvironment();
-  if (_gEnvironment.e10s
-      && _gEnvironment.osMac
-      && ((_gEnvironment.sandboxContentLevel != null)
-          && (_gEnvironment.sandboxContentLevel > 1))) {
+  if ((_gEnvironment.e10s
+        && ((_gEnvironment.sandboxContentLevel != null)
+            && (_gEnvironment.sandboxContentLevel > 1)))
+        || ((_gEnvironment.sandboxContentLevel != null)
+            && (_gEnvironment.sandboxContentLevel > 2))) {
     return undefined;
   }
 
@@ -242,10 +243,11 @@ function injectGMInfo(aSandbox, aContentWin, aScript) {
 
 function runScriptInSandbox(aSandbox, aScript) {
   let _gEnvironment = GM_util.getEnvironment();
-  if (_gEnvironment.e10s
-      && _gEnvironment.osMac
-      && ((_gEnvironment.sandboxContentLevel != null)
-          && (_gEnvironment.sandboxContentLevel > 1))) {
+  if ((_gEnvironment.e10s
+        && ((_gEnvironment.sandboxContentLevel != null)
+            && (_gEnvironment.sandboxContentLevel > 1)))
+        || ((_gEnvironment.sandboxContentLevel != null)
+            && (_gEnvironment.sandboxContentLevel > 2))) {
     GM_util.logError(
         GM_CONSTANTS.info.scriptHandler + " - "
         + GM_CONSTANTS.localeStringBundle.createBundle(
