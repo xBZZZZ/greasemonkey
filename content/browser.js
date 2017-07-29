@@ -390,10 +390,15 @@ function GM_showPopup(aEvent) {
     return undefined;
   }
 
-  var mm = getBrowser().mCurrentBrowser.frameLoader.messageManager;
-
   // See #2276.
   var aEventTarget = aEvent.target;
+
+  // See below.
+  /*
+  var mm = aEventTarget.ownerDocument.defaultView
+      .gBrowser.mCurrentBrowser.frameLoader.messageManager;
+  */
+  var mm = getBrowser().mCurrentBrowser.frameLoader.messageManager;
 
   var callback = null;
   callback = function (aMessage) {
@@ -634,6 +639,10 @@ function GM_showTooltip(aEvent) {
     }
   }
 
+  // See above.
+  /*
+  var mm = getBrowser().mCurrentBrowser.frameLoader.messageManager;
+  */
   var mm = aEvent.target.ownerDocument.defaultView
       .gBrowser.mCurrentBrowser.frameLoader.messageManager;
 
