@@ -35,6 +35,7 @@ const URL_USER_PASS_STRIP_REGEXP = new RegExp(
     GM_CONSTANTS.urlUserPassStripRegexp, "");
 
 var gScope = this;
+var _gEnvironment = GM_util.getEnvironment();
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
@@ -88,6 +89,23 @@ function browserLoadEnd(aEvent) {
     // See #1820, #2371, #2195.
     if ((href == GM_CONSTANTS.urlAboutPart1)
         || (href.match(URL_ABOUT_PART2_REGEXP))) {
+      // http://bugzil.la/1357383
+      // let _gEnvironment = GM_util.getEnvironment();
+      if (!_gEnvironment.e10s) {
+        // See #2229.
+        // http://bugzil.la/1196270
+        if (contentWin) {
+          let winUtils = contentWin.QueryInterface(Ci.nsIInterfaceRequestor)
+              .getInterface(Ci.nsIDOMWindowUtils);
+          try {
+            if (winUtils && !winUtils.isParentWindowMainWidgetVisible) {
+              return undefined;
+            }
+          } catch (e) {
+            return undefined;
+          }
+        }
+      }
       runScripts("document-end", contentWin);
       runScripts("document-idle", contentWin);
     }
