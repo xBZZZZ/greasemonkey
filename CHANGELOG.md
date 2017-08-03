@@ -1,5 +1,16 @@
 ## Changelog
 
+#### 3.12.1beta12 (2017-08-03)
+
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.12.1beta11ForkExperimental...3.12.1beta12ForkExperimental)
+
+* API: unsafeWindow - Requires explicit definition of all grants (opt-in)
+* Loading: Added support for "view-source" protocol (Firefox 42+) ([#2479](https://github.com/greasemonkey/greasemonkey/pull/2479))
+* Loading: Added support for "content-document-global-created" instead of "document-element-inserted" (opt-in) ([#1849](https://github.com/greasemonkey/greasemonkey/issue/1849))
+* General: Add a message (into the log) if a script was removed (if is not complete)
+* Loading: about:blank, the script with alert function - after the restart, the browser hangs ([#2229](https://github.com/greasemonkey/greasemonkey/issue/2229))
+* Fix typos, style clean up
+
 #### 3.12.1beta11 (2017-07-04)
 
 [All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.12.1beta10ForkExperimental...3.12.1beta11ForkExperimental)

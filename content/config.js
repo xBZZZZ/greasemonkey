@@ -41,12 +41,16 @@ Config.prototype.addObserver = function (aObserver, aScript) {
 };
 
 Config.prototype.removeObserver = function (aObserver, aScript) {
+  let _message = GM_CONSTANTS.info.scriptHandler + " - "
+      + "Config: An observer not found";
   let observers = aScript ? aScript._observers : this._observers;
   let index = observers.indexOf(aObserver);
   if (index == -1) {
-    throw new Error("Config: Observer not found.");
+    // GM_util.logError(_message);
+    dump(_message + "\n");
+  } else {
+    observers.splice(index, 1);
   }
-  observers.splice(index, 1);
 },
 
 Config.prototype._notifyObservers = function (aScript, aEvent, aData) {
