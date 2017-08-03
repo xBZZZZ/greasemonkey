@@ -29,6 +29,8 @@ Cu.import("chrome://greasemonkey-modules/content/third-party/MatchPattern.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
+const UPDATE_META_STATUS_FAIL = "fail";
+
 var gGreasemonkeyVersion = "unknown";
 Cu.import("resource://gre/modules/AddonManager.jsm");
 AddonManager.getAddonByID(GM_CONSTANTS.addonGUID, function (aAddon) {
@@ -1156,7 +1158,7 @@ Script.prototype.checkForRemoteUpdate = function (aCallback, aForced) {
   let uri = GM_util.getUriFromUrl(this.updateURL).clone();
 
   let usedMeta = false;
-  if (this._updateMetaStatus != "fail") {
+  if (this._updateMetaStatus != UPDATE_META_STATUS_FAIL) {
     uri.path = uri.path.replace(
         GM_CONSTANTS.fileScriptExtension, GM_CONSTANTS.fileMetaExtension);
     usedMeta = true;
@@ -1260,7 +1262,7 @@ Script.prototype.checkForRemoteUpdate = function (aCallback, aForced) {
 Script.prototype.checkRemoteVersion = function (
     aReq, aCallback, aForced, aMeta) {
   let metaFail = GM_util.hitch(this, function () {
-    this._updateMetaStatus = "fail";
+    this._updateMetaStatus = UPDATE_META_STATUS_FAIL;
     this._changed("modified", null);
 
     return this.checkForRemoteUpdate(aCallback, aForced);
