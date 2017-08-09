@@ -109,7 +109,7 @@ function GM_Resources(aScript) {
 GM_Resources.prototype.getResourceText = function (
     aWrappedContentWin, aSandbox, aFileURL, aName, aResponseType) {
   // Verify the existence of the resource.
-  let dep = this._getDep(aWrappedContentWin, aFileURL, aName);
+  let dep = this._getDependency(aWrappedContentWin, aFileURL, aName);
   if (dep.textContent !== undefined) {
     return dep.textContent;
   }
@@ -120,7 +120,7 @@ GM_Resources.prototype.getResourceText = function (
 GM_Resources.prototype.getResourceURL = function (
     aWrappedContentWin, aSandbox, aScript, aName) {
   // Verify the existence of the resource.
-  let dep = this._getDep(aWrappedContentWin, aScript.fileURL, aName);
+  let dep = this._getDependency(aWrappedContentWin, aScript.fileURL, aName);
   return [
     GM_CONSTANTS.addonScriptProtocolScheme + ":",
     aScript.uuid,
@@ -128,7 +128,7 @@ GM_Resources.prototype.getResourceURL = function (
   ].join("");
 };
 
-GM_Resources.prototype._getDep = function (
+GM_Resources.prototype._getDependency = function (
     aWrappedContentWin, aFileURL, aName) {
   let resources = this.script.resources;
   for (var i = 0, iLen = resources.length; i < iLen; i++) {
