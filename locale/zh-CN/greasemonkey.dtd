@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespot 博客">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
 <!ENTITY menu.webSites.manual "Greasemonkey 手册">
-<!ENTITY newscript.description "描述">
-<!ENTITY newscript.excludes "脚本将排除（每行一条）">
-<!ENTITY newscript.fromClipboard "使用剪贴板中的脚本">
-<!ENTITY newscript.includes "脚本应用到（每行一条）">
-<!ENTITY newscript.name "名称">
-<!ENTITY newscript.namespace "命名空间">
+<!ENTITY newScript.description "描述">
+<!ENTITY newScript.excludes "脚本将排除（每行一条）">
+<!ENTITY newScript.fromClipboard "使用剪贴板中的脚本">
+<!ENTITY newScript.includes "脚本应用到（每行一条）">
+<!ENTITY newScript.name "名称">
+<!ENTITY newScript.namespace "命名空间">
 <!ENTITY options.browseForEditor "选择编辑器程序">
 <!ENTITY options.defaultEditor "使用默认编辑器">
 <!ENTITY options.editor "编辑器">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "需要安全更新（HTTPS）">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "脚本的设置">
-<!ENTITY scriptprefs.title "Greasemonkey 用户脚本首选项 - !!">
-<!ENTITY scriptprefs.userSettings "用户的设置">
-<!ENTITY statusbar.enabled "启用">
-<!ENTITY statusbar.enabled.accesskey "E">
+<!ENTITY scriptPrefs.scriptSettings "脚本的设置">
+<!ENTITY scriptPrefs.title "Greasemonkey 用户脚本首选项 - !!">
+<!ENTITY scriptPrefs.userSettings "用户的设置">
+<!ENTITY statusBar.enabled "启用">
+<!ENTITY statusBar.enabled.accesskey "E">
 <!ENTITY submitStats "收集和提交匿名的使用统计数据以帮助改善 Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "卸载">

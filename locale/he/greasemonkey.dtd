@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespot Blog">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
 <!ENTITY menu.webSites.manual "Greasemonkey Manual">
-<!ENTITY newscript.description "תיאור">
-<!ENTITY newscript.excludes "לא כולל (אחד בכל שורה)">
-<!ENTITY newscript.fromClipboard "השתמש בקובץ Script מהלוח">
-<!ENTITY newscript.includes "כולל (אחד בכל שורה)">
-<!ENTITY newscript.name "שם">
-<!ENTITY newscript.namespace "שם מרחב">
+<!ENTITY newScript.description "תיאור">
+<!ENTITY newScript.excludes "לא כולל (אחד בכל שורה)">
+<!ENTITY newScript.fromClipboard "השתמש בקובץ Script מהלוח">
+<!ENTITY newScript.includes "כולל (אחד בכל שורה)">
+<!ENTITY newScript.name "שם">
+<!ENTITY newScript.namespace "שם מרחב">
 <!ENTITY options.browseForEditor "Browse for Editor Program">
 <!ENTITY options.defaultEditor "Use Default Editor">
 <!ENTITY options.editor "עורך">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "דורשת עדכונים מאובטחים">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "הגדרות קבצי Script">
-<!ENTITY scriptprefs.title "מאפייני קבצי Script של Greasemonkey - !!">
-<!ENTITY scriptprefs.userSettings "הגדרות משתמש">
-<!ENTITY statusbar.enabled "הפוך לזמין">
-<!ENTITY statusbar.enabled.accesskey "מ">
+<!ENTITY scriptPrefs.scriptSettings "הגדרות קבצי Script">
+<!ENTITY scriptPrefs.title "מאפייני קבצי Script של Greasemonkey - !!">
+<!ENTITY scriptPrefs.userSettings "הגדרות משתמש">
+<!ENTITY statusBar.enabled "הפוך לזמין">
+<!ENTITY statusBar.enabled.accesskey "מ">
 <!ENTITY submitStats "אסיפה ומשלוח עיבוד נתונים ללא זיהוי המשתמש לצורך שיפור Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "הסר">

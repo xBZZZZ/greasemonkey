@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespot Blog">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
 <!ENTITY menu.webSites.manual "Greasemonkey Manuál">
-<!ENTITY newscript.description "Popis">
-<!ENTITY newscript.excludes "Vylučuje (jeden na riadok)">
-<!ENTITY newscript.fromClipboard "Použiť skript zo schránky">
-<!ENTITY newscript.includes "Zahŕňa (jeden na riadok)">
-<!ENTITY newscript.name "Meno">
-<!ENTITY newscript.namespace "Menný priestor">
+<!ENTITY newScript.description "Popis">
+<!ENTITY newScript.excludes "Vylučuje (jeden na riadok)">
+<!ENTITY newScript.fromClipboard "Použiť skript zo schránky">
+<!ENTITY newScript.includes "Zahŕňa (jeden na riadok)">
+<!ENTITY newScript.name "Meno">
+<!ENTITY newScript.namespace "Menný priestor">
 <!ENTITY options.browseForEditor "Prehliadať program editora">
 <!ENTITY options.defaultEditor "Použiť predvolený editor">
 <!ENTITY options.editor "Editor">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Požaduje bezpečnostné aktualizácie">
 <!ENTITY requireTimeoutUpdates "Použiť pre aktualizácie timeout">
-<!ENTITY scriptprefs.scriptSettings "Nastavenie skriptov">
-<!ENTITY scriptprefs.title "Greasemonkey uživatelský skript Nastavenia -!!">
-<!ENTITY scriptprefs.userSettings "Užívateľské nastavenia">
-<!ENTITY statusbar.enabled "Povolený">
-<!ENTITY statusbar.enabled.accesskey "P">
+<!ENTITY scriptPrefs.scriptSettings "Nastavenie skriptov">
+<!ENTITY scriptPrefs.title "Greasemonkey uživatelský skript Nastavenia -!!">
+<!ENTITY scriptPrefs.userSettings "Užívateľské nastavenia">
+<!ENTITY statusBar.enabled "Povolený">
+<!ENTITY statusBar.enabled.accesskey "P">
 <!ENTITY submitStats "Zbierať a posielať anonymné štatistiky používania pre zlepšenie Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Sekundy">
 <!ENTITY uninstall "Odinštalovať">

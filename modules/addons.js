@@ -30,7 +30,7 @@ Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 Cu.import("resource://gre/modules/AddonManager.jsm");
 
 Cu.import("chrome://greasemonkey-modules/content/GM_notification.js");
-Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
 Cu.import("chrome://greasemonkey-modules/content/remoteScript.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
@@ -462,7 +462,7 @@ function GM_addonsStartup(aParams) {
         "id": GM_CONSTANTS.scriptAddonType,
         "name": GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGmAddonsProperties)
-            .GetStringFromName("userscripts"),
+            .GetStringFromName("userScripts"),
         "uiPriority": 4500,
         "viewType": AddonManager.VIEW_TYPE_LIST,
       }]);

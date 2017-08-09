@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespot Blog">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
 <!ENTITY menu.webSites.manual "Greasemonkey Manual">
-<!ENTITY newscript.description "Leírás">
-<!ENTITY newscript.excludes "Kizárt oldalak (soronként egy)">
-<!ENTITY newscript.fromClipboard "Use Script From Clipboard">
-<!ENTITY newscript.includes "Engedélyezett oldalak (soronként egy)">
-<!ENTITY newscript.name "Név">
-<!ENTITY newscript.namespace "Névtér">
+<!ENTITY newScript.description "Leírás">
+<!ENTITY newScript.excludes "Kizárt oldalak (soronként egy)">
+<!ENTITY newScript.fromClipboard "Use Script From Clipboard">
+<!ENTITY newScript.includes "Engedélyezett oldalak (soronként egy)">
+<!ENTITY newScript.name "Név">
+<!ENTITY newScript.namespace "Névtér">
 <!ENTITY options.browseForEditor "Browse for Editor Program">
 <!ENTITY options.defaultEditor "Use Default Editor">
 <!ENTITY options.editor "Szerkesztő">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Biztonsági frissítések igénylése">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "Parancsfájl beállítások">
-<!ENTITY scriptprefs.title "Greasemonkey parancsfájl beállítások - !!">
-<!ENTITY scriptprefs.userSettings "Felhasználói beállítások">
-<!ENTITY statusbar.enabled "Engedélyezve">
-<!ENTITY statusbar.enabled.accesskey "E">
+<!ENTITY scriptPrefs.scriptSettings "Parancsfájl beállítások">
+<!ENTITY scriptPrefs.title "Greasemonkey parancsfájl beállítások - !!">
+<!ENTITY scriptPrefs.userSettings "Felhasználói beállítások">
+<!ENTITY statusBar.enabled "Engedélyezve">
+<!ENTITY statusBar.enabled.accesskey "E">
 <!ENTITY submitStats "Gather and submit anonymous usage statistics to improve Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Eltávolítás">

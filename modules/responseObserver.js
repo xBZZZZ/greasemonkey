@@ -20,9 +20,9 @@ Cu.import("resource://gre/modules/Services.jsm");
 //   // Ignore.
 // }
 
-Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
-Cu.import("chrome://greasemonkey-modules/content/third-party/convert2RegExp.js");
-Cu.import("chrome://greasemonkey-modules/content/third-party/MatchPattern.js");
+Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
+Cu.import("chrome://greasemonkey-modules/content/third-party/convertToRegexp.js");
+Cu.import("chrome://greasemonkey-modules/content/third-party/matchPattern.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
@@ -127,7 +127,7 @@ function _corsCspTestUrl(aUrl) {
   var uri = GM_util.getUriFromUrl(aUrl);
 
   function testClude(glob) {
-    return GM_convert2RegExp(glob, uri).test(aUrl);
+    return GM_convertToRegexp(glob, uri).test(aUrl);
   }
 
   function testMatch(matchPattern) {

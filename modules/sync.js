@@ -31,8 +31,8 @@ Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
 Cu.import("resource://services-crypto/utils.js");
 
-Cu.import("chrome://greasemonkey-modules/content/miscapis.js");
-Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/miscApis.js");
+Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
 Cu.import("chrome://greasemonkey-modules/content/remoteScript.js");
 Cu.import("chrome://greasemonkey-modules/content/storageBack.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");

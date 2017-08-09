@@ -25,7 +25,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-const EXPORTED_SYMBOLS = ["GM_convert2RegExp"];
+const EXPORTED_SYMBOLS = ["GM_convertToRegexp"];
 
 if (typeof Cc === "undefined") {
   var Cc = Components.classes;
@@ -45,8 +45,8 @@ const TLD_REGEXP = /^([^:]+:\/\/[^\/]+)\.tld(\/.*)?$/;
 // Exposed outer method takes regex as string, and handles the magic TLD.
 // (Can't memoize a URI object, yet we want to do URL->URI outside this method,
 // once for efficiency. Compromise: memoize just the internal string handling.)
-function GM_convert2RegExp(aPattern, aUri, aForceGlob) {
-  let reStr = GM_convert2RegExpInner(aPattern, aForceGlob);
+function GM_convertToRegexp(aPattern, aUri, aForceGlob) {
+  let reStr = GM_convertToRegexpInner(aPattern, aForceGlob);
 
   // Inner returns a RegExp, not str, for input regex (not glob) patterns.
   // Use those directly without magic TLD modifications.
@@ -73,7 +73,7 @@ function GM_convert2RegExp(aPattern, aUri, aForceGlob) {
 }
 
 // Memoized internal implementation just does glob -> regex translation.
-function GM_convert2RegExpInner(pattern, forceGlob) {
+function GM_convertToRegexpInner(pattern, forceGlob) {
   let s = new String(pattern);
 
   if (!forceGlob && (s.substr(0, 1) == "/") && (s.substr(-1, 1) == "/")) {
@@ -114,4 +114,4 @@ function GM_convert2RegExpInner(pattern, forceGlob) {
 
   return res + "$";
 }
-GM_convert2RegExpInner = GM_util.memoize(GM_convert2RegExpInner);
+GM_convertToRegexpInner = GM_util.memoize(GM_convertToRegexpInner);

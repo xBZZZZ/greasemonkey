@@ -15,12 +15,12 @@ Cu.import("chrome://greasemonkey-modules/content/constants.js");
 Cu.import("resource://gre/modules/osfile.jsm");
 
 Cu.import("chrome://greasemonkey-modules/content/extractMeta.js");
-Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
 Cu.import("chrome://greasemonkey-modules/content/script.js");
 Cu.import("chrome://greasemonkey-modules/content/scriptIcon.js");
 Cu.import("chrome://greasemonkey-modules/content/scriptRequire.js");
 Cu.import("chrome://greasemonkey-modules/content/scriptResource.js");
-Cu.import("chrome://greasemonkey-modules/content/third-party/MatchPattern.js");
+Cu.import("chrome://greasemonkey-modules/content/third-party/matchPattern.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 

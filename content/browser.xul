@@ -11,7 +11,7 @@
   <script type="application/x-javascript"
     src="chrome://greasemonkey/content/browser.js" />
   <script type="application/x-javascript"
-    src="chrome://greasemonkey/content/menucommander.js" />
+    src="chrome://greasemonkey/content/menuCommander.js" />
 
   <commandset>
     <!-- Sync the 'disabled' attribute for toolbar button. -->
@@ -72,8 +72,8 @@
       oncommand="GM_popupClicked(event); event.stopPropagation();"
       oncontextmenu="event.preventDefault();">
       <menuitem class="gm-enabled-item"
-        accesskey="&statusbar.enabled.accesskey;"
-        label="&statusbar.enabled;"
+        accesskey="&statusBar.enabled.accesskey;"
+        label="&statusBar.enabled;"
         type="checkbox"
         command="gm_toggle_checked" />
       <menuseparator />
@@ -131,7 +131,7 @@
 
   <stringbundleset id="stringbundleset">
     <stringbundle id="gm-browser-bundle"
-      src="chrome://greasemonkey/locale/gm-browser.properties" />
+      src="chrome://greasemonkey/locale/gmBrowser.properties" />
   </stringbundleset>
 
 </overlay>

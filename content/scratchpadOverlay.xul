@@ -2,5 +2,5 @@
 <overlay id="greasemonkey-browser-overlay"
   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script type="application/x-javascript"
-    src="chrome://greasemonkey/content/scratchpad-overlay.js" />
+    src="chrome://greasemonkey/content/scratchpadOverlay.js" />
 </overlay>

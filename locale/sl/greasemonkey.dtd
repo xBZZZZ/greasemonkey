@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Blog Greasespot">
 <!ENTITY menu.webSites.greasespotWiki "Wiki Greasespot">
 <!ENTITY menu.webSites.manual "Priročnik Greasemonkey">
-<!ENTITY newscript.description "Opis">
-<!ENTITY newscript.excludes "Izključuje (enega na vrstico)">
-<!ENTITY newscript.fromClipboard "Uporabi skript iz odložišča">
-<!ENTITY newscript.includes "Vključuje (enega na vrstico)">
-<!ENTITY newscript.name "Ime">
-<!ENTITY newscript.namespace "Imenski prostor">
+<!ENTITY newScript.description "Opis">
+<!ENTITY newScript.excludes "Izključuje (enega na vrstico)">
+<!ENTITY newScript.fromClipboard "Uporabi skript iz odložišča">
+<!ENTITY newScript.includes "Vključuje (enega na vrstico)">
+<!ENTITY newScript.name "Ime">
+<!ENTITY newScript.namespace "Imenski prostor">
 <!ENTITY options.browseForEditor "Brskaj za urejevalniškim programom">
 <!ENTITY options.defaultEditor "Uporabi privzeti urejevalnik">
 <!ENTITY options.editor "Urejevalnik">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Zahtevaj varne posodobitve">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "Nastavitve skripta">
-<!ENTITY scriptprefs.title "Nastavitve uporabniških skriptov Greasemonkey - !!">
-<!ENTITY scriptprefs.userSettings "Uporabniške nastavitve">
-<!ENTITY statusbar.enabled "Omogočeno">
-<!ENTITY statusbar.enabled.accesskey "O">
+<!ENTITY scriptPrefs.scriptSettings "Nastavitve skripta">
+<!ENTITY scriptPrefs.title "Nastavitve uporabniških skriptov Greasemonkey - !!">
+<!ENTITY scriptPrefs.userSettings "Uporabniške nastavitve">
+<!ENTITY statusBar.enabled "Omogočeno">
+<!ENTITY statusBar.enabled.accesskey "O">
 <!ENTITY submitStats "Zbiraj in pošlji anonimno statistiko o uporabi za izboljšanje dodatka Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Odstrani">

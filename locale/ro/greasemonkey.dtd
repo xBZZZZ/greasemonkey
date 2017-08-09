@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespot Blog">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
 <!ENTITY menu.webSites.manual "Greasemonkey Manual">
-<!ENTITY newscript.description "Descriere">
-<!ENTITY newscript.excludes "Excluderi (una pe linie)">
-<!ENTITY newscript.fromClipboard "Use Script From Clipboard">
-<!ENTITY newscript.includes "Includeri (una pe linie)">
-<!ENTITY newscript.name "Nume">
-<!ENTITY newscript.namespace "Spațiu de nume">
+<!ENTITY newScript.description "Descriere">
+<!ENTITY newScript.excludes "Excluderi (una pe linie)">
+<!ENTITY newScript.fromClipboard "Use Script From Clipboard">
+<!ENTITY newScript.includes "Includeri (una pe linie)">
+<!ENTITY newScript.name "Nume">
+<!ENTITY newScript.namespace "Spațiu de nume">
 <!ENTITY options.browseForEditor "Browse for Editor Program">
 <!ENTITY options.defaultEditor "Use Default Editor">
 <!ENTITY options.editor "Editor">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Sunt necesare actualizări de securitate">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "Setări script">
-<!ENTITY scriptprefs.title "Preferințe script utilizator Greasemonkey - !!">
-<!ENTITY scriptprefs.userSettings "Setări utilizator">
-<!ENTITY statusbar.enabled "Activat">
-<!ENTITY statusbar.enabled.accesskey "A">
+<!ENTITY scriptPrefs.scriptSettings "Setări script">
+<!ENTITY scriptPrefs.title "Preferințe script utilizator Greasemonkey - !!">
+<!ENTITY scriptPrefs.userSettings "Setări utilizator">
+<!ENTITY statusBar.enabled "Activat">
+<!ENTITY statusBar.enabled.accesskey "A">
 <!ENTITY submitStats "Adună și trimite statistici anonime de utilizare pentru a îmbunătății Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Dezinstalare">

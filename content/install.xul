@@ -26,7 +26,7 @@
   defaultButton="accept">
 
   <stringbundle id="gm-browser-bundle"
-    src="chrome://greasemonkey/locale/gm-browser.properties" />
+    src="chrome://greasemonkey/locale/gmBrowser.properties" />
 
   <script type="application/x-javascript"
     src="chrome://greasemonkey/content/install.js" />

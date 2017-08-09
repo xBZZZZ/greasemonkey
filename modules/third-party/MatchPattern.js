@@ -52,7 +52,7 @@ if (typeof Cu === "undefined") {
 
 Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
-Cu.import("chrome://greasemonkey-modules/content/third-party/convert2RegExp.js");
+Cu.import("chrome://greasemonkey-modules/content/third-party/convertToRegexp.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
@@ -121,7 +121,7 @@ function MatchPattern(aPattern) {
 
   if (host) {
     // We have to manually create the hostname regexp (instead of using
-    // GM_convert2RegExp) to properly handle *.example.tld, which should match
+    // GM_convertToRegexp) to properly handle *.example.tld, which should match
     // example.tld and any of its subdomains, but not anotherexample.tld.
     this._hostExpr = new RegExp("^" +
         // Two characters in the host portion need special treatment:
@@ -137,7 +137,7 @@ function MatchPattern(aPattern) {
     // If omitted, then it means "", an alias for localhost.
     this._hostExpr = /^$/;
   }
-  this._pathExpr = GM_convert2RegExp(path, false, true);
+  this._pathExpr = GM_convertToRegexp(path, false, true);
 }
 
 Object.defineProperty(MatchPattern.prototype, "pattern", {

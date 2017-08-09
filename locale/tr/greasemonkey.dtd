@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespot Blog">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
 <!ENTITY menu.webSites.manual "Greasemonkey Kılavuzu">
-<!ENTITY newscript.description "Tanım">
-<!ENTITY newscript.excludes "Çıkarılanlar (satır başına bir tane)">
-<!ENTITY newscript.fromClipboard "Panodan Betik Kullan">
-<!ENTITY newscript.includes "Eklenenler (satır başına bir tane)">
-<!ENTITY newscript.name "İsim">
-<!ENTITY newscript.namespace "İsim alanı">
+<!ENTITY newScript.description "Tanım">
+<!ENTITY newScript.excludes "Çıkarılanlar (satır başına bir tane)">
+<!ENTITY newScript.fromClipboard "Panodan Betik Kullan">
+<!ENTITY newScript.includes "Eklenenler (satır başına bir tane)">
+<!ENTITY newScript.name "İsim">
+<!ENTITY newScript.namespace "İsim alanı">
 <!ENTITY options.browseForEditor "Düzenleyici Program Bul">
 <!ENTITY options.defaultEditor "Varsayılan Düzenleyi Kullan">
 <!ENTITY options.editor "Editör">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Gerekli güvenlik güncellemeleri">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "Betik Ayarları">
-<!ENTITY scriptprefs.title "Greasemonkey Kullanıcı Betik Tercihleri -!!">
-<!ENTITY scriptprefs.userSettings "Kullanıcı Ayarları">
-<!ENTITY statusbar.enabled "Etkin">
-<!ENTITY statusbar.enabled.accesskey "E">
+<!ENTITY scriptPrefs.scriptSettings "Betik Ayarları">
+<!ENTITY scriptPrefs.title "Greasemonkey Kullanıcı Betik Tercihleri -!!">
+<!ENTITY scriptPrefs.userSettings "Kullanıcı Ayarları">
+<!ENTITY statusBar.enabled "Etkin">
+<!ENTITY statusBar.enabled.accesskey "E">
 <!ENTITY submitStats "Greasemonkey geliştirmeleri için anonim kullanım istatistiklerini topla ve gönder">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Kaldır">

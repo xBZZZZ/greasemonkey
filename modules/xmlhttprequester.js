@@ -1,4 +1,4 @@
-const EXPORTED_SYMBOLS = ["GM_xmlhttpRequester"];
+const EXPORTED_SYMBOLS = ["GM_xmlHttpRequester"];
 
 if (typeof Cc === "undefined") {
   var Cc = Components.classes;
@@ -30,7 +30,7 @@ const AUTHORIZATION_USER_PASSWORD_REGEXP = new RegExp(
     "^([^:]+):([^:]+)$", "");
 */
 
-function GM_xmlhttpRequester(aWrappedContentWin, aSandbox, aFileURL, aOriginUrl) {
+function GM_xmlHttpRequester(aWrappedContentWin, aSandbox, aFileURL, aOriginUrl) {
   this.fileURL = aFileURL;
   this.originUrl = aOriginUrl;
   this.sandbox = aSandbox;
@@ -40,7 +40,7 @@ function GM_xmlhttpRequester(aWrappedContentWin, aSandbox, aFileURL, aOriginUrl)
 
 // This function gets called by user scripts in content security scope
 // to start a cross-domain xmlhttp request.
-GM_xmlhttpRequester.prototype.contentStartRequest = function (aDetails) {
+GM_xmlHttpRequester.prototype.contentStartRequest = function (aDetails) {
   if (!aDetails) {
     throw new this.wrappedContentWin.Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
@@ -136,7 +136,7 @@ GM_xmlhttpRequester.prototype.contentStartRequest = function (aDetails) {
 
 // This function is intended to be called in chrome's security context,
 // so that it can access other domains without security warning.
-GM_xmlhttpRequester.prototype.chromeStartRequest =
+GM_xmlHttpRequester.prototype.chromeStartRequest =
 function (safeUrl, details, req) {
   let setupRequestEvent = GM_util.hitch(
       this, "setupRequestEvent", this.wrappedContentWin, this.sandbox,
@@ -366,7 +366,7 @@ function (safeUrl, details, req) {
 // Arranges for the specified "event" on xmlhttprequest "req" to call
 // the method by the same name which is a property of "details"
 // in the content window's security context.
-GM_xmlhttpRequester.prototype.setupRequestEvent = function (
+GM_xmlHttpRequester.prototype.setupRequestEvent = function (
     wrappedContentWin, sandbox, fileURL, req, event, details) {
   // Waive Xrays so that we can read callback function properties...
   details = Cu.waiveXrays(details);
@@ -423,7 +423,7 @@ GM_xmlhttpRequester.prototype.setupRequestEvent = function (
           req.abort();
         } catch (e) {
           GM_util.logError(
-              "GM_xmlhttpRequester.setupRequestEvent - url:"
+              "GM_xmlHttpRequester.setupRequestEvent - url:"
               + "\n" + '"' + details.url + '":' + "\n" + e, true,
               fileURL, null);
         }
@@ -476,7 +476,7 @@ GM_xmlhttpRequester.prototype.setupRequestEvent = function (
         req.abort();
       } catch (e) {
         GM_util.logError(
-            "GM_xmlhttpRequester.setupRequestEvent - url:"
+            "GM_xmlHttpRequester.setupRequestEvent - url:"
             + "\n" + '"' + details.url + '":' + "\n" + e, true,
             fileURL, null);
       }

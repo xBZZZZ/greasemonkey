@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespot Блог">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Уики">
 <!ENTITY menu.webSites.manual "Ръководство на Greasemonkey">
-<!ENTITY newscript.description "Описание">
-<!ENTITY newscript.excludes "Изключени (по един на ред)">
-<!ENTITY newscript.fromClipboard "Използване на скрипта от клипборда">
-<!ENTITY newscript.includes "Включени (по един на ред)">
-<!ENTITY newscript.name "Име">
-<!ENTITY newscript.namespace "Пространство от имена">
+<!ENTITY newScript.description "Описание">
+<!ENTITY newScript.excludes "Изключени (по един на ред)">
+<!ENTITY newScript.fromClipboard "Използване на скрипта от клипборда">
+<!ENTITY newScript.includes "Включени (по един на ред)">
+<!ENTITY newScript.name "Име">
+<!ENTITY newScript.namespace "Пространство от имена">
 <!ENTITY options.browseForEditor "Разглеждане">
 <!ENTITY options.defaultEditor "Редактор по подразбиране">
 <!ENTITY options.editor "Редактор">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Изискване на актуализации по сигурността">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "Настройки на скрипта">
-<!ENTITY scriptprefs.title "Настройки на потребителските скриптове на Greasemonkey – !!">
-<!ENTITY scriptprefs.userSettings "Потребителски настройки">
-<!ENTITY statusbar.enabled "Включен">
-<!ENTITY statusbar.enabled.accesskey "В">
+<!ENTITY scriptPrefs.scriptSettings "Настройки на скрипта">
+<!ENTITY scriptPrefs.title "Настройки на потребителските скриптове на Greasemonkey – !!">
+<!ENTITY scriptPrefs.userSettings "Потребителски настройки">
+<!ENTITY statusBar.enabled "Включен">
+<!ENTITY statusBar.enabled.accesskey "В">
 <!ENTITY submitStats "Събиране и изпращане на анонимни данни за употребата с цел подобряване на Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Деинсталиране">

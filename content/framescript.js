@@ -16,9 +16,9 @@ Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
 Cu.import("chrome://greasemonkey-modules/content/documentObserver.js");
 Cu.import("chrome://greasemonkey-modules/content/GM_setClipboard.js");
-Cu.import("chrome://greasemonkey-modules/content/ipcscript.js");
-Cu.import("chrome://greasemonkey-modules/content/menucommand.js");
-Cu.import("chrome://greasemonkey-modules/content/miscapis.js");
+Cu.import("chrome://greasemonkey-modules/content/ipcScript.js");
+Cu.import("chrome://greasemonkey-modules/content/menuCommand.js");
+Cu.import("chrome://greasemonkey-modules/content/miscApis.js");
 Cu.import("chrome://greasemonkey-modules/content/sandbox.js");
 Cu.import("chrome://greasemonkey-modules/content/scriptProtocol.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");

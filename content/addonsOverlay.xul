@@ -9,7 +9,7 @@
   <!ENTITY % extensionsDTD SYSTEM
     "chrome://mozapps/locale/extensions/extensions.dtd">
   <!ENTITY % greasemonkeyAddonsDTD SYSTEM
-    "chrome://greasemonkey/locale/gm-addons.dtd">
+    "chrome://greasemonkey/locale/gmAddons.dtd">
   <!ENTITY % greasemonkeyDTD SYSTEM
     "chrome://greasemonkey/locale/greasemonkey.dtd">
   %extensionsDTD;
@@ -21,9 +21,9 @@
   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
 <script type="application/x-javascript"
-  src="chrome://greasemonkey/content/addons-overlay.js" />
+  src="chrome://greasemonkey/content/addonsOverlay.js" />
 <script type="application/x-javascript"
-  src="chrome://greasemonkey/content/third-party/mpl-utils.js" />
+  src="chrome://greasemonkey/content/third-party/mplUtils.js" />
 
 <commandset id="viewCommandSet">
   <command id="cmd_userscript_edit" />

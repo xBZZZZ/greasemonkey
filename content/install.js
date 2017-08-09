@@ -8,7 +8,7 @@ if (typeof Cu === "undefined") {
   var Cu = Components.utils;
 }
 
-Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
@@ -196,7 +196,7 @@ function updateLabel(aOkAllowed) {
   gAcceptButton.disabled = disabled;
 }
 
-// See: closewindow.xul.
+// See: closeWindow.xul.
 function GM_onClose() {
   gRemoteScript.cleanup();
 }

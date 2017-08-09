@@ -26,9 +26,9 @@ Cu.import("resource://gre/modules/PrivateBrowsingUtils.jsm");
 
 Cu.import("resource://services-common/utils.js");
 
-Cu.import("chrome://greasemonkey-modules/content/miscapis.js");
+Cu.import("chrome://greasemonkey-modules/content/miscApis.js");
 Cu.import("chrome://greasemonkey-modules/content/parseScript.js");
-Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
 Cu.import("chrome://greasemonkey-modules/content/storageBack.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
@@ -176,7 +176,7 @@ function getStatsObj() {
       "enabled": script.enabled,
       "id": script.id,
       "installDomain": domain,
-      "installScheme": downloadUri.scheme,
+      "installScheme": downloadUri ? downloadUri.scheme : "",
       "installTime": script.installDate.toISOString(),
       "modifiedTime": script.modifiedDate.toISOString(),
       "sizes": sizes,

@@ -18,7 +18,7 @@ Cu.import("chrome://greasemonkey-modules/content/constants.js");
 Cu.import("resource://gre/modules/Services.jsm");
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
-Cu.import("chrome://greasemonkey-modules/content/ipcscript.js");
+Cu.import("chrome://greasemonkey-modules/content/ipcScript.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 

@@ -12,7 +12,7 @@ Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
 Cu.import("chrome://greasemonkey-modules/content/extractMeta.js");
 Cu.import("chrome://greasemonkey-modules/content/parseScript.js");
-Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
@@ -69,7 +69,7 @@ function doInstall() {
   var script = scope.parse(scriptSrc);
   // ...make sure entered details will not ruin an existing file.
   if (config.installIsUpdate(script)) {
-    let overwrite = confirm(gBundle.getString("newscript.exists"));
+    let overwrite = confirm(gBundle.getString("newScript.exists"));
     if (!overwrite) {
       return false;
     }
@@ -141,7 +141,7 @@ function createScriptSource() {
     if (!aOptional && !replaceVal) {
       throw {
         "name": METADATA_VALUE_ERROR,
-        "message": gBundle.getString("newscript.no" + aMetaName),
+        "message": gBundle.getString("newScript.no" + aMetaName),
       };
     }
     if (aOptional && !replaceVal) {

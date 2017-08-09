@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Blogue de Greasespot">
 <!ENTITY menu.webSites.greasespotWiki "Wiki de Greasespot">
 <!ENTITY menu.webSites.manual "Manual de Greasemonkey">
-<!ENTITY newscript.description "Descrición">
-<!ENTITY newscript.excludes "Excluír (un por liña)">
-<!ENTITY newscript.fromClipboard "Usar script do portapapeis">
-<!ENTITY newscript.includes "Incluír (un por liña)">
-<!ENTITY newscript.name "Nome">
-<!ENTITY newscript.namespace "Espazo do nome">
+<!ENTITY newScript.description "Descrición">
+<!ENTITY newScript.excludes "Excluír (un por liña)">
+<!ENTITY newScript.fromClipboard "Usar script do portapapeis">
+<!ENTITY newScript.includes "Incluír (un por liña)">
+<!ENTITY newScript.name "Nome">
+<!ENTITY newScript.namespace "Espazo do nome">
 <!ENTITY options.browseForEditor "Buscar un programa de edición">
 <!ENTITY options.defaultEditor "Usar o editor predeterminado">
 <!ENTITY options.editor "Editor">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Requerir actualizacións de seguranza">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "Axustes de script">
-<!ENTITY scriptprefs.title "Preferencias de script de Greasemonkey - !!">
-<!ENTITY scriptprefs.userSettings "Axustes de usuario">
-<!ENTITY statusbar.enabled "Activado">
-<!ENTITY statusbar.enabled.accesskey "E">
+<!ENTITY scriptPrefs.scriptSettings "Axustes de script">
+<!ENTITY scriptPrefs.title "Preferencias de script de Greasemonkey - !!">
+<!ENTITY scriptPrefs.userSettings "Axustes de usuario">
+<!ENTITY statusBar.enabled "Activado">
+<!ENTITY statusBar.enabled.accesskey "E">
 <!ENTITY submitStats "Envía as estadísticas anónimas de uso para mellorar Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Desinstalar">

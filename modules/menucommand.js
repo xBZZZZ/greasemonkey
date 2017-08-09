@@ -16,7 +16,7 @@ if (typeof Cu === "undefined") {
 
 Cu.import("resource://gre/modules/Services.jsm");
 
-Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
 
 
 var MenuCommandEventNameSuffix = (function () {

@@ -4,14 +4,14 @@
   type="text/css"?>
 <?xml-stylesheet href="chrome://greasemonkey/skin/bindings.css"
   type="text/css"?>
-<?xml-stylesheet href="chrome://greasemonkey/skin/scriptprefs.css"
+<?xml-stylesheet href="chrome://greasemonkey/skin/scriptPrefs.css"
   type="text/css"?>
 
 <!DOCTYPE prefwindow [
   <!ENTITY % addonsDTD SYSTEM
-    "chrome://greasemonkey/locale/gm-addons.dtd">
+    "chrome://greasemonkey/locale/gmAddons.dtd">
   <!ENTITY % cludesDTD SYSTEM
-    "chrome://greasemonkey/locale/gm-cludes.dtd">
+    "chrome://greasemonkey/locale/gmCludes.dtd">
   <!ENTITY % greasemonkeyDTD SYSTEM
     "chrome://greasemonkey/locale/greasemonkey.dtd">
   %addonsDTD;
@@ -22,17 +22,17 @@
 <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
   buttons="accept,cancel"
   id="greasemonkey-script-preferences"
-  title="&scriptprefs.title;"
+  title="&scriptPrefs.title;"
   ondialogaccept="return onDialogAccept();"
   persist="screenX screenY width height">
 
 <script type="application/x-javascript"
-  src="chrome://greasemonkey/content/scriptprefs.js" />
+  src="chrome://greasemonkey/content/scriptPrefs.js" />
 
 <tabbox flex="1">
   <tabs>
-    <tab label="&scriptprefs.userSettings;" />
-    <tab label="&scriptprefs.scriptSettings;" />
+    <tab label="&scriptPrefs.userSettings;" />
+    <tab label="&scriptPrefs.scriptSettings;" />
     <resizer id="resizer" dir="right" />
   </tabs>
   <tabpanels flex="1">

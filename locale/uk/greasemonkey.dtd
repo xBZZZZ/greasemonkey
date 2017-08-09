@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespot Blog">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
 <!ENTITY menu.webSites.manual "Greasemonkey Manual">
-<!ENTITY newscript.description "Опис">
-<!ENTITY newscript.excludes "Винятки (один на рядок)">
-<!ENTITY newscript.fromClipboard "Use Script From Clipboard">
-<!ENTITY newscript.includes "Охоплення (одне на рядок)">
-<!ENTITY newscript.name "Ім’я">
-<!ENTITY newscript.namespace "Простір імен">
+<!ENTITY newScript.description "Опис">
+<!ENTITY newScript.excludes "Винятки (один на рядок)">
+<!ENTITY newScript.fromClipboard "Use Script From Clipboard">
+<!ENTITY newScript.includes "Охоплення (одне на рядок)">
+<!ENTITY newScript.name "Ім’я">
+<!ENTITY newScript.namespace "Простір імен">
 <!ENTITY options.browseForEditor "Browse for Editor Program">
 <!ENTITY options.defaultEditor "Use Default Editor">
 <!ENTITY options.editor "Редактор">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Вимагати безпечних оновлень">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "Налаштування скрипту">
-<!ENTITY scriptprefs.title "Налаштування користувацьких скриптів Greasemonkey - !!">
-<!ENTITY scriptprefs.userSettings "Налаштування">
-<!ENTITY statusbar.enabled "Увімкнено">
-<!ENTITY statusbar.enabled.accesskey "У">
+<!ENTITY scriptPrefs.scriptSettings "Налаштування скрипту">
+<!ENTITY scriptPrefs.title "Налаштування користувацьких скриптів Greasemonkey - !!">
+<!ENTITY scriptPrefs.userSettings "Налаштування">
+<!ENTITY statusBar.enabled "Увімкнено">
+<!ENTITY statusBar.enabled.accesskey "У">
 <!ENTITY submitStats "Збирати та надсилати анонимну статистику про використання для покращення Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Вилучити">

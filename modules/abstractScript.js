@@ -14,8 +14,8 @@ if (typeof Cu === "undefined") {
 
 Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
-Cu.import("chrome://greasemonkey-modules/content/third-party/convert2RegExp.js");
-Cu.import("chrome://greasemonkey-modules/content/third-party/MatchPattern.js");
+Cu.import("chrome://greasemonkey-modules/content/third-party/convertToRegexp.js");
+Cu.import("chrome://greasemonkey-modules/content/third-party/matchPattern.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
@@ -40,7 +40,7 @@ AbstractScript.prototype.matchesURL = function (aUrl) {
       return false;
     }
 
-    return GM_convert2RegExp(aGlob, uri).test(aUrl);
+    return GM_convertToRegexp(aGlob, uri).test(aUrl);
   }
   function testMatch(matchPattern) {
     if (typeof matchPattern == "string") {

@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespot 部落格">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
 <!ENTITY menu.webSites.manual "Greasemonkey 說明書">
-<!ENTITY newscript.description "說明">
-<!ENTITY newscript.excludes "不包含（每行一項）">
-<!ENTITY newscript.fromClipboard "使用剪貼簿中的腳本">
-<!ENTITY newscript.includes "包含（每行一項）">
-<!ENTITY newscript.name "名稱">
-<!ENTITY newscript.namespace "命名空間">
+<!ENTITY newScript.description "說明">
+<!ENTITY newScript.excludes "不包含（每行一項）">
+<!ENTITY newScript.fromClipboard "使用剪貼簿中的腳本">
+<!ENTITY newScript.includes "包含（每行一項）">
+<!ENTITY newScript.name "名稱">
+<!ENTITY newScript.namespace "命名空間">
 <!ENTITY options.browseForEditor "瀏覽編輯程式">
 <!ENTITY options.defaultEditor "使用預設編輯器">
 <!ENTITY options.editor "腳本編輯器">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "要求透過安全通道更新">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "腳本設定值">
-<!ENTITY scriptprefs.title "Greasemonkey 使用者腳本偏好設定 - !!">
-<!ENTITY scriptprefs.userSettings "使用者設定值">
-<!ENTITY statusbar.enabled "已啟用">
-<!ENTITY statusbar.enabled.accesskey "E">
+<!ENTITY scriptPrefs.scriptSettings "腳本設定值">
+<!ENTITY scriptPrefs.title "Greasemonkey 使用者腳本偏好設定 - !!">
+<!ENTITY scriptPrefs.userSettings "使用者設定值">
+<!ENTITY statusBar.enabled "已啟用">
+<!ENTITY statusBar.enabled.accesskey "E">
 <!ENTITY submitStats "收集並送出匿名統計資訊以幫助改進 Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "腳本移除設定">

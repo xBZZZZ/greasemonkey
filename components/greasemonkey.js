@@ -17,9 +17,9 @@ Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
 Cu.import("resource://gre/modules/AddonManager.jsm");
 
-Cu.import("chrome://greasemonkey-modules/content/ipcscript.js");
-Cu.import("chrome://greasemonkey-modules/content/menucommand.js");
-Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/ipcScript.js");
+Cu.import("chrome://greasemonkey-modules/content/menuCommand.js");
+Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
 Cu.import("chrome://greasemonkey-modules/content/storageBack.js");
 Cu.import("chrome://greasemonkey-modules/content/sync.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
@@ -50,7 +50,7 @@ function startup(aService) {
   GM_CONSTANTS.jsSubScriptLoader.loadSubScript(
       "chrome://greasemonkey/content/config.js");
   GM_CONSTANTS.jsSubScriptLoader.loadSubScript(
-      "chrome://greasemonkey/content/third-party/mpl-utils.js");
+      "chrome://greasemonkey/content/third-party/mplUtils.js");
 
   // Most incoming messages go to the "global" message manager.
   let scriptValHandler = aService.handleScriptValMsg.bind(aService);
@@ -81,7 +81,7 @@ function startup(aService) {
       "greasemonkey:url-is-temp-file", aService.urlIsTempFile.bind(aService));
 
   Services.mm.loadFrameScript(
-      "chrome://greasemonkey/content/framescript.js", true);
+      "chrome://greasemonkey/content/frameScript.js", true);
 
   // Beam down initial set of scripts.
   aService.broadcastScriptUpdates();

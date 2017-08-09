@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Blog Greasespot">
 <!ENTITY menu.webSites.greasespotWiki "Wiki Greasespot">
 <!ENTITY menu.webSites.manual "Instrukcja Greasemonkey ">
-<!ENTITY newscript.description "Opis">
-<!ENTITY newscript.excludes "Witryny, na których skrypt nie będzie uruchamiany (jedna w wierszu)">
-<!ENTITY newscript.fromClipboard "Użyj skryptu ze schowka">
-<!ENTITY newscript.includes "Witryny, na których skrypt będzie uruchamiany (jedna w wierszu)">
-<!ENTITY newscript.name "Nazwa">
-<!ENTITY newscript.namespace "Lokalizacja">
+<!ENTITY newScript.description "Opis">
+<!ENTITY newScript.excludes "Witryny, na których skrypt nie będzie uruchamiany (jedna w wierszu)">
+<!ENTITY newScript.fromClipboard "Użyj skryptu ze schowka">
+<!ENTITY newScript.includes "Witryny, na których skrypt będzie uruchamiany (jedna w wierszu)">
+<!ENTITY newScript.name "Nazwa">
+<!ENTITY newScript.namespace "Lokalizacja">
 <!ENTITY options.browseForEditor "Przeglądaj w poszukiwaniu edytora">
 <!ENTITY options.defaultEditor "Użyj domyślnego edytora">
 <!ENTITY options.editor "Edytor">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Wymaga bezpiecznych aktualizacji">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "Ustawienia skryptu">
-<!ENTITY scriptprefs.title "Ustawienia skryptów - !!">
-<!ENTITY scriptprefs.userSettings "Ustawienia użytkownika">
-<!ENTITY statusbar.enabled "Włącz">
-<!ENTITY statusbar.enabled.accesskey "W">
+<!ENTITY scriptPrefs.scriptSettings "Ustawienia skryptu">
+<!ENTITY scriptPrefs.title "Ustawienia skryptów - !!">
+<!ENTITY scriptPrefs.userSettings "Ustawienia użytkownika">
+<!ENTITY statusBar.enabled "Włącz">
+<!ENTITY statusBar.enabled.accesskey "W">
 <!ENTITY submitStats "Zbieraj i przekazuj anonimowo statystyki używania Greasemonkey, by pomóc w udoskonaleniu aplikacji">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Odinstaluj">

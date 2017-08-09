@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespot Blog">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
 <!ENTITY menu.webSites.manual "Greasemonkey-handleiding">
-<!ENTITY newscript.description "Beschrijving">
-<!ENTITY newscript.excludes "Sluit uit (één per regel)">
-<!ENTITY newscript.fromClipboard "Script van klembord gebruiken">
-<!ENTITY newscript.includes "Beïnvloedt (één per regel)">
-<!ENTITY newscript.name "Naam">
-<!ENTITY newscript.namespace "Namespace">
+<!ENTITY newScript.description "Beschrijving">
+<!ENTITY newScript.excludes "Sluit uit (één per regel)">
+<!ENTITY newScript.fromClipboard "Script van klembord gebruiken">
+<!ENTITY newScript.includes "Beïnvloedt (één per regel)">
+<!ENTITY newScript.name "Naam">
+<!ENTITY newScript.namespace "Namespace">
 <!ENTITY options.browseForEditor "Naar bewerkingsprogramma bladeren">
 <!ENTITY options.defaultEditor "Standaard bewerkingsprogramma gebruiken">
 <!ENTITY options.editor "Tekstverwerker">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Beveiligde updates vereisen">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "Scriptinstellingen">
-<!ENTITY scriptprefs.title "Greasemonkey-gebruikersscriptvoorkeuren - !!">
-<!ENTITY scriptprefs.userSettings "Gebruikersinstellingen">
-<!ENTITY statusbar.enabled "Ingeschakeld">
-<!ENTITY statusbar.enabled.accesskey "I">
+<!ENTITY scriptPrefs.scriptSettings "Scriptinstellingen">
+<!ENTITY scriptPrefs.title "Greasemonkey-gebruikersscriptvoorkeuren - !!">
+<!ENTITY scriptPrefs.userSettings "Gebruikersinstellingen">
+<!ENTITY statusBar.enabled "Ingeschakeld">
+<!ENTITY statusBar.enabled.accesskey "I">
 <!ENTITY submitStats "Verzamel en verstuur anonieme gebruiksstatistieken om Greasemonkey te verbeteren">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Deïnstalleren">

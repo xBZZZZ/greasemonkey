@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespot Blog">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
 <!ENTITY menu.webSites.manual "Greasemonkey Manual">
-<!ENTITY newscript.description "Kuvaus">
-<!ENTITY newscript.excludes "Pois lukien sivut (yksi per rivi)">
-<!ENTITY newscript.fromClipboard "Use Script From Clipboard">
-<!ENTITY newscript.includes "Ajetaan sivuilla (yksi per rivi)">
-<!ENTITY newscript.name "Nimi">
-<!ENTITY newscript.namespace "Nimiavaruus">
+<!ENTITY newScript.description "Kuvaus">
+<!ENTITY newScript.excludes "Pois lukien sivut (yksi per rivi)">
+<!ENTITY newScript.fromClipboard "Use Script From Clipboard">
+<!ENTITY newScript.includes "Ajetaan sivuilla (yksi per rivi)">
+<!ENTITY newScript.name "Nimi">
+<!ENTITY newScript.namespace "Nimiavaruus">
 <!ENTITY options.browseForEditor "Browse for Editor Program">
 <!ENTITY options.defaultEditor "Use Default Editor">
 <!ENTITY options.editor "Tekstieditori">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Require secure updates">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "Script Settings">
-<!ENTITY scriptprefs.title "Greasemonkey User Script Preferences - !!">
-<!ENTITY scriptprefs.userSettings "User Settings">
-<!ENTITY statusbar.enabled "Käytössä">
-<!ENTITY statusbar.enabled.accesskey "K">
+<!ENTITY scriptPrefs.scriptSettings "Script Settings">
+<!ENTITY scriptPrefs.title "Greasemonkey User Script Preferences - !!">
+<!ENTITY scriptPrefs.userSettings "User Settings">
+<!ENTITY statusBar.enabled "Käytössä">
+<!ENTITY statusBar.enabled.accesskey "K">
 <!ENTITY submitStats "Gather and submit anonymous usage statistics to improve Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Poisto">

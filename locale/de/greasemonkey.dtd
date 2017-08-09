@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespot Blog">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
 <!ENTITY menu.webSites.manual "Greasemonkey Handbuch">
-<!ENTITY newscript.description "Beschreibung:">
-<!ENTITY newscript.excludes "Nicht auf diese Seiten anwenden (zeilenweise angeben):">
-<!ENTITY newscript.fromClipboard "Script aus der Zwischenablage verwenden.">
-<!ENTITY newscript.includes "Auf diese Seiten anwenden (zeilenweise angeben):">
-<!ENTITY newscript.name "Name:">
-<!ENTITY newscript.namespace "Namensraum:">
+<!ENTITY newScript.description "Beschreibung:">
+<!ENTITY newScript.excludes "Nicht auf diese Seiten anwenden (zeilenweise angeben):">
+<!ENTITY newScript.fromClipboard "Script aus der Zwischenablage verwenden.">
+<!ENTITY newScript.includes "Auf diese Seiten anwenden (zeilenweise angeben):">
+<!ENTITY newScript.name "Name:">
+<!ENTITY newScript.namespace "Namensraum:">
 <!ENTITY options.browseForEditor "Nach Editor Programm suchen">
 <!ENTITY options.defaultEditor "Standard Editor verwenden">
 <!ENTITY options.editor "Editor">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Sicherheitsupdate erforderlich">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "Skript-Einstellungen">
-<!ENTITY scriptprefs.title "Greasemonkey - Benutzerskript-Einstellungen - !!">
-<!ENTITY scriptprefs.userSettings "Benutzereinstellungen">
-<!ENTITY statusbar.enabled "Greasemonkey aktivieren">
-<!ENTITY statusbar.enabled.accesskey "A">
+<!ENTITY scriptPrefs.scriptSettings "Skript-Einstellungen">
+<!ENTITY scriptPrefs.title "Greasemonkey - Benutzerskript-Einstellungen - !!">
+<!ENTITY scriptPrefs.userSettings "Benutzereinstellungen">
+<!ENTITY statusBar.enabled "Greasemonkey aktivieren">
+<!ENTITY statusBar.enabled.accesskey "A">
 <!ENTITY submitStats "Sammeln und einreichen von anonymen Nutzungsstatistiken an Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Deinstallieren">

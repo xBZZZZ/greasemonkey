@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespot Blog">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
 <!ENTITY menu.webSites.manual "Greasemonkey Manual">
-<!ENTITY newscript.description "Aprašymas">
-<!ENTITY newscript.excludes "Kuriuose neveikia (po vieną eilutėj)">
-<!ENTITY newscript.fromClipboard "Use Script From Clipboard">
-<!ENTITY newscript.includes "Kuriuose veikia (po vieną eilutėj)">
-<!ENTITY newscript.name "Pavadinimas">
-<!ENTITY newscript.namespace "Vardų sritis">
+<!ENTITY newScript.description "Aprašymas">
+<!ENTITY newScript.excludes "Kuriuose neveikia (po vieną eilutėj)">
+<!ENTITY newScript.fromClipboard "Use Script From Clipboard">
+<!ENTITY newScript.includes "Kuriuose veikia (po vieną eilutėj)">
+<!ENTITY newScript.name "Pavadinimas">
+<!ENTITY newScript.namespace "Vardų sritis">
 <!ENTITY options.browseForEditor "Browse for Editor Program">
 <!ENTITY options.defaultEditor "Use Default Editor">
 <!ENTITY options.editor "Redaktorius">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Reikalauti saugumo atnaujinimų">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "Scenarijaus nustatymai">
-<!ENTITY scriptprefs.title "Greasemonkey naudotojo scenarijų nustatymai - !!">
-<!ENTITY scriptprefs.userSettings "Naudotojo nustatymai">
-<!ENTITY statusbar.enabled "Įjungta">
-<!ENTITY statusbar.enabled.accesskey "I">
+<!ENTITY scriptPrefs.scriptSettings "Scenarijaus nustatymai">
+<!ENTITY scriptPrefs.title "Greasemonkey naudotojo scenarijų nustatymai - !!">
+<!ENTITY scriptPrefs.userSettings "Naudotojo nustatymai">
+<!ENTITY statusBar.enabled "Įjungta">
+<!ENTITY statusBar.enabled.accesskey "I">
 <!ENTITY submitStats "Rinkti ir siųsti anoniminę naudojimo statistiką">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Pašalinti">

@@ -156,11 +156,11 @@ GM_PrefManager.prototype.watch = function (aPrefName, aWatcher) {
  * Stop watching.
  */
 GM_PrefManager.prototype.unwatch = function (aPrefName, aWatcher) {
-  let obs = this.observers.get(aWatcher);
-  if (obs) {
+  let observer = this.observers.get(aWatcher);
+  if (observer) {
     this.observers.delete(aWatcher);
     this.pref.QueryInterface(Ci.nsIPrefBranchInternal)
-        .removeObserver(aPrefName, obs);
+        .removeObserver(aPrefName, observer);
   }
 };
 

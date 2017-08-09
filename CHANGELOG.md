@@ -144,7 +144,7 @@ __(very many changes - this is why it is beta at this point)__
 * Loading: HTTP Auth - can't install userscript ([#1717](https://github.com/greasemonkey/greasemonkey/issues/1717), [#2430](https://github.com/greasemonkey/greasemonkey/pull/2430))
 * The context menu: "View User Script Source" - detection of the separator ([#1914](https://github.com/greasemonkey/greasemonkey/issues/1914), [#1979](https://github.com/greasemonkey/greasemonkey/pull/1979))
 * Loading: Added support for CORS/CSP override ([#2046](https://github.com/greasemonkey/greasemonkey/issues/2046))
-* The list of the userscripts - added support sorting by namespace ([#2306](https://github.com/greasemonkey/greasemonkey/issues/2306), [#2334](https://github.com/greasemonkey/greasemonkey/pull/2334))
+* The list of the user scripts - added support sorting by namespace ([#2306](https://github.com/greasemonkey/greasemonkey/issues/2306), [#2334](https://github.com/greasemonkey/greasemonkey/pull/2334))
 * Loading: Improve handling of script install failures ([#2390](https://github.com/greasemonkey/greasemonkey/issues/2390), [#2415](https://github.com/greasemonkey/greasemonkey/pull/2415))
 * Loading: If Greasemonkey is disabled, some scripts works ([#2416](https://github.com/greasemonkey/greasemonkey/issues/2416), [#2417](https://github.com/greasemonkey/greasemonkey/pull/2417))
 * Scratchpad: Deleting other menu items ([#2419](https://github.com/greasemonkey/greasemonkey/pull/2419))

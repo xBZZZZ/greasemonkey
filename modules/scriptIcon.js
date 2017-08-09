@@ -18,7 +18,7 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 const MIME_TYPE_DATA_IMAGE = new RegExp("^data:image\/", "i");
 const MIME_TYPE_DATA = new RegExp("^data:", "i");
-const URL_IMAGE_DEFAULT = "chrome://greasemonkey/skin/userscript.png";
+const URL_IMAGE_DEFAULT = "chrome://greasemonkey/skin/userScript.png";
 
 ScriptIcon.prototype = new ScriptDependency();
 ScriptIcon.prototype.constructor = ScriptIcon;

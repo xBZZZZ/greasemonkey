@@ -81,9 +81,9 @@ const GM_CONSTANTS = {
   "jsSubScriptLoader": Cc["@mozilla.org/moz/jssubscript-loader;1"]
       .getService(Ci.mozIJSSubScriptLoader),
   "localeGmAddonsProperties":
-      "chrome://greasemonkey/locale/gm-addons.properties",
+      "chrome://greasemonkey/locale/gmAddons.properties",
   "localeGmBrowserProperties":
-      "chrome://greasemonkey/locale/gm-browser.properties",
+      "chrome://greasemonkey/locale/gmBrowser.properties",
   "localeGreasemonkeyProperties":
       "chrome://greasemonkey/locale/greasemonkey.properties",
   "localeStringBundle": Cc["@mozilla.org/intl/stringbundle;1"]
@@ -96,7 +96,7 @@ const GM_CONSTANTS = {
   "scriptParseBOM": "\u00EF\u00BB\u00BF",
   "scriptParseBOMArray": [0xEF, 0xBB, 0xBF],
   "scriptParseMetaRegexp": "// ==UserScript==([\\s\\S]*?)^// ==/UserScript==",
-  "scriptPrefsUrl": "chrome://greasemonkey/content/scriptprefs.xul",
+  "scriptPrefsUrl": "chrome://greasemonkey/content/scriptPrefs.xul",
   "scriptType": "user-script",
   "scriptViewID": "addons://list/greasemonkey-user-script",
   "scriptViewIDDetailPrefix": "addons://detail/",

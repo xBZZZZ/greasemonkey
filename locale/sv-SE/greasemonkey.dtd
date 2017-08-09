@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespots blogg">
 <!ENTITY menu.webSites.greasespotWiki "Greasespots wiki">
 <!ENTITY menu.webSites.manual "Handbok för Greasemonkey">
-<!ENTITY newscript.description "Beskrivning">
-<!ENTITY newscript.excludes "Undantag (ett per rad)">
-<!ENTITY newscript.fromClipboard "Använd skript från Urklipp">
-<!ENTITY newscript.includes "Inkluderingar (ett per rad)">
-<!ENTITY newscript.name "Namn">
-<!ENTITY newscript.namespace "Namnrymd">
+<!ENTITY newScript.description "Beskrivning">
+<!ENTITY newScript.excludes "Undantag (ett per rad)">
+<!ENTITY newScript.fromClipboard "Använd skript från Urklipp">
+<!ENTITY newScript.includes "Inkluderingar (ett per rad)">
+<!ENTITY newScript.name "Namn">
+<!ENTITY newScript.namespace "Namnrymd">
 <!ENTITY options.browseForEditor "Bläddra efter redigeringsprogram">
 <!ENTITY options.defaultEditor "Använd standardredigeringsprogrammet">
 <!ENTITY options.editor "Redigeringsprogram">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Kräv säkra uppdateringar">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "Skriptinställningar">
-<!ENTITY scriptprefs.title "Inställningar för användarskript i Greasemonkey - !!">
-<!ENTITY scriptprefs.userSettings "Användarinställningar">
-<!ENTITY statusbar.enabled "Aktiverat">
-<!ENTITY statusbar.enabled.accesskey "A">
+<!ENTITY scriptPrefs.scriptSettings "Skriptinställningar">
+<!ENTITY scriptPrefs.title "Inställningar för användarskript i Greasemonkey - !!">
+<!ENTITY scriptPrefs.userSettings "Användarinställningar">
+<!ENTITY statusBar.enabled "Aktiverat">
+<!ENTITY statusBar.enabled.accesskey "A">
 <!ENTITY submitStats "Samla in och skicka in anonym användningsstatistik för att förbättra Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Avinstallera">

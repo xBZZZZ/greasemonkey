@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespot Blog">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
 <!ENTITY menu.webSites.manual "Greasemonkey Manual">
-<!ENTITY newscript.description "Beskrivelse">
-<!ENTITY newscript.excludes "Ekskluderinger (en pr. linje)">
-<!ENTITY newscript.fromClipboard "Use Script From Clipboard">
-<!ENTITY newscript.includes "Inkluderinger (en pr. linje)">
-<!ENTITY newscript.name "Navn">
-<!ENTITY newscript.namespace "Navnerum">
+<!ENTITY newScript.description "Beskrivelse">
+<!ENTITY newScript.excludes "Ekskluderinger (en pr. linje)">
+<!ENTITY newScript.fromClipboard "Use Script From Clipboard">
+<!ENTITY newScript.includes "Inkluderinger (en pr. linje)">
+<!ENTITY newScript.name "Navn">
+<!ENTITY newScript.namespace "Navnerum">
 <!ENTITY options.browseForEditor "Browse for Editor Program">
 <!ENTITY options.defaultEditor "Use Default Editor">
 <!ENTITY options.editor "Redigeringsprogram">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Require secure updates">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "Script indstillinger">
-<!ENTITY scriptprefs.title "Greasemonkey user script indstilinger - !!">
-<!ENTITY scriptprefs.userSettings "Bruger indstillinger">
-<!ENTITY statusbar.enabled "Aktiveret">
-<!ENTITY statusbar.enabled.accesskey "E">
+<!ENTITY scriptPrefs.scriptSettings "Script indstillinger">
+<!ENTITY scriptPrefs.title "Greasemonkey user script indstilinger - !!">
+<!ENTITY scriptPrefs.userSettings "Bruger indstillinger">
+<!ENTITY statusBar.enabled "Aktiveret">
+<!ENTITY statusBar.enabled.accesskey "E">
 <!ENTITY submitStats "Gather and submit anonymous usage statistics to improve Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Afinstaller">

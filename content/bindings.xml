@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE overlay SYSTEM "chrome://greasemonkey/locale/gm-cludes.dtd">
+<!DOCTYPE overlay SYSTEM "chrome://greasemonkey/locale/gmCludes.dtd">
 <bindings xmlns="http://www.mozilla.org/xbl"
   xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <binding id="clude-editor-base">
@@ -14,7 +14,7 @@
             "chrome://greasemonkey-modules/content/constants.js");
 
         Components.utils.import(
-            "chrome://greasemonkey-modules/content/third-party/MatchPattern.js");
+            "chrome://greasemonkey-modules/content/third-party/matchPattern.js");
         Components.utils.import(
             "chrome://greasemonkey-modules/content/util.js");
 

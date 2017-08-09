@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespot Blog">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
 <!ENTITY menu.webSites.manual "Greasemonkey Manual">
-<!ENTITY newscript.description "شرح">
-<!ENTITY newscript.excludes "مستثنا کردن (یکی در هر خط)">
-<!ENTITY newscript.fromClipboard "Use Script From Clipboard">
-<!ENTITY newscript.includes "شامل کردن (یکی در هر خط)">
-<!ENTITY newscript.name "نام">
-<!ENTITY newscript.namespace "فضای نام">
+<!ENTITY newScript.description "شرح">
+<!ENTITY newScript.excludes "مستثنا کردن (یکی در هر خط)">
+<!ENTITY newScript.fromClipboard "Use Script From Clipboard">
+<!ENTITY newScript.includes "شامل کردن (یکی در هر خط)">
+<!ENTITY newScript.name "نام">
+<!ENTITY newScript.namespace "فضای نام">
 <!ENTITY options.browseForEditor "Browse for Editor Program">
 <!ENTITY options.defaultEditor "Use Default Editor">
 <!ENTITY options.editor "ویراستار">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Require secure updates">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "تنظیمات گریزمانکی">
-<!ENTITY scriptprefs.title "ترجیهات دستنویس کاربریگریزمانکی  - !!">
-<!ENTITY scriptprefs.userSettings "تنظیمات کاربر">
-<!ENTITY statusbar.enabled "فعال">
-<!ENTITY statusbar.enabled.accesskey "ع">
+<!ENTITY scriptPrefs.scriptSettings "تنظیمات گریزمانکی">
+<!ENTITY scriptPrefs.title "ترجیهات دستنویس کاربریگریزمانکی  - !!">
+<!ENTITY scriptPrefs.userSettings "تنظیمات کاربر">
+<!ENTITY statusBar.enabled "فعال">
+<!ENTITY statusBar.enabled.accesskey "ع">
 <!ENTITY submitStats "Gather and submit anonymous usage statistics to improve Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "عزل">

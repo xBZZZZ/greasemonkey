@@ -15,15 +15,15 @@ Cu.import("chrome://greasemonkey-modules/content/constants.js");
 Cu.import("chrome://greasemonkey-modules/content/extractMeta.js");
 Cu.import("chrome://greasemonkey-modules/content/GM_openInTab.js");
 Cu.import("chrome://greasemonkey-modules/content/GM_setClipboard.js");
-Cu.import("chrome://greasemonkey-modules/content/menucommand.js");
-Cu.import("chrome://greasemonkey-modules/content/miscapis.js");
+Cu.import("chrome://greasemonkey-modules/content/menuCommand.js");
+Cu.import("chrome://greasemonkey-modules/content/miscApis.js");
 Cu.import("chrome://greasemonkey-modules/content/notificationer.js");
-Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
 Cu.import("chrome://greasemonkey-modules/content/storageFront.js");
 Cu.import("chrome://greasemonkey-modules/content/third-party/getChromeWinForContentWin.js");
 // Cu.import("chrome://greasemonkey-modules/content/third-party/GM_cookie.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
-Cu.import("chrome://greasemonkey-modules/content/xmlhttprequester.js");
+Cu.import("chrome://greasemonkey-modules/content/xmlHttpRequester.js");
 
 
 // https://hg.mozilla.org/mozilla-central/file/33031c875984/js/src/jsapi.cpp#l1072
@@ -166,7 +166,7 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
 
   if (GM_util.inArray(aScript.grants, "GM_xmlhttpRequest")) {
     sandbox.GM_xmlhttpRequest = GM_util.hitch(
-        new GM_xmlhttpRequester(aContentWin, sandbox, aScript.fileURL, aUrl),
+        new GM_xmlHttpRequester(aContentWin, sandbox, aScript.fileURL, aUrl),
         "contentStartRequest");
   }
 

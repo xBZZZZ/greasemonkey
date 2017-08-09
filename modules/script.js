@@ -17,15 +17,15 @@ Cu.import("resource://gre/modules/PrivateBrowsingUtils.jsm");
 Cu.import("chrome://greasemonkey-modules/content/abstractScript.js");
 Cu.import("chrome://greasemonkey-modules/content/extractMeta.js");
 Cu.import("chrome://greasemonkey-modules/content/GM_notification.js");
-Cu.import("chrome://greasemonkey-modules/content/ipcscript.js");
-Cu.import("chrome://greasemonkey-modules/content/miscapis.js");
+Cu.import("chrome://greasemonkey-modules/content/ipcScript.js");
+Cu.import("chrome://greasemonkey-modules/content/miscApis.js");
 Cu.import("chrome://greasemonkey-modules/content/parseScript.js");
-Cu.import("chrome://greasemonkey-modules/content/prefmanager.js");
+Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
 Cu.import("chrome://greasemonkey-modules/content/scriptIcon.js");
 Cu.import("chrome://greasemonkey-modules/content/scriptRequire.js");
 Cu.import("chrome://greasemonkey-modules/content/scriptResource.js");
 Cu.import("chrome://greasemonkey-modules/content/storageBack.js");
-Cu.import("chrome://greasemonkey-modules/content/third-party/MatchPattern.js");
+Cu.import("chrome://greasemonkey-modules/content/third-party/matchPattern.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
@@ -1053,7 +1053,7 @@ Script.prototype.updateFromNewScript = function (
 
       // Part 2/2 (remoteScript.js - Part 1/2).
       // The fix update "aAddon._script.filename" (that != null) in:
-      // addons-overlay.js - gViewController.commands.cmd_userscript_edit
+      // addonsOverlay.js - gViewController.commands.cmd_userscript_edit
       // It happens when updating the icon to the wrong "URL" (data:)
       // (e.g. "data:image" -> "data:mage").
       // Otherwise an exception occurs:

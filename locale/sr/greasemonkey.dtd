@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespot блог">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot вики">
 <!ENTITY menu.webSites.manual "Greasespot приручник">
-<!ENTITY newscript.description "Опис">
-<!ENTITY newscript.excludes "Изузима (једно по линији)">
-<!ENTITY newscript.fromClipboard "Користи скрипту из оставе">
-<!ENTITY newscript.includes "Обухвата (једно по линији)">
-<!ENTITY newscript.name "Име">
-<!ENTITY newscript.namespace "Namespace">
+<!ENTITY newScript.description "Опис">
+<!ENTITY newScript.excludes "Изузима (једно по линији)">
+<!ENTITY newScript.fromClipboard "Користи скрипту из оставе">
+<!ENTITY newScript.includes "Обухвата (једно по линији)">
+<!ENTITY newScript.name "Име">
+<!ENTITY newScript.namespace "Namespace">
 <!ENTITY options.browseForEditor "Потражи уређивач">
 <!ENTITY options.defaultEditor "Користи подразумевани уређивач">
 <!ENTITY options.editor "Уређивач">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Тражи безбедносна ажурирања">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "Подешавања скрипте">
-<!ENTITY scriptprefs.title "Подешавања корисничких скрипти за Greasemonkey">
-<!ENTITY scriptprefs.userSettings "Корисничка подешавања">
-<!ENTITY statusbar.enabled "Омогућен">
-<!ENTITY statusbar.enabled.accesskey "о">
+<!ENTITY scriptPrefs.scriptSettings "Подешавања скрипте">
+<!ENTITY scriptPrefs.title "Подешавања корисничких скрипти за Greasemonkey">
+<!ENTITY scriptPrefs.userSettings "Корисничка подешавања">
+<!ENTITY statusBar.enabled "Омогућен">
+<!ENTITY statusBar.enabled.accesskey "о">
 <!ENTITY submitStats "Прикупљај и шаљи анонимну статистику о коришћењу ради побољшања додатка Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Уклони">

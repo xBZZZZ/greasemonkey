@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Blog Greasespot">
 <!ENTITY menu.webSites.greasespotWiki "Wiki Greasespot">
 <!ENTITY menu.webSites.manual "Penggunaan Greasemonkey">
-<!ENTITY newscript.description "Deskripsi">
-<!ENTITY newscript.excludes "Dikecualikan (Satu per baris)">
-<!ENTITY newscript.fromClipboard "Gunakan skrip dari papan klip">
-<!ENTITY newscript.includes "Disertakan (Satu per baris)">
-<!ENTITY newscript.name "Nama">
-<!ENTITY newscript.namespace "Namespace">
+<!ENTITY newScript.description "Deskripsi">
+<!ENTITY newScript.excludes "Dikecualikan (Satu per baris)">
+<!ENTITY newScript.fromClipboard "Gunakan skrip dari papan klip">
+<!ENTITY newScript.includes "Disertakan (Satu per baris)">
+<!ENTITY newScript.name "Nama">
+<!ENTITY newScript.namespace "Namespace">
 <!ENTITY options.browseForEditor "Cari Program Penyunting">
 <!ENTITY options.defaultEditor "Gunakan Penyunting Bawaan">
 <!ENTITY options.editor "Penyunting">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "Membutuhkan pembaruan aman">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "Pengaturan Skrip">
-<!ENTITY scriptprefs.title "Preferensi Skrip Greasemonkey - !!">
-<!ENTITY scriptprefs.userSettings "Pengaturan Pengguna">
-<!ENTITY statusbar.enabled "Diaktifkan">
-<!ENTITY statusbar.enabled.accesskey "E">
+<!ENTITY scriptPrefs.scriptSettings "Pengaturan Skrip">
+<!ENTITY scriptPrefs.title "Preferensi Skrip Greasemonkey - !!">
+<!ENTITY scriptPrefs.userSettings "Pengaturan Pengguna">
+<!ENTITY statusBar.enabled "Diaktifkan">
+<!ENTITY statusBar.enabled.accesskey "E">
 <!ENTITY submitStats "Mengumpulkan dan mengirim statistik penggunaan secara anonim untuk perbaikan dan peningkatan Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Copot">

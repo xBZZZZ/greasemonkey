@@ -30,12 +30,12 @@
 <!ENTITY menu.webSites.greasespot "Greasespot Blog">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
 <!ENTITY menu.webSites.manual "Greasemonkey Manual">
-<!ENTITY newscript.description "الوصف">
-<!ENTITY newscript.excludes "لايعمل على (صحة لكل سطر)">
-<!ENTITY newscript.fromClipboard "Use Script From Clipboard">
-<!ENTITY newscript.includes "يعمل على (صفحة لكل سطر)">
-<!ENTITY newscript.name "الاسم">
-<!ENTITY newscript.namespace "المساحة">
+<!ENTITY newScript.description "الوصف">
+<!ENTITY newScript.excludes "لايعمل على (صحة لكل سطر)">
+<!ENTITY newScript.fromClipboard "Use Script From Clipboard">
+<!ENTITY newScript.includes "يعمل على (صفحة لكل سطر)">
+<!ENTITY newScript.name "الاسم">
+<!ENTITY newScript.namespace "المساحة">
 <!ENTITY options.browseForEditor "Browse for Editor Program">
 <!ENTITY options.defaultEditor "Use Default Editor">
 <!ENTITY options.editor "المحرر">
@@ -46,11 +46,11 @@
 <!ENTITY requireDisabledScriptsUpdates "Disabled scripts are checked for automatic updates">
 <!ENTITY requireSecureUpdates "تتطلب تحديثات آمنة">
 <!ENTITY requireTimeoutUpdates "Require timeout updates">
-<!ENTITY scriptprefs.scriptSettings "أعدادات السكربت">
-<!ENTITY scriptprefs.title "تفضيلات السكربت - !!">
-<!ENTITY scriptprefs.userSettings "أعدادات العضوية">
-<!ENTITY statusbar.enabled "تشغيل">
-<!ENTITY statusbar.enabled.accesskey "ت">
+<!ENTITY scriptPrefs.scriptSettings "أعدادات السكربت">
+<!ENTITY scriptPrefs.title "تفضيلات السكربت - !!">
+<!ENTITY scriptPrefs.userSettings "أعدادات العضوية">
+<!ENTITY statusBar.enabled "تشغيل">
+<!ENTITY statusBar.enabled.accesskey "ت">
 <!ENTITY submitStats "Gather and submit anonymous usage statistics to improve Greasemonkey">
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "إلغاء التثبيت">
