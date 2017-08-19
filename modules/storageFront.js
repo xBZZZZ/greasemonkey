@@ -205,8 +205,11 @@ GM_ScriptStorageFront.prototype.listValues = function () {
   }
 };
 
+// * Stats. *
+/*
 GM_ScriptStorageFront.prototype.getStats = function () {
   throw new this._wrappedContentWin.Error(
       MESSAGE_ERROR_PREFIX + "Does not expose stats.",
       this._script.fileURL, null);
 };
+*/

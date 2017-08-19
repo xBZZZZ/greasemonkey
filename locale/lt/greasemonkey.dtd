@@ -51,7 +51,10 @@
 <!ENTITY scriptPrefs.userSettings "Naudotojo nustatymai">
 <!ENTITY statusBar.enabled "Įjungta">
 <!ENTITY statusBar.enabled.accesskey "I">
+<!-- * Stats. * -->
+<!--
 <!ENTITY submitStats "Rinkti ir siųsti anoniminę naudojimo statistiką">
+-->
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Pašalinti">
 <!ENTITY updateChecking "Atnaujinimų tikrinimas">

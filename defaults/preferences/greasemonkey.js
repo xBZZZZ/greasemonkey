@@ -130,12 +130,15 @@ pref("extensions.greasemonkey.requireTimeoutUpdates", true);
 pref("extensions.greasemonkey.showGrantsWarning", true);
 pref("extensions.greasemonkey.sniffGrants", false);
 pref("extensions.greasemonkey.sortBy", "uiState,name");
+// * Stats. *
+/*
 pref("extensions.greasemonkey.stats.id", "");
 pref("extensions.greasemonkey.stats.interval", 604800000); // ms = 1 week
 pref("extensions.greasemonkey.stats.lastSubmitTime", "Thu, 01 Jan 1970 00:00:00 GMT");
 pref("extensions.greasemonkey.stats.optedIn", false);
 pref("extensions.greasemonkey.stats.prompted", false);
 pref("extensions.greasemonkey.stats.url", "https://stats.greasespot.net/submit/");
+*/
 pref("extensions.greasemonkey.sync.enabled", true);
 pref("extensions.greasemonkey.sync.values", false);
 pref("extensions.greasemonkey.sync.values.deleteNonExistentValues", false);
@@ -152,8 +155,11 @@ pref("services.sync.prefs.sync.extensions.greasemonkey.newScript.template", true
 pref("services.sync.prefs.sync.extensions.greasemonkey.requireSecureUpdates", true);
 pref("services.sync.prefs.sync.extensions.greasemonkey.requireTimeoutUpdates", true);
 pref("services.sync.prefs.sync.extensions.greasemonkey.showGrantsWarning", true);
+// * Stats. *
+/*
 pref("services.sync.prefs.sync.extensions.greasemonkey.stats.lastSubmitTime", true);
 pref("services.sync.prefs.sync.extensions.greasemonkey.stats.optedIn", true);
+*/
 pref("services.sync.prefs.sync.extensions.greasemonkey.sync.enabled", true);
 pref("services.sync.prefs.sync.extensions.greasemonkey.sync.values", true);
 pref("services.sync.prefs.sync.extensions.greasemonkey.sync.values.deleteNonExistentValues", true);

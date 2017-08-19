@@ -51,7 +51,10 @@
 <!ENTITY scriptPrefs.userSettings "Setări utilizator">
 <!ENTITY statusBar.enabled "Activat">
 <!ENTITY statusBar.enabled.accesskey "A">
+<!-- * Stats. * -->
+<!--
 <!ENTITY submitStats "Adună și trimite statistici anonime de utilizare pentru a îmbunătății Greasemonkey">
+-->
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Dezinstalare">
 <!ENTITY updateChecking "Verificare actualizări">

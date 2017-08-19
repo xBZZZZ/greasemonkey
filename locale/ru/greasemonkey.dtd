@@ -51,7 +51,10 @@
 <!ENTITY scriptPrefs.userSettings "Пользовательские настройки">
 <!ENTITY statusBar.enabled "Включить Greasemonkey">
 <!ENTITY statusBar.enabled.accesskey "к">
+<!-- * Stats. * -->
+<!--
 <!ENTITY submitStats "Собирать и передавать анонимную статистику использования для улучшения Greasemonkey">
+-->
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Удаление">
 <!ENTITY updateChecking "Проверка обновлений">

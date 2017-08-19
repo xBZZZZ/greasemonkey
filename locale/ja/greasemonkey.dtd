@@ -51,7 +51,10 @@
 <!ENTITY scriptPrefs.userSettings "ユーザー設定">
 <!ENTITY statusBar.enabled "有効">
 <!ENTITY statusBar.enabled.accesskey "E">
+<!-- * Stats. * -->
+<!--
 <!ENTITY submitStats "Greasemonkey を改善するために匿名の利用統計を収集し送信する">
+-->
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "削除">
 <!ENTITY updateChecking "更新の確認">

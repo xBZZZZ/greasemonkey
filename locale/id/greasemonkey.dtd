@@ -51,7 +51,10 @@
 <!ENTITY scriptPrefs.userSettings "Pengaturan Pengguna">
 <!ENTITY statusBar.enabled "Diaktifkan">
 <!ENTITY statusBar.enabled.accesskey "E">
+<!-- * Stats. * -->
+<!--
 <!ENTITY submitStats "Mengumpulkan dan mengirim statistik penggunaan secara anonim untuk perbaikan dan peningkatan Greasemonkey">
+-->
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Copot">
 <!ENTITY updateChecking "Pemeriksaan Pembaruan">

@@ -96,7 +96,8 @@ GM_BrowserUI.chromeLoad = function (aEvent) {
   GM_BrowserUI.showToolbarButton();
 
   // Make sure this is imported at least once, so its internal timer starts.
-  Cu.import("chrome://greasemonkey-modules/content/stats.js");
+  // * Stats. *
+  // Cu.import("chrome://greasemonkey-modules/content/stats.js");
 };
 
 /**

@@ -51,7 +51,10 @@
 <!ENTITY scriptPrefs.userSettings "Felhasználói beállítások">
 <!ENTITY statusBar.enabled "Engedélyezve">
 <!ENTITY statusBar.enabled.accesskey "E">
+<!-- * Stats. * -->
+<!--
 <!ENTITY submitStats "Gather and submit anonymous usage statistics to improve Greasemonkey">
+-->
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Eltávolítás">
 <!ENTITY updateChecking "Frissítések keresése">

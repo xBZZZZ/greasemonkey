@@ -51,7 +51,10 @@
 <!ENTITY scriptPrefs.userSettings "使用者設定值">
 <!ENTITY statusBar.enabled "已啟用">
 <!ENTITY statusBar.enabled.accesskey "E">
+<!-- * Stats. * -->
+<!--
 <!ENTITY submitStats "收集並送出匿名統計資訊以幫助改進 Greasemonkey">
+-->
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "腳本移除設定">
 <!ENTITY updateChecking "檢查更新">

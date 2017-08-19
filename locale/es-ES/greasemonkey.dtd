@@ -51,7 +51,10 @@
 <!ENTITY scriptPrefs.userSettings "Ajustes del usuario">
 <!ENTITY statusBar.enabled "Activado">
 <!ENTITY statusBar.enabled.accesskey "A">
+<!-- * Stats. * -->
+<!--
 <!ENTITY submitStats "Recopilar y enviar estadísticas de uso anónimas para mejorar Greasemonkey">
+-->
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Desinstalar">
 <!ENTITY updateChecking "Comprobación de actualizaciones">

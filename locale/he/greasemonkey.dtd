@@ -51,7 +51,10 @@
 <!ENTITY scriptPrefs.userSettings "הגדרות משתמש">
 <!ENTITY statusBar.enabled "הפוך לזמין">
 <!ENTITY statusBar.enabled.accesskey "מ">
+<!-- * Stats. * -->
+<!--
 <!ENTITY submitStats "אסיפה ומשלוח עיבוד נתונים ללא זיהוי המשתמש לצורך שיפור Greasemonkey">
+-->
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "הסר">
 <!ENTITY updateChecking "בדיקת עדכון">

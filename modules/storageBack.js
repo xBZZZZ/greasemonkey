@@ -143,6 +143,8 @@ GM_ScriptStorageBack.prototype.listValues = function () {
   return valueNames;
 };
 
+// * Stats. *
+/*
 GM_ScriptStorageBack.prototype.getStats = function () {
   let stats = {
     "count": undefined,
@@ -165,3 +167,4 @@ GM_ScriptStorageBack.prototype.getStats = function () {
 
   return stats;
 };
+*/
