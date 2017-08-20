@@ -27,8 +27,10 @@
 <!ENTITY menu.webSites "Уеб сайтове...">
 <!ENTITY menu.webSites.accesskey "Б">
 <!ENTITY menu.webSites.getUserScripts "Получаване на потребителски скриптове">
+<!--
 <!ENTITY menu.webSites.greasespot "Greasespot Блог">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Уики">
+-->
 <!ENTITY menu.webSites.manual "Ръководство на Greasemonkey">
 <!ENTITY newScript.description "Описание">
 <!ENTITY newScript.excludes "Изключени (по един на ред)">

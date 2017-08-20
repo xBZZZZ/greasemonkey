@@ -36,11 +36,17 @@ function GM_loadOptions() {
       .checked = GM_prefRoot.getValue("requireTimeoutUpdates");
   let timeoutUpdatesInSeconds = GM_prefRoot.getValue("timeoutUpdatesInSeconds");
   timeoutUpdatesInSeconds = isNaN(parseInt(timeoutUpdatesInSeconds, 10))
-      ? 45 : parseInt(timeoutUpdatesInSeconds, 10);
+      ? GM_CONSTANTS.scriptUpdateTimeoutDefault
+      : parseInt(timeoutUpdatesInSeconds, 10);
   timeoutUpdatesInSeconds = timeoutUpdatesInSeconds >= 1
-      && timeoutUpdatesInSeconds <= 60
-      ? timeoutUpdatesInSeconds : 45;
-  document.getElementById("timeout-update-value")
+      && timeoutUpdatesInSeconds <= GM_CONSTANTS.scriptUpdateTimeoutMax
+      ? timeoutUpdatesInSeconds : GM_CONSTANTS.scriptUpdateTimeoutDefault;
+  let timeoutUpdateValueElm = document.getElementById("timeout-update-value");
+  timeoutUpdateValueElm
+      .setAttribute("min", GM_CONSTANTS.scriptUpdateTimeoutMin);
+  timeoutUpdateValueElm
+      .setAttribute("max", GM_CONSTANTS.scriptUpdateTimeoutMax);
+  timeoutUpdateValueElm
       .value = timeoutUpdatesInSeconds;
   // * Stats. *
   /*

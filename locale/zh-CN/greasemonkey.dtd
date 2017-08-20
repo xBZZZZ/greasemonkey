@@ -27,8 +27,10 @@
 <!ENTITY menu.webSites "网站...">
 <!ENTITY menu.webSites.accesskey "W">
 <!ENTITY menu.webSites.getUserScripts "获取用户脚本">
+<!--
 <!ENTITY menu.webSites.greasespot "Greasespot 博客">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
+-->
 <!ENTITY menu.webSites.manual "Greasemonkey 手册">
 <!ENTITY newScript.description "描述">
 <!ENTITY newScript.excludes "脚本将排除（每行一条）">

@@ -27,8 +27,10 @@
 <!ENTITY menu.webSites "Web siteleri">
 <!ENTITY menu.webSites.accesskey "W">
 <!ENTITY menu.webSites.getUserScripts "Kullanıcı Betikleri Al">
+<!--
 <!ENTITY menu.webSites.greasespot "Greasespot Blog">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
+-->
 <!ENTITY menu.webSites.manual "Greasemonkey Kılavuzu">
 <!ENTITY newScript.description "Tanım">
 <!ENTITY newScript.excludes "Çıkarılanlar (satır başına bir tane)">

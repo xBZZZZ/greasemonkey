@@ -27,8 +27,10 @@
 <!ENTITY menu.webSites "網站…">
 <!ENTITY menu.webSites.accesskey "W">
 <!ENTITY menu.webSites.getUserScripts "下載使用者腳本">
+<!--
 <!ENTITY menu.webSites.greasespot "Greasespot 部落格">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
+-->
 <!ENTITY menu.webSites.manual "Greasemonkey 說明書">
 <!ENTITY newScript.description "說明">
 <!ENTITY newScript.excludes "不包含（每行一項）">

@@ -27,8 +27,10 @@
 <!ENTITY menu.webSites "Web sites...">
 <!ENTITY menu.webSites.accesskey "W">
 <!ENTITY menu.webSites.getUserScripts "Get User Scripts">
+<!--
 <!ENTITY menu.webSites.greasespot "Greasespot Blog">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot Wiki">
+-->
 <!ENTITY menu.webSites.manual "Greasemonkey Manual">
 <!ENTITY newScript.description "Descriere">
 <!ENTITY newScript.excludes "Excluderi (una pe linie)">

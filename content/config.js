@@ -374,17 +374,22 @@ Config.prototype._updateVersion = function () {
     // Update the stored current version so we don't do this work again.
     GM_prefRoot.setValue("version", newVersion);
 
-    if (oldVersion == "0.0") {
-      // This is the first launch.  Show the welcome screen.
+    if (oldVersion == GM_CONSTANTS.addonVersionFirst) {
+      // This is the first launch.
+      // Show the welcome screen.
+      /*
       let chromeWin = GM_util.getBrowserWindow();
-      if (chromeWin && chromeWin.gBrowser) chromeWin.setTimeout(function () {
-        let url = "http://www.greasespot.net/p/welcome.html"
-            + "?utm_source=xpi&utm_medium=xpi&utm_campaign=welcome"
-            + "&utm_content=" + newVersion;
-        // The setTimeout makes sure we do not execute too early
-        // - sometimes the window isn't quite ready to add a tab yet.
-        chromeWin.gBrowser.selectedTab = chromeWin.gBrowser.addTab(url);
-      }, 1000);
+      if (chromeWin && chromeWin.gBrowser) {
+        chromeWin.setTimeout(function () {
+          let url = "http://www.greasespot.net/p/welcome.html"
+              + "?utm_source=xpi&utm_medium=xpi&utm_campaign=welcome"
+              + "&utm_content=" + newVersion;
+          // The setTimeout makes sure we do not execute too early
+          // - sometimes the window isn't quite ready to add a tab yet.
+          chromeWin.gBrowser.selectedTab = chromeWin.gBrowser.addTab(url);
+        }, 1000);
+      }
+      */
     }
 
     let _versionMajor = "3";

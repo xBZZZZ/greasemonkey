@@ -27,8 +27,10 @@
 <!ENTITY menu.webSites "Spletne strani ...">
 <!ENTITY menu.webSites.accesskey "S">
 <!ENTITY menu.webSites.getUserScripts "Dobi uporabniške skripte">
+<!--
 <!ENTITY menu.webSites.greasespot "Blog Greasespot">
 <!ENTITY menu.webSites.greasespotWiki "Wiki Greasespot">
+-->
 <!ENTITY menu.webSites.manual "Priročnik Greasemonkey">
 <!ENTITY newScript.description "Opis">
 <!ENTITY newScript.excludes "Izključuje (enega na vrstico)">

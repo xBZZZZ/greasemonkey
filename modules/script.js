@@ -1172,10 +1172,11 @@ Script.prototype.checkForRemoteUpdate = function (aCallback, aForced) {
     let timeoutUpdatesInSeconds = GM_prefRoot.getValue(
         "timeoutUpdatesInSeconds");
     timeoutUpdatesInSeconds = isNaN(parseInt(timeoutUpdatesInSeconds, 10))
-        ? 45 : parseInt(timeoutUpdatesInSeconds, 10);
+        ? GM_CONSTANTS.scriptUpdateTimeoutDefault
+        : parseInt(timeoutUpdatesInSeconds, 10);
     timeoutUpdatesInSeconds = timeoutUpdatesInSeconds >= 1
-        && timeoutUpdatesInSeconds <= 60
-        ? timeoutUpdatesInSeconds : 45;
+        && timeoutUpdatesInSeconds <= GM_CONSTANTS.scriptUpdateTimeoutMax
+        ? timeoutUpdatesInSeconds : GM_CONSTANTS.scriptUpdateTimeoutDefault;
     req.timeout = timeoutUpdatesInSeconds * 1000;
   }
   try {

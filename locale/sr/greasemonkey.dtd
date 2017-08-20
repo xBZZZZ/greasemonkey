@@ -27,8 +27,10 @@
 <!ENTITY menu.webSites "Странице...">
 <!ENTITY menu.webSites.accesskey "С">
 <!ENTITY menu.webSites.getUserScripts "Get User Scripts">
+<!--
 <!ENTITY menu.webSites.greasespot "Greasespot блог">
 <!ENTITY menu.webSites.greasespotWiki "Greasespot вики">
+-->
 <!ENTITY menu.webSites.manual "Greasespot приручник">
 <!ENTITY newScript.description "Опис">
 <!ENTITY newScript.excludes "Изузима (једно по линији)">

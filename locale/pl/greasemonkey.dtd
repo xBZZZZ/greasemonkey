@@ -27,8 +27,10 @@
 <!ENTITY menu.webSites "Strony internetowe...">
 <!ENTITY menu.webSites.accesskey "T">
 <!ENTITY menu.webSites.getUserScripts "Pobierz skrypty">
+<!--
 <!ENTITY menu.webSites.greasespot "Blog Greasespot">
 <!ENTITY menu.webSites.greasespotWiki "Wiki Greasespot">
+-->
 <!ENTITY menu.webSites.manual "Instrukcja Greasemonkey ">
 <!ENTITY newScript.description "Opis">
 <!ENTITY newScript.excludes "Witryny, na których skrypt nie będzie uruchamiany (jedna w wierszu)">

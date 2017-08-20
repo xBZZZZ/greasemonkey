@@ -81,12 +81,14 @@
         accesskey="&menu.webSites.accesskey;"
         label="&menu.webSites;">
         <menupopup>
+          <!--
           <menuitem
             label="&menu.webSites.greasespot;"
             oncommand="GM_BrowserUI.openTab('http://www.greasespot.net/');" />
           <menuitem
             label="&menu.webSites.greasespotWiki;"
             oncommand="GM_BrowserUI.openTab('http://wiki.greasespot.net/');" />
+          -->
           <menuitem
             label="&menu.webSites.manual;"
             oncommand="GM_BrowserUI.openTab('http://wiki.greasespot.net/Greasemonkey_Manual');" />

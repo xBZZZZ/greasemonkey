@@ -255,7 +255,7 @@ GM_BrowserUI.showToolbarButton = function () {
   // transition happens in an async callback to get addon version.
   // If existing version is "0.0" (the default), this hasn't happened yet,
   // so try later.
-  if (GM_prefRoot.getValue("version") == "0.0") {
+  if (GM_prefRoot.getValue("version") == GM_CONSTANTS.addonVersionFirst) {
     setTimeout(GM_BrowserUI.showToolbarButton, 50);
     return undefined;
   }

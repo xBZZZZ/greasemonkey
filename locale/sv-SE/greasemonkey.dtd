@@ -27,8 +27,10 @@
 <!ENTITY menu.webSites "Webbplatser…">
 <!ENTITY menu.webSites.accesskey "W">
 <!ENTITY menu.webSites.getUserScripts "Get User Scripts">
+<!--
 <!ENTITY menu.webSites.greasespot "Greasespots blogg">
 <!ENTITY menu.webSites.greasespotWiki "Greasespots wiki">
+-->
 <!ENTITY menu.webSites.manual "Handbok för Greasemonkey">
 <!ENTITY newScript.description "Beskrivning">
 <!ENTITY newScript.excludes "Undantag (ett per rad)">
