@@ -20,8 +20,8 @@ Cu.import("chrome://greasemonkey-modules/content/miscApis.js");
 Cu.import("chrome://greasemonkey-modules/content/notificationer.js");
 Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
 Cu.import("chrome://greasemonkey-modules/content/storageFront.js");
-Cu.import("chrome://greasemonkey-modules/content/third-party/getChromeWinForContentWin.js");
-// Cu.import("chrome://greasemonkey-modules/content/third-party/GM_cookie.js");
+Cu.import("chrome://greasemonkey-modules/content/thirdParty/getChromeWinForContentWin.js");
+// Cu.import("chrome://greasemonkey-modules/content/thirdParty/GM_cookie.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 Cu.import("chrome://greasemonkey-modules/content/xmlHttpRequester.js");
 

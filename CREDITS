@@ -20,6 +20,6 @@ Greasemonkey also contains code derived from Mozilla projects, including
 Firefox ( http://mozilla.org/ ),
 reused under the MPL license; see the LICENSE.mpl file.
 
-All MPL code is located in the content/third-party/ and modules/third-party/
-and skin/third-party/ directories, and all such files contain
+All MPL code is located in the content/thirdParty/ and modules/thirdParty/
+and skin/thirdParty/ directories, and all such files contain
 the appropriate licensing disclaimers and notifications.

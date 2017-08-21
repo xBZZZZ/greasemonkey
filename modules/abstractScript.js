@@ -14,8 +14,8 @@ if (typeof Cu === "undefined") {
 
 Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
-Cu.import("chrome://greasemonkey-modules/content/third-party/convertToRegexp.js");
-Cu.import("chrome://greasemonkey-modules/content/third-party/matchPattern.js");
+Cu.import("chrome://greasemonkey-modules/content/thirdParty/convertToRegexp.js");
+Cu.import("chrome://greasemonkey-modules/content/thirdParty/matchPattern.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 

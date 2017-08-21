@@ -2,7 +2,7 @@
 
 <?xml-stylesheet href="chrome://greasemonkey/skin/addons.css"
   type="text/css"?>
-<?xml-stylesheet href="chrome://greasemonkey/content/third-party/addons.css"
+<?xml-stylesheet href="chrome://greasemonkey/content/thirdParty/addons.css"
   type="text/css"?>
 
 <!DOCTYPE overlay [
@@ -23,7 +23,7 @@
 <script type="application/x-javascript"
   src="chrome://greasemonkey/content/addonsOverlay.js" />
 <script type="application/x-javascript"
-  src="chrome://greasemonkey/content/third-party/mplUtils.js" />
+  src="chrome://greasemonkey/content/thirdParty/mplUtils.js" />
 
 <commandset id="viewCommandSet">
   <command id="cmd_userscript_edit" />

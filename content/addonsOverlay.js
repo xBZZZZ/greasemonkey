@@ -19,7 +19,7 @@ Cu.import("resource://gre/modules/AddonManager.jsm");
 
 Cu.import("chrome://greasemonkey-modules/content/addons.js");
 Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
-Cu.import("chrome://greasemonkey-modules/content/third-party/droppedUrls.js");
+Cu.import("chrome://greasemonkey-modules/content/thirdParty/droppedUrls.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 

@@ -13,7 +13,7 @@ Cu.import("chrome://greasemonkey-modules/content/constants.js");
 Cu.import("chrome://greasemonkey-modules/content/miscApis.js");
 Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
 Cu.import("chrome://greasemonkey-modules/content/script.js");
-Cu.import("chrome://greasemonkey-modules/content/third-party/matchPattern.js");
+Cu.import("chrome://greasemonkey-modules/content/thirdParty/matchPattern.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 

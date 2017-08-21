@@ -21,8 +21,8 @@ Cu.import("resource://gre/modules/Services.jsm");
 // }
 
 Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
-Cu.import("chrome://greasemonkey-modules/content/third-party/convertToRegexp.js");
-Cu.import("chrome://greasemonkey-modules/content/third-party/matchPattern.js");
+Cu.import("chrome://greasemonkey-modules/content/thirdParty/convertToRegexp.js");
+Cu.import("chrome://greasemonkey-modules/content/thirdParty/matchPattern.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 

@@ -20,7 +20,7 @@ Cu.import("chrome://greasemonkey-modules/content/script.js");
 Cu.import("chrome://greasemonkey-modules/content/scriptIcon.js");
 Cu.import("chrome://greasemonkey-modules/content/scriptRequire.js");
 Cu.import("chrome://greasemonkey-modules/content/scriptResource.js");
-Cu.import("chrome://greasemonkey-modules/content/third-party/matchPattern.js");
+Cu.import("chrome://greasemonkey-modules/content/thirdParty/matchPattern.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 

@@ -50,7 +50,7 @@ function startup(aService) {
   GM_CONSTANTS.jsSubScriptLoader.loadSubScript(
       "chrome://greasemonkey/content/config.js");
   GM_CONSTANTS.jsSubScriptLoader.loadSubScript(
-      "chrome://greasemonkey/content/third-party/mplUtils.js");
+      "chrome://greasemonkey/content/thirdParty/mplUtils.js");
 
   // Most incoming messages go to the "global" message manager.
   let scriptValHandler = aService.handleScriptValMsg.bind(aService);
