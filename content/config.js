@@ -107,7 +107,9 @@ Config.prototype._load = function () {
       GM_util.logError(e, false, e.fileName, e.lineNumber);
       continue;
     }
-    if (script.allFilesExist()) {
+    let _allFilesExist = script.allFilesExistResult();
+    // if (script.allFilesExist()) {
+    if (_allFilesExist.length == 0) {
       this._scripts.push(script);
     } else {
       // Add a user prompt to restore the missing script here?
@@ -117,7 +119,7 @@ Config.prototype._load = function () {
           GM_CONSTANTS.localeGreasemonkeyProperties)
           .GetStringFromName("error.scriptIsNotComplete")
           .replace("%1", script.name)
-          .replace("%2", script.allFilesExistResult());
+          .replace("%2", _allFilesExist);
       GM_util.logError(_info, false, script.fileURL, null);
       node.parentNode.removeChild(node);
       // To save config file after change:
