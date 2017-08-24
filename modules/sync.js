@@ -269,6 +269,8 @@ ScriptTracker.prototype = {
       if (this.addChangedID(syncId(aScript))) {
         this.score = Math.min(100, this.score + 5);
       }
+    // See #2414.
+    // http://bugzil.la/1286618
     } else if (aEvent in {
       "cludes": 1,
       "val-del": 1,
