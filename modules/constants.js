@@ -16,7 +16,7 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
 const GM_CONSTANTS = {
-  "addonGUID": "{e4a8a97b-f2ed-450b-b12d-ee082ba24781}",
+  "addonGUID": "greasemonkeyforpm@janekptacijarabaci",
   "addonInstallPolicyClassDescription": "Greasemonkey Script Install Policy",
   "addonInstallPolicyClassID": Components.ID(
       "c03c575c-e87e-4a0f-b88d-8be090116a0c"),

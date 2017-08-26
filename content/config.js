@@ -369,9 +369,9 @@ Config.prototype.getScriptById = function (aScriptId) {
  */
 Config.prototype._updateVersion = function () {
   Cu.import("resource://gre/modules/AddonManager.jsm");
-  AddonManager.getAddonByID(this.GM_GUID, GM_util.hitch(this, function (addon) {
+  AddonManager.getAddonByID(this.GM_GUID, GM_util.hitch(this, function (aAddon) {
     var oldVersion = GM_prefRoot.getValue("version");
-    var newVersion = addon.version;
+    var newVersion = aAddon.version;
 
     // Update the stored current version so we don't do this work again.
     GM_prefRoot.setValue("version", newVersion);
