@@ -70,6 +70,8 @@ GM_xmlHttpRequester.prototype.contentStartRequest = function (aDetails) {
   // to get access to things like files and chrome.
   // Careful.
   switch (uri.scheme) {
+    case "blob":
+    case "data":
     case "ftp":
     case "http":
     case "https":
