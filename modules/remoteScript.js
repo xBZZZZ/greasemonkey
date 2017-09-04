@@ -797,19 +797,37 @@ RemoteScript.prototype._downloadFile = function (
   }
   // See #1717.
   // A page with a userscript - http auth.
-  // Private browsing.
-  if (channel instanceof Ci.nsIPrivateBrowsingChannel) {
-    let isPrivate = true;
-    let chromeWin = GM_util.getBrowserWindow();
-    if (chromeWin && chromeWin.gBrowser) {
-      // i.e. the Private Browsing autoStart pref:
-      // "browser.privatebrowsing.autostart"
-      isPrivate = PrivateBrowsingUtils.isBrowserPrivate(chromeWin.gBrowser);
+  // Private browsing, Containers (Firefox 42+).
+  let privateMode = true;
+  let userContextId = null;
+  let chromeWin = GM_util.getBrowserWindow();
+  if (chromeWin && chromeWin.gBrowser) {
+    // i.e. the Private Browsing autoStart pref:
+    // "browser.privatebrowsing.autostart"
+    privateMode = PrivateBrowsingUtils.isBrowserPrivate(chromeWin.gBrowser);
+    /*
+    if (chromeWin.gBrowser.selectedBrowser
+        && chromeWin.gBrowser.selectedBrowser.contentPrincipal
+        && chromeWin.gBrowser.selectedBrowser.contentPrincipal.originAttributes
+        && chromeWin.gBrowser.selectedBrowser.contentPrincipal.originAttributes
+            .userContextId) {
+      userContextId = chromeWin.gBrowser.selectedBrowser.contentPrincipal
+          .originAttributes.userContextId;
     }
-    if (isPrivate) {
-      channel = channel.QueryInterface(Ci.nsIPrivateBrowsingChannel);
-      channel.setPrivate(true);
+    */
+  }
+  if (userContextId === null) {
+    if (channel instanceof Ci.nsIPrivateBrowsingChannel) {
+      if (privateMode) {
+        channel = channel.QueryInterface(Ci.nsIPrivateBrowsingChannel);
+        channel.setPrivate(true);
+      }
     }
+  } else {
+    req.setOriginAttributes({
+      "privateBrowsingId": privateMode ? 1 : 0,
+      // "userContextId": userContextId,
+    });
   }
   /*
   dump("RemoteScript._downloadFile - url:" + "\n" + aUri.spec + "\n"

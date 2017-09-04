@@ -1204,19 +1204,35 @@ Script.prototype.checkForRemoteUpdate = function (aCallback, aForced) {
   }
   */
 
-  // Private browsing.
-  if (req.channel instanceof Ci.nsIPrivateBrowsingChannel) {
-    let isPrivate = true;
-    let chromeWin = GM_util.getBrowserWindow();
-    if (chromeWin && chromeWin.gBrowser) {
-      // i.e. the Private Browsing autoStart pref:
-      // "browser.privatebrowsing.autostart"
-      isPrivate = PrivateBrowsingUtils.isBrowserPrivate(chromeWin.gBrowser);
+  // Private browsing, Containers (Firefox 42+).
+  let privateMode = true;
+  let userContextId = null;
+  let chromeWin = GM_util.getBrowserWindow();
+  if (chromeWin && chromeWin.gBrowser) {
+    // i.e. the Private Browsing autoStart pref:
+    // "browser.privatebrowsing.autostart"
+    privateMode = PrivateBrowsingUtils.isBrowserPrivate(chromeWin.gBrowser);
+    if (chromeWin.gBrowser.selectedBrowser
+        && chromeWin.gBrowser.selectedBrowser.contentPrincipal
+        && chromeWin.gBrowser.selectedBrowser.contentPrincipal.originAttributes
+        && chromeWin.gBrowser.selectedBrowser.contentPrincipal.originAttributes
+            .userContextId) {
+      userContextId = chromeWin.gBrowser.selectedBrowser.contentPrincipal
+          .originAttributes.userContextId;
     }
-    if (isPrivate) {
-      channel = req.channel.QueryInterface(Ci.nsIPrivateBrowsingChannel);
-      channel.setPrivate(true);
+  }
+  if (userContextId === null) {
+    if (req.channel instanceof Ci.nsIPrivateBrowsingChannel) {
+      if (privateMode) {
+        channel = req.channel.QueryInterface(Ci.nsIPrivateBrowsingChannel);
+        channel.setPrivate(true);
+      }
     }
+  } else {
+    req.setOriginAttributes({
+      "privateBrowsingId": privateMode ? 1 : 0,
+      "userContextId": userContextId,
+    });
   }
   /*
   dump("Script.checkForRemoteUpdate - url:" + "\n" + url + "\n"

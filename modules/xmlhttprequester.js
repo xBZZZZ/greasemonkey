@@ -264,12 +264,32 @@ function (safeUrl, details, req) {
 
   let channel;
 
-  // Private browsing.
-  if (req.channel instanceof Ci.nsIPrivateBrowsingChannel) {
-    if (GM_util.windowIsPrivate(this.wrappedContentWin)) {
-      channel = req.channel.QueryInterface(Ci.nsIPrivateBrowsingChannel);
-      channel.setPrivate(true);
+  // Private browsing, Containers (Firefox 42+).
+  let privateMode = false;
+  if (GM_util.windowIsPrivate(this.wrappedContentWin)) {
+    privateMode = true;
+  }
+  let userContextId = null;
+  if (this.wrappedContentWin.document
+      && this.wrappedContentWin.document.nodePrincipal
+      && this.wrappedContentWin.document.nodePrincipal.originAttributes
+      && this.wrappedContentWin.document.nodePrincipal.originAttributes
+          .userContextId) {
+    userContextId = this.wrappedContentWin.document.nodePrincipal
+        .originAttributes.userContextId;
+  }
+  if (userContextId === null) {
+    if (req.channel instanceof Ci.nsIPrivateBrowsingChannel) {
+      if (privateMode) {
+        channel = req.channel.QueryInterface(Ci.nsIPrivateBrowsingChannel);
+        channel.setPrivate(true);
+      }
     }
+  } else {
+    req.setOriginAttributes({
+      "privateBrowsingId": privateMode ? 1 : 0,
+      "userContextId": userContextId,
+    });
   }
   /*
   dump("GM_xmlhttpRequest - url:" + "\n" + safeUrl + "\n"
