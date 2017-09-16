@@ -226,7 +226,7 @@ function urlForWin(aContentWin) {
   // the location.href changes between document-start and document-end time.
   // But the content can call replacestate() much later, too.
   // The only way to be consistent is to ignore it.
-  // Luckily, the  document.documentURI does _not_ change,
+  // Luckily, the document.documentURI does _not_ change,
   // so always use it when deciding whether to run scripts.
   let url = aContentWin.document.documentURI;
   // But (see #1631) ignore user/pass in the URL.
