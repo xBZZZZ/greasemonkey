@@ -48,11 +48,6 @@ function GM_loadOptions() {
       .setAttribute("max", GM_CONSTANTS.scriptUpdateTimeoutMax);
   timeoutUpdateValueElm
       .value = timeoutUpdatesInSeconds;
-  // * Stats. *
-  /*
-  document.getElementById("submit-stats")
-      .checked = GM_prefRoot.getValue("stats.optedIn");
-  */
   document.getElementById("check-sync")
       .setAttribute("label", document.getElementById("check-sync")
       .getAttribute("label")
@@ -81,11 +76,6 @@ function GM_saveOptions(checkbox) {
       !!document.getElementById("timeout-update").checked);
   GM_prefRoot.setValue("timeoutUpdatesInSeconds",
       parseInt(document.getElementById("timeout-update-value").value, 10));
-  // * Stats. *
-  /*
-  GM_prefRoot.setValue("stats.optedIn",
-      !!document.getElementById("submit-stats").checked);
-  */
   GM_prefRoot.setValue("sync.enabled",
       !!document.getElementById("check-sync").checked);
   GM_util.getService().config.globalExcludes =

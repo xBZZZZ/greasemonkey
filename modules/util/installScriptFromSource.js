@@ -33,7 +33,7 @@ function installScriptFromSource(aSource, aCallback) {
             GM_CONSTANTS.localeGreasemonkeyProperties)
             .GetStringFromName("error.couldNotDownloadDependencies")
             .replace("%1", remoteScript.errorMessage),
-            "dependency-download-failed");
+            "greasemonkey-dependency-download-failed");
         return undefined;
       }
       remoteScript.install();

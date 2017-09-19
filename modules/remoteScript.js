@@ -540,12 +540,20 @@ RemoteScript.prototype.install = function (aOldScript, aOnlyDependencies) {
 
     // Let the user know we're all done.
     if (!this._silent) {
+      let notificationOptions = null;
+      if (this.messageName == "script.updated") {
+        notificationOptions = {
+          "persistence": -1,
+          "persistWhileVisible": true,
+          "learnMoreURL": this.script.homepageURL,
+        };
+      }
       GM_notification(
           "(" + this.script.localized.name + ") "
           + GM_CONSTANTS.localeStringBundle.createBundle(
               GM_CONSTANTS.localeGmBrowserProperties)
               .GetStringFromName(this.messageName),
-          this.messageName);
+          this.messageName, notificationOptions);
     }
   }
 };
@@ -667,7 +675,7 @@ RemoteScript.prototype.showSource = function (aBrowser) {
       GM_CONSTANTS.localeStringBundle.createBundle(
           GM_CONSTANTS.localeGmBrowserProperties)
           .GetStringFromName("greeting.msg"),
-      "install-userscript",
+      "greasemonkey-install-userscript",
       "chrome://greasemonkey/skin/icon16.png",
       notificationBox.PRIORITY_WARNING_MEDIUM,
       buttons

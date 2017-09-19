@@ -53,10 +53,6 @@
 <!ENTITY scriptPrefs.userSettings "Bruger indstillinger">
 <!ENTITY statusBar.enabled "Aktiveret">
 <!ENTITY statusBar.enabled.accesskey "E">
-<!-- * Stats. * -->
-<!--
-<!ENTITY submitStats "Gather and submit anonymous usage statistics to improve Greasemonkey">
--->
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Afinstaller">
 <!ENTITY updateChecking "Update Checking">

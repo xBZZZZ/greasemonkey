@@ -204,12 +204,3 @@ GM_ScriptStorageFront.prototype.listValues = function () {
     return Cu.cloneInto([], this._sandbox);
   }
 };
-
-// * Stats. *
-/*
-GM_ScriptStorageFront.prototype.getStats = function () {
-  throw new this._wrappedContentWin.Error(
-      MESSAGE_ERROR_PREFIX + "Does not expose stats.",
-      this._script.fileURL, null);
-};
-*/

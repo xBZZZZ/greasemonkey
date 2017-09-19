@@ -142,29 +142,3 @@ GM_ScriptStorageBack.prototype.listValues = function () {
 
   return valueNames;
 };
-
-// * Stats. *
-/*
-GM_ScriptStorageBack.prototype.getStats = function () {
-  let stats = {
-    "count": undefined,
-    "size": undefined,
-  };
-  let stmt = this.db.createStatement(
-      "SELECT COUNT(0) AS count, SUM(LENGTH(value)) AS size FROM scriptvals");
-  try {
-    while (stmt.step()) {
-      stats.count = stmt.row.count;
-      stats.size = stmt.row.size || 0;
-    }
-  } catch (e) {
-    GM_util.logError(
-        MESSAGE_ERROR_PREFIX + "getStats():" + "\n" + e, false,
-        e.fileName, e.lineNumber);
-  } finally {
-    stmt.reset();
-  }
-
-  return stats;
-};
-*/

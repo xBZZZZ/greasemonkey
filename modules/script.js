@@ -972,7 +972,7 @@ Script.prototype.updateFromNewScript = function (
       if (!aSuccess) {
         GM_notification(
             "(" + this.localized.name + ") " +
-            rs.errorMessage, "dependency-update-failed");
+            rs.errorMessage, "greasemonkey-dependency-update-failed");
         return undefined;
       }
 
@@ -1068,50 +1068,19 @@ Script.prototype.showGrantWarning = function () {
       || !GM_prefRoot.getValue("showGrantsWarning")) {
     return undefined;
   }
-  let chromeWin = GM_util.getBrowserWindow();
-  if (!chromeWin) {
-    // Ignore, this is probably a startup issue like #2294.
-    return undefined;
-  }
 
-  function muteWarnings() {
-    GM_prefRoot.setValue("showGrantsWarning", false);
-  }
-
-  let primaryAction = {
-    "accessKey": GM_CONSTANTS.localeStringBundle.createBundle(
-        GM_CONSTANTS.localeGreasemonkeyProperties)
-        .GetStringFromName("warning.scriptsShouldGrant.readDocs.key"),
-    "callback": function () {
-        chromeWin.gBrowser.selectedTab = chromeWin.gBrowser.addTab(
-            "http://wiki.greasespot.net/@grant", {
-              "ownerTab": chromeWin.gBrowser.selectedTab,
-            });
-        muteWarnings();
-    },
-    "label": GM_CONSTANTS.localeStringBundle.createBundle(
-        GM_CONSTANTS.localeGreasemonkeyProperties)
-        .GetStringFromName("warning.scriptsShouldGrant.readDocs"),
+  let notificationOptions = {
+    // "persistence": -1,
+    // "persistWhileVisible": true,
+    "learnMoreURL": "http://wiki.greasespot.net/@grant",
   };
-  let secondaryActions = [{
-    "accessKey": GM_CONSTANTS.localeStringBundle.createBundle(
-        GM_CONSTANTS.localeGreasemonkeyProperties)
-        .GetStringFromName("warning.scriptsShouldGrant.dontShow.key"),
-    "callback": muteWarnings,
-    "label": GM_CONSTANTS.localeStringBundle.createBundle(
-        GM_CONSTANTS.localeGreasemonkeyProperties)
-        .GetStringFromName("warning.scriptsShouldGrant.dontShow"),
-  }];
 
-  chromeWin.PopupNotifications.show(
-      chromeWin.gBrowser.selectedBrowser,
-      "greasemonkey-grants",
+  GM_notification(
       "(" + this.localized.name + ") "
       + GM_CONSTANTS.localeStringBundle.createBundle(
           GM_CONSTANTS.localeGreasemonkeyProperties)
           .GetStringFromName("warning.scriptsShouldGrant"),
-      null, // anchorID.
-      primaryAction, secondaryActions);
+      "greasemonkey-grants-warning", notificationOptions);
 };
 
 Script.prototype.checkConfig = function () {

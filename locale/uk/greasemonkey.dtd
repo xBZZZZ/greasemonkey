@@ -53,10 +53,6 @@
 <!ENTITY scriptPrefs.userSettings "Налаштування">
 <!ENTITY statusBar.enabled "Увімкнено">
 <!ENTITY statusBar.enabled.accesskey "У">
-<!-- * Stats. * -->
-<!--
-<!ENTITY submitStats "Збирати та надсилати анонимну статистику про використання для покращення Greasemonkey">
--->
 <!ENTITY timeoutUpdatesUnits "Seconds">
 <!ENTITY uninstall "Вилучити">
 <!ENTITY updateChecking "Перевірка оновлень">

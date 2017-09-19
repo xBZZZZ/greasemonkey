@@ -96,8 +96,7 @@ GM_BrowserUI.chromeLoad = function (aEvent) {
   GM_BrowserUI.showToolbarButton();
 
   // Make sure this is imported at least once, so its internal timer starts.
-  // * Stats. *
-  // Cu.import("chrome://greasemonkey-modules/content/stats.js");
+  // Cu.import("...stats.js");
 };
 
 /**
@@ -319,12 +318,12 @@ GM_BrowserUI.checkDisabledScriptNavigation = function (aContentType, aHref) {
 
   let notificationBox = gBrowser.getNotificationBox();
   let notification = notificationBox.appendNotification(
-    GM_BrowserUI.bundle.GetStringFromName("greeting.msg"),
-    "install-userscript",
-    "chrome://greasemonkey/skin/icon16.png",
-    notificationBox.PRIORITY_WARNING_MEDIUM,
-    buttons
-  );
+      GM_BrowserUI.bundle.GetStringFromName("greeting.msg"),
+      "greasemonkey-install-userscript",
+      "chrome://greasemonkey/skin/icon16.png",
+      notificationBox.PRIORITY_WARNING_MEDIUM,
+      buttons
+    );
   notification.persistence = -1;
 };
 
