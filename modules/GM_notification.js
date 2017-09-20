@@ -28,7 +28,7 @@ function mute(aTopic) {
   GM_prefRoot.setValue("notification.muted." + aTopic, true);
 }
 
-function GM_notification(aMsg, aTopic, aOptions) {
+function GM_notification(aMessage, aTopic, aOptions) {
   let type = null;
   switch (aTopic) {
     case "greasemonkey-grants-warning":
@@ -61,7 +61,7 @@ function GM_notification(aMsg, aTopic, aOptions) {
   }
 
   let win = GM_util.getBrowserWindow();
-  let primaryAction = {
+  let mainAction = {
     "accessKey": GM_CONSTANTS.localeStringBundle.createBundle(
         GM_CONSTANTS.localeGreasemonkeyProperties)
         .GetStringFromName("notification.ok.accesskey"),
@@ -116,17 +116,17 @@ function GM_notification(aMsg, aTopic, aOptions) {
         .GetStringFromName("notification.neverAgain.label"),
   });
 
-  let name = "greasemonkey-notification";
+  let id = "greasemonkey-notification";
   switch (type) {
     case "grants":
-      name = name + "-" + type;
+      id = id + "-" + type;
       break;
   }
 
   if (win) {
     win.PopupNotifications.show(
-        win.gBrowser.selectedBrowser, name,
-        aMsg, null, primaryAction, secondaryActions,
+        win.gBrowser.selectedBrowser, id,
+        aMessage, null, mainAction, secondaryActions,
         aOptions ? aOptions : null);
   } else {
     switch (type) {
@@ -136,7 +136,7 @@ function GM_notification(aMsg, aTopic, aOptions) {
       default:
         GM_util.logError(
             "(internal) GM_notification():"
-            + "\n" + aMsg + "\n" + "win = " + win);
+            + "\n" + aMessage + "\n" + "win = " + win);
         break;
     }
   }

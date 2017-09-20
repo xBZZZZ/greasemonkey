@@ -305,7 +305,7 @@ Config.prototype.updateModifiedScripts = function (
       let parsedScript = scope.parse(
           script.textContent, GM_util.getUriFromUrl(script.downloadURL));
       if (!parsedScript || parsedScript.parseErrors.length) {
-        let msg = "(" + script.localized.name + ") "
+        let message = "(" + script.localized.name + ") "
             + GM_CONSTANTS.localeStringBundle.createBundle(
                 GM_CONSTANTS.localeGreasemonkeyProperties)
                 .GetStringFromName("error.parsingScript")
@@ -330,7 +330,7 @@ Config.prototype.updateModifiedScripts = function (
 
           let notificationBox = chromeWin.gBrowser.getNotificationBox();
           let notification = notificationBox.appendNotification(
-              msg,
+              message,
               "greasemonkey-parse-userscript",
               "chrome://greasemonkey/skin/icon16.png",
               notificationBox.PRIORITY_WARNING_MEDIUM,
@@ -338,7 +338,7 @@ Config.prototype.updateModifiedScripts = function (
             );
           notification.persistence = -1;
         }
-        GM_util.logError(msg, true, script.fileURL, null);
+        GM_util.logError(message, true, script.fileURL, null);
       }
       script.updateFromNewScript(parsedScript, aUrl, aWindowId, aBrowser);
     } else {
