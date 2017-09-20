@@ -284,7 +284,13 @@ ScriptAddon.prototype._handleRemoteUpdate = function (
           GM_util.logError(_info, false, aInfo.fileURL, null);
         }
         if (aInfo.notification) {
-          GM_notification(_info, "greasemonkey-script-updated-failure");
+          let notificationOptions = {
+            "persistence": -1,
+            "persistWhileVisible": true,
+          };
+          GM_notification(
+              _info, "greasemonkey-script-updated-failure",
+              notificationOptions);
         }
         tryToCall(aUpdateListener, "onNoUpdateAvailable", this);
         tryToCall(aUpdateListener, "onUpdateFinished", this,

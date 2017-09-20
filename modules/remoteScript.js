@@ -649,7 +649,8 @@ RemoteScript.prototype.showSource = function (aBrowser) {
   var cleanup = GM_util.hitch(this, "cleanup");
   tab.addEventListener("TabClose", cleanup, false);
 
-  let buttons = [{
+  let buttons = [];
+  buttons.push({
     "accessKey": GM_CONSTANTS.localeStringBundle.createBundle(
         GM_CONSTANTS.localeGmBrowserProperties)
         .GetStringFromName("greeting.btnAccess"),
@@ -668,7 +669,8 @@ RemoteScript.prototype.showSource = function (aBrowser) {
         GM_CONSTANTS.localeGmBrowserProperties)
         .GetStringFromName("greeting.btn"),
     "popup": null,
-  }];
+  });
+
   // See #2348.
   let notificationBox = tabBrowser.getNotificationBox();
   let notification = notificationBox.appendNotification(

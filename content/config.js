@@ -327,6 +327,7 @@ Config.prototype.updateModifiedScripts = function (
                 .GetStringFromName("notification.ok.label"),
             "popup": null,
           });
+
           let notificationBox = chromeWin.gBrowser.getNotificationBox();
           let notification = notificationBox.appendNotification(
               msg,

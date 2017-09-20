@@ -288,7 +288,8 @@ GM_BrowserUI.checkDisabledScriptNavigation = function (aContentType, aHref) {
     return undefined;
   }
 
-  let buttons = [{
+  let buttons = [];
+  buttons.push({
     "accessKey": GM_BrowserUI.bundle
         .GetStringFromName("disabledWarning.enable.accesskey"),
     "callback": function () {
@@ -296,7 +297,8 @@ GM_BrowserUI.checkDisabledScriptNavigation = function (aContentType, aHref) {
     },
     "label": GM_BrowserUI.bundle.GetStringFromName("disabledWarning.enable"),
     "popup": null,
-  }, {
+  });
+  buttons.push({
     "callback": function () {
       GM_util.setEnabled(true);
       GM_util.showInstallDialog(aHref, gBrowser);
@@ -306,7 +308,8 @@ GM_BrowserUI.checkDisabledScriptNavigation = function (aContentType, aHref) {
     "label": GM_BrowserUI.bundle
         .GetStringFromName("disabledWarning.enableAndInstall"),
     "popup": null,
-  }, {
+  });
+  buttons.push({
     "accessKey": GM_BrowserUI.bundle
         .GetStringFromName("disabledWarning.install.accesskey"),
     "callback": function () {
@@ -314,7 +317,7 @@ GM_BrowserUI.checkDisabledScriptNavigation = function (aContentType, aHref) {
     },
     "label": GM_BrowserUI.bundle.GetStringFromName("disabledWarning.install"),
     "popup": null,
-  }];
+  });
 
   let notificationBox = gBrowser.getNotificationBox();
   let notification = notificationBox.appendNotification(

@@ -29,11 +29,16 @@ function installScriptFromSource(aSource, aCallback) {
     remoteScript.setScript(script, tempFile);
     remoteScript.download(function (aSuccess) {
       if (!aSuccess) {
-        GM_notification(GM_CONSTANTS.localeStringBundle.createBundle(
-            GM_CONSTANTS.localeGreasemonkeyProperties)
-            .GetStringFromName("error.couldNotDownloadDependencies")
-            .replace("%1", remoteScript.errorMessage),
-            "greasemonkey-dependency-download-failed");
+        let notificationOptions = {
+          "persistence": -1,
+          "persistWhileVisible": true,
+        };
+        GM_notification(
+            GM_CONSTANTS.localeStringBundle.createBundle(
+                GM_CONSTANTS.localeGreasemonkeyProperties)
+                .GetStringFromName("error.couldNotDownloadDependencies")
+                .replace("%1", remoteScript.errorMessage),
+            "greasemonkey-dependency-download-failed", notificationOptions);
         return undefined;
       }
       remoteScript.install();

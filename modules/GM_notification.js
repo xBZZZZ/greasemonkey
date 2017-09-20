@@ -36,11 +36,16 @@ function GM_notification(aMsg, aTopic, aOptions) {
       break;
   }
 
+  let muted = false;
   switch (type) {
     case "grants":
+      muted = GM_prefRoot.getValue("showGrantsWarning");
+      if (!muted) {
+        return undefined;
+      }
       break;
     default:
-      let muted = GM_prefRoot.getValue("notification.muted." + aTopic, false);
+      muted = GM_prefRoot.getValue("notification.muted." + aTopic, false);
       if (muted) {
         return undefined;
       }
@@ -111,16 +116,16 @@ function GM_notification(aMsg, aTopic, aOptions) {
         .GetStringFromName("notification.neverAgain.label"),
   });
 
-  let id = "greasemonkey-notification";
+  let name = "greasemonkey-notification";
   switch (type) {
     case "grants":
-      id = id + "-" + type;
+      name = name + "-" + type;
       break;
   }
 
   if (win) {
     win.PopupNotifications.show(
-        win.gBrowser.selectedBrowser, id,
+        win.gBrowser.selectedBrowser, name,
         aMsg, null, primaryAction, secondaryActions,
         aOptions ? aOptions : null);
   } else {

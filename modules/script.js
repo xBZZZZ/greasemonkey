@@ -970,9 +970,14 @@ Script.prototype.updateFromNewScript = function (
     rs.setScript(newScript);
     rs.download(GM_util.hitch(this, function (aSuccess) {
       if (!aSuccess) {
+        let notificationOptions = {
+          "persistence": -1,
+          "persistWhileVisible": true,
+        };
         GM_notification(
             "(" + this.localized.name + ") " +
-            rs.errorMessage, "greasemonkey-dependency-update-failed");
+            rs.errorMessage, "greasemonkey-dependency-update-failed",
+            notificationOptions);
         return undefined;
       }
 
@@ -1064,14 +1069,13 @@ Script.prototype.updateFromNewScript = function (
 };
 
 Script.prototype.showGrantWarning = function () {
-  if ((this._grants.length != 0)
-      || !GM_prefRoot.getValue("showGrantsWarning")) {
+  if (this._grants.length != 0) {
     return undefined;
   }
 
   let notificationOptions = {
-    // "persistence": -1,
-    // "persistWhileVisible": true,
+    "persistence": -1,
+    "persistWhileVisible": true,
     "learnMoreURL": "http://wiki.greasespot.net/@grant",
   };
 
