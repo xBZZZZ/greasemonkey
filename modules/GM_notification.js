@@ -60,7 +60,7 @@ function GM_notification(aMessage, aTopic, aOptions) {
     supportLearnMoreURL = false;
   }
 
-  let win = GM_util.getBrowserWindow();
+  let chromeWin = GM_util.getBrowserWindow();
   let mainAction = {
     "accessKey": GM_CONSTANTS.localeStringBundle.createBundle(
         GM_CONSTANTS.localeGreasemonkeyProperties)
@@ -77,9 +77,9 @@ function GM_notification(aMessage, aTopic, aOptions) {
           GM_CONSTANTS.localeGreasemonkeyProperties)
           .GetStringFromName("notification.learnMore.accesskey"),
       "callback": function () {
-        win.gBrowser.selectedTab = win.gBrowser.addTab(
+        chromeWin.gBrowser.selectedTab = chromeWin.gBrowser.addTab(
             aOptions.learnMoreURL, {
-              "ownerTab": win.gBrowser.selectedTab,
+              "ownerTab": chromeWin.gBrowser.selectedTab,
             });
         /*
         switch (type) {
@@ -123,9 +123,9 @@ function GM_notification(aMessage, aTopic, aOptions) {
       break;
   }
 
-  if (win) {
-    win.PopupNotifications.show(
-        win.gBrowser.selectedBrowser, id,
+  if (chromeWin) {
+    chromeWin.PopupNotifications.show(
+        chromeWin.gBrowser.selectedBrowser, id,
         aMessage, null, mainAction, secondaryActions,
         aOptions ? aOptions : null);
   } else {
@@ -136,7 +136,7 @@ function GM_notification(aMessage, aTopic, aOptions) {
       default:
         GM_util.logError(
             "(internal) GM_notification():"
-            + "\n" + aMessage + "\n" + "win = " + win);
+            + "\n" + aMessage + "\n" + "chromeWin = " + chromeWin);
         break;
     }
   }
