@@ -117,27 +117,27 @@ GM_notificationer.prototype.contentStart = function (
         this.fileURL, null);
   }
 
-  var notification = {
+  let _notification = {
     "details": details,
     "onClick": details.onclick,
     "onDone": details.ondone,
   };
 
-  if (typeof notification.onClick !== "function") {
+  if (typeof _notification.onClick !== "function") {
     throw new this.wrappedContentWin.Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
             .GetStringFromName("error.notification.callbackIsNotFunction")
-            .replace("%1", notification.details.title)
+            .replace("%1", _notification.details.title)
             .replace("%2", "onclick"),
         this.fileURL, null);
   }
-  if (typeof notification.onDone !== "function") {
+  if (typeof _notification.onDone !== "function") {
     throw new this.wrappedContentWin.Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
             .GetStringFromName("error.notification.callbackIsNotFunction")
-            .replace("%1", notification.details.title)
+            .replace("%1", _notification.details.title)
             .replace("%2", "ondone"),
         this.fileURL, null);
   }
@@ -146,23 +146,30 @@ GM_notificationer.prototype.contentStart = function (
     "body": details.message,
     "icon": details.image,
     "requireInteraction": true,
-  }
+  };
 
-  // Hightlight tab does not work.
-  /*
-  if (details.highlight) {
-    this.wrappedContentWin.focus();
-    if (details.message == "") {
-      details.highlightOnly = true;
-      this.setupEvent(notification, "done", details);
-    }
-  }
-  */
-  // if (details.message != "") {
-    if (this.chromeWin) {
-      var notification = new this.chromeWin
+  var notification = null;
+  if (this.chromeWin) {
+    if (!("Notification" in this.chromeWin)) {
+      // This browser does not support desktop notification.
+      // Ignore.
+    } else if (this.chromeWin.Notification.permission === "granted") {
+      // Let's check whether notification permissions
+      // have already been granted.
+      // If it's okay let's create a notification.
+      notification = new this.chromeWin
           .Notification(details.title, options);
-
+    } else if (this.chromeWin.Notification.permission !== "denied") {
+      // Otherwise, we need to ask the user for permission.
+      this.chromeWin.Notification.requestPermission(function (aPermission) {
+        // If the user accepts, let's create a notification.
+        if (aPermission === "granted") {
+          notification = new this.chromeWin
+              .Notification(details.title, options);
+        }
+      });
+    }
+    if (notification) {
       if (details.timeout && (details.timeout > 0)) {
         GM_util.timeout(function () {
           if (notification) {
@@ -171,17 +178,39 @@ GM_notificationer.prototype.contentStart = function (
           }
         }, details.timeout);
       }
-    } else {
-      throw new this.wrappedContentWin.Error(
-          'GM_notification() - "' + notification.details.title + '": '
-          + GM_CONSTANTS.localeStringBundle.createBundle(
-              GM_CONSTANTS.localeGreasemonkeyProperties)
-              .GetStringFromName("error.environment.unsupported.e10s"),
-          this.fileURL, null);
     }
-  // }
+  } else {
+    throw new this.wrappedContentWin.Error(
+        'GM_notification() - "' + details.title + '": '
+        + GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.environment.unsupported.e10s"),
+        this.fileURL, null);
+  }
 
-  GM_util.hitch(this, "chromeStart", notification, details)();
+  if (notification) {
+    // Hightlight tab does not work.
+    /*
+    if (details.highlight) {
+      this.wrappedContentWin.focus();
+      if (details.message == "") {
+        details.highlightOnly = true;
+        this.setupEvent(notification, "done", details);
+      }
+    }
+    */
+    // if (details.message != "") {
+      GM_util.hitch(this, "chromeStart", notification, details)();
+    // }
+  } else {
+    throw new this.wrappedContentWin.Error(
+        GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.notification.functionIsNotEnabled")
+            .replace("%1", details.title)
+            .replace("%2", '"about:config" - "dom.webnotifications.enabled"'),
+        this.fileURL, null);
+  }
 };
 
 // This function is intended to be called in chrome's security context.

@@ -166,7 +166,9 @@ var observer = {
         // Use old and new the addon references to update the view.
         item = createItem(addon);
         let oldItem = gListView.getListItemForID(oldAddon.id);
-        oldItem.parentNode.replaceChild(item, oldItem);
+        if (oldItem) {
+          oldItem.parentNode.replaceChild(item, oldItem);
+        }
 
         break;
       case events["uninstall"]:
