@@ -213,6 +213,7 @@ function injectGMInfo(aSandbox, aContentWin, aScript) {
   function getScriptSource() {
     let content = fileCache.get("scriptSource");
     if (content === undefined) {
+      // The alternative MIME type: "text/plain,charset=utf-8"
       content = GM_util.fileXhr(scriptURL, "application/javascript");
       fileCache.set("scriptSource", content);
     }
@@ -277,6 +278,7 @@ function runScriptInSandbox(aSandbox, aScript) {
             e.fileName,
             e.lineNumber);
 
+        // The alternative MIME type: "text/plain,charset=utf-8"
         let code = GM_util.fileXhr(aUrl, "application/javascript");
         Cu.evalInSandbox(
             "(function () { " + code + "\n})()",

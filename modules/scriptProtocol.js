@@ -51,6 +51,7 @@ function DummyChannel(aUri, aScript) {
   // nsIChannel
   this.contentCharset = GM_CONSTANTS.fileScriptCharset;
   this.contentLength = this.content.length;
+  // The alternative MIME type: "text/plain,charset=utf-8"
   this.contentType = "application/javascript";
   this.notificationCallbacks = null;
   this.originalURI = aUri;
