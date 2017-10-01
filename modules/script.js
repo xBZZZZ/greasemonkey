@@ -1140,7 +1140,8 @@ Script.prototype.checkForRemoteUpdate = function (aCallback, aForced) {
 
   let req = Cc["@mozilla.org/xmlextras/xmlhttprequest;1"]
       .createInstance(Ci.nsIXMLHttpRequest);
-  // The alternative MIME type: "text/plain,charset=utf-8"
+  // The alternative MIME type:
+  // "text/plain,charset=" + GM_CONSTANTS.fileScriptCharset.toLowerCase()
   req.overrideMimeType("application/javascript");
   if (GM_prefRoot.getValue("requireTimeoutUpdates")) {
     let timeoutUpdatesInSeconds = GM_prefRoot.getValue(
