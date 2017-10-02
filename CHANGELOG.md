@@ -1,5 +1,17 @@
 ## Changelog
 
+#### 3.30rc1 (2017-10-02)
+
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.12.1beta12ForkExperimental...3.30rc1Fork)
+
+* General: Changed the extension ID! Update requires you the uninstall the old version (beta) and then install the new (rc)! Your settings and scripts should stay in place.
+* General: Removing statistics
+* API: GM_xmlhttpRequest - Added support for blob: and data: protocols
+* API: GM_xmlhttpRequest - Added support for Containers (Firefox 42+) ([#2555](https://github.com/greasemonkey/greasemonkey/issues/2555))
+* GUI: Updating scripts - Viewing homepage ([#2566](https://github.com/greasemonkey/greasemonkey/issues/2566))
+* API: GM_notification - If this function (Web/Desktop Notifications) is not enabled
+* Fix typos, style clean up
+
 #### 3.12.1beta12 (2017-08-03)
 
 [All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.12.1beta11ForkExperimental...3.12.1beta12ForkExperimental)
@@ -29,8 +41,8 @@
 * API: GM_...value - "sendRpcMessage" instead of "sendSyncMessage" ([#2506](https://github.com/greasemonkey/greasemonkey/issues/2506), [#2507](https://github.com/greasemonkey/greasemonkey/pull/2507))
 * API: GM_registerMenuCommand - Frames (it won't add any menu commands) ([#2509](https://github.com/greasemonkey/greasemonkey/issues/2509))
 * General: The RegExp object - small performance improvements
-* General: Changes name - From: `Greasemonkey` To: `Greasemonkey for Pale Moon`
-* General - a note: ID and branding (icons) - I don't know, if and when it will happen
+* General: Changed the name - From: `Greasemonkey` To: `Greasemonkey for Pale Moon`
+* General - a note: The extension ID and branding (icons) - I don't know, if and when it will happen
 * Fix typos, style clean up
 
 #### 3.12.1beta9 (2017-05-22)
@@ -120,7 +132,7 @@
 * GUI: Script Preferences / Options - Added display count of rows and better scrolling
 * API: Added proper support for "about:blank" and "@run-at document-start" ([#1849#issuecomment-107177049](https://github.com/greasemonkey/greasemonkey/issues/1849#issuecomment-107177049))
 * Loading: If Greasemonkey is disabled, some scripts works (follow up) ([#2416](https://github.com/greasemonkey/greasemonkey/issues/2416), [#2417](https://github.com/greasemonkey/greasemonkey/pull/2417))
-* API: XMLHttpRequest - Fix bug with the "anonymous" mode ([#2330](https://github.com/greasemonkey/greasemonkey/pull/2330)), ([PaleMoon#968](https://github.com/MoonchildProductions/Pale-Moon/pull/968))
+* API: GM_xmlhttpRequest - Fix bug with the "anonymous" mode ([#2330](https://github.com/greasemonkey/greasemonkey/pull/2330)), ([PaleMoon#968](https://github.com/MoonchildProductions/Pale-Moon/pull/968))
 * General: Updating scripts / Stats - Detecting the private mode (pushed to upstream - not yet)
 * GUI: The install window - If the button "Install" is pressed too soon, throws an errors (pushed to upstream - not yet)
 * GUI: The fix update icon in the AOM (after a change in the editor) (pushed to upstream - not yet)

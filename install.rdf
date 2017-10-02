@@ -6,7 +6,7 @@
   <Description about="urn:mozilla:install-manifest">
 
     <em:id>greasemonkeyforpm@janekptacijarabaci</em:id>
-    <em:version>3.12.1beta12</em:version>
+    <em:version>3.30rc1</em:version>
     <em:creator>Aaron Boodman; http://youngpup.net/ (Pale Moon: janekptacijarabaci)</em:creator>
     <em:homepageURL>https://github.com/janekptacijarabaci/greasemonkey/releases</em:homepageURL>
     <!-- <em:updateURL>https://gist.github.com/raw/[uuid]/update.rdf</em:updateURL> -->
@@ -118,21 +118,32 @@
     <em:translator>yymp</em:translator>
     <em:translator>zmni</em:translator>
 
-    <!-- Firefox -->
-    <em:targetApplication>
-      <Description>
-        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-        <em:minVersion>39.0.0</em:minVersion>
-        <em:maxVersion>56.*</em:maxVersion>
-      </Description>
-    </em:targetApplication>
-
     <!-- Pale Moon -->
     <em:targetApplication>
       <Description>
         <em:id>{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}</em:id>
         <em:minVersion>27.1.0</em:minVersion>
         <em:maxVersion>27.*</em:maxVersion>
+      </Description>
+    </em:targetApplication>
+
+    <!-- Basilisk -->
+    <!--
+    <em:targetApplication>
+      <Description>
+        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+        <em:minVersion>55.*</em:minVersion>
+        <em:maxVersion>56.*</em:maxVersion>
+      </Description>
+    </em:targetApplication>
+    -->
+
+    <!-- Firefox -->
+    <em:targetApplication>
+      <Description>
+        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+        <em:minVersion>39.0.0</em:minVersion>
+        <em:maxVersion>56.*</em:maxVersion>
       </Description>
     </em:targetApplication>
 
