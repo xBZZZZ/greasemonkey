@@ -1,0 +1,88 @@
+/* Reference: https://firefoxux.github.io/StyleGuide/ */
+
+html, body {
+  font: caption;
+  overflow: hidden;
+  overflow-y: auto;
+}
+html {
+  height: 100%;
+  margin: 0 1em;
+}
+body {
+  margin: 1em auto;
+  max-width: 40em;
+}
+
+html, body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+body.result #install,
+body.result .panel-section-footer,
+body.install #result
+{ display: none; }
+
+header {
+  margin-bottom: 1em;
+}
+header * {
+  display: inline-block;
+  vertical-align: middle;
+}
+header .icon img {
+  max-width: 32px;
+  height: 32px;
+}
+header h1 {
+  font-size: 20px;
+}
+header h1 #version {
+  padding-left: 6px;
+}
+
+#install {
+  display: flex;
+  flex-direction: column;
+}
+#install, .spacer {
+  flex-grow: 1;
+}
+
+#details {
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  padding: 16px;
+}
+
+#details > * {
+  margin-top: 1em;
+}
+#details #apis {
+  margin-top: 0;
+}
+#details p,
+#details ul
+{ margin: 0; }
+
+.text strong {
+  font-size: 1.2em;
+}
+
+
+progress {
+  height: 17px;
+  margin: 13px;
+  width: 100%;
+}
+
+
+#footer {
+  display: flex;
+}
+#footer button {
+  flex-grow: 3;
+  width: 0;
+}
