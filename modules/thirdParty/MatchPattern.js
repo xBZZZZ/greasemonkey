@@ -125,7 +125,7 @@ function MatchPattern(aPattern) {
     // example.tld and any of its subdomains, but not anotherexample.tld.
     this._hostExpr = new RegExp("^" +
         // Two characters in the host portion need special treatment:
-        //   - ". should not be treated as a wildcard, so we escape it to \.
+        //   - "." should not be treated as a wildcard, so we escape it to \.
         //   - if the hostname only consists of "*" (i.e. full wildcard),
         //     replace it with .*
         host.replace(/\./g, "\\.").replace(/^\*$/, ".*")
