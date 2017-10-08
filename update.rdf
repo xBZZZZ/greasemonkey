@@ -18,7 +18,7 @@
 
             <!-- One targetApplication for each application the add-on is compatible with -->
             <!-- This is where this version of the add-on will be downloaded from -->
-            <!-- PaleMoon -->
+            <!-- Pale Moon -->
             <em:targetApplication>
               <RDF:Description>
                 <em:id>{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}</em:id>
