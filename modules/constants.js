@@ -16,6 +16,27 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
 const GM_CONSTANTS = {
+  "addonAPI": [
+    "GM_addStyle",
+    // "GM_cookie",
+    "GM_deleteValue",
+    "GM_getResourceText",
+    "GM_getResourceURL",
+    "GM_getValue",
+    // This is a separate API:
+    // "GM_info",
+    "GM_listValues",
+    "GM_log",
+    "GM_notification",
+    "GM_openInTab",
+    "GM_registerMenuCommand",
+    "GM_setClipboard",
+    "GM_setValue",
+    "GM_xmlhttpRequest",
+    "unsafeWindow",
+  ],
+  "addonAPIPrefix1": "GM_",
+  "addonAPIPrefix2": "GM.",
   "addonGUID": "greasemonkeyforpm@janekptacijarabaci",
   "addonInstallPolicyClassDescription": "Greasemonkey Script Install Policy",
   "addonInstallPolicyClassID": Components.ID(
