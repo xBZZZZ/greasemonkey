@@ -369,8 +369,7 @@ function runScriptInSandbox(aSandbox, aScript) {
     return true;
   }
 
-  /*
-  if (GM_prefRoot.getValue("api.object.polyfill")) {
+  function evalAPI2Polyfill(aSandbox, aScript) {
     let _API1 = "GM_info";
     let API2Polyfill = "";
     API2Polyfill += `
@@ -406,7 +405,18 @@ function runScriptInSandbox(aSandbox, aScript) {
           API2Polyfill,
           aSandbox, JAVASCRIPT_VERSION_MAX, aScript.fileURL, 1);
     } catch (e) {
-      throw e;
+      // Log it properly.
+      GM_util.logError(e, false, e.fileName, e.lineNumber);
+      // Stop the script, in the case of requires, as if it was one big script.
+      return false;
+    }
+    return true;
+  }
+
+  /*
+  if (GM_prefRoot.getValue("api.object.polyfill")) {
+    if (!evalAPI2Polyfill(aSandbox, aScript)) {
+      return undefined;
     }
   }
   */
