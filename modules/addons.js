@@ -50,7 +50,7 @@ var AddonProvider = {
       aCallback([]);
     } else {
       var scriptAddons = [];
-      GM_util.getService().config.scripts.forEach(function (script) {
+      GM_util.getService().config.scripts.forEach(function (aScript) {
         /*
         "true" - to "properly" (better; also reload page) update the AOM.
         e.g. ScriptAddon.isCompatible
@@ -59,8 +59,8 @@ var AddonProvider = {
           (this script is not uninstalled).
         But a simple solution: see ScriptAddonFactoryByScript().
         */
-        // scriptAddons.push(ScriptAddonFactoryByScript(script, true));
-        scriptAddons.push(ScriptAddonFactoryByScript(script));
+        // scriptAddons.push(ScriptAddonFactoryByScript(aScript, true));
+        scriptAddons.push(ScriptAddonFactoryByScript(aScript));
       });
       aCallback(scriptAddons);
     }
@@ -68,12 +68,12 @@ var AddonProvider = {
 
   "getInstallsByTypes": function (aTypes, aCallback) {
     var scriptInstalls = [];
-    GM_util.getService().config.scripts.forEach(function (script) {
-      if (!script.availableUpdate) {
+    GM_util.getService().config.scripts.forEach(function (aScript) {
+      if (!aScript.availableUpdate) {
         return undefined;
       }
 
-      let aAddon = ScriptAddonFactoryByScript(script);
+      let aAddon = ScriptAddonFactoryByScript(aScript);
       let scriptInstall = ScriptInstallFactoryByAddon(aAddon);
 
       scriptInstalls.push(scriptInstall);

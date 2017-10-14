@@ -253,8 +253,8 @@ DownloadListener.prototype = {
           // Ignore.
         }
       }
-      Object.getOwnPropertyNames(headers).forEach(function (prop) {
-        _headers += "\n" + '"' + prop + '": "' + headers[prop] + '"';
+      Object.getOwnPropertyNames(headers).forEach(function (aProp) {
+        _headers += "\n" + '"' + aProp + '": "' + headers[aProp] + '"';
       });
       errorMessage = GM_CONSTANTS.localeStringBundle.createBundle(
           GM_CONSTANTS.localeGreasemonkeyProperties)

@@ -1349,8 +1349,8 @@ Script.prototype.allFilesExistResult = function () {
   });
 
   let noFilesName = [];
-  noFiles.forEach(function (file) {
-    noFilesName.push(file.leafName);
+  noFiles.forEach(function (aFile) {
+    noFilesName.push(aFile.leafName);
   });
 
   return noFilesName;

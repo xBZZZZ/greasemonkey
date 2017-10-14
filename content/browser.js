@@ -509,14 +509,14 @@ function asyncShowPopup(aEventTarget, aUrls) {
   if (runsFramed.length) {
     point = scriptsFramedElm;
     runsFramed.forEach(
-        function (script) {
-          point = getScripts.appendScriptAfter(script, point).menuItem;
+        function (aScript) {
+          point = getScripts.appendScriptAfter(aScript, point).menuItem;
         });
   }
   point = scriptsTopElm;
   runsOnTop.forEach(
-      function (script) {
-        point = getScripts.appendScriptAfter(script, point).menuItem;
+      function (aScript) {
+        point = getScripts.appendScriptAfter(aScript, point).menuItem;
       });
 
   // Propagate to commands sub-menu.
@@ -576,9 +576,9 @@ function GM_showTooltip(aEvent) {
 
       var total = 0;
       var totalEnable = 0;
-      GM_util.getService().config.scripts.forEach(function (script) {
+      GM_util.getService().config.scripts.forEach(function (aScript) {
         total++;
-        totalEnable = totalEnable + (script.enabled ? 1 : 0);
+        totalEnable = totalEnable + (aScript.enabled ? 1 : 0);
       });
 
       total = totalEnable + "/" + total;
@@ -600,8 +600,8 @@ function GM_showTooltip(aEvent) {
       var point;
       if (runsFramed.length) {
         runsFramed.forEach(
-            function (script) {
-              _runsFramed = getScripts.appendScriptAfter(script, point, true);
+            function (aScript) {
+              _runsFramed = getScripts.appendScriptAfter(aScript, point, true);
               _runsFramedEnable = ((_runsFramed.menuItem
                   .getAttribute("checked") == "true") ? 1 : 0);
               runsFramedEnable = runsFramedEnable + _runsFramedEnable;
@@ -612,9 +612,9 @@ function GM_showTooltip(aEvent) {
         });
       }
       runsOnTop.forEach(
-          function (script) {
+          function (aScript) {
             runsOnTopEnable = runsOnTopEnable + ((getScripts
-                .appendScriptAfter(script, point, true)
+                .appendScriptAfter(aScript, point, true)
                 .menuItem.getAttribute("checked") == "true") ? 1 : 0);
       });
 

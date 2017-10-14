@@ -233,10 +233,10 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
   }
 
   // See #2129.
-  Object.getOwnPropertyNames(sandbox).forEach(function (prop) {
-    if (prop.indexOf(GM_CONSTANTS.addonAPIPrefix1) == 0) {
-      sandbox[prop] = Cu.cloneInto(
-          sandbox[prop], sandbox, {
+  Object.getOwnPropertyNames(sandbox).forEach(function (aProp) {
+    if (aProp.indexOf(GM_CONSTANTS.addonAPIPrefix1) == 0) {
+      sandbox[aProp] = Cu.cloneInto(
+          sandbox[aProp], sandbox, {
             "cloneFunctions": true,
             "wrapReflectors": true,
           });

@@ -7,8 +7,8 @@ function getScriptSource(aScript) {
   let offsets = [];
   let offset = 0;
 
-  aScript.requires.forEach(function (req) {
-    let contents = req.textContent;
+  aScript.requires.forEach(function (aReq) {
+    let contents = aReq.textContent;
     let lineCount = contents.split("\n").length;
     parts.push(contents);
     offset += lineCount;

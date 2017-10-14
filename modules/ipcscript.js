@@ -138,8 +138,8 @@ var gScripts = [];
 function objectToScript(aObj) {
   var script = Object.create(IPCScript.prototype);
 
-  Object.keys(aObj).forEach(function (k) {
-    script[k] = aObj[k];
+  Object.keys(aObj).forEach(function (aKey) {
+    script[aKey] = aObj[aKey];
   });
 
   Object.freeze(script);

@@ -42,12 +42,12 @@ AbstractScript.prototype.matchesURL = function (aUrl) {
 
     return GM_convertToRegexp(aGlob, uri).test(aUrl);
   }
-  function testMatch(matchPattern) {
-    if (typeof matchPattern == "string") {
-      matchPattern = new MatchPattern(matchPattern);
+  function testMatch(aMatchPattern) {
+    if (typeof aMatchPattern == "string") {
+      aMatchPattern = new MatchPattern(aMatchPattern);
     }
 
-    return matchPattern.doMatch(aUrl);
+    return aMatchPattern.doMatch(aUrl);
   }
 
   // Flat deny if URL is not greaseable, or matches global excludes.

@@ -13,9 +13,10 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
 var gScriptId = decodeURIComponent(location.hash.substring(1));
-var gScript = GM_util.getService().config.getMatchingScripts(function (script) {
-  return script && (script.id == gScriptId);
-})[0];
+var gScript = GM_util.getService().config.getMatchingScripts(
+    function (aScript) {
+      return aScript && (aScript.id == gScriptId);
+    })[0];
 
 var gElmTabbox = null;
 var gElmUserTab = null;
@@ -37,13 +38,13 @@ window.addEventListener("load", function () {
   gElmTabbox = document.getElementsByTagName("tabbox")[0];
   gElmUserTab = gElmTabbox.tabs.getItemAtIndex(0);
 
-  Object.getOwnPropertyNames(gElm).forEach(function (prop) {
-    gElm[prop] = document.getElementById(gElm[prop]);
+  Object.getOwnPropertyNames(gElm).forEach(function (aProp) {
+    gElm[aProp] = document.getElementById(gElm[aProp]);
   });
 
   gElm.scriptIncludes.pages = gScript.includes;
-  gElm.scriptIncludes.onAddUserExclude = function (page) {
-    gElm.userExcludes.addPage(page);
+  gElm.scriptIncludes.onAddUserExclude = function (aPage) {
+    gElm.userExcludes.addPage(aPage);
     gElmTabbox.selectedTab = gElmUserTab;
   };
   gElm.userIncludes.pages = gScript.userIncludes;
@@ -60,8 +61,8 @@ window.addEventListener("load", function () {
   gElm.userMatches.pages = userMatchesPattern;
 
   gElm.scriptExcludes.pages = gScript.excludes;
-  gElm.scriptExcludes.onAddUserInclude = function (page) {
-    gElm.userIncludes.addPage(page);
+  gElm.scriptExcludes.onAddUserInclude = function (aPage) {
+    gElm.userIncludes.addPage(aPage);
     gElmTabbox.selectedTab = gElmUserTab;
   };
   gElm.userExcludes.pages = gScript.userExcludes;

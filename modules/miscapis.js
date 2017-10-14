@@ -47,8 +47,8 @@ function GM_addStyle(aWrappedContentWin, aFileURL, aRunAt, aCss) {
     try {
       let MutationObserver = aWrappedContentWin.MutationObserver;
       var observer = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-          let addedNodes = mutation.addedNodes;
+        mutations.forEach(function (aMutation) {
+          let addedNodes = aMutation.addedNodes;
           for (let i = 0, iLen = addedNodes.length; i < iLen; i++) {
             let node = addedNodes[i];
             if ((node.nodeType == 1)

@@ -87,38 +87,38 @@ function _corsCspTestUrl(aUrl) {
   values[gCorsCspOverrideMatches] = valueDefault;
 
   var _pref = "";
-  Object.getOwnPropertyNames(values).forEach(function (prop) {
+  Object.getOwnPropertyNames(values).forEach(function (aProp) {
     _pref = gCorsCspOverridePrefBase
-        + gCorsCspOverridePrefItemsSeparator + prop;
+        + gCorsCspOverridePrefItemsSeparator + aProp;
     if (GM_prefRoot.exists(_pref) && GM_prefRoot.getValue(_pref)) {
       _pref = gCorsCspOverridePrefBase
-          + gCorsCspOverridePrefItemsSeparator + prop
+          + gCorsCspOverridePrefItemsSeparator + aProp
           + gCorsCspOverridePrefItemsSeparator + gCorsCspOverridePrefItemsValue;
       if (GM_prefRoot.exists(_pref)) {
-        values[prop] = GM_prefRoot.getValue(_pref);
+        values[aProp] = GM_prefRoot.getValue(_pref);
       }
     }
   });
 
   var _error = false;
-  Object.getOwnPropertyNames(values).forEach(function (prop) {
+  Object.getOwnPropertyNames(values).forEach(function (aProp) {
     try {
-      values[_internalSeparator + prop] = JSON.parse(values[prop]);
+      values[_internalSeparator + aProp] = JSON.parse(values[aProp]);
     } catch (e) {
       dump(gCorsCspOverrideDumpPrefix + " - testUrl (" + aUrl + ") - "
-          + prop + ": " + values[prop]
+          + aProp + ": " + values[aProp]
           + " - e:" + "\n" + e + "\n");
       _error = true;
       return false;
     }
-    if (!Array.isArray(values[_internalSeparator + prop])) {
+    if (!Array.isArray(values[_internalSeparator + aProp])) {
       dump(gCorsCspOverrideDumpPrefix + " - testUrl (" + aUrl + ") - "
-          + prop + ": " + values[prop]
+          + aProp + ": " + values[aProp]
           + " - isArray: false" + "\n");
       _error = true;
       return false;
     }
-    values[prop + _internalSeparator] = false;
+    values[aProp + _internalSeparator] = false;
   });
   if (_error) {
     return false;
@@ -130,20 +130,20 @@ function _corsCspTestUrl(aUrl) {
     return GM_convertToRegexp(glob, uri).test(aUrl);
   }
 
-  function testMatch(matchPattern) {
-    if (typeof matchPattern == "string") {
+  function testMatch(aMatchPattern) {
+    if (typeof aMatchPattern == "string") {
       try {
-        matchPattern = new MatchPattern(matchPattern);
+        aMatchPattern = new MatchPattern(aMatchPattern);
       } catch (e) {
         dump(gCorsCspOverrideDumpPrefix + " - testUrl (" + aUrl + "): "
             + GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
             .GetStringFromName("error.parse.ignoringMatch")
-            .replace("%1", matchPattern).replace("%2", e) + "\n");
+            .replace("%1", aMatchPattern).replace("%2", e) + "\n");
         return false;
       }
     }
-    return matchPattern.doMatch(aUrl);
+    return aMatchPattern.doMatch(aUrl);
   }
 
   if (!GM_util.isGreasemonkeyable(aUrl)) {

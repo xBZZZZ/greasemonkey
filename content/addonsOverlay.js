@@ -427,8 +427,8 @@ function applySort() {
   while (list.lastChild) {
     list.removeChild(list.lastChild);
   }
-  elements.forEach(function (el) {
-    list.appendChild(el);
+  elements.forEach(function (aElm) {
+    list.appendChild(aElm);
   });
 };
 
