@@ -381,9 +381,9 @@ function runScriptInSandbox(aSandbox, aScript) {
           && (value != _API1)) {
         let prop = value.replace(API_PREFIX_REGEXP, "$2");
         API2Polyfill += `
-        GM["` + prop + `"] = function () {
+        GM["` + prop + `"] = (...args) => {
           try {
-            return Promise.resolve(` + value + `.apply(null, arguments));
+            return Promise.resolve(` + value + `(...args));
           } catch (e) {
             return Promise.reject(e);
           }
@@ -398,7 +398,7 @@ function runScriptInSandbox(aSandbox, aScript) {
         Object.freeze(GM);
       })();
     `;
-    // GM_util.logError(API2Polyfill);
+    // dump(evalAPI2Polyfill.name + ":" + "\n" + API2Polyfill + "\n");
 
     try {
       Cu.evalInSandbox(

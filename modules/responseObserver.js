@@ -114,7 +114,7 @@ function _corsCspTestUrl(aUrl) {
     if (!Array.isArray(values[_internalSeparator + prop])) {
       dump(gCorsCspOverrideDumpPrefix + " - testUrl (" + aUrl + ") - "
           + prop + ": " + values[prop]
-          + " - isArray: false");
+          + " - isArray: false" + "\n");
       _error = true;
       return false;
     }
@@ -139,7 +139,7 @@ function _corsCspTestUrl(aUrl) {
             + GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
             .GetStringFromName("error.parse.ignoringMatch")
-            .replace("%1", matchPattern).replace("%2", e));
+            .replace("%1", matchPattern).replace("%2", e) + "\n");
         return false;
       }
     }
