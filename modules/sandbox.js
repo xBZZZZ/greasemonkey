@@ -376,14 +376,14 @@ function runScriptInSandbox(aSandbox, aScript) {
       var GM = {};
       (async () => {
     `;
-    Object.getOwnPropertyNames(aSandbox).forEach(function (value) {
-      if ((value.indexOf(GM_CONSTANTS.addonAPIPrefix1) == 0)
-          && (value != _API1)) {
-        let prop = value.replace(API_PREFIX_REGEXP, "$2");
+    Object.getOwnPropertyNames(aSandbox).forEach(function (aValue) {
+      if ((aValue.indexOf(GM_CONSTANTS.addonAPIPrefix1) == 0)
+          && (aValue != _API1)) {
+        let prop = aValue.replace(API_PREFIX_REGEXP, "$2");
         API2Polyfill += `
         GM["` + prop + `"] = (...args) => {
           try {
-            return Promise.resolve(` + value + `(...args));
+            return Promise.resolve(` + aValue + `(...args));
           } catch (e) {
             return Promise.reject(e);
           }
