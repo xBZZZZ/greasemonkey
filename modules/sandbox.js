@@ -89,7 +89,7 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
   _API2 = _API1.replace(
       API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
   if (GM_util.inArray(aScript.grants, _API1)
-      || GM_util.inArray(aScript.grants, _API2)) {
+      || GM_util.inArray(aScript.grants, _API2, true)) {
     sandbox[_API1] = GM_util.hitch(
         null, GM_addStyle, aContentWin, aScript.fileURL, aRunAt);
   }
@@ -100,7 +100,7 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
     _API2 = _API1.replace(
         API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
     if (GM_util.inArray(aScript.grants, _API1)
-        || GM_util.inArray(aScript.grants, _API2)) {
+        || GM_util.inArray(aScript.grants, _API2, true)) {
       sandbox[_API1] = GM_util.hitch(
           null, GM_cookie, aContentWin, sandbox,
           aScript.fileURL, aUrl);
@@ -114,21 +114,21 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
   _API2 = _API1.replace(
       API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
   if (GM_util.inArray(aScript.grants, _API1)
-      || GM_util.inArray(aScript.grants, _API2)) {
+      || GM_util.inArray(aScript.grants, _API2, true)) {
     sandbox[_API1] = GM_util.hitch(scriptStorage, "deleteValue");
   }
   _API1 = "GM_getValue";
   _API2 = _API1.replace(
       API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
   if (GM_util.inArray(aScript.grants, _API1)
-      || GM_util.inArray(aScript.grants, _API2)) {
+      || GM_util.inArray(aScript.grants, _API2, true)) {
     sandbox[_API1] = GM_util.hitch(scriptStorage, "getValue");
   }
   _API1 = "GM_setValue";
   _API2 = _API1.replace(
       API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
   if (GM_util.inArray(aScript.grants, _API1)
-      || GM_util.inArray(aScript.grants, _API2)) {
+      || GM_util.inArray(aScript.grants, _API2, true)) {
     sandbox[_API1] = GM_util.hitch(scriptStorage, "setValue");
   }
 
@@ -136,7 +136,7 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
   _API2 = _API1.replace(
       API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
   if (GM_util.inArray(aScript.grants, _API1)
-      || GM_util.inArray(aScript.grants, _API2)) {
+      || GM_util.inArray(aScript.grants, _API2, true)) {
     sandbox[_API1] = GM_util.hitch(scriptStorage, "listValues");
   }
 
@@ -145,7 +145,7 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
   _API2 = _API1.replace(
       API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
   if (GM_util.inArray(aScript.grants, _API1)
-      || GM_util.inArray(aScript.grants, _API2)) {
+      || GM_util.inArray(aScript.grants, _API2, true)) {
     sandbox[_API1] = GM_util.hitch(
         scriptResources, "getResourceText",
         aContentWin, sandbox, aScript.fileURL);
@@ -154,7 +154,7 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
   _API2 = _API1.replace(
       API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
   if (GM_util.inArray(aScript.grants, _API1)
-      || GM_util.inArray(aScript.grants, _API2)) {
+      || GM_util.inArray(aScript.grants, _API2, true)) {
     sandbox[_API1] = GM_util.hitch(
         scriptResources, "getResourceURL",
         aContentWin, sandbox, aScript);
@@ -164,7 +164,7 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
   _API2 = _API1.replace(
       API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
   if (GM_util.inArray(aScript.grants, _API1)
-      || GM_util.inArray(aScript.grants, _API2)) {
+      || GM_util.inArray(aScript.grants, _API2, true)) {
     sandbox[_API1] = GM_util.hitch(new GM_ScriptLogger(aScript), "log");
   }
 
@@ -172,7 +172,7 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
   _API2 = _API1.replace(
       API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
   if (GM_util.inArray(aScript.grants, _API1)
-      || GM_util.inArray(aScript.grants, _API2)) {
+      || GM_util.inArray(aScript.grants, _API2, true)) {
     sandbox[_API1] = GM_util.hitch(
         new GM_notificationer(
             getChromeWinForContentWin(aContentWin), aContentWin, sandbox,
@@ -184,7 +184,7 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
   _API2 = _API1.replace(
       API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
   if (GM_util.inArray(aScript.grants, _API1)
-      || GM_util.inArray(aScript.grants, _API2)) {
+      || GM_util.inArray(aScript.grants, _API2, true)) {
     sandbox[_API1] = GM_util.hitch(null, GM_openInTab, aFrameScope, aUrl);
   }
 
@@ -192,7 +192,7 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
   _API2 = _API1.replace(
       API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
   if (GM_util.inArray(aScript.grants, _API1)
-      || GM_util.inArray(aScript.grants, _API2)) {
+      || GM_util.inArray(aScript.grants, _API2, true)) {
     Cu.evalInSandbox(
         "this._MenuCommandSandbox = " + MenuCommandSandbox.toSource(), sandbox);
     sandbox._MenuCommandSandbox(
@@ -217,7 +217,7 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
   _API2 = _API1.replace(
       API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
   if (GM_util.inArray(aScript.grants, _API1)
-      || GM_util.inArray(aScript.grants, _API2)) {
+      || GM_util.inArray(aScript.grants, _API2, true)) {
     sandbox[_API1] = GM_util.hitch(
         null, GM_setClipboard, aContentWin, aScript.fileURL);
   }
@@ -226,7 +226,7 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
   _API2 = _API1.replace(
       API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
   if (GM_util.inArray(aScript.grants, _API1)
-      || GM_util.inArray(aScript.grants, _API2)) {
+      || GM_util.inArray(aScript.grants, _API2, true)) {
     sandbox[_API1] = GM_util.hitch(
         new GM_xmlHttpRequester(aContentWin, sandbox, aScript.fileURL, aUrl),
         "contentStartRequest");
@@ -371,6 +371,10 @@ function runScriptInSandbox(aSandbox, aScript) {
 
   function evalAPI2Polyfill(aSandbox, aScript) {
     let _API1 = "GM_info";
+    let _API2Special = {
+      "GM_getResourceURL": "getResourceUrl",
+      "GM_xmlhttpRequest": "xmlHttpRequest",
+    };
     let API2Polyfill = "";
     API2Polyfill += `
       var GM = {};
@@ -379,7 +383,18 @@ function runScriptInSandbox(aSandbox, aScript) {
     Object.getOwnPropertyNames(aSandbox).forEach(function (aValue) {
       if ((aValue.indexOf(GM_CONSTANTS.addonAPIPrefix1) == 0)
           && (aValue != _API1)) {
-        let prop = aValue.replace(API_PREFIX_REGEXP, "$2");
+        let prop = "";
+        let isAPI2Special = false;
+        Object.entries(_API2Special).forEach(([aAPI1, aAPI2]) => {
+          if (aValue == aAPI1) {
+            prop = aAPI2;
+            isAPI2Special = true;
+            return true;
+          }
+        });
+        if (!isAPI2Special) {
+          prop = aValue.replace(API_PREFIX_REGEXP, "$2");
+        }
         API2Polyfill += `
         GM["` + prop + `"] = (...args) => {
           try {
