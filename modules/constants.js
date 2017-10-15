@@ -35,6 +35,10 @@ const GM_CONSTANTS = {
     "GM_xmlhttpRequest",
     "unsafeWindow",
   ],
+  "addonAPIConversion": {
+    "GM_getResourceURL": "getResourceUrl",
+    "GM_xmlhttpRequest": "xmlHttpRequest",
+  },
   "addonAPIPrefix1": "GM_",
   "addonAPIPrefix2": "GM.",
   "addonGUID": "greasemonkeyforpm@janekptacijarabaci",

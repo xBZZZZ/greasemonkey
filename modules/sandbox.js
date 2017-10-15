@@ -371,10 +371,6 @@ function runScriptInSandbox(aSandbox, aScript) {
 
   function evalAPI2Polyfill(aSandbox, aScript) {
     let _API1 = "GM_info";
-    let _API2Special = {
-      "GM_getResourceURL": "getResourceUrl",
-      "GM_xmlhttpRequest": "xmlHttpRequest",
-    };
     let API2Polyfill = "";
     API2Polyfill += `
       var GM = {};
@@ -384,15 +380,16 @@ function runScriptInSandbox(aSandbox, aScript) {
       if ((aValue.indexOf(GM_CONSTANTS.addonAPIPrefix1) == 0)
           && (aValue != _API1)) {
         let prop = "";
-        let isAPI2Special = false;
-        Object.entries(_API2Special).forEach(([aAPI1, aAPI2]) => {
-          if (aValue == aAPI1) {
-            prop = aAPI2;
-            isAPI2Special = true;
-            return true;
-          }
-        });
-        if (!isAPI2Special) {
+        let isAPIConversion = false;
+        Object.entries(GM_CONSTANTS.addonAPIConversion).forEach(
+            ([aAPI1, aAPI2]) => {
+              if (aValue == aAPI1) {
+                prop = aAPI2;
+                isAPIConversion = true;
+                return true;
+              }
+            });
+        if (!isAPIConversion) {
           prop = aValue.replace(API_PREFIX_REGEXP, "$2");
         }
         API2Polyfill += `
