@@ -215,20 +215,20 @@ GM_notificationer.prototype.contentStart = function (
 
 // This function is intended to be called in chrome's security context.
 GM_notificationer.prototype.chromeStart =
-function (notification, details) {
-  this.setupEvent(notification, "click", details);
+function (aNotification, aDetails) {
+  this.setupEvent(aNotification, "click", aDetails);
   // Deprecated.
-  this.setupEvent(notification, "close", details);
-  this.setupEvent(notification, "done", details);
-  this.setupEvent(notification, "error", details);
+  this.setupEvent(aNotification, "close", aDetails);
+  this.setupEvent(aNotification, "done", aDetails);
+  this.setupEvent(aNotification, "error", aDetails);
 };
 
 // Arranges for the specified "event" on notification to call
 // the method by the same name which is a property of "details"
 // in the content window's security context.
 GM_notificationer.prototype.setupEvent = function (
-    wrappedContentWin, sandbox, fileURL, notification, event, details) {
-   var eventCallback = details["on" + event];
+    aWrappedContentWin, aSandbox, aFileURL, aNotification, aEvent, aDetails) {
+   var eventCallback = aDetails["on" + aEvent];
 
   // Part 2: ...but ensure that the callback came from a script, not content,
   // by checking that its principal equals that of the sandbox.
@@ -240,52 +240,52 @@ GM_notificationer.prototype.setupEvent = function (
   }
 
   var startEventCallback = GM_util.hitch(
-      this, "startEventCallback", wrappedContentWin, details);
+      this, "startEventCallback", aWrappedContentWin, aDetails);
 
-  notification.addEventListener(event, function (evt) {
-    if (!details.highlightOnly) {
-      evt.preventDefault();
+  aNotification.addEventListener(aEvent, function (aEvt) {
+    if (!aDetails.highlightOnly) {
+      aEvt.preventDefault();
     }
-    startEventCallback(details["on" + evt.type]);
-    switch (evt.type) {
+    startEventCallback(aDetails["on" + aEvt.type]);
+    switch (aEvt.type) {
       case "click":
         startEventCallback(
-            details["on" + "done"],
-            (notification.onclose !== "undefined"));
+            aDetails["on" + "done"],
+            (aNotification.onclose !== "undefined"));
         break;
       case "close":
-        if (!details.timeoutWasReached) {
-          startEventCallback(details["on" + "done"]);
+        if (!aDetails.timeoutWasReached) {
+          startEventCallback(aDetails["on" + "done"]);
         }
         break;
       case "error":
-        throw new wrappedContentWin.Error(
+        throw new aWrappedContentWin.Error(
             GM_CONSTANTS.localeStringBundle.createBundle(
                 GM_CONSTANTS.localeGreasemonkeyProperties)
                 .GetStringFromName("error.notification.error")
-                .replace("%1", details.title),
-            fileURL, null);
+                .replace("%1", aDetails.title),
+            aFileURL, null);
         break;
     }
   }, false);
 };
 
 GM_notificationer.prototype.startEventCallback = function (
-    wrappedContentWin, details, eventCallback,
-    isNothingOrOnCloseExists) {
-  if (!eventCallback || isNothingOrOnCloseExists) {
+    aWrappedContentWin, aDetails, aEventCallback,
+    aIsNothingOrOnCloseExists) {
+  if (!aEventCallback || aIsNothingOrOnCloseExists) {
     return undefined;
   }
-  if (GM_util.windowIsClosed(wrappedContentWin)) {
+  if (GM_util.windowIsClosed(aWrappedContentWin)) {
     return undefined;
   }
 
   // Pop back onto browser thread and call event handler.
   // Have to use nested function here instead of GM_util.hitch
-  // because otherwise details[event].apply can point to window.setTimeout,
+  // because otherwise aDetails[aEvent].apply can point to window.setTimeout,
   // which can be abused to get increased privileges.
-  new XPCNativeWrapper(wrappedContentWin, "setTimeout()")
+  new XPCNativeWrapper(aWrappedContentWin, "setTimeout()")
       .setTimeout(function () {
-        eventCallback.call();
+        aEventCallback.call();
       }, 0);
 };

@@ -167,8 +167,8 @@ Object.defineProperty(service.prototype, "config", {
 });
 
 service.prototype.scriptUpdateData = function () {
-  let ipcScripts = this.config.scripts.map(function (script) {
-    return new IPCScript(script, gGreasemonkeyVersion);
+  let ipcScripts = this.config.scripts.map(function (aScript) {
+    return new IPCScript(aScript, gGreasemonkeyVersion);
   });
   let excludes = this.config._globalExcludes;
   return {

@@ -187,8 +187,8 @@ Config.prototype.install = function (
     // A needed fix for script update (if contains userMatches).
     // See #2455.
     // aScript.userMatches = aOldScript.userMatches;
-    aScript.userMatches = aOldScript.userMatches.map(function (match) {
-      return match.pattern;
+    aScript.userMatches = aOldScript.userMatches.map(function (aMatch) {
+      return aMatch.pattern;
     });
     aScript.userIncludes = aOldScript.userIncludes;
     aScript.userOverride = aOldScript.userOverride;
@@ -289,9 +289,9 @@ Config.prototype.updateModifiedScripts = function (
     aWhen, aUrl, aWindowId, aBrowser) {
   // Find any updated scripts or scripts with delayed injection.
   let scripts = this.getMatchingScripts(
-      function (script) {
-        return (script.runAt == aWhen)
-            && (script.isModified() || (script.pendingExec.length != 0));
+      function (aScript) {
+        return (aScript.runAt == aWhen)
+            && (aScript.isModified() || (aScript.pendingExec.length != 0));
       });
   if (scripts.length == 0) {
     return undefined;

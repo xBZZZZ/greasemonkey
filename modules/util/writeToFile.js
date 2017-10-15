@@ -35,8 +35,8 @@ function writeToFile(aData, aFile, aCallback) {
       .createInstance(Ci.nsIFileOutputStream);
   ostream.init(tmpFile, STREAM_FLAGS, GM_CONSTANTS.fileMask, 0);
 
-  NetUtil.asyncCopy(istream, ostream, function (status) {
-    if (Components.isSuccessCode(status)) {
+  NetUtil.asyncCopy(istream, ostream, function (aStatus) {
+    if (Components.isSuccessCode(aStatus)) {
       // On successful write, move it to the real location.
       tmpFile.moveTo(aFile.parent, aFile.leafName);
 

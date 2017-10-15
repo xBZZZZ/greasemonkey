@@ -48,28 +48,28 @@ function IPCScript(aScript, aAddonVersion) {
   this.version = aScript.version;
   this.willUpdate = aScript.isRemoteUpdateAllowed(false);
 
-  this.matches = aScript.matches.map(function (match) {
-    return match.pattern;
+  this.matches = aScript.matches.map(function (aMatch) {
+    return aMatch.pattern;
   });
-  this.userMatches = aScript.userMatches.map(function (match) {
-    return match.pattern;
+  this.userMatches = aScript.userMatches.map(function (aMatch) {
+    return aMatch.pattern;
   });
 
-  this.requires = aScript.requires.map(function (req) {
+  this.requires = aScript.requires.map(function (aReq) {
     return {
-      "fileURL": req.fileURL,
+      "fileURL": aReq.fileURL,
     };
   });
 
-  this.resources = aScript.resources.map(function (res) {
+  this.resources = aScript.resources.map(function (aRes) {
     return {
-      "name": res.name,
-      "mimetype": res.mimetype,
-      "file_url": GM_util.getUriFromFile(res.file).spec,
+      "name": aRes.name,
+      "mimetype": aRes.mimetype,
+      "file_url": GM_util.getUriFromFile(aRes.file).spec,
       "gm_url": [
         GM_CONSTANTS.addonScriptProtocolScheme + ":",
         aScript.uuid,
-        GM_CONSTANTS.addonScriptProtocolSeparator, res.name
+        GM_CONSTANTS.addonScriptProtocolSeparator, aRes.name
       ].join(""),
     };
   });
@@ -82,9 +82,9 @@ IPCScript.prototype = Object.create(AbstractScript.prototype, {
 });
 
 IPCScript.scriptsForUrl = function (aUrl, aWhen, aWindowId /* ignore */) {
-  let result = gScripts.filter(function (script) {
+  let result = gScripts.filter(function (aScript) {
     try {
-      return GM_util.scriptMatchesUrlAndRuns(script, aUrl, aWhen);
+      return GM_util.scriptMatchesUrlAndRuns(aScript, aUrl, aWhen);
     } catch (e) {
       // See #1692.
       // Prevent failures like that from being so severe.
@@ -97,11 +97,11 @@ IPCScript.scriptsForUrl = function (aUrl, aWhen, aWindowId /* ignore */) {
 };
 
 IPCScript.prototype.info = function () {
-  let resources = this.resources.map(function (res) {
+  let resources = this.resources.map(function (aRes) {
     return {
-      "name": res.name,
-      "mimetype": res.mimetype,
-      "url": res.gm_url,
+      "name": aRes.name,
+      "mimetype": aRes.mimetype,
+      "url": aRes.gm_url,
     };
   });
 

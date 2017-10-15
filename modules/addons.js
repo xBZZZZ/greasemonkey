@@ -99,8 +99,8 @@ function ScriptAddonFactoryByScript(aScript, aReplace) {
 function ScriptAddonFactoryById(aId) {
   let _count = 1;
   let scripts = GM_util.getService().config.getMatchingScripts(
-      function (script) {
-        return aId == (script.id + GM_CONSTANTS.scriptIDSuffix);
+      function (aScript) {
+        return aId == (aScript.id + GM_CONSTANTS.scriptIDSuffix);
       });
   if (scripts.length == _count) {
     return ScriptAddonFactoryByScript(scripts[0]);

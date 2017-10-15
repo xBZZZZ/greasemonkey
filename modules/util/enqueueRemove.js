@@ -60,8 +60,8 @@ function getEnqueuedPaths() {
 
 function removeEnqueuedPath(aPath) {
   let paths = getEnqueuedPaths();
-  paths = paths.filter(function (item) {
-    return item.path != aPath;
+  paths = paths.filter(function (aItem) {
+    return aItem.path != aPath;
   });
   GM_prefRoot.setValue("enqueuedRemovals", JSON.stringify(paths));
 }

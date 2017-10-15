@@ -302,8 +302,8 @@ Object.defineProperty(Script.prototype, "localized", {
     // and description might be for different locales
     // (e.g. if an exact match is only provided for one of them).
     function getBestLocalization(aLocales, aProp) {
-      let available = Object.keys(aLocales).filter(function (locale) {
-        return !!aLocales[locale][aProp];
+      let available = Object.keys(aLocales).filter(function (aLocale) {
+        return !!aLocales[aLocale][aProp];
       });
 
       let bestMatch = GM_util.getBestLocaleMatch(
@@ -793,16 +793,16 @@ Script.prototype.info = function () {
     let match = this.matches[i];
     matches.push(match.pattern);
   }
-  let resources = this.resources.map(function (res) {
+  let resources = this.resources.map(function (aRes) {
     return {
-      "name": res.name,
-      "mimetype": res.mimetype,
+      "name": aRes.name,
+      "mimetype": aRes.mimetype,
       /*
-      "file_url": GM_util.getUriFromFile(res.file).spec,
+      "file_url": GM_util.getUriFromFile(aRes.file).spec,
       "gm_url": [
         GM_CONSTANTS.addonScriptProtocolScheme + ":",
         aScript.uuid,
-        GM_CONSTANTS.addonScriptProtocolSeparator, res.name
+        GM_CONSTANTS.addonScriptProtocolSeparator, aRes.name
       ].join(""),
       */
     };
@@ -1344,8 +1344,8 @@ Script.prototype.allFilesExist = function () {
 Script.prototype.allFilesExistResult = function () {
   var _script = this;
 
-  let noFiles = this.allFiles().filter(function (file) {
-    return !_script.fileExists(file);
+  let noFiles = this.allFiles().filter(function (aFile) {
+    return !_script.fileExists(aFile);
   });
 
   let noFilesName = [];

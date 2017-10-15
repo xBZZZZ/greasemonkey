@@ -46,8 +46,8 @@ function GM_addStyle(aWrappedContentWin, aFileURL, aRunAt, aCss) {
     // http://bugzil.la/1333990
     try {
       let MutationObserver = aWrappedContentWin.MutationObserver;
-      var observer = new MutationObserver(function (mutations) {
-        mutations.forEach(function (aMutation) {
+      var observer = new MutationObserver(function (aMutations) {
+        aMutations.forEach(function (aMutation) {
           let addedNodes = aMutation.addedNodes;
           for (let i = 0, iLen = addedNodes.length; i < iLen; i++) {
             let node = addedNodes[i];

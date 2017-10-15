@@ -139,33 +139,33 @@ GM_xmlHttpRequester.prototype.contentStartRequest = function (aDetails) {
 // This function is intended to be called in chrome's security context,
 // so that it can access other domains without security warning.
 GM_xmlHttpRequester.prototype.chromeStartRequest =
-function (safeUrl, details, req) {
+function (aSafeUrl, aDetails, aReq) {
   let setupRequestEvent = GM_util.hitch(
       this, "setupRequestEvent", this.wrappedContentWin, this.sandbox,
       this.fileURL);
 
-  setupRequestEvent(req, "abort", details);
-  setupRequestEvent(req, "error", details);
-  setupRequestEvent(req, "load", details);
-  setupRequestEvent(req, "loadend", details);
-  setupRequestEvent(req, "loadstart", details);
-  setupRequestEvent(req, "progress", details);
-  setupRequestEvent(req, "readystatechange", details);
-  setupRequestEvent(req, "timeout", details);
-  if (details.upload) {
-    setupRequestEvent(req.upload, "abort", details.upload);
-    setupRequestEvent(req.upload, "error", details.upload);
-    setupRequestEvent(req.upload, "load", details.upload);
-    setupRequestEvent(req.upload, "loadend", details.upload);
-    setupRequestEvent(req.upload, "progress", details.upload);
-    setupRequestEvent(req.upload, "timeout", details.upload);
+  setupRequestEvent(aReq, "abort", aDetails);
+  setupRequestEvent(aReq, "error", aDetails);
+  setupRequestEvent(aReq, "load", aDetails);
+  setupRequestEvent(aReq, "loadend", aDetails);
+  setupRequestEvent(aReq, "loadstart", aDetails);
+  setupRequestEvent(aReq, "progress", aDetails);
+  setupRequestEvent(aReq, "readystatechange", aDetails);
+  setupRequestEvent(aReq, "timeout", aDetails);
+  if (aDetails.upload) {
+    setupRequestEvent(aReq.upload, "abort", aDetails.upload);
+    setupRequestEvent(aReq.upload, "error", aDetails.upload);
+    setupRequestEvent(aReq.upload, "load", aDetails.upload);
+    setupRequestEvent(aReq.upload, "loadend", aDetails.upload);
+    setupRequestEvent(aReq.upload, "progress", aDetails.upload);
+    setupRequestEvent(aReq.upload, "timeout", aDetails.upload);
   }
 
-  req.mozBackgroundRequest = !!details.mozBackgroundRequest;
+  aReq.mozBackgroundRequest = !!aDetails.mozBackgroundRequest;
 
   // See #1945, #2008 - part 2/3.
   /*
-  let safeUrlTmp = new this.wrappedContentWin.URL(safeUrl);
+  let safeUrlTmp = new this.wrappedContentWin.URL(aSafeUrl);
   var headersArr = [];
   var authorization = {
     "contrains": false,
@@ -179,8 +179,8 @@ function (safeUrl, details, req) {
   var authorizationRegexp = new RegExp(
       "^\\s*" + authorization.method + "\\s*([^\\s]+)\\s*$", "i");
 
-  if (details.headers) {
-    var headers = details.headers;
+  if (aDetails.headers) {
+    var headers = aDetails.headers;
 
     for (var prop in headers) {
       if (Object.prototype.hasOwnProperty.call(headers, prop)) {
@@ -207,7 +207,7 @@ function (safeUrl, details, req) {
   }
 
   if ((authorization.user || authorization.password)
-      || (details.user || details.password)) {
+      || (aDetails.user || aDetails.password)) {
     authenticationComponent.setAuthIdentity(
         safeUrlTmp.protocol,
         safeUrlTmp.hostname,
@@ -218,9 +218,9 @@ function (safeUrl, details, req) {
         "",
         "",
         (authorization.user
-          || details.user || ""),
+          || aDetails.user || ""),
         (authorization.password
-          || details.password || ""));
+          || aDetails.password || ""));
   } else {
     let authorizationDomain = {};
     let authorizationUser = {};
@@ -236,8 +236,8 @@ function (safeUrl, details, req) {
           authorizationDomain,
           authorizationUser,
           authorizationPassword);
-      details.user = authorizationUser.value || "";
-      details.password = authorizationPassword.value || "";
+      aDetails.user = authorizationUser.value || "";
+      aDetails.password = authorizationPassword.value || "";
     } catch (e) {
       // Ignore.
     }
@@ -247,19 +247,19 @@ function (safeUrl, details, req) {
   // See #2423.
   // http://bugzil.la/1275746
   try {
-    req.open(details.method, safeUrl,
-        !details.synchronous, details.user || "", details.password || "");
+    aReq.open(aDetails.method, aSafeUrl,
+        !aDetails.synchronous, aDetails.user || "", aDetails.password || "");
   } catch (e) {
     throw new this.wrappedContentWin.Error(
         "GM_xmlhttpRequest():"
-        + "\n" + details.url + "\n" + e,
+        + "\n" + aDetails.url + "\n" + e,
         this.fileURL, null);
   }
 
   // Pale Moon 27.2.x-
   // https://github.com/MoonchildProductions/Pale-Moon/pull/968
-  if ((details.mozAnon || details.anonymous) && !req.mozAnon) {
-    req.channel.loadFlags |= Ci.nsIRequest.LOAD_ANONYMOUS;
+  if ((aDetails.mozAnon || aDetails.anonymous) && !aReq.mozAnon) {
+    aReq.channel.loadFlags |= Ci.nsIRequest.LOAD_ANONYMOUS;
   }
 
   let channel;
@@ -279,49 +279,49 @@ function (safeUrl, details, req) {
         .originAttributes.userContextId;
   }
   if (userContextId === null) {
-    if (req.channel instanceof Ci.nsIPrivateBrowsingChannel) {
+    if (aReq.channel instanceof Ci.nsIPrivateBrowsingChannel) {
       if (privateMode) {
-        channel = req.channel.QueryInterface(Ci.nsIPrivateBrowsingChannel);
+        channel = aReq.channel.QueryInterface(Ci.nsIPrivateBrowsingChannel);
         channel.setPrivate(true);
       }
     }
   } else {
-    req.setOriginAttributes({
+    aReq.setOriginAttributes({
       "privateBrowsingId": privateMode ? 1 : 0,
       "userContextId": userContextId,
     });
   }
   /*
-  dump("GM_xmlhttpRequest - url:" + "\n" + safeUrl + "\n"
-      + "Private browsing mode: " + req.channel.isChannelPrivate + "\n");
+  dump("GM_xmlhttpRequest - url:" + "\n" + aSafeUrl + "\n"
+      + "Private browsing mode: " + aReq.channel.isChannelPrivate + "\n");
   */
 
   try {
-    channel = req.channel.QueryInterface(Ci.nsIHttpChannelInternal);
+    channel = aReq.channel.QueryInterface(Ci.nsIHttpChannelInternal);
     channel.forceAllowThirdPartyCookie = true;
   } catch (e) {
     // Ignore.
     // e.g. ftp://
   }
 
-  if (details.overrideMimeType) {
-    req.overrideMimeType(details.overrideMimeType);
+  if (aDetails.overrideMimeType) {
+    aReq.overrideMimeType(aDetails.overrideMimeType);
   }
-  if (details.responseType) {
-    req.responseType = details.responseType;
+  if (aDetails.responseType) {
+    aReq.responseType = aDetails.responseType;
   }
 
-  if (details.timeout) {
-    req.timeout = details.timeout;
+  if (aDetails.timeout) {
+    aReq.timeout = aDetails.timeout;
   }
 
   let httpChannel;
-  // Not use: details.redirectionLimit
+  // Not use: aDetails.redirectionLimit
   // (may have the value: 0 or 1 - a "boolean")
-  if ("redirectionLimit" in details) {
+  if ("redirectionLimit" in aDetails) {
     try {
-      httpChannel = req.channel.QueryInterface(Ci.nsIHttpChannel);
-      httpChannel.redirectionLimit = details.redirectionLimit;
+      httpChannel = aReq.channel.QueryInterface(Ci.nsIHttpChannel);
+      httpChannel.redirectionLimit = aDetails.redirectionLimit;
     } catch (e) {
       // Ignore.
     }
@@ -329,15 +329,15 @@ function (safeUrl, details, req) {
 
   // Cookies - reserved for possible future use (see also #2236) - part 2/2.
   /*
-  if (details.cookies) {
+  if (aDetails.cookies) {
     try {
       let _cookiesOrig = COOKIES_SERVICE.getCookieString(
-          GM_util.getUriFromUrl(this.originUrl), req.channel);
+          GM_util.getUriFromUrl(this.originUrl), aReq.channel);
 
       let _cookies = (_cookiesOrig === null) ? "" : _cookiesOrig;
 
       COOKIES_SERVICE.setCookieString(
-          GM_util.getUriFromUrl(safeUrl), null, _cookies, req.channel);
+          GM_util.getUriFromUrl(aSafeUrl), null, _cookies, aReq.channel);
     } catch (e) {
       throw new this.wrappedContentWin.Error(
           "GM_xmlhttpRequest():"
@@ -350,37 +350,37 @@ function (safeUrl, details, req) {
   // See #1945, #2008 - part 3/3.
   /*
   for (let i = 0, iLen = headersArr.length; i < iLen; i++) {
-    req.setRequestHeader(headersArr[i].prop, headersArr[i].value);
+    aReq.setRequestHeader(headersArr[i].prop, headersArr[i].value);
   }
   */
-  if (details.headers) {
-    let headers = details.headers;
+  if (aDetails.headers) {
+    let headers = aDetails.headers;
 
     for (let prop in headers) {
       if (Object.prototype.hasOwnProperty.call(headers, prop)) {
-        req.setRequestHeader(prop, headers[prop]);
+        aReq.setRequestHeader(prop, headers[prop]);
       }
     }
   }
 
-  let body = details.data ? details.data : null;
+  let body = aDetails.data ? aDetails.data : null;
   // See #2423.
   // http://bugzil.la/918751
   try {
-    if (details.binary && (body !== null)) {
+    if (aDetails.binary && (body !== null)) {
       let bodyLength = body.length;
       let bodyData = new Uint8Array(bodyLength);
       for (let i = 0; i < bodyLength; i++) {
         bodyData[i] = body.charCodeAt(i) & 0xff;
       }
-      req.send(new Blob([bodyData]));
+      aReq.send(new Blob([bodyData]));
     } else {
-      req.send(body);
+      aReq.send(body);
     }
   } catch (e) {
     throw new this.wrappedContentWin.Error(
         "GM_xmlhttpRequest():"
-        + "\n" + details.url + "\n" + e,
+        + "\n" + aDetails.url + "\n" + e,
         this.fileURL, null);
   }
 };
@@ -389,10 +389,10 @@ function (safeUrl, details, req) {
 // the method by the same name which is a property of "details"
 // in the content window's security context.
 GM_xmlHttpRequester.prototype.setupRequestEvent = function (
-    wrappedContentWin, sandbox, fileURL, req, event, details) {
+    aWrappedContentWin, aSandbox, aFileURL, aReq, aEvent, aDetails) {
   // Waive Xrays so that we can read callback function properties...
-  details = Cu.waiveXrays(details);
-  var eventCallback = details["on" + event];
+  aDetails = Cu.waiveXrays(aDetails);
+  var eventCallback = aDetails["on" + aEvent];
   if (!eventCallback) {
     return undefined;
   }
@@ -404,14 +404,14 @@ GM_xmlHttpRequester.prototype.setupRequestEvent = function (
     return undefined;
   }
 
-  req.addEventListener(event, function (evt) {
+  aReq.addEventListener(aEvent, function (aEvt) {
     var responseState = {
-      "context": details.context || null,
+      "context": aDetails.context || null,
       "finalUrl": null,
       "lengthComputable": null,
       "loaded": null,
-      "readyState": req.readyState,
-      "response": req.response,
+      "readyState": aReq.readyState,
+      "response": aReq.response,
       "responseHeaders": null,
       "responseText": null,
       "responseXML": null,
@@ -421,7 +421,7 @@ GM_xmlHttpRequester.prototype.setupRequestEvent = function (
     };
 
     try {
-      responseState.responseText = req.responseText;
+      responseState.responseText = aReq.responseText;
     } catch (e) {
       // Some response types don't have .responseText
       // (but do have e.g. blob .response).
@@ -430,7 +430,7 @@ GM_xmlHttpRequester.prototype.setupRequestEvent = function (
 
     var responseXML = null;
     try {
-      responseXML = req.responseXML;
+      responseXML = aReq.responseXML;
     } catch (e) {
       // At least in responseType blob case, this access fails.
       // Ignore.
@@ -439,15 +439,15 @@ GM_xmlHttpRequester.prototype.setupRequestEvent = function (
       // Clone the XML object into a content-window-scoped document.
       let xmlDoc;
       try {
-        xmlDoc = new wrappedContentWin.Document();
+        xmlDoc = new aWrappedContentWin.Document();
       } catch (e) {
         try {
-          req.abort();
+          aReq.abort();
         } catch (e) {
           GM_util.logError(
               "GM_xmlHttpRequester.setupRequestEvent - url:"
-              + "\n" + '"' + details.url + '":' + "\n" + e, true,
-              fileURL, null);
+              + "\n" + '"' + aDetails.url + '":' + "\n" + e, true,
+              aFileURL, null);
         }
         return undefined;
       }
@@ -456,22 +456,22 @@ GM_xmlHttpRequester.prototype.setupRequestEvent = function (
       responseState.responseXML = xmlDoc;
     }
 
-    switch (event) {
+    switch (aEvent) {
       case "progress":
-        responseState.lengthComputable = evt.lengthComputable;
-        responseState.loaded = evt.loaded;
-        responseState.total = evt.total;
+        responseState.lengthComputable = aEvt.lengthComputable;
+        responseState.loaded = aEvt.loaded;
+        responseState.total = aEvt.total;
         break;
       case "error":
         break;
       default:
-        if (2 > req.readyState) {
+        if (2 > aReq.readyState) {
           break;
         }
-        responseState.finalUrl = req.channel.URI.spec;
-        responseState.responseHeaders = req.getAllResponseHeaders();
-        responseState.status = req.status;
-        responseState.statusText = req.statusText;
+        responseState.finalUrl = aReq.channel.URI.spec;
+        responseState.responseHeaders = aReq.getAllResponseHeaders();
+        responseState.status = aReq.status;
+        responseState.statusText = aReq.statusText;
         break;
     }
 
@@ -488,30 +488,30 @@ GM_xmlHttpRequester.prototype.setupRequestEvent = function (
       "status": responseState.status,
       "statusText": responseState.statusText,
       "total": responseState.total,
-    }, sandbox, {
+    }, aSandbox, {
       "cloneFunctions": true,
       "wrapReflectors": true,
     });
 
-    if (GM_util.windowIsClosed(wrappedContentWin)) {
+    if (GM_util.windowIsClosed(aWrappedContentWin)) {
       try {
-        req.abort();
+        aReq.abort();
       } catch (e) {
         GM_util.logError(
             "GM_xmlHttpRequester.setupRequestEvent - url:"
-            + "\n" + '"' + details.url + '":' + "\n" + e, true,
-            fileURL, null);
+            + "\n" + '"' + aDetails.url + '":' + "\n" + e, true,
+            aFileURL, null);
       }
       return undefined;
     }
 
     // Pop back onto browser thread and call event handler.
     // Have to use nested function here instead of GM_util.hitch
-    // because otherwise details[event].apply can point to window.setTimeout,
+    // because otherwise aDetails[aEvent].apply can point to window.setTimeout,
     // which can be abused to get increased privileges.
-    new XPCNativeWrapper(wrappedContentWin, "setTimeout()")
+    new XPCNativeWrapper(aWrappedContentWin, "setTimeout()")
       .setTimeout(function () {
-        eventCallback.call(details, responseState);
+        eventCallback.call(aDetails, responseState);
       }, 0);
   }, false);
 };
