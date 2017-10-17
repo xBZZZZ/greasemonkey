@@ -374,35 +374,45 @@ function runScriptInSandbox(aSandbox, aScript) {
     let API2Polyfill = "";
     API2Polyfill += `
       var GM = {};
-      (async () => {
-    `;
-    Object.getOwnPropertyNames(aSandbox).forEach(function (aValue) {
-      if ((aValue.indexOf(GM_CONSTANTS.addonAPIPrefix1) == 0)
-          && (aValue != _API1)) {
-        let prop = "";
-        let isAPIConversion = false;
-        Object.entries(GM_CONSTANTS.addonAPIConversion).forEach(
-            ([aAPI1, aAPI2]) => {
-              if (aValue == aAPI1) {
-                prop = aAPI2;
-                isAPIConversion = true;
-                return true;
-              }
-            });
-        if (!isAPIConversion) {
-          prop = aValue.replace(API_PREFIX_REGEXP, "$2");
-        }
+      (async () => {`;
+    let _APIConversion = {};
+    GM_CONSTANTS.addonAPI.forEach(function (aValue) {
+      let prop = "";
+      let isAPIConversion = false;
+      Object.entries(GM_CONSTANTS.addonAPIConversion).forEach(
+          ([aAPI1, aAPI2]) => {
+            if (aValue == aAPI1) {
+              prop = aAPI2;
+              isAPIConversion = true;
+              return true;
+            }
+          });
+      if (!isAPIConversion) {
+        prop = aValue.replace(API_PREFIX_REGEXP, "$2");
+      }
+      _APIConversion[aValue] = prop;
+    });
+    API2Polyfill += `
+        Object.entries({`;
+    Object.entries(_APIConversion).forEach(([aAPI1, aAPI2]) => {
+      if (aAPI1.indexOf(GM_CONSTANTS.addonAPIPrefix1) == 0) {
         API2Polyfill += `
-        GM["` + prop + `"] = (...args) => {
-          try {
-            return Promise.resolve(` + aValue + `(...args));
-          } catch (e) {
-            return Promise.reject(e);
-          }
-        };
-        `;
+          "` + aAPI1 + `": "` + aAPI2 + `",`;
       }
     });
+    API2Polyfill += `
+        }).forEach(([aAPI1, aAPI2]) => {
+          let API1 = this[aAPI1];
+          if (API1) {
+            GM[aAPI2] = (...args) => {
+              try {
+                return Promise.resolve(API1(...args));
+              } catch (e) {
+                return Promise.reject(e);
+              }
+            };
+          }
+        });`;
     let prop = _API1.replace(API_PREFIX_REGEXP, "$2");
     API2Polyfill += `
         GM["` + prop + `"] = ` + _API1 + `;
