@@ -38,9 +38,9 @@ function GM_loadOptions() {
   timeoutUpdatesInSeconds = isNaN(parseInt(timeoutUpdatesInSeconds, 10))
       ? GM_CONSTANTS.scriptUpdateTimeoutDefault
       : parseInt(timeoutUpdatesInSeconds, 10);
-  timeoutUpdatesInSeconds = timeoutUpdatesInSeconds >= 1
-      && timeoutUpdatesInSeconds <= GM_CONSTANTS.scriptUpdateTimeoutMax
-      ? timeoutUpdatesInSeconds : GM_CONSTANTS.scriptUpdateTimeoutDefault;
+  timeoutUpdatesInSeconds = (((timeoutUpdatesInSeconds >= 1)
+      && (timeoutUpdatesInSeconds <= GM_CONSTANTS.scriptUpdateTimeoutMax))
+      ? timeoutUpdatesInSeconds : GM_CONSTANTS.scriptUpdateTimeoutDefault);
   let timeoutUpdateValueElm = document.getElementById("timeout-update-value");
   timeoutUpdateValueElm
       .setAttribute("min", GM_CONSTANTS.scriptUpdateTimeoutMin);
