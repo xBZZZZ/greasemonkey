@@ -278,7 +278,7 @@ function injectGMInfo(aSandbox, aContentWin, aScript) {
     let content = fileCache.get("scriptSource");
     if (content === undefined) {
       // The alternative MIME type:
-      // "text/plain,charset=" + GM_CONSTANTS.fileScriptCharset.toLowerCase()
+      // "text/plain; charset=" + GM_CONSTANTS.fileScriptCharset.toLowerCase()
       content = GM_util.fileXhr(scriptURL, "application/javascript");
       fileCache.set("scriptSource", content);
     }
@@ -344,7 +344,7 @@ function runScriptInSandbox(aSandbox, aScript) {
             e.lineNumber);
 
         // The alternative MIME type:
-        // "text/plain,charset=" + GM_CONSTANTS.fileScriptCharset.toLowerCase()
+        // "text/plain; charset=" + GM_CONSTANTS.fileScriptCharset.toLowerCase()
         let code = GM_util.fileXhr(aUrl, "application/javascript");
         Cu.evalInSandbox(
             "(function () { " + code + "\n})()",
