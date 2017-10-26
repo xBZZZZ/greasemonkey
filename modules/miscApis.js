@@ -1,5 +1,6 @@
 const EXPORTED_SYMBOLS = [
-    "GM_addStyle", "GM_console", "GM_Resources", "GM_ScriptLogger"];
+    "GM_addStyle", "GM_console", "GM_Resources", "GM_ScriptLogger",
+    "GM_window"];
 
 if (typeof Cc === "undefined") {
   var Cc = Components.classes;
@@ -76,7 +77,8 @@ function GM_addStyle(aWrappedContentWin, aFileURL, aRunAt, aCss) {
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
 function GM_console(aScript) {
-  // based on http://www.getfirebug.com/firebug/firebugx.js
+  // Based on:
+  // http://www.getfirebug.com/firebug/firebugx.js
   let names = [
     "debug", "warn", "error", "info", "assert", "dir", "dirxml",
     "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile",
@@ -167,4 +169,12 @@ GM_ScriptLogger.prototype.log = function (aMessage) {
   // - wstring / wide string
   this.consoleService.logStringMessage((this.prefix + "\n" + aMessage)
       .replace(new RegExp("\\0", "g"), ""));
+};
+
+// \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
+
+function GM_window(aFrame, aWhat) {
+  aFrame.sendAsyncMessage("greasemonkey:window", {
+    "what": aWhat,
+  });
 };

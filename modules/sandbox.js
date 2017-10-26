@@ -15,10 +15,6 @@ Cu.import("chrome://greasemonkey-modules/content/constants.js");
 Cu.import("chrome://greasemonkey-modules/content/extractMeta.js");
 Cu.import("chrome://greasemonkey-modules/content/GM_openInTab.js");
 Cu.import("chrome://greasemonkey-modules/content/GM_setClipboard.js");
-/*
-// GM_windowClose, GM_windowFocus
-Cu.import("chrome://greasemonkey-modules/content/GM_window.js");
-*/
 Cu.import("chrome://greasemonkey-modules/content/menuCommand.js");
 Cu.import("chrome://greasemonkey-modules/content/miscApis.js");
 Cu.import("chrome://greasemonkey-modules/content/notificationer.js");
