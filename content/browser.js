@@ -161,6 +161,7 @@ GM_BrowserUI.window = function (aMessage) {
   var tabBrowser = browser.getTabBrowser();
   var scriptTab = tabBrowser.getTabForBrowser(browser);
   var what = aMessage.data.what;
+  var fileURL = aMessage.data.fileURL;
   // Work around a race condition in Firefox code
   // with Electrolysis (e10s) disabled.
   // See #2107 and #2234.
@@ -168,10 +169,22 @@ GM_BrowserUI.window = function (aMessage) {
   // GM_util.timeout(function () {
     switch (what) {
       case "close":
-        tabBrowser.removeTab(scriptTab);
+        try {
+          tabBrowser.removeTab(scriptTab);
+        } catch (e) {
+          GM_util.logError(
+              "GM_windowClose():" + "\n" + e,
+              false, fileURL, null);
+        }
         break;
       case "focus":
-        tabBrowser.selectedTab = scriptTab;
+        try {
+          tabBrowser.selectedTab = scriptTab;
+        } catch (e) {
+          GM_util.logError(
+              "GM_windowFocus():" + "\n" + e,
+              false, fileURL, null);
+        }
         break;
     }
   // }, 0);

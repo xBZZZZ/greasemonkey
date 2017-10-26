@@ -173,8 +173,9 @@ GM_ScriptLogger.prototype.log = function (aMessage) {
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
-function GM_window(aFrame, aWhat) {
+function GM_window(aFrame, aFileURL, aWhat) {
   aFrame.sendAsyncMessage("greasemonkey:window", {
+    "fileURL": aFileURL,
     "what": aWhat,
   });
 };

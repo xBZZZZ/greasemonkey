@@ -229,14 +229,16 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
       API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
   if (GM_util.inArray(aScript.grants, _API1)
       || GM_util.inArray(aScript.grants, _API2, true)) {
-    sandbox[_API1] = GM_util.hitch(null, GM_window, aFrameScope, "close");
+    sandbox[_API1] = GM_util.hitch(
+        null, GM_window, aFrameScope, aScript.fileURL, "close");
   }
   _API1 = "GM_windowFocus";
   _API2 = _API1.replace(
       API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
   if (GM_util.inArray(aScript.grants, _API1)
       || GM_util.inArray(aScript.grants, _API2, true)) {
-    sandbox[_API1] = GM_util.hitch(null, GM_window, aFrameScope, "focus");
+    sandbox[_API1] = GM_util.hitch(
+        null, GM_window, aFrameScope, aScript.fileURL, "focus");
   }
   */
 
@@ -279,15 +281,15 @@ function injectGMInfo(aSandbox, aContentWin, aScript) {
 
   let _API1 = "GM_info";
 
-  var rawInfo = aScript.info();
-  var scriptURL = aScript.fileURL;
+  var scriptInfoRaw = aScript.info();
+  var scriptFileURL = aScript.fileURL;
 
-  rawInfo.isIncognito = GM_util.windowIsPrivate(aContentWin);
-  rawInfo.isPrivate = rawInfo.isIncognito;
+  scriptInfoRaw.isIncognito = GM_util.windowIsPrivate(aContentWin);
+  scriptInfoRaw.isPrivate = scriptInfoRaw.isIncognito;
 
   // TODO:
   // Also delay top level clone via lazy getter (XPCOMUtils.defineLazyGetter)?
-  aSandbox[_API1] = Cu.cloneInto(rawInfo, aSandbox);
+  aSandbox[_API1] = Cu.cloneInto(scriptInfoRaw, aSandbox);
 
   var waivedInfo = Cu.waiveXrays(aSandbox[_API1]);
   var fileCache = new Map();
@@ -297,7 +299,7 @@ function injectGMInfo(aSandbox, aContentWin, aScript) {
     if (content === undefined) {
       // The alternative MIME type:
       // "text/plain; charset=" + GM_CONSTANTS.fileScriptCharset.toLowerCase()
-      content = GM_util.fileXhr(scriptURL, "application/javascript");
+      content = GM_util.fileXhr(scriptFileURL, "application/javascript");
       fileCache.set("scriptSource", content);
     }
 
