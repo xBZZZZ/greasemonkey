@@ -15,6 +15,10 @@ Cu.import("chrome://greasemonkey-modules/content/constants.js");
 Cu.import("chrome://greasemonkey-modules/content/extractMeta.js");
 Cu.import("chrome://greasemonkey-modules/content/GM_openInTab.js");
 Cu.import("chrome://greasemonkey-modules/content/GM_setClipboard.js");
+/*
+// GM_windowClose, GM_windowFocus
+Cu.import("chrome://greasemonkey-modules/content/GM_window.js");
+*/
 Cu.import("chrome://greasemonkey-modules/content/menuCommand.js");
 Cu.import("chrome://greasemonkey-modules/content/miscApis.js");
 Cu.import("chrome://greasemonkey-modules/content/notificationer.js");
@@ -221,6 +225,24 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
     sandbox[_API1] = GM_util.hitch(
         null, GM_setClipboard, aContentWin, aScript.fileURL);
   }
+
+  /*
+  // See #2538 (an alternative).
+  _API1 = "GM_windowClose";
+  _API2 = _API1.replace(
+      API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
+  if (GM_util.inArray(aScript.grants, _API1)
+      || GM_util.inArray(aScript.grants, _API2, true)) {
+    sandbox[_API1] = GM_util.hitch(null, GM_window, aFrameScope, "close");
+  }
+  _API1 = "GM_windowFocus";
+  _API2 = _API1.replace(
+      API_PREFIX_REGEXP, GM_CONSTANTS.addonAPIPrefix2 + "$2");
+  if (GM_util.inArray(aScript.grants, _API1)
+      || GM_util.inArray(aScript.grants, _API2, true)) {
+    sandbox[_API1] = GM_util.hitch(null, GM_window, aFrameScope, "focus");
+  }
+  */
 
   _API1 = "GM_xmlhttpRequest";
   _API2 = _API1.replace(

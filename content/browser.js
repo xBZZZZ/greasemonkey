@@ -44,6 +44,11 @@ GM_BrowserUI.init = function () {
   window.addEventListener("unload", GM_BrowserUI.chromeUnload, false);
   window.messageManager.addMessageListener("greasemonkey:open-in-tab",
       GM_BrowserUI.openInTab);
+  /*
+  // GM_windowClose, GM_windowFocus
+  window.messageManager.addMessageListener("greasemonkey:window",
+      GM_BrowserUI.window);
+  */
   window.messageManager.addMessageListener("greasemonkey:DOMContentLoaded",
       function (aMessage) {
         let contentType = aMessage.data.contentType;
@@ -146,6 +151,32 @@ GM_BrowserUI.openInTab = function (aMessage) {
     }
   }, 0);
 };
+
+/**
+ * Handles tab close/focus for a GM_windowClose/GM_windowFocus API call.
+ */
+/*
+GM_BrowserUI.window = function (aMessage) {
+  var browser = aMessage.target;
+  var tabBrowser = browser.getTabBrowser();
+  var scriptTab = tabBrowser.getTabForBrowser(browser);
+  var what = aMessage.data.what;
+  // Work around a race condition in Firefox code
+  // with Electrolysis (e10s) disabled.
+  // See #2107 and #2234.
+  // http://bugzil.la/1200334
+  GM_util.timeout(function () {
+    switch (what) {
+      case "close":
+        tabBrowser.removeTab(scriptTab);
+        break;
+      case "focus":
+        tabBrowser.selectedTab = scriptTab;
+        break;
+    }
+  }, 0);
+};
+*/
 
 /**
  * The browser XUL has unloaded. Destroy references/watchers/listeners.

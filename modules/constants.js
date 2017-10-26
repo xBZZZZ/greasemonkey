@@ -32,6 +32,10 @@ const GM_CONSTANTS = {
     "GM_registerMenuCommand",
     "GM_setClipboard",
     "GM_setValue",
+    /*
+    "GM_windowClose",
+    "GM_windowFocus",
+    */
     "GM_xmlhttpRequest",
     "unsafeWindow",
   ],
