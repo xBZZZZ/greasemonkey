@@ -165,7 +165,7 @@ GM_BrowserUI.window = function (aMessage) {
   // with Electrolysis (e10s) disabled.
   // See #2107 and #2234.
   // http://bugzil.la/1200334
-  GM_util.timeout(function () {
+  // GM_util.timeout(function () {
     switch (what) {
       case "close":
         tabBrowser.removeTab(scriptTab);
@@ -174,7 +174,7 @@ GM_BrowserUI.window = function (aMessage) {
         tabBrowser.selectedTab = scriptTab;
         break;
     }
-  }, 0);
+  // }, 0);
 };
 */
 
