@@ -114,7 +114,10 @@ Lines should have no trailing whitespace.
 <ul>
 <li>
 Spaces around braces used for in-line functions or objects, except before
-commas or semicolons, e.g. <pre>function valueObject(aValue) { return { value: aValue }; }</pre>
+commas or semicolons, e.g.
+<pre>
+function valueObject(aValue) { return { value: aValue }; }
+</pre>
 </li>
 <li>
 Otherwise spaces are not necessary inside brackets.
@@ -245,8 +248,13 @@ Please try to follow them.
 <ul>
 <li>
 Be very careful about assignments that are also used in a boolean context, e.g.
-<pre>while (node = node.parentNode) { /* ... */ }</pre> or
-<pre>for (var i=0, item; item=array[i]; i++) { /* ... */ }</pre>
+<pre>
+while (node = node.parentNode) { /* ... */ }
+</pre>
+or
+<pre>
+for (var i = 0, item; item = array[i]; i++) { /* ... */ }
+</pre>
 This can be a common source of subtle bugs.
 </li>
 <li>
