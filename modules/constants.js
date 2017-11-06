@@ -123,7 +123,8 @@ const GM_CONSTANTS = {
   },
   "scriptAddonType": "greasemonkey-user-script",
   // Backward compatibility.
-  "scriptIDSuffix": "@greasespot.net",
+  // "scriptIDSuffix": "@greasespot.net",
+  "scriptIDSuffix": "@greasemonkeyforpm",
   "scriptParseBOM": "\u00EF\u00BB\u00BF",
   "scriptParseBOMArray": [0xEF, 0xBB, 0xBF],
   "scriptParseMetaRegexp": "// ==UserScript==([\\s\\S]*?)^// ==/UserScript==",
