@@ -425,11 +425,13 @@ function runScriptInSandbox(aSandbox, aScript) {
           let API1 = this[aAPI1];
           if (API1) {
             GM[aAPI2] = (...args) => {
-              try {
-                return Promise.resolve(API1(...args));
-              } catch (e) {
-                return Promise.reject(e);
-              }
+              return new Promise((resolve, reject) => {
+                try {
+                  resolve(API1(...args));
+                } catch (e) {
+                  reject(e);
+                }
+              });
             };
           }
         });`;
