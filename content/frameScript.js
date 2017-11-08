@@ -81,6 +81,27 @@ if (!isWindowVisible) {
 }
 */
 
+// http://bugzil.la/1357383
+function isWindowVisible(aContentWin) {
+  // let _gEnvironment = GM_util.getEnvironment();
+  if (!_gEnvironment.e10s) {
+    // See #2229.
+    // http://bugzil.la/1196270
+    if (aContentWin) {
+      let winUtils = aContentWin.QueryInterface(Ci.nsIInterfaceRequestor)
+          .getInterface(Ci.nsIDOMWindowUtils);
+      try {
+        if (winUtils && !winUtils.isParentWindowMainWidgetVisible) {
+          return false;
+        }
+      } catch (e) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 function browserLoadEnd(aEvent) {
   let contentWin = aEvent.target.defaultView;
   let href = contentWin.location.href;
@@ -89,22 +110,8 @@ function browserLoadEnd(aEvent) {
     // See #1820, #2371, #2195.
     if ((href == GM_CONSTANTS.urlAboutPart1)
         || (href.match(URL_ABOUT_PART2_REGEXP))) {
-      // http://bugzil.la/1357383
-      // let _gEnvironment = GM_util.getEnvironment();
-      if (!_gEnvironment.e10s) {
-        // See #2229.
-        // http://bugzil.la/1196270
-        if (contentWin) {
-          let winUtils = contentWin.QueryInterface(Ci.nsIInterfaceRequestor)
-              .getInterface(Ci.nsIDOMWindowUtils);
-          try {
-            if (winUtils && !winUtils.isParentWindowMainWidgetVisible) {
-              return undefined;
-            }
-          } catch (e) {
-            return undefined;
-          }
-        }
+      if (!isWindowVisible(contentWin)) {
+        return undefined;
       }
       runScripts("document-end", contentWin);
       runScripts("document-idle", contentWin);
@@ -259,6 +266,9 @@ function windowCreated(aEvent) {
     // See #1820, #2371, #2195.
     if ((href == GM_CONSTANTS.urlAboutPart1)
         || (href.match(URL_ABOUT_PART2_REGEXP))) {
+      if (!isWindowVisible(contentWin)) {
+        return undefined;
+      }
       runScripts("document-start", contentWin);
     }
   }
@@ -267,8 +277,8 @@ function windowCreated(aEvent) {
 
 // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ // \\ //
 
-addEventListener("DOMContentLoaded", browserLoadEnd);
-addEventListener("DOMWindowCreated", windowCreated);
+addEventListener("DOMContentLoaded", browserLoadEnd, false);
+addEventListener("DOMWindowCreated", windowCreated, false);
 
 if (content) {
   windowCreated(null);
