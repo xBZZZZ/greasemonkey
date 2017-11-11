@@ -99,6 +99,7 @@ function isWindowVisible(aContentWin) {
       }
     }
   }
+
   return true;
 }
 
@@ -236,6 +237,7 @@ function urlForWin(aContentWin) {
   // Luckily, the document.documentURI does _not_ change,
   // so always use it when deciding whether to run scripts.
   let url = aContentWin.document.documentURI;
+
   // But (see #1631) ignore user/pass in the URL.
   return url.replace(URL_USER_PASS_STRIP_REGEXP, "$1");
 }
@@ -255,6 +257,7 @@ function windowIsTop(aContentWin) {
     dump("Framescript: Could not QI window to nsIDOMWindow (?!) at:" + "\n"
         + url + "\n");
   }
+
   return true;
 };
 
@@ -272,6 +275,7 @@ function windowCreated(aEvent) {
       runScripts("document-start", contentWin);
     }
   }
+
   onNewDocument(content, contentObserver);
 }
 
