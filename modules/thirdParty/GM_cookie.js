@@ -82,6 +82,7 @@ function GM_cookie(
     let details = {
       "host": aHost,
       "name": undefined,
+      "path": undefined,
     };
 
     if (typeof aDetails == "object") {
@@ -89,6 +90,7 @@ function GM_cookie(
         details.host = aDetails.host ? String(aDetails.host) : details.host;
       }
       details.name = aDetails.name ? String(aDetails.name) : details.name;
+      details.path = aDetails.path ? String(aDetails.path) : details.path;
     }
 
     if (typeof details.name === "undefined") {
@@ -116,7 +118,8 @@ function GM_cookie(
     while (enm.hasMoreElements()) {
       let cookie = enm.getNext().QueryInterface(Ci.nsICookie2);
       if (isCookieAtHost(cookie, details.host)) {
-        if (cookie.name == details.name) {
+        if ((cookie.name == details.name)
+            && (!details.path || (cookie.path == details.path))) {
           try {
             // Firefox 49+
             // http://bugzil.la/1267910
