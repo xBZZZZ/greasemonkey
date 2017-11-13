@@ -6,10 +6,11 @@
   <Description about="urn:mozilla:install-manifest">
 
     <em:id>greasemonkeyforpm@janekptacijarabaci</em:id>
-    <em:version>3.30rc1</em:version>
+    <em:version>3.30rc2</em:version>
     <em:creator>Aaron Boodman; http://youngpup.net/ (Pale Moon: janekptacijarabaci)</em:creator>
     <em:homepageURL>https://github.com/janekptacijarabaci/greasemonkey/releases</em:homepageURL>
-    <!-- <em:updateURL>https://gist.github.com/raw/[uuid]/update.rdf</em:updateURL> -->
+    <!-- <em:updateURL>https://gist.githubusercontent.com/janekptacijarabaci/[uuid]/raw/update.rdf</em:updateURL> -->
+    <em:updateURL>https://github.com/janekptacijarabaci/greasemonkey/raw/_forkBranch_Pale-Moon/update.rdf</em:updateURL>
     <!-- See https://bugzilla.mozilla.org/show_bug.cgi?id=267950#c9 -->    
     <!-- <em:optionsURL>javascript:opener.openDialog('chrome://greasemonkey/content/options.xul','','modal,resizable');window.close();</em:optionsURL> -->
     <em:optionsURL>chrome://greasemonkey/content/options.xul</em:optionsURL>

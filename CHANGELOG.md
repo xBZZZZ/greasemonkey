@@ -1,10 +1,20 @@
 ## Changelog
 
+#### 3.30rc2 (2017-11-13)
+
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.30rc1Fork...3.30rc2Fork)
+
+* General: Added update URL for automatic updating
+* API: Added support for Greasemonkey 4.0+ - Promise APIs (preliminary steps)
+* Loading: about:blank, the script with alert function - after the restart, the browser hangs ([#2229](https://github.com/greasemonkey/greasemonkey/issues/2229)) (follow up - for "document-element-inserted")
+* Loading: addEventListener ("DOMContentLoaded", "DOMWindowCreated") - explicitly set useCapture
+* Fix typos, style clean up
+
 #### 3.30rc1 (2017-10-02)
 
 [All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.12.1beta12ForkExperimental...3.30rc1Fork)
 
-* General: Changed the extension ID! Update requires you the uninstall the old version (beta) and then install the new (rc)! Your settings and scripts should stay in place.
+* General: Changed the extension ID! Update requires you the uninstall the old version (e.g. beta) and then install the new (rc) - the new version will not overwrite the old one, and you cannot use both versions together! Your settings and scripts should stay in place.
 * General: Removing statistics
 * API: GM_xmlhttpRequest - Added support for blob: and data: protocols
 * API: GM_xmlhttpRequest - Added support for Containers (Firefox 42+) ([#2555](https://github.com/greasemonkey/greasemonkey/issues/2555))
@@ -21,7 +31,7 @@
 * Loading: Added support for "content-document-global-created" instead of "document-element-inserted" (opt-in) ([#1849](https://github.com/greasemonkey/greasemonkey/issues/1849))
 * General: Add a message (into the log) if a script was removed (if is not complete)
 * Loading: about:blank, the script with alert function - after the restart, the browser hangs ([#2229](https://github.com/greasemonkey/greasemonkey/issues/2229))
-* Fix typos, style clean up
+* Style clean up
 
 #### 3.12.1beta11 (2017-07-04)
 
