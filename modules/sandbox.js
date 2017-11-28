@@ -449,6 +449,9 @@ function runScriptInSandbox(aSandbox, aScript) {
           API2Polyfill,
           aSandbox, JAVASCRIPT_VERSION_MAX, aScript.fileURL, 1);
     } catch (e) {
+      // "async" functions:
+      // Firefox 52.0+
+      // http://bugzil.la/1185106
       // js/src/js.msg: JSMSG_BAD_ARROW_ARGS
       if (e.message.indexOf("invalid arrow-function arguments") != 1) {
         GM_util.logError(
