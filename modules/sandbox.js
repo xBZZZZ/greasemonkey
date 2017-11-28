@@ -449,21 +449,28 @@ function runScriptInSandbox(aSandbox, aScript) {
           API2Polyfill,
           aSandbox, JAVASCRIPT_VERSION_MAX, aScript.fileURL, 1);
     } catch (e) {
-      // Log it properly.
-      GM_util.logError(e, false, e.fileName, e.lineNumber);
+      // js/src/js.msg: JSMSG_BAD_ARROW_ARGS
+      if (e.message.indexOf("invalid arrow-function arguments") != 1) {
+        GM_util.logError(
+            GM_CONSTANTS.localeStringBundle.createBundle(
+                GM_CONSTANTS.localeGreasemonkeyProperties)
+                .GetStringFromName("error.api.object.polyfill"),
+            false, e.fileName, null);
+      } else {
+        // Log it properly.
+        GM_util.logError(e, false, e.fileName, null);
+      }
       // Stop the script, in the case of requires, as if it was one big script.
       return false;
     }
     return true;
   }
 
-  /*
   if (GM_prefRoot.getValue("api.object.polyfill")) {
     if (!evalAPI2Polyfill(aSandbox, aScript)) {
       return undefined;
     }
   }
-  */
 
   for (let i = 0, iLen = aScript.requires.length; i < iLen; i++) {
     let require = aScript.requires[i];

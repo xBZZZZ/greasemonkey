@@ -1,6 +1,6 @@
 pref("extensions.greasemonkeyforpm@janekptacijarabaci.description", "chrome://greasemonkey/locale/greasemonkey.properties");
 // pref("extensions.greasemonkey.api.GM_cookie", false);
-// pref("extensions.greasemonkey.api.object.polyfill", false);
+pref("extensions.greasemonkey.api.object.polyfill", false);
 pref("extensions.greasemonkey.api.unsafeWindow.grant", false);
 pref("extensions.greasemonkey.cors_csp_override.excludes", false);
 pref("extensions.greasemonkey.cors_csp_override.excludes.value", "[\"\"]");
