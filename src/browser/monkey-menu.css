@@ -1,7 +1,8 @@
 body {
   cursor: default;
   font: caption;
-  min-width: 21em;
+  overflow-x: hidden;
+  min-width: 23em;
 }
 body.rendering { display: none; }
 
@@ -14,6 +15,7 @@ body #menu, body.detail #user-script-detail { display: block; }
   display: flex;
   flex-direction: row;
   padding: 4px 8px;
+  -moz-user-select: none;
 }
 .menu-item * {
   vertical-align: middle;
@@ -31,8 +33,15 @@ body #menu, body.detail #user-script-detail { display: block; }
 .menu-item.disabled .icon img {
   opacity: 0.66;
 }
+.menu-item .heading {
+  color: #333;
+  font-style: italic;
+  padding-left: 21px;
+}
 .menu-item .text {
   flex-grow: 1;
+  white-space: nowrap;
+  width: 0;
 }
 .menu-item:hover {
   background: #EEE;
@@ -62,4 +71,6 @@ header #name {
   display: inline-block;
   flex-grow: 1;
   text-align: center;
+  white-space: nowrap;
+  width: 0;
 }

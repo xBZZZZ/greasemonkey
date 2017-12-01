@@ -6,6 +6,12 @@ the install process.  Nothing else besides `UserScriptRegistry` should ever
 reference any other objects from this file.
 */
 
+// Increment this number when updating `calculateEvalContent()`.  If it
+// is higher than it was when eval content was last calculated, it will
+// be re-calculated.
+const EVAL_CONTENT_VERSION = 6;
+
+
 // Private implementation.
 (function() {
 
@@ -26,6 +32,9 @@ function _testClude(glob, url) {
 function _testMatch(matchPattern, url) {
   if ('string' == typeof matchPattern) {
     matchPattern = new MatchPattern(matchPattern);
+  } else if (MatchPattern != typeof matchPattern) {
+    console.error('matchPattern is not a string nor MatchPattern object:', matchPattern);
+    return false;
   }
   return matchPattern.doMatch(url);
 }
@@ -124,6 +133,14 @@ window.RemoteUserScript = class RemoteUserScript {
       throw new Error('runsAt() got non-url parameter: ' + url);
     }
 
+    if (url
+        && url.protocol != 'http:'
+        && url.protocol != 'https:'
+        && !url.href.startsWith('about:blank')
+    ) {
+      return false;
+    }
+
     // TODO: Profile cost of pattern generation, cache if justified.
     // TODO: User global excludes.
     // TODO: User includes/excludes/matches.
@@ -150,7 +167,7 @@ window.RemoteUserScript = class RemoteUserScript {
 
 
 const runnableUserScriptKeys = [
-    'enabled', 'evalContent', 'iconBlob', 'resources',
+    'enabled', 'evalContent', 'evalContentVersion', 'iconBlob', 'resources',
     'userExcludes', 'userIncludes', 'userMatches', 'uuid'];
 /// A _UserScript, plus user settings, plus (eval'able) contents.  Should
 /// never be called except by `UserScriptRegistry.`
@@ -161,6 +178,7 @@ window.RunnableUserScript = class RunnableUserScript
 
     this._enabled = true;
     this._evalContent = null;  // TODO: Calculated final eval string.  Blob?
+    this._evalContentVersion = -1;
     this._iconBlob = null;
     this._resources = {};  // Name to object with keys: name, mimetype, blob.
     this._userExcludes = [];  // TODO: Not implemented.
@@ -170,12 +188,7 @@ window.RunnableUserScript = class RunnableUserScript
 
     _loadValuesInto(this, details, runnableUserScriptKeys);
 
-    if (!this._uuid) {
-      this._uuid = _randomUuid();
-      console.info(
-          'For new RunnableUserScript ' + this._name
-          + ', created UUID: ' + this._uuid);
-    }
+    if (!this._uuid) this._uuid = _randomUuid();
   }
 
   get details() {
@@ -195,6 +208,7 @@ window.RunnableUserScript = class RunnableUserScript
   get userMatches() { return _safeCopy(this._userMatches); }
 
   get evalContent() { return this._evalContent; }
+  get evalContentVersion() { return this._evalContentVersion; }
   get iconBlob() { return this._iconBlob; }
   get resources() { return _safeCopy(this._resources); }
   get uuid() { return this._uuid; }
@@ -234,34 +248,45 @@ window.EditableUserScript = class EditableUserScript
     // generated content -- wrapped in a function.  Then add the rest
     // of the generated parts.
     this._evalContent
-        = 'try {'
-        + '(function scopeWrapper(){'
-        + 'function userScript(){' + this._content + '} // User Script End.\n\n'
-        + this.calculateGmInfo() + '\n\n'
-        + apiProviderSource(this) + '\n\n'
-        + Object.values(this._requiresContent).join('\n\n')
-        + 'userScript();})();\n\n' // Ends scope wrapper.
-        + '} catch (e) { console.error("Script error: ", e); }\n\n'
-        + '//# sourceURL=user-script:' + escape(this.id);
-//    console.log('generated script:\n', this._evalContent);
+        // Note intentional lack of line breaks before the script content.
+        = `try { (function scopeWrapper(){ function userScript() { ${this._content}
+        /* Line break to catch comments on the final line of scripts. */ }
+        const unsafeWindow = window.wrappedJSObject;
+        ${this.calculateGmInfo()}
+        ${apiProviderSource(this)}
+        ${Object.values(this._requiresContent).join('\n\n')}
+        userScript();
+        })();
+        } catch (e) { console.error("Script error: ", e); }
+        //# sourceURL=user-script:${escape(this.id)}`;
+    this._evalContentVersion = EVAL_CONTENT_VERSION;
   }
 
   calculateGmInfo() {
     let gmInfo = {
       'script': {
         'description': this.description,
+        'excludes': this.excludes,
+        'includes': this.includes,
+        'matches': this.matches,
         'name': this.name,
         'namespace': this.namespace,
         'resources': {},
+        'runAt': this.runAt,
+        'uuid': this.uuid,
         'version': this.version,
       },
+      'scriptMetaStr': extractMeta(this.content),
       'scriptHandler': 'Greasemonkey',
-      'uuid': this.uuid,
       'version': extensionVersion,
     };
     Object.keys(this.resources).forEach(n => {
       let r = this.resources[n];
-      gmInfo.script.resources[n] = {'name': r.name, 'mimetype': r.mimetype};
+      gmInfo.script.resources[n] = {
+        'name': r.name,
+        'mimetype': r.mimetype,
+        'url': r.url || "",
+      };
     });
     return 'const GM = {};\n'
         + 'GM.info=' + JSON.stringify(gmInfo) + ';'
@@ -310,6 +335,7 @@ window.EditableUserScript = class EditableUserScript
               this._resources[n] = {
                   'name': n,
                   'mimetype': d.xhr.getResponseHeader('Content-Type'),
+                  'url': d.url,
                   'blob': d.xhr.response,
               };
             });

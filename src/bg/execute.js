@@ -5,13 +5,9 @@ content script executions.
 TODO: Make document_start execution time work as intended.
 */
 
-// Private implementation.
-(function() {
+function executeUserscriptOnNavigation(detail) {
+  if (false === getGlobalEnabled()) return;
 
-let openPorts = [];
-let pendingPorts = {};
-
-chrome.webNavigation.onCommitted.addListener(detail => {
   var userScriptIterator = UserScriptRegistry.scriptsToRunAt(detail.url);
   for (let userScript of userScriptIterator) {
     let options = {
@@ -22,15 +18,13 @@ chrome.webNavigation.onCommitted.addListener(detail => {
     if (detail.frameId) options.frameId = detail.frameId;
     chrome.tabs.executeScript(detail.tabId, options, result => {
       let err = chrome.runtime.lastError;
-      if (err) {
-        if (err.message.startsWith('Message manager disconnected')) return;
-        // TODO: Better indication of the root cause.
-        console.error(
-            'Could not execute user script: ' + userScript.toString(),
-            '\n', err);
-      }
+      if (!err) return;
+      if (err.message.startsWith('Message manager disconnected')) return;
+      if (err.message.startsWith('No matching message handler')) return;
+      // TODO: Better indication of the root cause.
+      console.error(
+          'Could not execute user script: ' + userScript.toString(),
+          '\n', err);
     });
   }
-});
-
-})();
+}

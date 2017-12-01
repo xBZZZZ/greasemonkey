@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
-<link rel="stylesheet" href="/skin/third-party/shoelace/shoelace.css">
-<link rel="stylesheet" href="/skin/third-party/font_awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/third-party/shoelace/shoelace.css">
+<link rel="stylesheet" href="/third-party/font_awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="monkey-menu.css">
 <body class="rendering">
 
@@ -11,6 +11,49 @@
     <div rv-show="enabled" class="icon fa fa-fw fa-check-circle-o"></div>
     <div rv-hide="enabled" class="icon fa fa-fw fa-circle-o"></div>
     <div class="text">Greasemonkey is {enabled | active}</div>
+  </div>
+  <!-- TODO: This feature.
+  <div class="menu-item" id="open-options">
+    <div class="icon fa fa-fw fa-cogs"></div>
+    <div class="text">Greasemonkey Options</div>
+  </div>
+  -->
+
+  <div rv-hide="userScripts.active | empty">
+    <hr>
+    <div class="menu-item">
+      <div class="text heading">User scripts for this tab</div>
+    </div>
+
+    <div rv-each-script="userScripts.active" class="menu-item user-script"
+        rv-class-disabled="script.enabled | not"
+        rv-data-user-script-uuid="script.uuid"
+    >
+      <div class="icon fa-fw"><img rv-src="script.icon"></div>
+      <div class="text">{script.name}</div>
+    </div>
+  </div>
+
+  <div rv-hide="userScripts.inactive | empty">
+    <hr>
+    <div class="menu-item" rv-hide="userScripts.active | empty">
+      <div class="text heading">Other user scripts</div>
+    </div>
+
+    <div rv-each-script="userScripts.inactive" class="menu-item user-script"
+        rv-class-disabled="script.enabled | not"
+        rv-data-user-script-uuid="script.uuid"
+    >
+      <div class="icon fa-fw"><img rv-src="script.icon"></div>
+      <div class="text">{script.name}</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="menu-item" id="new-user-script">
+    <div class="icon fa fa-fw fa-file-text-o"></div>
+    <div class="text">New user script ...</div>
   </div>
 
   <hr>
@@ -29,42 +72,6 @@
       data-url="https://wiki.greasespot.net/User_Script_Hosting">
     <div class="icon fa fa-fw fa-link"></div>
     <div class="text">Get User Scripts</div>
-  </div>
-
-  <hr>
-
-  <!-- TODO: This feature.
-  <div class="menu-item" id="open-options">
-    <div class="icon fa fa-fw fa-cogs"></div>
-    <div class="text">Greasemonkey Options</div>
-  </div>
-  -->
-
-  <div class="menu-item" id="manage-scripts">
-    <div class="icon fa fa-fw fa-tasks"></div>
-    <div class="text">Manage User Scripts</div>
-  </div>
-
-  <!-- TODO: This feature.
-  <div class="menu-item" id="new-script">
-    <div class="icon fa fa-fw fa-file-text-o"></div>
-    <div class="text">New User Script...</div>
-  </div>
-  -->
-
-  <hr>
-
-  <div rv-each-script="userScripts" class="menu-item user-script"
-    rv-class-disabled="script.enabled | not"
-    rv-data-user-script-uuid="script.uuid"
-  >
-    <div class="icon fa-fw"><img rv-src="script.icon"></div>
-    <div class="text">{script.name}</div>
-  </div>
-
-  <div rv-show="userScripts | empty" class="menu-item">
-    <div class="icon fa fa-fw fa-exclamation"></div>
-    <div class="text">No user scripts installed!</div>
   </div>
 </section>
 
@@ -86,14 +93,28 @@
     <div class="icon fa fa-fw fa-pencil-square-o"></div>
     <div class="text">Edit</div>
   </div>
+
+  <div class="menu-item" id="user-script-uninstall" rv-hide="pendingUninstall">
+    <div class="icon fa fa-fw fa-trash-o"></div>
+    <div class="text">Uninstall</div>
+  </div>
+  <div class="menu-item" id="user-script-uninstall-undo" rv-show="pendingUninstall">
+    <div class="icon fa fa-fw fa-trash-o"></div>
+    <div class="text">Undo uninstall ({ pendingUninstall })</div>
+  </div>
 </section>
 
 
-<script src="/src/third-party/rivets/rivets.bundled.min.js"></script>
+<script src="/third-party/rivets/rivets.bundled.min.js"></script>
+<script src="/third-party/convert2RegExp.js"></script>
+<script src="/third-party/MatchPattern.js"></script>
 <script src="/src/util/iconUrl.js"></script>
 <script src="/src/util/rivets-formatters.js"></script>
-<script src="/src/open-editor.js"></script>
+<script src="/src/parse-meta-line.js"></script>
+<script src="/src/parse-user-script.js"></script>
+<script src="/src/user-script-obj.js"></script>
 <script src="monkey-menu.js"></script>
+<script src="monkey-menu.run.js"></script>
 
 </body>
 </html>

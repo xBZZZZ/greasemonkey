@@ -1,7 +1,4 @@
-// Private implementation.
-(function() {
-
-var gAllMetaRegexp = new RegExp(
+const gAllMetaRegexp = new RegExp(
     '^(\u00EF\u00BB\u00BF)?// ==UserScript==([\\s\\S]*?)^// ==/UserScript==',
     'm');
 
@@ -14,6 +11,9 @@ function extractMeta(content) {
 }
 
 
+// Private implementation.
+(function() {
+
 /** Pull the filename part from the URL, without `.user.js`. */
 function nameFromUrl(url) {
   var name = url.substring(0, url.indexOf(".user.js"));
@@ -22,13 +22,23 @@ function nameFromUrl(url) {
 }
 
 
+// Safely construct a new URL object from a path and base. According to MDN,
+// if a URL constructor recieved an absolute URL as the path then the base
+// is ignored. Unfortunately that doesn't seem to be the case. And if the
+// base is invalid (null / empty string) then an exception is thrown.
+function safeURL(path, base) {
+  if (base) {
+    return new URL(path, base);
+  } else {
+    return new URL(path);
+  }
+}
+
+
 /** Parse the source of a script; produce object of data. */
 window.parseUserScript = function(content, url, failIfMissing) {
   if (!content) {
     throw new Error('parseUserScript() got no content!');
-  }
-  if (!url) {
-    throw new Error('parseUserScript() got no url!');
   }
 
   var meta = extractMeta(content).match(/.+/g);
@@ -41,8 +51,9 @@ window.parseUserScript = function(content, url, failIfMissing) {
     'grants': [],
     'includes': [],
     'matches': [],
-    'name': nameFromUrl(url),
-    'namespace': new URL(url).host,
+    'name': url && nameFromUrl(url) || 'Unnamed Script',
+    'namespace': url && new URL(url).host || null,
+    'noFrames': false,
     'requireUrls': [],
     'resourceUrls': {},
     'runAt': 'end'
@@ -110,10 +121,10 @@ window.parseUserScript = function(content, url, failIfMissing) {
       break;
 
     case 'icon':
-      details.iconUrl = new URL(data.value, url).toString();
+      details.iconUrl = safeURL(data.value, url).toString();
       break;
     case 'require':
-      details.requireUrls.push( new URL(data.value, url).toString() );
+      details.requireUrls.push( safeURL(data.value, url).toString() );
       break;
     case 'resource':
       let resourceName = data.value1;
@@ -121,7 +132,7 @@ window.parseUserScript = function(content, url, failIfMissing) {
       if (resourceName in details.resourceUrls) {
         throw new Error('Duplicate resource name: ' + resourceName);
       }
-      details.resourceUrls[resourceName] = new URL(resourceUrl, url).toString();
+      details.resourceUrls[resourceName] = safeURL(resourceUrl, url).toString();
       break;
     }
   }
@@ -133,7 +144,7 @@ window.parseUserScript = function(content, url, failIfMissing) {
   }
 
   if (details.grants.includes('none') && details.grants.length > 1) {
-    details.grants = 'none';
+    details.grants = ['none'];
   }
 
   return details;

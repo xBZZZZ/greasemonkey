@@ -40,7 +40,7 @@ const db = (function() {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-function install(downloader) {
+function installFromDownloader(downloader) {
   db.then(db => {
     try {
       let remoteScript = new RemoteUserScript(downloader.scriptDetails);
@@ -59,8 +59,39 @@ function install(downloader) {
         console.error('Error looking up script!', event);
       };
     } catch (e) {
-      console.error('at install(), db fail:', e);
+      console.error('at installFromDownloader(), db fail:', e);
     }
+  });
+}
+
+
+async function installFromSource(source) {
+  return new Promise((resolve, reject) => {
+    db.then(db => {
+      try {
+        let details = parseUserScript(source, null);
+        let remoteScript = new RemoteUserScript(details);
+        let txn = db.transaction([scriptStoreName], "readonly");
+        let store = txn.objectStore(scriptStoreName);
+        let index = store.index('id');
+        let req = index.get(remoteScript.id);
+        txn.oncomplete = event => {
+          details = req.result || details;
+          details.content = source;
+          details.parsedDetails = details;
+          let userScript = new EditableUserScript(details);
+          console.log('saving', userScript);
+          saveUserScript(userScript);
+          console.log('<<< installFromSource');
+          resolve(userScript.uuid);
+        };
+        txn.onerror = event => {
+          console.error('Error looking up script!', event);
+        };
+      } catch (e) {
+        console.error('at installFromSource(), db fail:', e);
+      }
+    });
   });
 }
 
@@ -73,7 +104,12 @@ function loadUserScripts() {
     req.onsuccess = event => {
       userScripts = {};
       event.target.result.forEach(details => {
-        userScripts[details.uuid] = new EditableUserScript(details);
+        let userScript = new EditableUserScript(details);
+        userScripts[details.uuid] = userScript;
+        if (userScript.evalContentVersion < EVAL_CONTENT_VERSION) {
+          userScript.calculateEvalContent();
+          saveUserScript(userScript);
+        }
       });
     };
     req.onerror = event => {
@@ -91,9 +127,7 @@ function onEditorSaved(message, sender, sendResponse) {
   }
 
   userScript.updateFromEditorSaved(message)
-      .then(
-          value => saveUserScript(userScript),
-          reason => null);
+      .then(value => saveUserScript(userScript));
 };
 window.onEditorSaved = onEditorSaved;
 
@@ -180,9 +214,11 @@ window.onUserScriptUninstall = onUserScriptUninstall;
 
 function saveUserScript(userScript) {
   if (!(userScript instanceof EditableUserScript)) {
-    throw new Error('Cannot save this type of UserScript object:' + userScript.constructor.name);
+    throw new Error(
+        'Cannot save this type of UserScript object:'
+        + userScript.constructor.name);
   }
-  db.then((db) => {
+  return new Promise((resolve, reject) => db.then((db) => {
     let txn = db.transaction([scriptStoreName], 'readwrite');
     txn.oncomplete = event => {
       // In case this was for an install, now that the user script is saved
@@ -194,9 +230,11 @@ function saveUserScript(userScript) {
         'details': userScript.details,
         'parsedDetails': userScript.parsedDetails,
       });
+      resolve();
     };
     txn.onerror = event => {
       console.warn('save transaction error?', event, event.target);
+      reject();
     };
 
     try {
@@ -209,22 +247,13 @@ function saveUserScript(userScript) {
       console.error('when saving', userScript, e);
       return;
     }
-  });
+  }));
 }
 
 
 // Generate user scripts to run at `urlStr`; all if no URL provided.
 function* scriptsToRunAt(urlStr=null, includeDisabled=false) {
-  if (false === getGlobalEnabled()) return;
   let url = urlStr && new URL(urlStr);
-
-  if (url
-    && url.protocol != 'http:'
-    && url.protocol != 'https:'
-    && !url.href.startsWith('about:blank')
-  ) {
-    return;
-  }
 
   for (let uuid in userScripts) {
     let userScript = userScripts[uuid];
@@ -241,12 +270,12 @@ function* scriptsToRunAt(urlStr=null, includeDisabled=false) {
 }
 
 
-loadUserScripts();
-
-
 // Export public API.
 window.UserScriptRegistry = {
-  'install': install,
+  '_loadUserScripts': loadUserScripts,
+  '_saveUserScript': saveUserScript,
+  'installFromDownloader': installFromDownloader,
+  'installFromSource': installFromSource,
   'scriptsToRunAt': scriptsToRunAt,
 };
 

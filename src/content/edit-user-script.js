@@ -6,17 +6,17 @@ var editor = CodeMirror(
     // TODO: Make appropriate options user-configurable.
     {
       'tabSize': 2,
-      'extraKeys': {
-        'Ctrl-S': onSave,
-      },
       'lineNumbers': true,
     });
+
+CodeMirror.commands.save = onSave;
 
 const titlePattern = '%s - Greasemonkey User Script Editor';
 const userScriptUuid = location.hash.substr(1);
 const editorDocs = [];
 const editorTabs = [];
 const editorUrls = [];
+const tabs = document.getElementById('tabs');
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -42,8 +42,6 @@ chrome.runtime.sendMessage({
   'name': 'UserScriptGet',
   'uuid': userScriptUuid,
 }, userScript => {
-  let tabs = document.getElementById('tabs');
-
   let scriptTab = document.createElement('li');
   scriptTab.className = 'tab active';
   scriptTab.textContent = userScript.name;
@@ -65,22 +63,23 @@ chrome.runtime.sendMessage({
 
 function onUserScriptChanged(message, sender, sendResponse) {
   if (message.name != 'UserScriptChanged') return;
-  if (message.uuid != userScriptUuid) return;
+  if (message.details.uuid != userScriptUuid) return;
   let details = message.details;
+  let parsedDetails = message.parsedDetails;
 
   document.title = titlePattern.replace('%s', details.name);
 
   for (let i = editorDocs.length - 1; i > 0; i--) {
     let u = editorUrls[i];
-    if (message.parsedDetails.requireUrls.indexOf(u) === -1) {
+    if (parsedDetails.requireUrls.indexOf(u) === -1) {
       editorTabs[i].parentNode.removeChild(editorTabs[i]);
-      delete editorDocs[i];
-      delete editorTabs[i];
-      delete editorUrls[i];
+      editorDocs.splice(i, 1);
+      editorTabs.splice(i, 1);
+      editorUrls.splice(i, 1);
     }
   }
 
-  message.parsedDetails.requireUrls.forEach(u => {
+  parsedDetails.requireUrls.forEach(u => {
     if (editorUrls.indexOf(u) === -1) {
       addRequireTab(u, details.requiresContent[u]);
     }
@@ -91,7 +90,7 @@ chrome.runtime.onMessage.addListener(onUserScriptChanged);
 ///////////////////////////////////////////////////////////////////////////////
 
 // TODO: Keyboard accessibility?
-document.getElementById('tabs').addEventListener('click', event => {
+tabs.addEventListener('click', event => {
   if (event.target.classList.contains('tab')) {
     let selectedTab = document.querySelector('#tabs .tab.active');
     selectedTab.classList.remove('active');
@@ -141,3 +140,13 @@ function onSave() {
     editorTabs[i].classList.remove('dirty');
   }
 }
+
+///////////////////////////////////////////////////////////////////////////////
+
+editor.on('swapDoc', doc => {
+  if (doc.getMode().name == 'javascript') {
+    doc.setOption('gutters', ['CodeMirror-lint-markers']);
+    doc.setOption('lint', true);
+    doc.performLint();
+  }
+});
