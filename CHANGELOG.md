@@ -1,5 +1,12 @@
 ## Changelog
 
+#### 3.30rc3 (2017-12-01)
+
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.30rc2Fork...3.30rc3Fork)
+
+* Basilisk - API: Added (native) support for Greasemonkey 4.0+ - Promise APIs (experimental, opt-in)
+* Fix typos
+
 #### 3.30rc2 (2017-11-13)
 
 [All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.30rc1Fork...3.30rc2Fork)
