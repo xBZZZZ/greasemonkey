@@ -392,9 +392,13 @@ function runScriptInSandbox(aSandbox, aScript) {
   function evalAPI2Polyfill(aSandbox, aScript) {
     let _API1 = "GM_info";
     let API2Polyfill = "";
+    // Alternatives (see below "async"):
+    //  (async () => {`;
+    // instead of
+    //  (() => {`;
     API2Polyfill += `
       var GM = {};
-      (async () => {`;
+      (() => {`;
     let _APIConversion = {};
     GM_CONSTANTS.addonAPI.forEach(function (aValue) {
       let prop = "";
