@@ -1,5 +1,11 @@
 ## Changelog
 
+#### 3.30rc4 (2017-12-17)
+
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.30rc3Fork...3.30rc4Fork)
+
+* Pale Moon - API: Added (native) support for Greasemonkey 4.0+ - Promise APIs (experimental, opt-in)
+
 #### 3.30rc3 (2017-12-01)
 
 [All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.30rc2Fork...3.30rc3Fork)
