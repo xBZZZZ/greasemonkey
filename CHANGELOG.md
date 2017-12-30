@@ -1,5 +1,11 @@
 ## Changelog
 
+#### 3.30 (2017-12-30)
+
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.30rc4Fork...3.30Fork)
+
+* [No change]
+
 #### 3.30rc4 (2017-12-17)
 
 [All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.30rc3Fork...3.30rc4Fork)
