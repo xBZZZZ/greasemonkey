@@ -316,12 +316,12 @@ function injectGMInfo(aSandbox, aContentWin, aScript) {
     return meta;
   }
 
-  // lazy getters for heavyweight strings that aren't sent down through IPC
+  // Lazy getters for heavyweight strings that aren't sent down through IPC.
   Object.defineProperty(waivedInfo, "scriptSource", {
     "get": Cu.exportFunction(getScriptSource, aSandbox),
   });
 
-  // meta depends on content, so we need a lazy one here too
+  // Meta depends on content, so we need a lazy one here too.
   Object.defineProperty(waivedInfo, "scriptMetaStr", {
     "get": Cu.exportFunction(getMeta, aSandbox),
   });

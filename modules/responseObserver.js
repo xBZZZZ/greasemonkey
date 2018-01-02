@@ -126,8 +126,8 @@ function _corsCspTestUrl(aUrl) {
 
   var uri = GM_util.getUriFromUrl(aUrl);
 
-  function testClude(glob) {
-    return GM_convertToRegexp(glob, uri).test(aUrl);
+  function testClude(aGlob) {
+    return GM_convertToRegexp(aGlob, uri).test(aUrl);
   }
 
   function testMatch(aMatchPattern) {

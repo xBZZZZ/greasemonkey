@@ -19,9 +19,9 @@
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- * Henrik Aasted Sorensen <henrik@aasted.org>
- * Stefan Kinitz <mcmurmel.blah@gmx.de>
- * Rue <quill@ethereal.net>
+ *   Henrik Aasted Sorensen <henrik@aasted.org>
+ *   Stefan Kinitz <mcmurmel.blah@gmx.de>
+ *   Rue <quill@ethereal.net>
  *
  * ***** END LICENSE BLOCK ***** */
 
@@ -46,15 +46,15 @@ const TLD_REGEXP = /^([^:]+:\/\/[^\/]+)\.tld(\/.*)?$/;
 // (Can't memoize a URI object, yet we want to do URL->URI outside this method,
 // once for efficiency. Compromise: memoize just the internal string handling.)
 function GM_convertToRegexp(aPattern, aUri, aForceGlob) {
-  let reStr = GM_convertToRegexpInner(aPattern, aForceGlob);
+  let strRegexp = GM_convertToRegexpInner(aPattern, aForceGlob);
 
   // Inner returns a RegExp, not str, for input regex (not glob) patterns.
   // Use those directly without magic TLD modifications.
-  if (reStr instanceof RegExp) {
-    return reStr;
+  if (strRegexp instanceof RegExp) {
+    return strRegexp;
   }
 
-  if (aUri && reStr.match(TLD_REGEXP)) {
+  if (aUri && strRegexp.match(TLD_REGEXP)) {
     let tld = null;
     try {
       tld = Cc["@mozilla.org/network/effective-tld-service;1"]
@@ -65,26 +65,26 @@ function GM_convertToRegexp(aPattern, aUri, aForceGlob) {
       // - like http://localhost/ - has no TLD.
     }
     if (tld) {
-      reStr = reStr.replace(TLD_REGEXP, "$1." + tld + "$2");
+      strRegexp = strRegexp.replace(TLD_REGEXP, "$1." + tld + "$2");
     }
   }
 
-  return new RegExp(reStr, "i");
+  return new RegExp(strRegexp, "i");
 }
 
 // Memoized internal implementation just does glob -> regex translation.
-function GM_convertToRegexpInner(pattern, forceGlob) {
-  let s = new String(pattern);
+function GM_convertToRegexpInner(aPattern, aForceGlob) {
+  let str = new String(aPattern);
 
-  if (!forceGlob && (s.substr(0, 1) == "/") && (s.substr(-1, 1) == "/")) {
+  if (!aForceGlob && (str.substr(0, 1) == "/") && (str.substr(-1, 1) == "/")) {
     // Leading and trailing slash means raw regex.
-    return new RegExp(s.substring(1, s.length - 1), "i");
+    return new RegExp(str.substring(1, str.length - 1), "i");
   }
 
   let res = "^";
 
-  for (let i = 0, iLen = s.length; i < iLen; i++) {
-    switch(s[i]) {
+  for (let i = 0, iLen = str.length; i < iLen; i++) {
+    switch(str[i]) {
       case "*" :
         res += ".*";
         break;
@@ -101,13 +101,13 @@ function GM_convertToRegexpInner(pattern, forceGlob) {
       case "(" :
       case ")" :
       case "\\" :
-        res += "\\" + s[i];
+        res += "\\" + str[i];
         break;
       case " " :
         // Remove spaces from URLs.
         break;
       default :
-        res += s[i];
+        res += str[i];
         break;
     }
   }

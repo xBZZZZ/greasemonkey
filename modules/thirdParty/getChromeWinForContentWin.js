@@ -14,7 +14,7 @@
  * The Original Code is DevTools (HeadsUpDisplay) Console Code
  *
  * The Initial Developer of the Original Code is
- *   Mozilla Foundation
+ * the Mozilla Foundation.
  * Portions created by the Initial Developer are Copyright (C) 2010
  * the Initial Developer. All Rights Reserved.
  *

@@ -13,7 +13,8 @@
  *
  * The Original Code is Page Modifications code.
  *
- * The Initial Developer of the Original Code is Mozilla.
+ * The Initial Developer of the Original Code
+ * the Mozilla Foundation.
  * Portions created by the Initial Developer are Copyright (C) 2009
  * the Initial Developer. All Rights Reserved.
  *
@@ -52,18 +53,72 @@ if (typeof Cu === "undefined") {
 
 Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
+Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
 Cu.import("chrome://greasemonkey-modules/content/thirdParty/convertToRegexp.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 
+// Firefox 41+
+// http://bugzil.la/1171248
+//
+// Cu.import("resource://gre/modules/MatchPattern.jsm");
+// let match = new MatchPattern("*://www.domain.org/");
+// let uri = ...;
+// match.matches(uri); // true/false
+//
+// Cu.import("resource://gre/modules/MatchPattern.jsm");
+// let match = new MatchPattern("*://www.domain.org/");
+// let uri = ...;
+// match.matches(uri); // true/false
+//
+// // Not solved:
+// //  GM_convertToRegexp()
+// //  *.tld
+// this.getHostMatcher = function (aUri, aHost) {
+//   // This code ignores the port.
+//   if (aHost == "*") {
+//     return true;
+//   }
+//   if (aHost.startsWith("*.")) {
+//     let suffix = aHost.substr(2);
+//     let dotSuffix = "." + suffix;
+//
+//     return (aUri.host === suffix) || aUri.host.endsWith(dotSuffix);
+//   }
+//
+//   return aUri.host === aHost;
+// }
+//
+// // This function converts a glob pattern
+// // (containing * and possibly ? as wildcards) to a regular expression.
+// function globToRegexp(aPat, aAllowQuestion) {
+//   // Escape everything except ? and *.
+//   aPat = aPat.replace(/[.+^${}()|[\]\\]/g, "\\$&");
+//
+//   if (aAllowQuestion) {
+//     aPat = aPat.replace(/\?/g, ".");
+//   } else {
+//     aPat = aPat.replace(/\?/g, "\\?");
+//   }
+//   aPat = aPat.replace(/\*/g, ".*");
+//
+//   return new RegExp("^" + aPat + "$");
+// }
+
 const SCHEMES_VALID = ["file", "ftp", "http", "https"];
 // const SCHEMES_VALID_REGEXP = SCHEMES_VALID.join("|");
+const SCHEMES_ALL_VALID = ["http", "https"];
+// const SCHEMES_ALL_VALID_REGEXP = SCHEMES_ALL_VALID.join("|");
 
 const HOST_REGEXP = /^(?:\*\.)?[^*\/]+$|^\*$|^$/;
 
-// Firefox - copied this from resource://gre/modules/MatchPattern.jsm
-// const PARTS_REGEXP = new RegExp(`^([a-z]+|\\*)://(\\*|\\*\\.[^*/]+|[^*/]+|)(/.*)$`, "");
-const PARTS_REGEXP = new RegExp("^([a-z*]+)://([^/]+)(?:(/.*))$", "");
+var gPartsRegexp = null;
+if (GM_prefRoot.getValue("api.@match.better")) {
+  // MatchPattern.jsm
+  gPartsRegexp = new RegExp(`^([a-z]+|\\*)://(\\*|\\*\\.[^*/]+|[^*/]+|)(/.*)$`, "");
+} else {
+  gPartsRegexp = new RegExp("^([a-z*]+)://([^/]+)(?:(/.*))$", "");
+}
 
 // For the format of "pattern".
 // http://code.google.com/chrome/extensions/match_patterns.html
@@ -79,10 +134,19 @@ function MatchPattern(aPattern) {
     this._all = false;
   }
 
-  let match = aPattern.match(PARTS_REGEXP);
+  let match = aPattern.match(gPartsRegexp);
   // We allow the host to be empty for file URLs.
-  // if (!match || ((match[1] != "file") && (match[2] == ""))) {
-  if (!match) {
+  let _match = match;
+  if (GM_prefRoot.getValue("api.@match.better")) {
+    if (!match || ((match[1] != "file") && (match[2] == ""))) {
+      _match = false;
+    }
+  } else {
+    if (!match) {
+      _match = false;
+    }
+  }
+  if (!_match) {
     aPattern = "[" + (typeof aPattern) + "] " + aPattern;
     throw new Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
@@ -119,11 +183,17 @@ function MatchPattern(aPattern) {
             .replace("%1", path));
   }
 
+  // MatchPattern.jsm
+  //
+  // this._host = host;
+  // let pathMatch = globToRegexp(path, false);
+  // this._pathMatch = pathMatch.test.bind(pathMatch);
+
   if (host) {
     // We have to manually create the hostname regexp (instead of using
     // GM_convertToRegexp) to properly handle *.example.tld, which should match
     // example.tld and any of its subdomains, but not anotherexample.tld.
-    this._hostExpr = new RegExp("^" +
+    this._hostRegexp = new RegExp("^" +
         // Two characters in the host portion need special treatment:
         //   - "." should not be treated as a wildcard, so we escape it to \.
         //   - if the hostname only consists of "*" (i.e. full wildcard),
@@ -134,10 +204,11 @@ function MatchPattern(aPattern) {
         // by the replace above.
             .replace("*\\.", "(.*\\.)?") + "$", "i");
   } else {
-    // If omitted, then it means "", an alias for localhost.
-    this._hostExpr = /^$/;
+    // If omitted, then it means "",
+    // used for file: scheme (or an alias for localhost).
+    this._hostRegexp = /^$/;
   }
-  this._pathExpr = GM_convertToRegexp(path, false, true);
+  this._pathRegexp = GM_convertToRegexp(path, false, true);
 }
 
 Object.defineProperty(MatchPattern.prototype, "pattern", {
@@ -157,9 +228,23 @@ MatchPattern.prototype.doMatch = function (aUriSpec) {
   if (this._all) {
     return true;
   }
+
+  if ((this._scheme == "*")
+      && (SCHEMES_ALL_VALID.indexOf(matchURI.scheme) == -1)) {
+    return false;
+  }
   if ((this._scheme != "*") && (this._scheme != matchURI.scheme)) {
     return false;
   }
-  return this._hostExpr.test(matchURI.host)
-      && this._pathExpr.test(matchURI.path);
+
+  // MatchPattern.jsm
+  //
+  // return this.getHostMatcher(matchURI, this._host)
+  //     && this._pathMatch(matchURI.path);
+  // [or]
+  // return this.getHostMatcher(matchURI, this._host)
+  //     && this._pathMatch(matchURI.cloneIgnoringRef().path);
+
+  return this._hostRegexp.test(matchURI.host)
+      && this._pathRegexp.test(matchURI.path);
 };
