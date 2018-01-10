@@ -20,7 +20,7 @@
 <!ENTITY menu.manage.accesskey "M">
 <!ENTITY menu.new "New User Script...">
 <!ENTITY menu.new.accesskey "N">
-<!ENTITY menu.options "Greasemonkey Options...">
+<!ENTITY menu.options "Greasemonkey Preferences...">
 <!ENTITY menu.options.accesskey "O">
 <!ENTITY menu.show "View User Script Source">
 <!ENTITY menu.show.accesskey "V">

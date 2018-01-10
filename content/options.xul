@@ -1,12 +1,15 @@
 <?xml version="1.0"?>
 
 <!DOCTYPE prefwindow [
-  <!ENTITY % greasemonkeyDTD SYSTEM
-    "chrome://greasemonkey/locale/greasemonkey.dtd">
+  <!ENTITY % browserDTD SYSTEM
+    "chrome://browser/locale/browser.dtd">
   <!ENTITY % preferencesDTD SYSTEM
     "chrome://browser/locale/preferences/preferences.dtd">
-  %greasemonkeyDTD;
+  <!ENTITY % greasemonkeyDTD SYSTEM
+    "chrome://greasemonkey/locale/greasemonkey.dtd">
+  %browserDTD;
   %preferencesDTD;
+  %greasemonkeyDTD;
 ]>
 
 <?xml-stylesheet href="chrome://global/skin/global.css"
@@ -18,7 +21,7 @@
 <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
   buttons="accept,cancel"
   id="greasemonkey-options-dialog"
-  title="Greasemonkey - &prefWindow.titleWin;"
+  title="Greasemonkey - &preferencesCmd2.label;"
   onload="GM_loadOptions();"
   ondialogaccept="GM_saveOptions();"
   ondialogcancel="close();"
@@ -28,11 +31,11 @@
 <script type="application/x-javascript"
   src="chrome://greasemonkey/content/options.js" />
 
-<dialogheader title="Greasemonkey" description="&prefWindow.titleWin;" />
+<dialogheader title="Greasemonkey" description="&preferencesCmd2.label;" />
 
 <vbox flex="1">
   <groupbox>
-    <caption label="&prefWindow.titleWin;" />
+    <caption label="&preferencesCmd2.label;" />
     <checkbox id="secure-update" label="&requireSecureUpdates;" />
     <checkbox id="disable-update" label="&requireDisabledScriptsUpdates;" />
     <checkbox id="timeout-update" label="&requireTimeoutUpdates;" />

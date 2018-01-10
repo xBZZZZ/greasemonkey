@@ -20,7 +20,7 @@
 <!ENTITY menu.manage.accesskey "H">
 <!ENTITY menu.new "Uusi skripti...">
 <!ENTITY menu.new.accesskey "U">
-<!ENTITY menu.options "Greasemonkey Options...">
+<!ENTITY menu.options "Greasemonkey Preferences...">
 <!ENTITY menu.options.accesskey "O">
 <!ENTITY menu.show "Näytä skriptin lähdekoodi">
 <!ENTITY menu.show.accesskey "L">

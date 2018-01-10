@@ -20,7 +20,7 @@
 <!ENTITY menu.manage.accesskey "م">
 <!ENTITY menu.new "دستنویس کاربری جدید...">
 <!ENTITY menu.new.accesskey "ج">
-<!ENTITY menu.options "Greasemonkey Options...">
+<!ENTITY menu.options "Greasemonkey Preferences...">
 <!ENTITY menu.options.accesskey "O">
 <!ENTITY menu.show "نمایش متن دستنویس کاربری">
 <!ENTITY menu.show.accesskey "ش">
