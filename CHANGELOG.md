@@ -1,5 +1,14 @@
 ## Changelog
 
+#### 3.31beta1 (2018-01-10)
+
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.30Fork...3.31beta1Fork)
+
+* API: @match - Fix "*:" scheme (valid for ["http", "https"] only)
+* API: @match - Fix "file:" scheme / A better regular expression (experimental, opt-in)
+* Basilisk: Fix "XML Parsing Error: undefined entity" ([#270](https://github.com/MoonchildProductions/moebius/issues/270))
+* Style clean up 
+
 #### 3.30 (2017-12-30)
 
 [All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.30rc4Fork...3.30Fork)
