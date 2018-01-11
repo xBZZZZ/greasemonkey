@@ -21,7 +21,7 @@
 <!ENTITY menu.new "Naujas naudotojo scenarijus...">
 <!ENTITY menu.new.accesskey "N">
 <!ENTITY menu.options "Greasemonkey pasirinktys...">
-<!ENTITY menu.options.accesskey "P">
+<!ENTITY menu.options.accesskey "p">
 <!ENTITY menu.show "Peržiūrėti naudotojo scenarijaus pradinį kodą">
 <!ENTITY menu.show.accesskey "S">
 <!ENTITY menu.webSites "Web sites...">

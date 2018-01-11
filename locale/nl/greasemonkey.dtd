@@ -17,11 +17,11 @@
 <!ENTITY menu.install "Gebruikersscript installeren…">
 <!ENTITY menu.install.accesskey "S">
 <!ENTITY menu.manage "Gebruikersscripts beheren…">
-<!ENTITY menu.manage.accesskey "U">
+<!ENTITY menu.manage.accesskey "u">
 <!ENTITY menu.new "Nieuw gebruikersscript…">
 <!ENTITY menu.new.accesskey "N">
 <!ENTITY menu.options "Greasemonkey-opties…">
-<!ENTITY menu.options.accesskey "O">
+<!ENTITY menu.options.accesskey "o">
 <!ENTITY menu.show "Broncode van gebruikersscript bekijken">
 <!ENTITY menu.show.accesskey "k">
 <!ENTITY menu.webSites "Websites…">

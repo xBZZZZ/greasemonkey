@@ -21,7 +21,7 @@
 <!ENTITY menu.new "Nový uživatelský skript...">
 <!ENTITY menu.new.accesskey "N">
 <!ENTITY menu.options "Greasemonkey nastavení...">
-<!ENTITY menu.options.accesskey "n">
+<!ENTITY menu.options.accesskey "G">
 <!ENTITY menu.show "Zobrazit zdrojový kód uživatelského skriptu">
 <!ENTITY menu.show.accesskey "Z">
 <!ENTITY menu.webSites "Webové stránky...">
