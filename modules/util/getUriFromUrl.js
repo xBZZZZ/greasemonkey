@@ -17,7 +17,7 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 
 function getUriFromUrl(aUrl, aBase) {
   let baseUri = null;
-  if (typeof aBase === "string") {
+  if (typeof aBase == "string") {
     baseUri = GM_util.getUriFromUrl(aBase);
   } else if (aBase) {
     baseUri = aBase;

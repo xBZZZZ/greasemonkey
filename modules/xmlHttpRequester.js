@@ -396,6 +396,15 @@ GM_xmlHttpRequester.prototype.setupRequestEvent = function (
   if (!eventCallback) {
     return undefined;
   }
+  if (typeof eventCallback != "function") {
+    throw new aWrappedContentWin.Error(
+        GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.xmlhttpRequest.callbackIsNotFunction")
+            .replace("%1", aDetails.url)
+            .replace("%2", "on" + aEvent),
+        aFileURL, null);
+  }
 
   // ...but ensure that the callback came from a script, not content,
   // by checking that its principal equals that of the sandbox.

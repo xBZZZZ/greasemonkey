@@ -118,7 +118,7 @@ function MenuCommandSandbox(
                 aMenuCommandCouldNotRunErrorStr.replace(
                     "%1", commands[detail.cookie].name),
                 aScriptFileURL, null);
-          } else if (typeof commandFunc !== "function") {
+          } else if (typeof commandFunc != "function") {
             throw new Error(
                 aMenuCommandCallbackIsNotFunctionErrorStr.replace(
                     "%1", commands[detail.cookie].name),

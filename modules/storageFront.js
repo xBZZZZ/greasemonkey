@@ -134,7 +134,7 @@ GM_ScriptStorageFront.prototype.getValue = function (aName, aDefVal) {
     value = value.length && value[0];
 
     // Avoid caching large values.
-    if ((typeof value === "string") && (value.length > CACHE_MAX_VALUE)) {
+    if ((typeof value == "string") && (value.length > CACHE_MAX_VALUE)) {
       count = 0;
       intentToCache = false;
     }
@@ -163,7 +163,7 @@ GM_ScriptStorageFront.prototype.getValue = function (aName, aDefVal) {
   if (typeof aDefVal == "undefined") {
     aDefVal = undefined;
   }
-  if ((value === undefined) || (value === null)) {
+  if ((typeof value == "undefined") || (value === null)) {
     return aDefVal;
   }
 

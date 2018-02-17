@@ -93,7 +93,7 @@ function GM_cookie(
       details.path = aDetails.path ? String(aDetails.path) : details.path;
     }
 
-    if (typeof details.name === "undefined") {
+    if (typeof details.name == "undefined") {
       throw new aWrappedContentWin.Error(
           GM_CONSTANTS.localeStringBundle.createBundle(
               GM_CONSTANTS.localeGreasemonkeyProperties)
@@ -227,7 +227,7 @@ function GM_cookie(
           aFileURL, null);
     }
 
-    if (typeof details.name === "undefined") {
+    if (typeof details.name == "undefined") {
       throw new aWrappedContentWin.Error(
           GM_CONSTANTS.localeStringBundle.createBundle(
               GM_CONSTANTS.localeGreasemonkeyProperties)
@@ -236,7 +236,7 @@ function GM_cookie(
               .replace("%2", typeof details.name),
           aFileURL, null);
     }
-    if (typeof details.value === "undefined") {
+    if (typeof details.value == "undefined") {
       throw new aWrappedContentWin.Error(
           GM_CONSTANTS.localeStringBundle.createBundle(
               GM_CONSTANTS.localeGreasemonkeyProperties)

@@ -212,7 +212,7 @@ function isScriptDetailView() {
 }
 
 function addonExecutesRichlistitem(aAddon) {
-  return !(typeof aAddon.richlistitem === "undefined");
+  return !(typeof aAddon.richlistitem == "undefined");
 }
 
 function addonExecutesNonFirst(aAddon) {

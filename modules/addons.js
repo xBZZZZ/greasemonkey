@@ -249,9 +249,9 @@ ScriptAddon.prototype.findUpdates = function (aUpdateListener, aReason) {
 
 ScriptAddon.prototype._handleRemoteUpdate = function (
     aUpdateListener, aResult, aInfo) {
-  function tryToCall(obj, methName) {
-    if (obj && (typeof obj[methName] != "undefined")) {
-      obj[methName].apply(obj, Array.prototype.slice.call(arguments, 2));
+  function tryToCall(aObj, aMethName) {
+    if (aObj && (typeof aObj[aMethName] != "undefined")) {
+      aObj[aMethName].apply(aObj, Array.prototype.slice.call(arguments, 2));
     }
   }
 

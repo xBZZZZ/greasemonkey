@@ -48,7 +48,7 @@ var gWindowsNameMaxLen = (240 - GM_util.scriptDir().path.length) / 2;
 /////////////////////////////// Private Helpers ////////////////////////////////
 
 function assertIsFunction(aFunc, aMessage) {
-  if (typeof aFunc !== typeof function () {}) {
+  if (typeof aFunc != typeof function () {}) {
     throw new Error(aMessage);
   }
 }

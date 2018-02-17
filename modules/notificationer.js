@@ -64,7 +64,7 @@ GM_notificationer.prototype.contentStart = function (
     }
   }
 
-  if (typeof _details.highlight !== "undefined") {
+  if (typeof _details.highlight != "undefined") {
     details.highlight = _details.highlight;
   }
   // i.e. a data scheme
@@ -123,7 +123,7 @@ GM_notificationer.prototype.contentStart = function (
     "onDone": details.ondone,
   };
 
-  if (typeof _notification.onClick !== "function") {
+  if (typeof _notification.onClick != "function") {
     throw new this.wrappedContentWin.Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
@@ -132,7 +132,7 @@ GM_notificationer.prototype.contentStart = function (
             .replace("%2", "onclick"),
         this.fileURL, null);
   }
-  if (typeof _notification.onDone !== "function") {
+  if (typeof _notification.onDone != "function") {
     throw new this.wrappedContentWin.Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
@@ -251,7 +251,7 @@ GM_notificationer.prototype.setupEvent = function (
       case "click":
         startEventCallback(
             aDetails["on" + "done"],
-            (aNotification.onclose !== "undefined"));
+            (typeof aNotification.onclose != "undefined"));
         break;
       case "close":
         if (!aDetails.timeoutWasReached) {

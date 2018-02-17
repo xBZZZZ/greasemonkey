@@ -21,7 +21,7 @@ function compareVersion(aTarget, aTargetBuildID) {
 
   result = versionChecker.compare(GM_CONSTANTS.xulAppInfo.version, aTarget);
 
-  if ((typeof aTargetBuildID !== "undefined") && (result == 0)) {
+  if ((typeof aTargetBuildID != "undefined") && (result == 0)) {
     let _buildID1 = Number(GM_CONSTANTS.xulAppInfo.platformBuildID);
     let _buildID2 = Number(aTargetBuildID);
     if ((!Number.isNaN(_buildID1)) && (!Number.isNaN(_buildID2))) {

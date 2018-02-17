@@ -203,7 +203,7 @@ function corsCspOverride(aSubject, aTopic, aData) {
 
   var addonType = 0;
   if ((aDetailsIn != null)
-      && (typeof aDetailsIn === "object")
+      && (typeof aDetailsIn == "object")
       && aDetailsIn.hasOwnProperty("responseHeaders")) {
     addonType = 1;
     aTopic = gCorsCspListener.value;

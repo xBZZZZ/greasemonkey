@@ -296,7 +296,7 @@ function injectGMInfo(aSandbox, aContentWin, aScript) {
 
   function getScriptSource() {
     let content = fileCache.get("scriptSource");
-    if (content === undefined) {
+    if (typeof content == "undefined") {
       // The alternative MIME type:
       // "text/plain;charset=" + GM_CONSTANTS.fileScriptCharset.toLowerCase()
       content = GM_util.fileXhr(scriptFileURL, "application/javascript");
@@ -308,7 +308,7 @@ function injectGMInfo(aSandbox, aContentWin, aScript) {
 
   function getMeta() {
     let meta = fileCache.get("meta");
-    if (meta === undefined) {
+    if (typeof meta == "undefined") {
       meta = extractMeta(getScriptSource());
       fileCache.set("meta", meta);
     }

@@ -68,7 +68,7 @@ GM_PrefManager.prototype.getValue = function (aPrefName, aDefaultValue) {
         return this.pref.getIntPref(aPrefName);
     }
   } catch (e) {
-    return (aDefaultValue != undefined) ? aDefaultValue : null;
+    return (typeof aDefaultValue != "undefined") ? aDefaultValue : null;
   }
 
   return null;

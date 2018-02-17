@@ -112,7 +112,7 @@ GM_Resources.prototype.getResourceText = function (
     aWrappedContentWin, aSandbox, aFileURL, aName, aResponseType) {
   // Verify the existence of the resource.
   let dep = this._getDependency(aWrappedContentWin, aFileURL, aName);
-  if (dep.textContent !== undefined) {
+  if (typeof dep.textContent != "undefined") {
     return dep.textContent;
   }
   return Cu.cloneInto(GM_util.fileXhr(
