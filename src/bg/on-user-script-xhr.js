@@ -6,13 +6,21 @@ listens for a connection on a Port, and
 // Private implementation.
 (function() {
 
+const gExtensionUrl = chrome.extension.getURL('');
+const gHeadersToReplace = ['cookie', 'origin', 'referer'];
+const gDummyHeaderPrefix = 'x-greasemonkey-';
+
+
 function onUserScriptXhr(port) {
   if (port.name != 'UserScriptXhr') return;
 
   let xhr = new XMLHttpRequest();
   port.onMessage.addListener(msg => {
+    checkApiCallAllowed('GM.xmlHttpRequest', msg.uuid);
     switch (msg.name) {
-      case 'open': open(xhr, msg.details, port); break;
+      case 'open':
+        open(xhr, msg.details, port);
+        break;
       default:
         console.warn('UserScriptXhr port un-handled message name:', msg.name);
     }
@@ -23,7 +31,6 @@ chrome.runtime.onConnect.addListener(onUserScriptXhr);
 
 function open(xhr, d, port) {
   function xhrEventHandler(src, event) {
-    console.log('xhr event;', src, event);
     var responseState = {
       context: d.context || null,
       finalUrl: xhr.responseURL,
@@ -101,7 +108,13 @@ function open(xhr, d, port) {
   if (d.headers) {
     for (var prop in d.headers) {
       if (Object.prototype.hasOwnProperty.call(d.headers, prop)) {
-        xhr.setRequestHeader(prop, d.headers[prop]);
+        var propLower = prop.toLowerCase();
+        if (gHeadersToReplace.includes(propLower)) {
+          xhr.setRequestHeader(gDummyHeaderPrefix + propLower, d.headers[prop]);
+        }
+        else {
+          xhr.setRequestHeader(prop, d.headers[prop]);
+        }
       }
     }
   }
@@ -118,5 +131,38 @@ function open(xhr, d, port) {
     xhr.send(body);
   }
 }
+
+
+function getHeader(headers, name) {
+  name = name.toLowerCase();
+  for (var header of headers) {
+    if (header.name.toLowerCase() === name) {
+      return header;
+    }
+  }
+  return null;
+}
+
+
+function rewriteHeaders(e) {
+  if (e.originUrl && e.originUrl.startsWith(gExtensionUrl)) {
+    for (var name of gHeadersToReplace) {
+      var prefixedHeader = getHeader(e.requestHeaders, gDummyHeaderPrefix + name);
+      if (prefixedHeader) {
+        var unprefixedHeader = getHeader(e.requestHeaders, name);
+        if (unprefixedHeader) {
+          e.requestHeaders.splice(e.requestHeaders.indexOf(unprefixedHeader), 1);
+        }
+        e.requestHeaders.push({name: name, value: prefixedHeader.value});
+        e.requestHeaders.splice(e.requestHeaders.indexOf(prefixedHeader), 1);
+      }
+    }
+  }
+  return {'requestHeaders': e.requestHeaders};
+}
+chrome.webRequest.onBeforeSendHeaders.addListener(
+    rewriteHeaders,
+    {'urls': ['<all_urls>'], 'types': ['xmlhttprequest']},
+    ['blocking', 'requestHeaders']);
 
 })();

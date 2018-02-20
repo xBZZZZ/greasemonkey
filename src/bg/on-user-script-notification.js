@@ -24,12 +24,14 @@ function onUserScriptNotification(port) {
   if (port.name != 'UserScriptNotification') return;
 
   port.onMessage.addListener(msg => {
+    checkApiCallAllowed('GM.notification', msg.uuid);
     switch (msg.name) {
       case 'create':
         createNotification(msg.details, port);
         break;
       default:
-        console.warn('UserScriptNotification port un-handled message name:', msg.name);
+        console.warn(
+            'UserScriptNotification port un-handled message name:', msg.name);
     }
   });
 }
@@ -38,12 +40,15 @@ chrome.runtime.onConnect.addListener(onUserScriptNotification);
 
 chrome.notifications.onClicked.addListener(id => {
   let port = portMap.get(id);
-  port.postMessage({type: 'onclick'});
+  if (port) {
+    port.postMessage({type: 'onclick'});
+  }
 });
 
 
 chrome.notifications.onClosed.addListener(id => {
   let port = portMap.get(id);
+  if (!port) return;
   portMap.delete(id);
   port.postMessage({type: 'ondone'});
   port.disconnect();

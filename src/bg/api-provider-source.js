@@ -29,6 +29,8 @@ function apiProviderSource(userScript) {
   let source = '(function() {\n';
   // A private copy of the script UUID which cannot be tampered with.
   source += 'const _uuid = "' + userScript.uuid + '";\n\n';
+  // A private copy of the localization function, used by some of the API functions.
+  source += 'const _ = ' + _.toString() + ';\n\n';
 
   if (grants.includes('GM.deleteValue')) {
     source += 'GM.deleteValue = ' + GM_deleteValue.toString() + ';\n\n';
@@ -157,11 +159,11 @@ function GM_notification(text, title, image, onclick) {
   }
 
   if (typeof opt.text != 'string') {
-    throw new Error('GM.notification: "text" must be a string');
+    throw new Error(_('GM.notification: "text" must be a string'));
   }
 
   if (typeof opt.title != 'string') opt.title = 'Greasemonkey';
-  if (typeof opt.image != 'string') opt.image = 'skin/icon32.png';
+  if (typeof opt.image != 'string') opt.image = 'skin/icon.svg';
 
   let port = chrome.runtime.connect({name: 'UserScriptNotification'});
   port.onMessage.addListener(msg => {
@@ -169,12 +171,13 @@ function GM_notification(text, title, image, onclick) {
     if (typeof opt[msgType] == 'function') opt[msgType]();
   });
   port.postMessage({
-    name: 'create',
-    details: {
-        title: opt.title,
-        text: opt.text,
-        image: opt.image
-    }
+    'details': {
+      'title': opt.title,
+      'text': opt.text,
+      'image': opt.image
+    },
+    'name': 'create',
+    'uuid': _uuid,
   });
 }
 
@@ -185,18 +188,24 @@ function GM_openInTab(url, openInBackground) {
   try {
     objURL = new URL(url, location.href);
   } catch(e) {
-    throw new Error('GM.openInTab: Could not understand the URL: ' + url);
+    throw new Error(_('GM.openInTab: Could not understand the URL: $1', url));
   }
 
   chrome.runtime.sendMessage({
+    'active': (openInBackground === false),
     'name': 'ApiOpenInTab',
     'url': objURL.href,
-    'active': (openInBackground === false),
+    'uuid': _uuid,
   });
 }
 
 
 function GM_setClipboard(text) {
+  // TODO: This.  The check only works background side, but this implementation
+  // relies on clipboardWrite permission leaking to the content script so we
+  // couldn't block a script from doing this directly, anyway.
+  //checkApiCallAllowed('GM.setClipboard', message.uuid);
+
   function onCopy(event) {
     document.removeEventListener('copy', onCopy, true);
 
@@ -212,23 +221,23 @@ function GM_setClipboard(text) {
 
 
 function GM_xmlHttpRequest(d) {
-  if (!d) throw new Error('GM.xmlHttpRequest: Received no details.');
-  if (!d.url) throw new Error('GM.xmlHttpRequest: Received no URL.');
+  if (!d) throw new Error(_('GM.xmlHttpRequest: Received no details.'));
+  if (!d.url) throw new Error(_('GM.xmlHttpRequest: Received no URL.'));
 
   let url;
   try {
     url = new URL(d.url, location.href);
   } catch (e) {
     throw new Error(
-        'GM.xmlHttpRequest: Could not understand the URL: ' + d.url
-        + '\n' + e);
+        _('GM.xmlHttpRequest: Could not understand the URL: $1\n$2', d.url, e));
   }
 
   if (url.protocol != 'http:'
       && url.protocol != 'https:'
       && url.protocol != 'ftp:'
   ) {
-    throw new Error('GM.xmlHttpRequest: Passed URL has bad protocol: ' + d.url);
+    throw new Error(
+        _('GM.xmlHttpRequest: Passed URL has bad protocol: $1', d.url));
   }
 
   let port = chrome.runtime.connect({name: 'UserScriptXhr'});
@@ -247,7 +256,11 @@ function GM_xmlHttpRequest(d) {
   noCallbackDetails.upload = {};
   d.upload && Object.keys(k => noCallbackDetails.upload[k] = true);
   noCallbackDetails.url = url.href;
-  port.postMessage({name: 'open', details: noCallbackDetails});
+  port.postMessage({
+    'details': noCallbackDetails,
+    'name': 'open',
+    'uuid': _uuid,
+  });
 
   // TODO: Return an object which can be `.abort()`ed.
 }
