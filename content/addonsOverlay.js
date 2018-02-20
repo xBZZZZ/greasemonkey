@@ -362,14 +362,14 @@ function getSortBy(aButtons) {
   return button;
 }
 
-function setSortBy(button) {
+function setSortBy(aButton) {
   let ascending = SORT_BY.checkStateValueDescending
-      != button.getAttribute("checkState");
+      != aButton.getAttribute("checkState");
 
   GM_prefRoot.setValue(
       "sortBy",
       (!ascending ? SORT_BY.checkStateReverse : "")
-      + button.getAttribute("sortBy"));
+      + aButton.getAttribute("sortBy"));
 }
 
 function onSortersClicked(aEvent) {

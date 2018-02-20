@@ -67,7 +67,7 @@ function GM_loadOptions() {
       .value = GM_prefRoot.getValue("newScript.template");
 }
 
-function GM_saveOptions(checkbox) {
+function GM_saveOptions() {
   GM_prefRoot.setValue("requireSecureUpdates",
       !!document.getElementById("secure-update").checked);
   GM_prefRoot.setValue("requireDisabledScriptsUpdates",
