@@ -42,13 +42,6 @@ function GM_BrowserUI() {};
 GM_BrowserUI.init = function () {
   window.addEventListener("load", GM_BrowserUI.chromeLoad, false);
   window.addEventListener("unload", GM_BrowserUI.chromeUnload, false);
-  window.messageManager.addMessageListener("greasemonkey:open-in-tab",
-      GM_BrowserUI.openInTab);
-  /*
-  // GM_windowClose, GM_windowFocus
-  window.messageManager.addMessageListener("greasemonkey:window",
-      GM_BrowserUI.window);
-  */
   window.messageManager.addMessageListener("greasemonkey:DOMContentLoaded",
       function (aMessage) {
         let contentType = aMessage.data.contentType;
@@ -73,6 +66,10 @@ GM_BrowserUI.init = function () {
         }
       });
   */
+  window.messageManager.addMessageListener("greasemonkey:open-in-tab",
+      GM_BrowserUI.openInTab);
+  window.messageManager.addMessageListener("greasemonkey:window",
+      GM_BrowserUI.window);
 };
 
 /**
@@ -155,7 +152,6 @@ GM_BrowserUI.openInTab = function (aMessage) {
 /**
  * Handles tab close/focus for a GM_windowClose/GM_windowFocus API call.
  */
-/*
 GM_BrowserUI.window = function (aMessage) {
   var browser = aMessage.target;
   var tabBrowser = browser.getTabBrowser();
@@ -189,7 +185,6 @@ GM_BrowserUI.window = function (aMessage) {
     }
   // }, 0);
 };
-*/
 
 /**
  * The browser XUL has unloaded. Destroy references/watchers/listeners.

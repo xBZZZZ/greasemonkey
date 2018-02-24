@@ -222,7 +222,6 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
         null, GM_setClipboard, aContentWin, aScript.fileURL);
   }
 
-  /*
   // See #2538 (an alternative).
   _API1 = "GM_windowClose";
   _API2 = _API1.replace(
@@ -240,7 +239,6 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
     sandbox[_API1] = GM_util.hitch(
         null, GM_window, aFrameScope, aScript.fileURL, "focus");
   }
-  */
 
   _API1 = "GM_xmlhttpRequest";
   _API2 = _API1.replace(
