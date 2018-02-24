@@ -18,7 +18,7 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 const GM_CONSTANTS = {
   "addonAPI": [
     "GM_addStyle",
-    // "GM_cookie",
+    "GM_cookie",
     "GM_deleteValue",
     "GM_getResourceText",
     "GM_getResourceURL",

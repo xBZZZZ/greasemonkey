@@ -21,7 +21,7 @@ Cu.import("chrome://greasemonkey-modules/content/notificationer.js");
 Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
 Cu.import("chrome://greasemonkey-modules/content/storageFront.js");
 Cu.import("chrome://greasemonkey-modules/content/thirdParty/getChromeWinForContentWin.js");
-// Cu.import("chrome://greasemonkey-modules/content/thirdParty/GM_cookie.js");
+Cu.import("chrome://greasemonkey-modules/content/thirdParty/GM_cookie.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
 Cu.import("chrome://greasemonkey-modules/content/xmlHttpRequester.js");
 
@@ -94,7 +94,6 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
         null, GM_addStyle, aContentWin, aScript.fileURL, aRunAt);
   }
 
-  /*
   if (GM_prefRoot.getValue("api.GM_cookie")) {
     _API1 = "GM_cookie";
     _API2 = _API1.replace(
@@ -106,7 +105,6 @@ function createSandbox(aFrameScope, aContentWin, aUrl, aScript, aRunAt) {
           aScript.fileURL, aUrl);
     }
   }
-  */
 
   let scriptStorage = new GM_ScriptStorageFront(
       aFrameScope, aContentWin, sandbox, aScript);
