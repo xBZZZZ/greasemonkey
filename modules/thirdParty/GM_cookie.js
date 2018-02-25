@@ -213,8 +213,8 @@ function GM_cookie(
       details.secure = !!aDetails.secure;
       details.httpOnly = !!aDetails.httpOnly;
       details.session = !!aDetails.session;
-      details.expirationDate = aDetails.expirationDate
-          ? Number(aDetails.expirationDate)
+      details.expiration = aDetails.expiration
+          ? Number(aDetails.expiration)
           : Date.parse("Jan 17, 2038") / 1000;
       details.sameSite = aDetails.sameSite ? String(aDetails.sameSite) : null;
     } else {
@@ -258,7 +258,7 @@ function GM_cookie(
             details.secure,
             details.httpOnly,
             details.session,
-            details.expirationDate,
+            details.expiration,
             aWrappedContentWin.document.nodePrincipal.originAttributes);
             /*
             aWrappedContentWin.document.nodePrincipal.originAttributes,
@@ -273,9 +273,9 @@ function GM_cookie(
             details.secure,
             details.httpOnly,
             details.session,
-            details.expirationDate);
+            details.expiration);
             /*
-            details.expirationDate,
+            details.expiration,
             details.sameSite);
             */
       }
