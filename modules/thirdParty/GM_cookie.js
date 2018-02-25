@@ -45,7 +45,7 @@ function getSanitizeHost(aHost) {
 
 function isCookieAtHost(aCookie, aHost) {
   if (aCookie.host == null) {
-    return (aHost == null);
+    return aHost == null;
   }
   if (aCookie.host.startsWith(".")) {
     return ("." + aHost).endsWith(aCookie.host);
@@ -54,7 +54,7 @@ function isCookieAtHost(aCookie, aHost) {
     return aHost.startsWith("file://" + aCookie.path);
   }
 
-  return (aCookie.host == aHost);
+  return aCookie.host == aHost;
 }
 
 function GM_cookie(
