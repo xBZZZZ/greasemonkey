@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "Kullanıcı betikleri al">
 <!ENTITY greasemonkey.noScriptShere "Bu sayfada çalışan yüklenmiş betikler yok.">
 <!ENTITY greasemonkey.youHaveNoScripts "Yüklü bir kullanıcı betiğiniz yok">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "çalışmaz:">
 <!ENTITY install.downloadError "İndirme Hatası">
 <!ENTITY install.installButton "Kur">
 <!ENTITY install.matches "eşleşen:">
 <!ENTITY install.runsOn "çalışır:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "Betik Kaynağını Göster">
 <!ENTITY install.title "Greasemonkey Kurulumu">
 <!ENTITY install.warning1 "Kötü amaçlı betikler gizliliğinizi ihlal edebilir ve sizin bilginiz olmadan sizin adınıza hareket edebilir.">

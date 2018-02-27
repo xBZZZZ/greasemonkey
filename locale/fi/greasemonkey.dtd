@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "Hanki skriptejä">
 <!ENTITY greasemonkey.noScriptShere "Mitään skripteistä ei ajeta tällä sivulla.">
 <!ENTITY greasemonkey.youHaveNoScripts "Sinulla ei ole yhtään skriptiä asennettuna">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "pois lukien sivut:">
 <!ENTITY install.downloadError "Download Error">
 <!ENTITY install.installButton "Asenna">
 <!ENTITY install.matches "täsmää:">
 <!ENTITY install.runsOn "ajetaan sivuilla:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "Näytä skriptin lähdekoodi">
 <!ENTITY install.title "Greasemonkey-asennus">
 <!ENTITY install.warning1 "Haitalliset skriptit voivat vaarantaa yksityisyytesi ja toimia tietämättäsi.">

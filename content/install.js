@@ -26,9 +26,9 @@ var gTimer = null;
 var gTotalDelay = new GM_PrefManager().getValue("installDelay", 5);
 
 function init() {
-  setUpIncludes("includes", "includes-label", "includes-desc",
+  setUpIncludes("includes", "includes-label", "includes-description",
       gScript.includes);
-  setUpIncludes("excludes", "excludes-label", "excludes-desc",
+  setUpIncludes("excludes", "excludes-label", "excludes-description",
       gScript.excludes);
 
   let matches = [];
@@ -36,7 +36,7 @@ function init() {
     let match = gScript.matches[i];
     matches.push(match.pattern);
   }
-  setUpIncludes("matches", "matches-label", "matches-desc", matches);
+  setUpIncludes("matches", "matches-label", "matches-description", matches);
 
   gShowScriptButton = document.documentElement.getButton("extra1");
   gAcceptButton = document.documentElement.getButton("accept");
@@ -50,14 +50,37 @@ function init() {
   document.getElementById("heading").appendChild(
       document.createTextNode(bundle.getString("greeting.msg")));
 
-  let desc = document.getElementById("script-description");
-  desc.appendChild(document.createElementNS(HTML_NS, "strong"));
-  desc.firstChild.appendChild(document.createTextNode(gScript.localized.name));
+  let description = document.getElementById("script-description");
+  description.appendChild(document.createElementNS(HTML_NS, "strong"));
+  description.firstChild.appendChild(
+      document.createTextNode(gScript.localized.name));
   if (gScript.version) {
-    desc.appendChild(document.createTextNode(" " + gScript.version));
+    description.appendChild(document.createTextNode(" " + gScript.version));
   }
-  desc.appendChild(document.createElementNS(HTML_NS, "br"));
-  desc.appendChild(document.createTextNode(gScript.localized.description));
+  description.appendChild(document.createElementNS(HTML_NS, "br"));
+  description.appendChild(
+      document.createTextNode(gScript.localized.description));
+
+  let notice = document.getElementById("description-notice");
+  let originalScriptVersion = document.getElementById(
+      "original-script-version");
+  let showOriginalScriptSource = document.getElementById(
+      "original-script-source");
+
+  let existingScript = GM_util.getService().config
+      .getExistingScriptByScript(gScript);
+  if (existingScript) {
+    notice.style.display = "block";
+    if (existingScript.version) {
+      originalScriptVersion.setAttribute(
+          "value", " (" + existingScript.version + ")");
+    }
+    showOriginalScriptSource.addEventListener("command", function () {
+      GM_util.openInEditor(existingScript);
+    });
+  } else {
+    notice.style.display = "none";
+  }
 
   if (gRemoteScript.done) {
     // Download finished before we could open, fake a progress event.
@@ -134,18 +157,18 @@ function pauseTimer() {
   updateLabel();
 }
 
-function setUpIncludes(aBox, aLabel, aDesc, aIncludes) {
+function setUpIncludes(aBox, aLabel, aDescription, aIncludes) {
   if (aIncludes.length > 0) {
     document.getElementById(aBox).style.display = "block";
     document.getElementById(aLabel).style.display = "block";
-    aDesc = document.getElementById(aDesc);
+    aDescription = document.getElementById(aDescription);
 
     for (let i = 0, iLen = aIncludes.length; i < iLen; i++) {
-      aDesc.appendChild(document.createTextNode(aIncludes[i]));
-      aDesc.appendChild(document.createElementNS(HTML_NS, "br"));
+      aDescription.appendChild(document.createTextNode(aIncludes[i]));
+      aDescription.appendChild(document.createElementNS(HTML_NS, "br"));
     }
 
-    aDesc.removeChild(aDesc.lastChild);
+    aDescription.removeChild(aDescription.lastChild);
   }
 }
 

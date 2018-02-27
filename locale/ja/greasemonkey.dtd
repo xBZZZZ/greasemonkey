@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "ユーザースクリプトを入手">
 <!ENTITY greasemonkey.noScriptShere "このページで実行するスクリプトはインストールされていません。">
 <!ENTITY greasemonkey.youHaveNoScripts "スクリプトがインストールされていません">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "実行しないページ:">
 <!ENTITY install.downloadError "ダウンロードエラー">
 <!ENTITY install.installButton "インストール">
 <!ENTITY install.matches "一致:">
 <!ENTITY install.runsOn "実行するページ:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "スクリプトのソースを表示">
 <!ENTITY install.title "Greasemonkey インストール">
 <!ENTITY install.warning1 "悪意のあるスクリプトはあなたのプライバシーを侵害し、知らぬ間にあなたになりすまして動作することがあります。">

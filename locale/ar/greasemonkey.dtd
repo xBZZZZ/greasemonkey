@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "أجلب السكربتات">
 <!ENTITY greasemonkey.noScriptShere "لايوجد سكربت مثبت يعمل على هذه الصفحة.">
 <!ENTITY greasemonkey.youHaveNoScripts "انت لم تثبت أي سكربت">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "لايعمل على :">
 <!ENTITY install.downloadError "Download Error">
 <!ENTITY install.installButton "تثبيت">
 <!ENTITY install.matches "البحوث:">
 <!ENTITY install.runsOn "يعمل على :">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "مصدر السكربت">
 <!ENTITY install.title "مثبت السكربتات">
 <!ENTITY install.warning1 "السكربتات الخبيثة يمكن ان تنتهك خصوصيتك وتعمل دون علمك.">

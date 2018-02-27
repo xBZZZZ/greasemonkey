@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "Получаване на потребителски скриптове">
 <!ENTITY greasemonkey.noScriptShere "Няма инсталирани скриптове, които да се изпълняват на тази страница.">
 <!ENTITY greasemonkey.youHaveNoScripts "Нямате инсталирани потребителски скриптове">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "не работи на:">
 <!ENTITY install.downloadError "Грешка при изтегляне">
 <!ENTITY install.installButton "Инсталиране">
 <!ENTITY install.matches "отговаря на:">
 <!ENTITY install.runsOn "работи на:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "Показване на изходния код на скрипта">
 <!ENTITY install.title "Инсталация на Greasemonkey">
 <!ENTITY install.warning1 "Зловредните скриптове могат да получат достъп до Вашата лична информация и да се представят за Вас без Ваше знание. ">

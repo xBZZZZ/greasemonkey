@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "Obter scripts">
 <!ENTITY greasemonkey.noScriptShere "Ningún script instalado en execución.">
 <!ENTITY greasemonkey.youHaveNoScripts "Non ten scripts de usuario instalados">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "non se executa en:">
 <!ENTITY install.downloadError "Erro de descarga">
 <!ENTITY install.installButton "Instalar">
 <!ENTITY install.matches "coincidencias:">
 <!ENTITY install.runsOn "execútase en:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "Mostrar o código fonte">
 <!ENTITY install.title "Instalación do Greasemonkey">
 <!ENTITY install.warning1 "Os scripts maliciosos poden violar a súa privacidade e comprometelo sen o seu coñecemento.">

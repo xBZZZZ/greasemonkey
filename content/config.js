@@ -355,6 +355,15 @@ Config.prototype.updateModifiedScripts = function (
   this._save();
 };
 
+Config.prototype.getExistingScriptByScript = function (aScript) {
+  let existingIndex = this._find(aScript);
+  if (existingIndex > -1) {
+    return this.scripts[existingIndex];
+  } else {
+    return null;
+  }
+};
+
 Config.prototype.getScriptById = function (aScriptId) {
   for (let i = 0, iLen = this.scripts.length; i < iLen ; i++) {
     let script = this.scripts[i];

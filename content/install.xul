@@ -39,18 +39,24 @@
       </vbox>
       <vbox id="includes">
         <label id="includes-label" value="&install.runsOn;" />
-        <description id="includes-desc" />
+        <description id="includes-description" />
       </vbox>
       <vbox id="matches">
         <label id="matches-label" value="&install.matches;" />
-        <description id="matches-desc" />
+        <description id="matches-description" />
       </vbox>
       <vbox id="excludes">
         <label id="excludes-label" value="&install.butNotOn;" />
-        <description id="excludes-desc" />
+        <description id="excludes-description" />
       </vbox>
       <spacer flex="1" />
     </vbox>
+
+    <description id="description-notice">
+      &install.alreadyInstalled;<label id="original-script-version" value="" />:
+      <button id="original-script-source"
+        label="&install.showOriginalScriptSource;" />
+    </description>
 
     <description id="description-warning1">
       &install.warning1;

@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "取得使用者腳本">
 <!ENTITY greasemonkey.noScriptShere "沒有任何在此頁面執行的腳本。">
 <!ENTITY greasemonkey.youHaveNoScripts "您尚未安裝任何腳本">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "不執行於:">
 <!ENTITY install.downloadError "下載錯誤">
 <!ENTITY install.installButton "安裝">
 <!ENTITY install.matches "符合:">
 <!ENTITY install.runsOn "執行於:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "顯示腳本來源">
 <!ENTITY install.title "Greasemonkey 安裝">
 <!ENTITY install.warning1 "惡意的腳本可能會危害您的隱私，並在您不知情的情況下以您的名義執行。">

@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "Λήψη κώδικα χρηστών">
 <!ENTITY greasemonkey.noScriptShere "Κανένας εγκατεστημένος κώδικας δεν εκτελείτε σε αυτή τη σελίδα.">
 <!ENTITY greasemonkey.youHaveNoScripts "Δεν έχετε κανένα εγκατεστημένο κώδικα χρήστη">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "δεν εκτελείται ως:">
 <!ENTITY install.downloadError "Download Error">
 <!ENTITY install.installButton "Εγκατάσταση">
 <!ENTITY install.matches "ταιριάζει:">
 <!ENTITY install.runsOn "εκτελείται ως:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "Προβολή Προέλευσης Κώδικα">
 <!ENTITY install.title "Εγκατάσταση Greasemonkey">
 <!ENTITY install.warning1 "Κακόβουλοι κώδικες μπορούν να παραβιάσουν την ιδιωτικότητά σας και να ενεργούν για σας χωρίς να το γνωρίζετε.">

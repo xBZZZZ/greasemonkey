@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "Gauti naudotojo scenarijų">
 <!ENTITY greasemonkey.noScriptShere "Nėra įdiegtų scenarijų kurie veiktų šiame puslapyje.">
 <!ENTITY greasemonkey.youHaveNoScripts "Jūs neturite įdiegtų scenarijų">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "neveikia:">
 <!ENTITY install.downloadError "Download Error">
 <!ENTITY install.installButton "Įdiegti">
 <!ENTITY install.matches "atitinka:">
 <!ENTITY install.runsOn "veikia:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "Rodyti scenarijaus pradinį kodą">
 <!ENTITY install.title "Greasemonkey įdiegimas">
 <!ENTITY install.warning1 "Piktavaliai scenarijai gali pažeisti jūsų privatumą ir veikti jūsų vardu jums to nė nežinant.">

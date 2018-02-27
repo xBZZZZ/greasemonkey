@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "Töltsön le parancsfájlokat!">
 <!ENTITY greasemonkey.noScriptShere "Ezen az oldalon nem futnak telepített parancsfájlok.">
 <!ENTITY greasemonkey.youHaveNoScripts "Nincsenek parancsfájlok telepítve">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "nem fut a következőn:">
 <!ENTITY install.downloadError "Download Error">
 <!ENTITY install.installButton "Telepítés">
 <!ENTITY install.matches "illeszkedik:">
 <!ENTITY install.runsOn "fut a következőn:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "Parancsfájl forrásának megtekintése">
 <!ENTITY install.title "Greasemonkey telepítés">
 <!ENTITY install.warning1 "Kártékony parancsfájlok hozzáférhetnek az Ön személyes adataihoz és működhetnek az Ön tudta nélkül.">

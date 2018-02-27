@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "Dapatkan skrip">
 <!ENTITY greasemonkey.noScriptShere "Tidak ada skrip terpasang yang berjalan di halaman ini.">
 <!ENTITY greasemonkey.youHaveNoScripts "Belum ada satupun skrip yang terpasang.">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "tidak berjalan pada:">
 <!ENTITY install.downloadError "Gagal Mengunduh">
 <!ENTITY install.installButton "Pasang">
 <!ENTITY install.matches "cocok:">
 <!ENTITY install.runsOn "berjalan pada:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "Tampilkan Sumber Skrip">
 <!ENTITY install.title "Pemasangan Greasemonkey">
 <!ENTITY install.warning1 "Skrip yang jahat bisa membahayakan privasi Anda dan bertindak atas nama Anda tanpa diketahui.">

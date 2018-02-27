@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "Obține scripturi utilizator">
 <!ENTITY greasemonkey.noScriptShere "Nu sunt rulate pe această pagină scripturile instalate.">
 <!ENTITY greasemonkey.youHaveNoScripts "Nu aveți scripturi utilizator instalate">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "nu rulează pe:">
 <!ENTITY install.downloadError "Download Error">
 <!ENTITY install.installButton "Instalează">
 <!ENTITY install.matches "potriviri:">
 <!ENTITY install.runsOn "rulează pe:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "Arată sursa scriptului">
 <!ENTITY install.title "Instalare Greasemonkey">
 <!ENTITY install.warning1 "Scripturile malițioase vă pot viola intimitatea și pot acționa drept dumneavoastră fără a vă informa.">

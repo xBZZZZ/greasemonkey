@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "Find user scripts">
 <!ENTITY greasemonkey.noScriptShere "Ingen installerede scripts køres på denne side.">
 <!ENTITY greasemonkey.youHaveNoScripts "Du har ikke nogen user scripts installeret">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "kører ikke på:">
 <!ENTITY install.downloadError "Download Error">
 <!ENTITY install.installButton "Installer">
 <!ENTITY install.matches "matcher:">
 <!ENTITY install.runsOn "kører på:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "Vis Script kildekode">
 <!ENTITY install.title "Greasemonkey Installation">
 <!ENTITY install.warning1 "Ondsindede scripts kan krænke dit privatliv og handle på dine vegne uden din viden.">

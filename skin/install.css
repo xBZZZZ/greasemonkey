@@ -1,6 +1,6 @@
 #greasemonkey {
   width: 32em;
-  height: 32em;
+  height: 35em;
 }
 
 #heading {
@@ -35,8 +35,22 @@
   display: none;
 }
 
-#includes-desc, #matches-desc, #excludes-desc {
+#includes-description, #matches-description, #excludes-description {
   font-style: italic;
+}
+
+#description-notice {
+  margin-top: 1em;
+  font-weight: bold;
+}
+
+#original-script-source {
+  margin-left: 0;
+  font-weight: normal;
+}
+
+#original-script-version {
+  margin: 0;
 }
 
 #description-warning1 {

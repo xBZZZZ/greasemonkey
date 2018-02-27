@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "השג קבצי Script של משתמש">
 <!ENTITY greasemonkey.noScriptShere "לא מותקנים קבצי Script פעילים בדף זה.">
 <!ENTITY greasemonkey.youHaveNoScripts "לא מותקנים אצלך קבצי Script של משתמש כלשהם">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "לא עובד ב:">
 <!ENTITY install.downloadError "Download Error">
 <!ENTITY install.installButton "התקן">
 <!ENTITY install.matches "התאמות:">
 <!ENTITY install.runsOn "עובד ב:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "הצג קוד מקור של קובץ Script">
 <!ENTITY install.title "התקנת Greasemonkey">
 <!ENTITY install.warning1 "קבצי Script זדוניים עלולים להפר פרטיותך ולפעול בשמך ללא ידיעתך.">

@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "Hämta användarskript">
 <!ENTITY greasemonkey.noScriptShere "Inga installerade skript körs på denna sida.">
 <!ENTITY greasemonkey.youHaveNoScripts "Du har inga installerade användarskript">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "kör inte på:">
 <!ENTITY install.downloadError "Filhämtningsfel">
 <!ENTITY install.installButton "Installera">
 <!ENTITY install.matches "matchar:">
 <!ENTITY install.runsOn "kör på:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "Visa skriptkällkod">
 <!ENTITY install.title "Installation av Greasemonkey">
 <!ENTITY install.warning1 "Skadliga skript kan inkräkta på ditt privatliv och agera för din räkning utan din vetskap.">

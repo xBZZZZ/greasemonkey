@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "Gebruikersscripts verkrijgen">
 <!ENTITY greasemonkey.noScriptShere "Op deze pagina draaien geen geïnstalleerde scripts.">
 <!ENTITY greasemonkey.youHaveNoScripts "Er zijn geen gebruikersscripts geïnstalleerd">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "draait niet op:">
 <!ENTITY install.downloadError "Downloadfout">
 <!ENTITY install.installButton "Installeren">
 <!ENTITY install.matches "overeenkomsten:">
 <!ENTITY install.runsOn "draait op:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "Scriptbron weergeven">
 <!ENTITY install.title "Greasemonkey-installatie">
 <!ENTITY install.warning1 "Kwaadaardige programmatuur kan uw privacy schenden en namens u handelen zonder uw medeweten.">

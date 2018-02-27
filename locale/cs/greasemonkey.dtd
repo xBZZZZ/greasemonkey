@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "Získat uživatelské skripty">
 <!ENTITY greasemonkey.noScriptShere "Pro tuto stránku nejsou nainstalovány žádné skripty.">
 <!ENTITY greasemonkey.youHaveNoScripts "Nemáte nainstalovány žádné uživatelské skripty">
+<!ENTITY install.alreadyInstalled "Tento skript je již nainstalován">
 <!ENTITY install.butNotOn "nespouští se na:">
 <!ENTITY install.downloadError "Chyba při stahování">
 <!ENTITY install.installButton "Nainstalovat">
 <!ENTITY install.matches "spouští se na (match):">
 <!ENTITY install.runsOn "spouští se na:">
+<!ENTITY install.showOriginalScriptSource "Zobrazit zdrojový kód původního skriptu">
 <!ENTITY install.showScriptSource "Zobrazit zdrojový kód skriptu">
 <!ENTITY install.title "Instalace Greasemonkey">
 <!ENTITY install.warning1 "Podvodné skripty mohou narušit vaše soukromí a jednat vaším jménem bez vašeho vědomí.">

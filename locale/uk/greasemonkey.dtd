@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "Отримати користувацькі скрипти">
 <!ENTITY greasemonkey.noScriptShere "Жоден зі встановлених скриптів не працює на цій сторінці.">
 <!ENTITY greasemonkey.youHaveNoScripts "Жодних скриптів не встановлено">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "Не працює на:">
 <!ENTITY install.downloadError "Download Error">
 <!ENTITY install.installButton "Встановити">
 <!ENTITY install.matches "збіги:">
 <!ENTITY install.runsOn "Працює на:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "Показати початковий код скрипту">
 <!ENTITY install.title "Встановлення Greasemonkey">
 <!ENTITY install.warning1 "Сумнівні скрипти можуть порушити вашу конфіденційність без вашого відома!">

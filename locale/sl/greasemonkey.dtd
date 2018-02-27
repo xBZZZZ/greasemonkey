@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "Dobi uporabniške skripte">
 <!ENTITY greasemonkey.noScriptShere "Na tej strani se ne izvaja noben nameščen skript.">
 <!ENTITY greasemonkey.youHaveNoScripts "Nimate nameščenega nobenega uporabniškega skripta.">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "Se ne izvaja na:">
 <!ENTITY install.downloadError "Napaka pri prenosu">
 <!ENTITY install.installButton "Namesti">
 <!ENTITY install.matches "Se ujema s/z:">
 <!ENTITY install.runsOn "Se izvaja na:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "Prikaži vir skripta">
 <!ENTITY install.title "Namestitev dodatka Greasemonkey">
 <!ENTITY install.warning1 "Zlonamerni skripti lahko kršijo vašo zasebnost in delujejo v vašem imenu brez vaše vednosti.">

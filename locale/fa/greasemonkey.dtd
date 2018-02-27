@@ -2,11 +2,13 @@
 <!ENTITY greasemonkey.getUserScripts "دریافت دستنویس های کاربری">
 <!ENTITY greasemonkey.noScriptShere "دستنویس ای که در این صفحه اجرا شود موجود نیست.">
 <!ENTITY greasemonkey.youHaveNoScripts "شما هیچ دستنویس نسب شده ای ندارید">
+<!ENTITY install.alreadyInstalled "This script is already installed">
 <!ENTITY install.butNotOn "عدم اجرا در:">
 <!ENTITY install.downloadError "Download Error">
 <!ENTITY install.installButton "نصب">
 <!ENTITY install.matches "مطابقت ها:">
 <!ENTITY install.runsOn "اجرا در:">
+<!ENTITY install.showOriginalScriptSource "Show Original Script Source">
 <!ENTITY install.showScriptSource "نمایش متن دستنویس کاربری">
 <!ENTITY install.title "فرآیند نصب گریسمانکی">
 <!ENTITY install.warning1 "دستنویس های بد اندیش می توانند به حریم شما تجاوز کنند و بدون آگاهی شما، روی حقوق شما تاثری بگذارند.">
