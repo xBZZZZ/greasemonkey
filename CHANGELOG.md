@@ -1,5 +1,16 @@
 ## Changelog
 
+#### 3.31beta2 (2018-03-02)
+
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.31beta1Fork...3.31beta2Fork)
+
+* Fix typos (accesskeys)
+* API: GM_xmlhttpRequest - Added check if the callback is a type of "function"
+* API: Added support for GM_windowClose / GM_windowFocus (an alternative) ([#2538](https://github.com/greasemonkey/greasemonkey/issues/2538))
+* API: Added support for GM_cookie (experimental, opt-in) ([#1802](https://github.com/greasemonkey/greasemonkey/issues/1802))
+* GUI: Display current version of the script in the install dialog, if already installed ([#2877](https://github.com/greasemonkey/greasemonkey/issues/2877))
+* Style clean up
+
 #### 3.31beta1 (2018-01-10)
 
 [All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.30Fork...3.31beta1Fork)
@@ -7,7 +18,7 @@
 * API: @match - Fix "*:" scheme (valid for ["http", "https"] only)
 * API: @match - Fix "file:" scheme / A better regular expression (experimental, opt-in)
 * Basilisk: Fix "XML Parsing Error: undefined entity" ([#270](https://github.com/MoonchildProductions/moebius/issues/270))
-* Style clean up 
+* Style clean up
 
 #### 3.30 (2017-12-30)
 
