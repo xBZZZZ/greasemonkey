@@ -1,5 +1,11 @@
 ## Changelog
 
+#### 3.31 (2018-03-04)
+
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.31beta2Fork...3.31Fork)
+
+* [No change]
+
 #### 3.31beta2 (2018-03-02)
 
 [All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.31beta1Fork...3.31beta2Fork)
