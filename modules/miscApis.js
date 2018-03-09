@@ -25,6 +25,8 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 function GM_addStyle(aWrappedContentWin, aFileURL, aRunAt, aCss) {
   var elementName = "head";
 
+  aCss = String(aCss);
+
   function addStyle(aDoc, aHead, aCss) {
     let style = aDoc.createElement("style");
 

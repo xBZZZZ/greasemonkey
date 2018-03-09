@@ -98,6 +98,8 @@ GM_ScriptStorageFront.prototype.setValue = function (aName, aVal) {
             this._script.fileURL, null);
   }
 
+  aName = String(aName);
+
   let key = cacheKey(this._script, aName);
 
   invalidateCache(key);
@@ -115,6 +117,8 @@ GM_ScriptStorageFront.prototype.setValue = function (aName, aVal) {
 
 GM_ScriptStorageFront.prototype.getValue = function (aName, aDefVal) {
   let value;
+
+  aName = String(aName);
 
   let key = cacheKey(this._script, aName);
 
@@ -173,6 +177,8 @@ GM_ScriptStorageFront.prototype.getValue = function (aName, aDefVal) {
 };
 
 GM_ScriptStorageFront.prototype.deleteValue = function (aName) {
+  aName = String(aName);
+
   let key = cacheKey(this._script, aName);
 
   invalidateCache(key);

@@ -131,6 +131,8 @@ function MenuCommandSandbox(
   // 4) Export the "register a command" API function to the sandbox scope.
   this.GM_registerMenuCommand = function (
       aCommandName, aCommandFunc, aAccesskey, aUnused, aAccesskey2) {
+    aCommandName = String(aCommandName);
+
     // Legacy support:
     // If all five parameters were specified
     // (from when two were for accelerators) use the last one as the access key.
