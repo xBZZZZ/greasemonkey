@@ -59,7 +59,7 @@ function GM_setClipboard(aWrappedContentWin, aFileURL, aData, aOptions) {
       _type = aOptions.type;
     }
   }
-  _type = _type ? _type.toLowerCase() : _type;
+  _type = _type ? String(_type).toLowerCase() : _type;
 
   // let _mimetype = undefined;
   let _mimetype = (_type == TYPE.html.type)
@@ -70,7 +70,7 @@ function GM_setClipboard(aWrappedContentWin, aFileURL, aData, aOptions) {
       _mimetype = aOptions.mimetype;
     }
   }
-  _mimetype = _mimetype ? _mimetype.toLowerCase() : _mimetype;
+  _mimetype = _mimetype ? String(_mimetype).toLowerCase() : _mimetype;
 
   if (_mimetype == TYPE.text.mimetype) {
     _mimetype = FLAVOR.text.mimetype;
@@ -83,6 +83,10 @@ function GM_setClipboard(aWrappedContentWin, aFileURL, aData, aOptions) {
 
   switch (JSON.stringify(_obj)) {
     case JSON.stringify(FLAVOR.html):
+      if ((typeof aData == "undefined") || (aData === null)) {
+        aData = "";
+      }
+
       // Add text/html flavor.
       let strVal = supportString;
       strVal.data = aData;
