@@ -110,14 +110,17 @@ function GM_setClipboard(aWrappedContentWin, aFileURL, aData, aOptions) {
       clipboardHelperService.copyString(aData);
       break;
     default:
+      let unsupportedType = aOptions;
+      try {
+        unsupportedType = JSON.stringify(aOptions);
+      } catch (e) {
+        // Ignore.
+      }
       throw new aWrappedContentWin.Error(
           GM_CONSTANTS.localeStringBundle.createBundle(
               GM_CONSTANTS.localeGreasemonkeyProperties)
               .GetStringFromName("error.setClipboard.unsupportedType")
-              .replace("%1",
-              ((typeof aOptions != "object")
-                  ? aOptions
-                  : JSON.stringify(aOptions))),
+              .replace("%1", unsupportedType),
           aFileURL, null);
   }
 }
