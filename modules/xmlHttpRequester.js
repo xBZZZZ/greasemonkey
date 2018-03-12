@@ -41,7 +41,7 @@ function GM_xmlHttpRequester(aWrappedContentWin, aSandbox, aFileURL, aOriginUrl)
 // This function gets called by user scripts in content security scope
 // to start a cross-domain xmlhttp request.
 GM_xmlHttpRequester.prototype.contentStartRequest = function (aDetails) {
-  if (!aDetails) {
+  if (!aDetails || (typeof aDetails != "object")) {
     throw new this.wrappedContentWin.Error(
         GM_CONSTANTS.localeStringBundle.createBundle(
             GM_CONSTANTS.localeGreasemonkeyProperties)
