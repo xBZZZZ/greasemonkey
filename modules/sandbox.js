@@ -28,7 +28,9 @@ Cu.import("chrome://greasemonkey-modules/content/xmlHttpRequester.js");
 
 // https://hg.mozilla.org/mozilla-central/file/33031c875984/js/src/jsapi.cpp#l1072
 // Only a particular set of strings are allowed.
-const JAVASCRIPT_VERSION_MAX = "ECMAv5";
+// const JAVASCRIPT_VERSION_MAX = "ECMAv5";
+// http://bugzil.la/880917
+const JAVASCRIPT_VERSION_MAX = "latest";
 
 const API_PREFIX_REGEXP = new RegExp(
     "(^" + GM_CONSTANTS.addonAPIPrefix1 + ")(.+)", ""); 
