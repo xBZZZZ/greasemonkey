@@ -26,7 +26,7 @@ Cu.import("chrome://greasemonkey-modules/content/util.js");
 Cu.import("chrome://greasemonkey-modules/content/xmlHttpRequester.js");
 
 
-// https://hg.mozilla.org/mozilla-central/file/33031c875984/js/src/jsapi.cpp#l1072
+// https://hg.mozilla.org/releases/mozilla-esr52/file/324cc1bccf3d/js/src/jsapi.cpp#l582
 // Only a particular set of strings are allowed.
 // const JAVASCRIPT_VERSION_MAX = "ECMAv5";
 // http://bugzil.la/880917
