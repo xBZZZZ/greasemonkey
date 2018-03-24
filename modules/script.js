@@ -103,8 +103,8 @@ Script.prototype._changed = function (aEvent, aData) {
   GM_util.getService().config._changed(this, aEvent, aData, dontSave);
 };
 
-// TODO:
-// Move this method to be public rather than just aliasing it.
+// Backward compatibility.
+// Just aliasing it.
 Script.prototype.changed = Script.prototype._changed;
 
 Object.defineProperty(Script.prototype, "author", {

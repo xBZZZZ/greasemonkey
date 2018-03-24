@@ -513,10 +513,8 @@ function unload() {
       }
     }
     // Guarantee that the config.xml is saved to disk.
-    // TODO:
-    // This without dipping into private members.
     if (didUninstall) {
-      GM_config._save(true);
+      GM_config.save(true);
     }
   });
 

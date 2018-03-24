@@ -172,6 +172,10 @@ Config.prototype._save = function (aSaveNow) {
   GM_util.writeToFile(domSerializer.serializeToString(doc), this._configFile);
 };
 
+// Backward compatibility.
+// Just aliasing it.
+Config.prototype.save = Config.prototype._save;
+
 Config.prototype.install = function (
     aScript, aOldScript, aTempDir /* ignore */) {
   let existingIndex = this._find(aOldScript || aScript);
