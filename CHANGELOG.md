@@ -1,5 +1,15 @@
 ## Changelog
 
+#### 3.31.1 (2018-05-05)
+
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.31Fork...3.31.1Fork)
+
+* API: GM_addStyle, GM_getValue, GM_setValue, GM_deleteValue, GM_registerMenuCommand - Added convert the name/value to a "string"
+* API: GM_setClipboard - Added convert the value to a "string", check the data value, better shows the type value
+* API: GM_xmlhttpRequest - Added check the details value
+* Loading: Sandbox (JavaScript version) - "latest" is being used instead of "ECMAv5" (it should not affect - did not work)
+* Loading: Fix Scratchpad overlay for "Pale Moon UXP"
+
 #### 3.31 (2018-03-04)
 
 [All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.31beta2Fork...3.31Fork)
