@@ -1,3 +1,4 @@
+'use strict';
 let gBtnInstall = document.getElementById('btn-install');
 let gDetails = null;
 let gInstallCountdown = 9;
@@ -37,7 +38,7 @@ gDownloader.scriptDetails.then(scriptDetails => {
   document.title = _('NAME_greasemonkey_user_script', gDetails.name);
   // Apply the onerror event for the img tag. CSP does not allow it to be done
   // directly in HTML.
-  let iconEl = document.querySelector('#install header img');
+  let iconEl = document.querySelector('#install #header img');
   iconEl.onerror = () => { gRvDetails.iconUrl = defaultIconUrl; };
 
   // Rivets will mutate its second parameter to have getters and setters,

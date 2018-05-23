@@ -12,14 +12,44 @@
   "SCRIPT_does_not_grant_METHOD": {
     "message": "$1 does not @grant method $2"
   },
+  "backup_export": {
+    "message": "Export a backup..."
+  },
+  "backup_import": {
+    "message": "Import a backup..."
+  },
+  "backup_import_title": {
+    "message": "Greasemonkey Backup Import"
+  },
+  "backup_import_file": {
+    "message": "Import file"
+  },
+  "backup_import_select_file": {
+    "message": "Select a Greasemonkey backup ZIP file to import it with the above options."
+  },
+  "backup_import_options": {
+    "message": "Import options"
+  },
+  "backup_import_remove_detail": {
+    "message": "Uninstall scripts which are not in the backup file."
+  },
+  "backup_import_replace_detail": {
+    "message": "Overwrite already installed scripts with the version in the backup file."
+  },
   "cancel": {
     "message": "Cancel"
+  },
+  "description": {
+    "message": "Description:"
   },
   "disabled": {
     "message": "Disabled"
   },
   "does_not_run_on": {
     "message": "Does not run on:"
+  },
+  "done": {
+    "message": "Done"
   },
   "download_failed": {
     "message": "User script download failed"
@@ -79,8 +109,14 @@
   "greasemonkey_wiki": {
     "message": "Greasemonkey Wiki"
   },
+  "homepage": {
+    "message": "Home page"
+  },
   "ignoring_MATCH_because_REASON": {
     "message": "Ignoring @match pattern $1 because:\n$2"
+  },
+  "import_greasemonkey_database": {
+    "message": "Import Greasemonkey database"
   },
   "install": {
     "message": "Install"
@@ -90,6 +126,9 @@
   },
   "install_failed": {
     "message": "User script failed to install"
+  },
+  "importing": {
+    "message": "Importing ..."
   },
   "malicious_user_scripts": {
     "message": "Malicious user scripts can violate your privacy, steal your data, and act on your behalf without your knowledge."
@@ -141,6 +180,9 @@
   },
   "user_scripts_for_this_tab": {
     "message": "User scripts for this tab"
+  },
+  "version": {
+    "message": "Version:"
   },
   "xhr_bad_url": {
     "message": "GM.xmlHttpRequest: Could not understand the URL: $1\n$2"

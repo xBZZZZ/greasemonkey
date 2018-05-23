@@ -1,3 +1,4 @@
+'use strict';
 /*
 The UserScript object represents a user script, and all content and behaviors.
 
@@ -9,7 +10,7 @@ reference any other objects from this file.
 // Increment this number when updating `calculateEvalContent()`.  If it
 // is higher than it was when eval content was last calculated, it will
 // be re-calculated.
-const EVAL_CONTENT_VERSION = 11;
+const EVAL_CONTENT_VERSION = 12;
 
 
 // Private implementation.
@@ -97,8 +98,8 @@ function _safeCopy(v) {
 
 
 const userScriptKeys = [
-    'description', 'downloadUrl', 'excludes', 'grants', 'includes', 'matches',
-    'name', 'namespace', 'noFrames', 'runAt', 'version'];
+    'description', 'downloadUrl', 'excludes', 'grants', 'homePageUrl',
+    'includes', 'matches', 'name', 'namespace', 'noFrames', 'runAt', 'version'];
 /// Base class, fields and methods common to all kinds of UserScript objects.
 window.RemoteUserScript = class RemoteUserScript {
   constructor(vals) {
@@ -107,6 +108,7 @@ window.RemoteUserScript = class RemoteUserScript {
     this._downloadUrl = null;
     this._excludes = [];
     this._grants = ['none'];
+    this._homePageUrl = null;
     this._includes = [];
     this._matches = [];
     this._name = 'user-script';
@@ -131,6 +133,7 @@ window.RemoteUserScript = class RemoteUserScript {
   get downloadUrl() { return this._downloadUrl; }
   get excludes() { return _safeCopy(this._excludes); }
   get grants() { return _safeCopy(this._grants); }
+  get homePageUrl() { return _safeCopy(this._homePageUrl); }
   get includes() { return _safeCopy(this._includes); }
   get matches() { return _safeCopy(this._matches); }
   get name() { return this._name; }
@@ -206,7 +209,7 @@ window.RunnableUserScript = class RunnableUserScript
   }
 
   get details() {
-    var d = super.details;
+    let d = super.details;
     runnableUserScriptKeys.forEach(k => {
       d[k] = _safeCopy(this['_' + k]);
     });
@@ -230,7 +233,7 @@ window.RunnableUserScript = class RunnableUserScript
 
 
 const editableUserScriptKeys = [
-    'parsedDetails', 'content', 'requiresContent'];
+    'content', 'requiresContent'];
 /// A _UserScript, plus user settings, plus all requires' contents.  Should
 /// never be called except by `UserScriptRegistry.`
 window.EditableUserScript = class EditableUserScript
@@ -238,7 +241,6 @@ window.EditableUserScript = class EditableUserScript
   constructor(details) {
     super(details);
 
-    this._parsedDetails = null;  // All details from parseUserScript().
     this._content = null;
     this._requiresContent = {};  // Map of download URL to content.
 
@@ -251,17 +253,6 @@ window.EditableUserScript = class EditableUserScript
       d[k] = _safeCopy(this['_' + k]);
     });
     return d;
-  }
-
-  get parsedDetails() {
-    if (!this._parsedDetails) {
-      if (!this._content) {
-        throw new Error(
-            'EditableUserScript missing both content and parsed details!');
-      }
-      this._parsedDetails = parseUserScript(this._content, this._downloadUrl);
-    }
-    return this._parsedDetails;
   }
 
   get content() { return this._content; }
@@ -319,7 +310,7 @@ window.EditableUserScript = class EditableUserScript
   }
 
   // Given a successful `Downloader` object, update this script from it.
-  async updateFromDownloaderDetails(userScriptDetails, downloaderDetails) {
+  updateFromDownloaderDetails(userScriptDetails, downloaderDetails) {
     _loadValuesInto(this, userScriptDetails, userScriptKeys);
     _loadValuesInto(this, userScriptDetails, runnableUserScriptKeys);
     _loadValuesInto(this, userScriptDetails, editableUserScriptKeys);
