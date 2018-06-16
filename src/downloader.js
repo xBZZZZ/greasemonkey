@@ -106,14 +106,14 @@ class Downloader {
         'name': 'UserScriptInstall',
         'userScript': scriptDetails,
         'downloader': downloaderDetails,
-      }, (uuid) => {
+      }, savedDetails => {
         if (chrome.runtime.lastError) {
           console.error(chrome.runtime.lastError);
           reject(chrome.runtime.lastError);
         } else {
-          resolve(uuid);
+          resolve(savedDetails);
           if (openEditor) {
-            openUserScriptEditor(uuid);
+            openUserScriptEditor(savedDetails.uuid);
           }
         }
       });
@@ -252,7 +252,7 @@ class Download {
     });
   }
 
-  _onError(reject, event) {
+  _onError(reject) {
     this.progress = 1;
     reject();
   }

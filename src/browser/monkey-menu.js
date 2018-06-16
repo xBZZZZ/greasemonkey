@@ -24,7 +24,6 @@ function onClick(event) {
   if (event.which != 1) {
     event.preventDefault();
     event.stopPropagation();
-    return;
   } else {
     activate(event.target);
   }
@@ -32,13 +31,19 @@ function onClick(event) {
 
 
 function onKeyDown(event) {
-  if (event.code == 'Enter') return activate(event.target);
-  if (event.key == 'ArrowDown') return event.preventDefault(), switchFocus(1);
-  if (event.key == 'ArrowUp') return event.preventDefault(), switchFocus(-1);
+  if (event.code == 'Enter') {
+    return activate(event.target);
+  } else if (event.key == 'ArrowDown') {
+    event.preventDefault();
+    switchFocus(1);
+  } else  if (event.key == 'ArrowUp') {
+    event.preventDefault();
+    switchFocus(-1);
+  }
 }
 
 
-function onLoad(event) {
+function onLoad() {
   gPendingTicker = setInterval(pendingUninstallTicker, 1000);
   chrome.runtime.sendMessage(
       {'name': 'EnabledQuery'},
@@ -50,9 +55,9 @@ function onLoad(event) {
           let url = tabs.length && new URL(tabs[0].url) || null;
           loadScripts(userScripts, url);
 
-          rivets.formatters.bothArraysEmpty
-              = (a, b) => !(!!a.length | !!b.length);
-          rivets.bind(document.body, gTplData);
+          tinybind.formatters.bothArraysEmpty
+              = (a, b) => !(!!a.length || !!b.length);
+          tinybind.bind(document.body, gTplData);
 
           document.body.id = 'main-menu';
 
@@ -62,10 +67,7 @@ function onLoad(event) {
 }
 
 
-function onMouseOut(event) {
-  let el = event.target;
-//  while (el && el.tagName != 'MENUITEM') el = el.parentNode;
-//  if (el && el.hasAttribute('tabindex')) el.focus();
+function onMouseOut() {
   document.activeElement.blur();
 }
 
@@ -77,7 +79,7 @@ function onMouseOver(event) {
 }
 
 
-function onTransitionEnd(event) {
+function onTransitionEnd() {
   // After a CSS transition has moved a section out of the visible area,
   // force it to be hidden, so that it cannot gain focus.
   for (let section of document.getElementsByTagName('section')) {
@@ -87,7 +89,7 @@ function onTransitionEnd(event) {
 }
 
 
-function onTransitionStart(event) {
+function onTransitionStart() {
   // While CSS transitioning, keep all sections visible.
   for (let section of document.getElementsByTagName('section')) {
     section.style.visibility = 'visible';
@@ -207,9 +209,9 @@ async function newUserScript() {
 // ==/UserScript==`;
   let downloader
       = new UserScriptDownloader().setScriptContent(scriptSource);
-  await downloader.start();
-  await downloader.install(/*disabled=*/false, /*openEditor=*/true);
-  window.close();
+  downloader.start()
+      .then(() => downloader.install(/*disabled=*/false, /*openEditor=*/true))
+      .then(window.close);
 }
 
 
@@ -254,11 +256,13 @@ function uninstall(uuid) {
     logUnhandledError();
 
     allScriptsLoop:
-    for (let userScriptContainer of Object.values(gTplData.userScripts)) {
-      for (let i in userScriptContainer) {
-        let script = userScriptContainer[i];
+    for (let i of Object.keys(gTplData.userScripts)) {
+      let userScriptContainer = gTplData.userScripts[i];
+      for (let j in userScriptContainer) {
+        if (!userScriptContainer.hasOwnProperty(j)) continue;
+        let script = userScriptContainer[j];
         if (script.uuid == uuid) {
-          userScriptContainer.splice(i, 1);
+          userScriptContainer.splice(j, 1);
           break allScriptsLoop;
         }
       }
