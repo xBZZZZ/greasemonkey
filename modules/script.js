@@ -1128,6 +1128,18 @@ Script.prototype.checkForRemoteUpdate = function (aCallback, aForced) {
     });
   }
 
+  if (!aForced
+      && (this.checkRemoteUpdates == AddonManager.AUTOUPDATE_DISABLE)) {
+    return aCallback("noUpdateAvailable", {
+      "name": this.localized.name,
+      "fileURL": this.fileURL,
+      "url": this.updateURL,
+      "info": " = (this.checkRemoteUpdates == " + this.checkRemoteUpdates + ")",
+      "updateStatus": "UPDATE_STATUS_NO_ERROR",
+      "log": false,
+    });
+  }
+
   let uri = GM_util.getUriFromUrl(this.updateURL).clone();
 
   let usedMeta = false;
