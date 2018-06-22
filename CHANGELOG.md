@@ -1,5 +1,13 @@
 ## Changelog
 
+#### 3.31.2 (2018-06-22)
+
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.31.1Fork...3.31.2Fork)
+
+* Pale Moon - General: Fix <em:maxVersion>
+* Basilisk - General: Used <em:basilisk>
+* General: The script must not be updated if automatic updates are disabled
+
 #### 3.31.1 (2018-05-05)
 
 [All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.31Fork...3.31.1Fork)
