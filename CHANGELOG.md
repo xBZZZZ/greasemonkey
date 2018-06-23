@@ -1,5 +1,12 @@
 ## Changelog
 
+#### 3.31.3 (2018-06-23)
+
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.31.2Fork...3.31.3Fork)
+
+* General: The script must not be updated if automatic updates are set to default and automatic updates are disabled
+* API: Fix GM_info.scriptWillUpdate
+
 #### 3.31.2 (2018-06-22)
 
 [All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.31.1Fork...3.31.2Fork)
