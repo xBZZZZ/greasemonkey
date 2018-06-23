@@ -832,7 +832,8 @@ Script.prototype.info = function () {
     "scriptHandler": GM_CONSTANTS.info.scriptHandler,
     "scriptMetaStr": extractMeta(this.textContent),
     "scriptSource": this.textContent,
-    "scriptWillUpdate": this.isRemoteUpdateAllowed(false),
+    "scriptWillUpdate": this.isRemoteUpdateAllowed(false)
+        && this.shouldAutoUpdate(),
     "uuid": this.uuid,
     "version": gGreasemonkeyVersion,
   };
@@ -1112,6 +1113,16 @@ Script.prototype.checkConfig = function () {
   }
 };
 
+Script.prototype.shouldAutoUpdate = function () {
+  if (this.checkRemoteUpdates == AddonManager.AUTOUPDATE_ENABLE) {
+    return true;
+  }
+  if (this.checkRemoteUpdates == AddonManager.AUTOUPDATE_DISABLE) {
+    return false;
+  }
+  return AddonManager.autoUpdateDefault;
+};
+
 Script.prototype.checkForRemoteUpdate = function (aCallback, aForced) {
   if (this.availableUpdate) {
     return aCallback("updateAvailable");
@@ -1128,8 +1139,7 @@ Script.prototype.checkForRemoteUpdate = function (aCallback, aForced) {
     });
   }
 
-  if (!aForced
-      && (this.checkRemoteUpdates == AddonManager.AUTOUPDATE_DISABLE)) {
+  if (!aForced && !this.shouldAutoUpdate()) {
     return aCallback("noUpdateAvailable", {
       "name": this.localized.name,
       "fileURL": this.fileURL,
