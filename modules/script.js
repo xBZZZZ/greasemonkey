@@ -1139,12 +1139,13 @@ Script.prototype.checkForRemoteUpdate = function (aCallback, aForced) {
     });
   }
 
-  if (!aForced && !this.shouldAutoUpdate()) {
+  let _shouldAutoUpdate = this.shouldAutoUpdate();
+  if (!aForced && !_shouldAutoUpdate) {
     return aCallback("noUpdateAvailable", {
       "name": this.localized.name,
       "fileURL": this.fileURL,
       "url": this.updateURL,
-      "info": " = (this.checkRemoteUpdates == " + this.checkRemoteUpdates + ")",
+      "info": " = (this.shouldAutoUpdate() == " + _shouldAutoUpdate + ")",
       "updateStatus": "UPDATE_STATUS_NO_ERROR",
       "log": false,
     });
