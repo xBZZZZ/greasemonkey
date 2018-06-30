@@ -807,7 +807,7 @@ RemoteScript.prototype._downloadFile = function (
   }
   // See #1717.
   // A page with a userscript - http auth.
-  // Private browsing, Containers (Firefox 42+).
+  // Private Browsing, Containers (Firefox 42+).
   let privateMode = true;
   let userContextId = null;
   let chromeWin = GM_util.getBrowserWindow();
@@ -841,7 +841,7 @@ RemoteScript.prototype._downloadFile = function (
   }
   /*
   dump("RemoteScript._downloadFile - url:" + "\n" + aUri.spec + "\n"
-      + "Private browsing mode: " + req.channel.isChannelPrivate + "\n");
+      + "Private Browsing mode: " + req.channel.isChannelPrivate + "\n");
   */
   this._channels.push(channel);
   let dsl = new DownloadListener(

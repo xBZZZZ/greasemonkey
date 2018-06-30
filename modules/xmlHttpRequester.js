@@ -264,7 +264,7 @@ function (aSafeUrl, aDetails, aReq) {
 
   let channel;
 
-  // Private browsing, Containers (Firefox 42+).
+  // Private Browsing, Containers (Firefox 42+).
   let privateMode = false;
   if (GM_util.windowIsPrivate(this.wrappedContentWin)) {
     privateMode = true;
@@ -293,7 +293,7 @@ function (aSafeUrl, aDetails, aReq) {
   }
   /*
   dump("GM_xmlhttpRequest - url:" + "\n" + aSafeUrl + "\n"
-      + "Private browsing mode: " + aReq.channel.isChannelPrivate + "\n");
+      + "Private Browsing mode: " + aReq.channel.isChannelPrivate + "\n");
   */
 
   try {

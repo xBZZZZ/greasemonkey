@@ -1202,7 +1202,7 @@ Script.prototype.checkForRemoteUpdate = function (aCallback, aForced) {
   }
   */
 
-  // Private browsing, Containers (Firefox 42+).
+  // Private Browsing, Containers (Firefox 42+).
   let privateMode = true;
   let userContextId = null;
   let chromeWin = GM_util.getBrowserWindow();
@@ -1234,7 +1234,7 @@ Script.prototype.checkForRemoteUpdate = function (aCallback, aForced) {
   }
   /*
   dump("Script.checkForRemoteUpdate - url:" + "\n" + url + "\n"
-      + "Private browsing mode: " + req.channel.isChannelPrivate + "\n");
+      + "Private Browsing mode: " + req.channel.isChannelPrivate + "\n");
   */
 
   // Let the server know we want a user script metadata block.
