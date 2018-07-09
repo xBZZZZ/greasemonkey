@@ -14,6 +14,7 @@ if (typeof Cu === "undefined") {
 
 Cu.import("chrome://greasemonkey-modules/content/constants.js");
 
+Cu.import("chrome://greasemonkey-modules/content/prefManager.js");
 Cu.import("chrome://greasemonkey-modules/content/thirdParty/convertToRegexp.js");
 Cu.import("chrome://greasemonkey-modules/content/thirdParty/matchPattern.js");
 Cu.import("chrome://greasemonkey-modules/content/util.js");
@@ -32,6 +33,7 @@ Object.defineProperty(AbstractScript.prototype, "globalExcludes", {
 
 AbstractScript.prototype.matchesURL = function (aUrl) {
   var uri = GM_util.getUriFromUrl(aUrl);
+  var _AbstractScript = this;
 
   function testClude(aGlob) {
     // See #1298.
@@ -47,7 +49,22 @@ AbstractScript.prototype.matchesURL = function (aUrl) {
       aMatchPattern = new MatchPattern(aMatchPattern);
     }
 
-    return aMatchPattern.doMatch(aUrl);
+    let _url = aUrl;
+    if (!GM_prefRoot.getValue("api.@match.hash")) {
+      if (uri) {
+        _url = uri.specIgnoringRef;
+      } else {
+        GM_util.logError(
+            '"' + _AbstractScript.localized.name + '"' + "\n" +
+            "abstractScript - AbstractScript.matchesURL - testMatch:" + "\n" +
+            GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.invalidUrl")
+            .replace("%1", aUrl));
+      }
+    }
+
+    return aMatchPattern.doMatch(_url);
   }
 
   // Flat deny if URL is not greaseable, or matches global excludes.

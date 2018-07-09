@@ -143,7 +143,21 @@ function _corsCspTestUrl(aUrl) {
         return false;
       }
     }
-    return aMatchPattern.doMatch(aUrl);
+
+    let _url = aUrl;
+    if (!GM_prefRoot.getValue("api.@match.hash")) {
+      if (uri) {
+        _url = uri.specIgnoringRef;
+      } else {
+        dump(gCorsCspOverrideDumpPrefix + ": "
+            + GM_CONSTANTS.localeStringBundle.createBundle(
+            GM_CONSTANTS.localeGreasemonkeyProperties)
+            .GetStringFromName("error.invalidUrl")
+            .replace("%1", aUrl) + "\n");
+      }
+    }
+
+    return aMatchPattern.doMatch(_url);
   }
 
   if (!GM_util.isGreasemonkeyable(aUrl)) {
