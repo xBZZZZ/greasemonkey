@@ -23,7 +23,8 @@ function logError(e, aWarning, aFileName, aLineNumber) {
   // We don't know it. (Directly...)
   consoleError.init(
       e.message, aFileName, null, aLineNumber, e.columnNumber,
-      (aWarning ? 1 : 0), null);
+      (aWarning ? Ci.nsIScriptError.warningFlag : Ci.nsIScriptError.errorFlag),
+      null);
 
   Cc["@mozilla.org/consoleservice;1"].getService(Ci.nsIConsoleService)
       .logMessage(consoleError);
