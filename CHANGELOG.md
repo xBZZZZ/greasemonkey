@@ -1,5 +1,12 @@
 ## Changelog
 
+#### 3.31.4 (2018-08-05)
+
+[All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.31.3Fork...3.31.4Fork)
+
+* API: @match - Added support for ignoring a hash (opt-in)
+* Style clean up (automatic updates, others...)
+
 #### 3.31.3 (2018-06-23)
 
 [All](https://github.com/janekptacijarabaci/greasemonkey/compare/3.31.2Fork...3.31.3Fork)
