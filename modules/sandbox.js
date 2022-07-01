@@ -148,7 +148,7 @@ function injectGMInfo(aScript, sandbox, aContentWin) {
   rawInfo.isPrivate = rawInfo.isIncognito;
   
   // TODO: also delay top level clone via lazy getter? XPCOMUtils.defineLazyGetter
-  sandbox.GM_info = Cu.cloneInto(rawInfo, sandbox);
+  Reflect.set({}, 'GM_info', Cu.cloneInto(rawInfo, sandbox), sandbox);
 
   var waivedInfo = Components.utils.waiveXrays(sandbox.GM_info);
   var fileCache = new Map();
